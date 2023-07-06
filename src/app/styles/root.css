@@ -1,0 +1,20 @@
+:root {
+  /* Typography */
+  --font-sans: "Inter", sans-serif;
+
+  /* Color scheme */
+
+  /* Colors */
+  --color-primary: #1172CB;
+  --color-background-header: #9CCAF4;
+  --color-background-content: #C4DCF2;
+
+  /* Base */
+  --color-base-black: #000;
+  --color-base-white: #fff;
+
+  /* Shadows */
+
+  /* Typography */
+  --font-text-lg-regular: 400 24px/29.05px var(--font-sans);
+}
