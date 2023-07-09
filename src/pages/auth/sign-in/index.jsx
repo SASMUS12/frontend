@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { Navigate } from "react-router-dom";
 
 import { Input } from "../../../shared/ui/Input";
 import { Button } from "../../../shared/ui/Button";
