@@ -3,6 +3,9 @@ import { observer } from "mobx-react-lite";
 import { Input } from "../../shared/ui/Input";
 import { Button } from "../../shared/ui/Button";
 
+import { Header } from "../../components/Header/Header";
+import { Footer } from "../../components/Footer/Footer";
+
 import styles from "./styles.module.css";
 import { useModel } from "./model";
 

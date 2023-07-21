@@ -2,7 +2,6 @@ import React, { useState, FC } from "react";
 import ReactDOM from 'react-dom'
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import "./modal.css";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 type ScriptEvent = () => void;
 
@@ -56,9 +55,8 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
       </div>
       <div className='modal__container'>
         <div className="modal__button-container" test-id="modalCloseIconContainer">
-          <CloseIcon 
-          type="primary" 
-          onClick={handleClose}
+          <div
+            onClick={handleClose}
           />
         </div>
         {children}
