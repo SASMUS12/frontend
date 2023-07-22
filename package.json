@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "classnames": "^2.3.2",
     "compose-function": "^3.0.3",
+    "gh-pages": "^5.0.0",
     "mobx": "^6.9.0",
     "mobx-react-lite": "^3.4.3",
     "react": "^18.2.0",
@@ -23,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +51,7 @@
     "@types/mini-css-extract-plugin": "^2.5.1",
     "css-loader": "^6.8.1",
     "mini-css-extract-plugin": "^2.7.6",
-    "style-loader": "^3.3.3"
+    "style-loader": "^3.3.3",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
