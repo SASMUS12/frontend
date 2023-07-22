@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/frontend/static/css/main.24ee9dd3.css",
+    "main.js": "/frontend/static/js/main.b8a3e50b.js",
+    "static/css/488.290d14c0.chunk.css": "/frontend/static/css/488.290d14c0.chunk.css",
+    "static/js/488.b2134036.chunk.js": "/frontend/static/js/488.b2134036.chunk.js",
+    "static/css/815.49e443bb.chunk.css": "/frontend/static/css/815.49e443bb.chunk.css",
+    "static/js/815.013ee653.chunk.js": "/frontend/static/js/815.013ee653.chunk.js",
+    "static/css/347.a57cfdae.chunk.css": "/frontend/static/css/347.a57cfdae.chunk.css",
+    "static/js/347.18b34c0c.chunk.js": "/frontend/static/js/347.18b34c0c.chunk.js",
+    "static/js/817.b9a53f5d.chunk.js": "/frontend/static/js/817.b9a53f5d.chunk.js",
+    "static/js/39.c0cd53fd.chunk.js": "/frontend/static/js/39.c0cd53fd.chunk.js",
+    "static/media/logo-yandex.svg": "/frontend/static/media/logo-yandex.cabe8205e7b2fcb029fd102ddd6d9cf2.svg",
+    "static/media/logo-weibo.svg": "/frontend/static/media/logo-weibo.d37a57c0e926244402b081ce76045f6d.svg",
+    "static/media/logo-google.svg": "/frontend/static/media/logo-google.f54de8b1199fd5ff3f9d1242f2529226.svg",
+    "static/media/logo.svg": "/frontend/static/media/logo.8fb5fc6497ce8659e914ff6fc655f303.svg",
+    "index.html": "/frontend/index.html",
+    "main.24ee9dd3.css.map": "/frontend/static/css/main.24ee9dd3.css.map",
+    "main.b8a3e50b.js.map": "/frontend/static/js/main.b8a3e50b.js.map",
+    "488.290d14c0.chunk.css.map": "/frontend/static/css/488.290d14c0.chunk.css.map",
+    "488.b2134036.chunk.js.map": "/frontend/static/js/488.b2134036.chunk.js.map",
+    "815.49e443bb.chunk.css.map": "/frontend/static/css/815.49e443bb.chunk.css.map",
+    "815.013ee653.chunk.js.map": "/frontend/static/js/815.013ee653.chunk.js.map",
+    "347.a57cfdae.chunk.css.map": "/frontend/static/css/347.a57cfdae.chunk.css.map",
+    "347.18b34c0c.chunk.js.map": "/frontend/static/js/347.18b34c0c.chunk.js.map",
+    "817.b9a53f5d.chunk.js.map": "/frontend/static/js/817.b9a53f5d.chunk.js.map",
+    "39.c0cd53fd.chunk.js.map": "/frontend/static/js/39.c0cd53fd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.24ee9dd3.css",
+    "static/js/main.b8a3e50b.js"
+  ]
+}
