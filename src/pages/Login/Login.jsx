@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 
-import { Input } from "../../shared/ui/Input";
-import { Button } from "../../shared/ui/Button";
+import { Input } from "../../components/ui/Input";
+import { Button } from "../../components/ui/Button";
 
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
@@ -9,10 +9,10 @@ import { Footer } from "../../components/Footer/Footer";
 import styles from "./styles.module.css";
 import { useModel } from "./model";
 
-import logo from "../../shared/svg//logo.svg";
-import googleLogo from "../../shared/svg/logo-google.svg";
-import yandexLogo from "../../shared/svg/logo-yandex.svg";
-import weiboLogo from "../../shared/svg/logo-weibo.svg";
+import logo from "../../images/svg//logo.svg";
+import googleLogo from "../../images/svg/logo-google.svg";
+import yandexLogo from "../../images/svg/logo-yandex.svg";
+import weiboLogo from "../../images/svg/logo-weibo.svg";
 
 const Login = () => {
   const model = useModel();

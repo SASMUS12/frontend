@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { Loading } from "../../../shared/ui/Loading/Loading";
+import { Loading } from "../../ui/Loading/Loading";
 import React from "react";
 
 export const withRouter = (component: () => ReactNode) => () =>
