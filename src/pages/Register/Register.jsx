@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { useNavigate } from 'react-router-dom';
 
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
@@ -9,13 +10,14 @@ import { Footer } from "../../components/Footer/Footer";
 import styles from "./styles.module.css";
 import { useModel } from "./model";
 
-import logo from "../../images/svglogo.svg";
-import googleLogo from "../../images/svglogo-google.svg";
-import yandexLogo from "../../images/svglogo-yandex.svg";
-import weiboLogo from "../../images/svglogo-weibo.svg";
+import logo from "../../images/svg/logo.svg";
+import googleLogo from "../../images/svg/logo-google.svg";
+import yandexLogo from "../../images/svg/logo-yandex.svg";
+import weiboLogo from "../../images/svg/logo-weibo.svg";
 
 const Register = () => {
   const model = useModel();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -26,12 +28,13 @@ const Register = () => {
               variant="primary"
               size="s"
               disabled={model.isLoading}
+              onClick={(e)=>navigate('/')}
           >
-              {model.isLoading ? "Loading" : "Регистрация"}
+              {model.isLoading ? "Loading" : "Войти"}
           </Button>
       </header>
       <main className={styles.content}>
-          <h1 className={styles.title}>Войти через</h1>
+          <h1 className={styles.title}>Зарегистрироваться при помощи</h1>
           <Button
               className={styles.button}
               type="submit"

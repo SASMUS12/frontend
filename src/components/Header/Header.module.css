@@ -1,38 +1,50 @@
-.appHeader__header {
-  font-family: 'Jet Brains Mono', Arial, sans-serif;
-  background-color: #1C1C21;
-}
-
-.appHeader__nav {
+.header {
+  width: 100%;
+  height: 95px;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  background-color: var(--color-background-header);
+  padding: 18px 24px;
 }
 
-.appHeader__left-links {
+.content {
+  width: 100%;
+  min-height: 933px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-background-content);
 }
 
-.appHeader__active-link svg {
-  color: #F2F2F3;
-  fill: #F2F2F3;
+.title {
+  margin: 172px 0 0;
+  font: var(--font-text-xl-regular);
+  color: var(--color-primary);
 }
 
-.appHeader__link {
-  font-family: 'Jet Brains Mono', Arial, sans-serif;
-  display: flex;
-  flex-direction: row;
-  text-decoration: none;
-  gap: 8px;
+/*.button {
+  margin-top: 44px;
+}*/
+
+.logo {
+  margin-left: 36px;
+  margin-right: 43px;
 }
 
-.appHeader__active-link {
-  color: #F2F2F3;
+.text {
+  margin: 27px 0;
+  font: var(--font-text-lg-regular);
+  color: var(--color-primary);
 }
 
-.appHeader__padding-to-right {
-  padding-left: 188px;
+.input {
+  margin-top: 44px;
+}
+
+.link {
+  font: var(--font-text-lg-regular);
+  color: var(--color-primary);
+  cursor: pointer;
+  margin-top: 10px;
 }

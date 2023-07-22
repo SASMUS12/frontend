@@ -1,35 +1,27 @@
 import { observer } from "mobx-react-lite";
+import { useNavigate } from 'react-router-dom';
 
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 
-import { Header } from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 import styles from "./styles.module.css";
 import { useModel } from "./model";
 
-import logo from "../../images/svg//logo.svg";
+import logo from "../../images/svg/logo.svg";
 import googleLogo from "../../images/svg/logo-google.svg";
 import yandexLogo from "../../images/svg/logo-yandex.svg";
 import weiboLogo from "../../images/svg/logo-weibo.svg";
 
 const Login = () => {
   const model = useModel();
+  const navigate = useNavigate();
 
   return (
     <>
-      <header className={styles.header}>
-          <img src={logo} alt="Логотип проекта"/>
-          <Button
-              type="submit"
-              variant="primary"
-              size="s"
-              disabled={model.isLoading}
-          >
-              {model.isLoading ? "Loading" : "Регистрация"}
-          </Button>
-      </header>
+    <Header/>
       <main className={styles.content}>
           <h1 className={styles.title}>Войти через</h1>
           <Button
