@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 
-import { Input } from "../../shared/ui/Input";
-import { Button } from "../../shared/ui/Button";
+import { Input } from "../../components/ui/Input";
+import { Button } from "../../components/ui/Button";
 
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
@@ -9,10 +9,10 @@ import { Footer } from "../../components/Footer/Footer";
 import styles from "./styles.module.css";
 import { useModel } from "./model";
 
-import logo from "../../shared/svglogo.svg";
-import googleLogo from "../../shared/svglogo-google.svg";
-import yandexLogo from "../../shared/svglogo-yandex.svg";
-import weiboLogo from "../../shared/svglogo-weibo.svg";
+import logo from "../../images/svglogo.svg";
+import googleLogo from "../../images/svglogo-google.svg";
+import yandexLogo from "../../images/svglogo-yandex.svg";
+import weiboLogo from "../../images/svglogo-weibo.svg";
 
 const Register = () => {
   const model = useModel();
