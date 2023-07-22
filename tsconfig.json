@@ -25,6 +25,5 @@
     "src",
     "src/**/*.ts",
     "src/types/declarations.d.ts",
-    "src/components", "src/types/declarations.d.ts"
   ]
 }
