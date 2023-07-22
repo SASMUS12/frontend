@@ -17,6 +17,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
+    "typescript": "^5.1.6",
+    "typescript-plugin-css-modules": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -46,11 +48,11 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-proposal-private-property-in-object": "*",
+    "@types/mini-css-extract-plugin": "^2.5.1",
     "@types/compose-function": "^0.0.30",
     "css-loader": "^6.8.1",
     "mini-css-extract-plugin": "^2.7.6",
     "style-loader": "^3.3.3",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
