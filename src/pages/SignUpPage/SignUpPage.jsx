@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Input } from '../../components/UI/Input/Input';
 import { Button } from '../../components/UI/Button/Button';
+import Header from '../../components/Header/Header';
 
 import { useModel } from './model';
 
@@ -19,17 +20,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <header className={styles.header}>
-        <img src={logo} alt="Логотип проекта" />
-        <Button
-          type="submit"
-          variant="primary"
-          size="s"
-          disabled={model.isLoading}
-          onClick={() => navigate('/')}>
-          {model.isLoading ? 'Loading' : 'Войти'}
-        </Button>
-      </header>
+      <Header />
       <main className={styles.content}>
         <h1 className={styles.title}>Зарегистрироваться при помощи</h1>
         <Button
