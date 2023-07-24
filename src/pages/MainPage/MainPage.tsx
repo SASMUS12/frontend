@@ -1,4 +1,5 @@
 import { Card } from "../../components/Card/Card";
+import { results } from "./Cards";
 
 import styles from "./MainPage.module.scss";
 
@@ -6,15 +7,19 @@ const MainPage = () => {
   return (
       <main className={styles.content}>
           <section className={styles.content__cardList}>
-             <Card
-                 country="Россия"
-                 status="в сети"
-                 first_name="Dyah"
-                 gender="Женский"
-                 age={31}
-                 about="Hello! I’m Dyah from Indonesia. I like to make new friends. Feel free to chat me!"
-                 indicator={true}
-             />
+              {results.map((partner) => (
+                  <Card
+                      country={partner.country}
+                      status={partner.status}
+                      first_name={partner.first_name}
+                      gender={partner.gender}
+                      age={partner.age}
+                      about={partner.about}
+                      indicator={partner.indicator}
+                      nativeLanguages={partner.native_languages}
+                      foreignLanguages={partner.foreign_languages}
+                  />
+              ))}
           </section>
       </main>
   );
