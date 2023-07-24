@@ -1,17 +1,14 @@
-import React from "react";
-import "./modalOverlay.css";
+import React from 'react';
+import './ModalOverlay.module.scss';
 
 interface IModalOverlayProps {
   isOpen: boolean;
 }
 
 function ModalOverlay(props: IModalOverlayProps) {
-  const {isOpen} = props;
+  const { isOpen } = props;
 
-  return (
-      <div className={`modalOverlay ${isOpen ? 'modalOverlay_opened' : ''}`}>
-      </div>
-  );
+  return <div className={`modalOverlay ${isOpen ? 'modalOverlay_opened' : ''}`}></div>;
 }
 
 export default ModalOverlay;

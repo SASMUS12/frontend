@@ -1,18 +1,9 @@
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
+import { Button } from '../../components/ui/Button';
+import { useModel } from './model';
+import logo from '../../images/svg//logo.svg';
 
-import { Input } from "../../components/ui/Input";
-import { Button } from "../../components/ui/Button";
-
-import { Header } from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
-
-import styles from "./styles.module.css";
-import { useModel } from "./model";
-
-import logo from "../../images/svg//logo.svg";
-import googleLogo from "../../images/svg/logo-google.svg";
-import yandexLogo from "../../images/svg/logo-yandex.svg";
-import weiboLogo from "../../images/svg/logo-weibo.svg";
+import styles from './MainPage.module.scss';
 
 const MainPage = () => {
   const model = useModel();
@@ -20,18 +11,12 @@ const MainPage = () => {
   return (
     <>
       <header className={styles.header}>
-          <img src={logo} alt="Логотип проекта"/>
-          <Button
-              type="submit"
-              variant="primary"
-              size="s"
-              disabled={model.isLoading}
-          >
-              {model.isLoading ? "Loading" : "Регистрация"}
-          </Button>
+        <img src={logo} alt="Логотип проекта" />
+        <Button type="submit" variant="primary" size="s" disabled={model.isLoading}>
+          {model.isLoading ? 'Loading' : 'Регистрация'}
+        </Button>
       </header>
-      <main className={styles.content}>
-      </main>
+      <main className={styles.content}></main>
     </>
   );
 };

@@ -14,10 +14,10 @@
 }
 
 .modalOverlay:before {
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   opacity: 0.5;
   align-self: center;
   position: fixed;
@@ -29,22 +29,26 @@
 
 @media screen and (max-width: 920px) {
   .modalOverlay {
-    height: calc(100% + 270px);}
+    height: calc(100% + 270px);
+  }
 }
 
 @media screen and (max-width: 770px) {
   .modalOverlay {
-    height: calc(100% + 220px);}
+    height: calc(100% + 220px);
+  }
 }
 
 @media screen and (max-width: 610px) {
   .modalOverlay {
-    height: calc(100% + 170px);}
+    height: calc(100% + 170px);
+  }
 }
 
 @media screen and (max-width: 610px) {
   .modalOverlay {
-    top: -84px;}
+    top: -84px;
+  }
 }
 
 .modalOverlay_opened {
