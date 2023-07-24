@@ -1,1 +1,1 @@
-export const bazeUrl: string = 'http://5.181.255.32/api/v1/';
+export const bazeUrl = 'http://5.181.255.32/api/v1/';

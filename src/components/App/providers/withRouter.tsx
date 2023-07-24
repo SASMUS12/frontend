@@ -1,12 +1,11 @@
-import { ReactNode, Suspense } from "react";
-import { BrowserRouter } from "react-router-dom";
-
-import { Loading } from "../../ui/Loading/Loading";
-import React from "react";
+import React from 'react';
+import { ReactNode, Suspense } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import Preloader from '../../UI/Preloader/Preloader';
 
 export const withRouter = (component: () => ReactNode) => () =>
   (
     <BrowserRouter>
-      <Suspense fallback={<Loading />}>{component()}</Suspense>
+      <Suspense fallback={<Preloader />}>{component()}</Suspense>
     </BrowserRouter>
   );

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { Routing } from "../../pages/Routing";
-import { withProviders } from "./providers";
+import { Routing } from '../../pages/Routing';
+import { withProviders } from './providers';
 
 function Component() {
   return <Routing />;
