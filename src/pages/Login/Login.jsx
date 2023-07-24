@@ -3,10 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 
-import { Header } from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
-
-import styles from "./styles.module.css";
+import styles from "./Login.module.css";
 import { useModel } from "./model";
 
 import logo from "../../images/svg//logo.svg";

@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import styles from "./styles.module.css";
+import styles from "./Button.module.css";
 
 export const Button = ({className, type, variant, size, disabled, onClick, children }) => {
 
