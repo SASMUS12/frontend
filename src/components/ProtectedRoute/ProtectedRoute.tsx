@@ -6,15 +6,15 @@ type TProtectedRouteProps = {
   redirectPath: string;
 } & RouteProps;
 
-const ProtectedRoute: FC<TProtectedRouteProps> = ({
-  children,
-  loggedIn,
-  redirectPath,
-  ...rest
-}) => {
-  return (
-    <Route {...rest}>{loggedIn ? <>{children}</> : <Navigate to={redirectPath} replace />}</Route>
-  );
-};
-
-export default ProtectedRoute;
+// const ProtectedRoute: FC<TProtectedRouteProps> = ({
+//   children,
+//   loggedIn,
+//   redirectPath,
+//   ...rest
+// }) => {
+//   // return (
+//   //   <Route {...rest}>{loggedIn ? <>{children}</> : <Navigate to={redirectPath} replace />}</Route>
+//   // );
+// };
+//
+// export default ProtectedRoute;
