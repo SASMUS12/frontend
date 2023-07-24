@@ -1,11 +1,16 @@
 import { Card } from "../../components/Card/Card";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import { results } from "./Cards";
 
 import styles from "./MainPage.module.scss";
 
 const MainPage = () => {
   return (
-      <main className={styles.content}>
+    <>
+      <Header />
+      <main className={styles.main}>
+        <div className={styles.content}>
           <section className={styles.content__cardList}>
               {results.map((partner) => (
                   <Card
@@ -21,7 +26,10 @@ const MainPage = () => {
                   />
               ))}
           </section>
+        </div>
       </main>
+      <Footer />
+    </>
   );
 };
 
