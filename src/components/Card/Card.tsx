@@ -1,7 +1,7 @@
 import {FC} from "react";
 
 import { LanguagesTag } from "./LanguagesTag";
-import { native_languages, foreign_languages } from "./languages";
+import { results } from "../../pages/MainPage/Cards";
 
 import flag from "../../images/svg/russia.svg";
 import logInIndicator from "../../images/svg/card-indicator-logIn.svg";
@@ -18,12 +18,14 @@ interface IProps {
     status: string;
     first_name: string;
     gender: string;
-    age: number;
+    age: string;
     about: string;
     indicator: boolean;
+    nativeLanguages: any;
+    foreignLanguages: any;
 }
 
-export const Card: FC<IProps> = ({country, status, first_name, gender, age, about, indicator}) => {
+export const Card: FC<IProps> = ({country, status, first_name, gender, age, about, indicator, nativeLanguages, foreignLanguages}) => {
     const getGender = () => {
         return gender === "Женский"
             ? femaleGender
@@ -62,7 +64,7 @@ export const Card: FC<IProps> = ({country, status, first_name, gender, age, abou
                         <div className={styles.card__partnerPersonalInfo_languagesTag}>
                             <div className={styles.card__partnerPersonalInfo_languages}>
                                 <ul className={styles.languages}>
-                                    {native_languages.map((languages) => (
+                                    {nativeLanguages.map((languages: any) => (
                                         <LanguagesTag
                                             languages={languages}
                                         />
@@ -73,7 +75,7 @@ export const Card: FC<IProps> = ({country, status, first_name, gender, age, abou
                                  alt="Параллельные стрелки между изученными и изучаемыми языками"/>
                             <div className={styles.card__partnerPersonalInfo_languages}>
                                 <ul className={styles.languages}>
-                                    {foreign_languages.map((languages) => (
+                                    {foreignLanguages.map((languages: any) => (
                                         <LanguagesTag
                                             languages={languages}
                                         />

@@ -1,7 +1,14 @@
 .content {
+  max-width: 1440px;
+  margin: 0 auto;
+  background: var(--grey-color-50);
 
+  &__cardList {
+    max-width: 1392px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 0 auto;
+  }
 }
 
-.content__cardList {
-
-}
