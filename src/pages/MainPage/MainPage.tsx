@@ -5,6 +5,8 @@ import {api} from "../../utils/constants"
 import {Card} from "../../components/Card/Card";
 
 import Header from "../../components/Header/Header";
+import Categories from "../../components/Categories/Categories";
+import Sort from "../../components/Sort/Sort";
 import Footer from "../../components/Footer/Footer";
 import {Button} from "../../components/UI/Button/Button";
 
@@ -14,11 +16,18 @@ import styles from "./MainPage.module.scss";
 const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
+    const [categoryId, setCategortyId] = useState(0);
+    const [sortType, setSortType] = useState({
+        //Объект параметров сортировки(шаблон)
+    });
 
     const getUsersList = async () => {
         try {
             console.log('отправка запроса ---');
-            const response = await api.api.usersList();
+            const response = await api.api.usersList(
+                category: categoryId,
+                sort: sortType,
+            );
             console.log('ответ получен -', response);
             setIsUsersList(true);
 
@@ -34,12 +43,19 @@ const MainPage = () => {
 
     useEffect(() => {
         getUsersList();
-    }, []);
+    }, [categoryId, sortType]);
 
     return (
         <>
             <Header/>
             <main className={styles.content}>
+                
+                <div className={styles.content__top}>
+                        <Categories value={categoryId} onChangeCategory={setCategortyId} />
+                        <Sort value={sortType} onChangeSort={setSortType} />
+                </div>
+
+
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 {/*<div className={styles.content__filterTag}>*/}
                 {/*    <div className={styles.content__categories}>*/}
