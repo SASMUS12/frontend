@@ -16,6 +16,10 @@
   --grey-color-50: #F0F2F4;
   --grey-color-90: #909090;
   --grey-color-500: #323944;
+  --accent-color-violet: #6D47D1;
+  --dark-violet: #403A6D;
+  --primory-button-hover: #A083E0;
+  --secondary-button-hover: #E1D6FF;
 
   /* Base */
   --color-base-black: #000;
@@ -30,9 +34,10 @@
   --font-text-lg-regular: 400 24px/29.05px var(--font-sans);
 
   /*По макету*/
-  --font-text-13-108-normal: 400 13px/14px var(--font-sans);
-  --font-text-14-100-normal: 400 14px/14px var(--font-sans);
-  --font-text-14-140-normal: 400 14px/1.4 var(--font-sans);
-  --font-text-16-120-normal: 400 16px/1.2 var(--font-sans);
+  --font-text-13-108-400: 400 13px/14px var(--font-sans);
+  --font-text-14-100-400: 400 14px/14px var(--font-sans);
+  --font-text-14-140-400: 400 14px/1.4 var(--font-sans);
+  --font-text-16-120-400: 400 16px/1.2 var(--font-sans);
+  --font-header-18-120-600: 600 18px/1.2 var(--font-sans);
 
 }

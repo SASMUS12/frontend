@@ -1,19 +1,36 @@
-.main {
-  background: var(--grey-color-50);
-  padding: 80px 0;
-}
-
 .content {
+  display: flex;
+  flex-direction: column;
   max-width: 1440px;
   margin: 0 auto;
+  padding: 20px 24px 81px;
   background: var(--grey-color-50);
 
+  &__header {
+    color: var(--dark-violet);
+    font: var(--font-header-18-120-600);
+  }
+
+  &__filterTag {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+
+  &__categories {
+    display: flex;
+  }
+
   &__cardList {
-    max-width: 1392px;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     margin: 0 auto;
   }
-}
 
+  &__continuingButton {
+    margin: 40px auto 0;
+  }
+}

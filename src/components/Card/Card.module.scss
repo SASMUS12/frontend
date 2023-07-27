@@ -3,6 +3,7 @@
     width: 336px;
     padding: 16px;
     flex-direction: column;
+    overflow: hidden;
     border-radius: 20px;
     background: var(--color-base-white);
     box-shadow: var(--card-shadow);
@@ -19,7 +20,7 @@
     }
 
     &__text {
-        font: var(--font-text-13-108-normal);
+        font: var(--font-text-13-108-400);
         color: var(--grey-color-90);
     }
 
@@ -62,7 +63,7 @@
         height: 40px;
         overflow: hidden;
         text-overflow: ellipsis;
-        font: var(--font-text-14-140-normal);
+        font: var(--font-text-14-140-400);
         color: #9A98A8;
     }
 
@@ -74,7 +75,7 @@
         margin-left: 12px;
 
         &_firstName {
-            font: var(--font-text-16-120-normal);
+            font: var(--font-text-16-120-400);
             color: var(--grey-color-500);
         }
 
@@ -94,12 +95,14 @@
 
         &_partnerAge {
             margin-left: 8px;
-            font: var(--font-text-14-100-normal);
+            font: var(--font-text-14-100-400);
             color: var(--soft-grey);
         }
 
         &_languagesTag {
             display: flex;
+            width: 100%;
+            overflow: hidden;
         }
 
         &_languages {
@@ -137,7 +140,7 @@
 
 .language {
     margin-left: 2px;
-    font: var(--font-text-14-100-normal);
+    font: var(--font-text-14-100-400);
     color: var(--grey-color-500);
 }
 

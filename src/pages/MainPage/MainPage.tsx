@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 import {api} from "../../utils/constants"
 
@@ -6,8 +6,10 @@ import {Card} from "../../components/Card/Card";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import {Button} from "../../components/UI/Button/Button";
 
 import styles from "./MainPage.module.scss";
+
 
 const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
@@ -36,14 +38,23 @@ const MainPage = () => {
     return (
         <>
             <Header/>
-            <main className={styles.main}>
-                <section className={styles.content}>
+            <main className={styles.content}>
+                <h1 className={styles.content__header}>Поиск партнера</h1>
+                <div className={styles.content__filterTag}>
+                    <div className={styles.content__categories}>
+
+
+                    </div>
+
+                </div>
                     <div className={styles.content__cardList}>
                         {isUsersList &&
                             usersList.map((partner) => (
                                 <Card
-                                    country={partner.country}
+                                    country={partner.country.code}
+                                    flag={partner.country.flag_icon}
                                     status={partner.status}
+                                    avatar={partner.avatar}
                                     first_name={partner.first_name}
                                     gender={partner.gender}
                                     age={partner.age}
@@ -54,7 +65,12 @@ const MainPage = () => {
                                 />
                             ))}
                     </div>
-                </section>
+                    <Button
+                        className={styles.content__continuingButton}
+                        variant="transparent"
+                    >
+                        Продолжить искать
+                    </Button>
             </main>
             <Footer/>
         </>
