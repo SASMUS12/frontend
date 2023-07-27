@@ -20,7 +20,9 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 16px 0;
+    height: 26px;
   }
 
   &__categories {
@@ -37,5 +39,12 @@
 
   &__continuingButton {
     margin: 40px auto 0;
+  }
+  &__button {
+    background-image: url("../../images/svg/Filter.svg");
+    width: 26px;
+    height: 26px;
+    border: none;
+    cursor: pointer;
   }
 }

@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import styles from "../Categories/Categories.module.scss";
 
 type CategoriesProps = {
     value: number;
@@ -11,7 +12,7 @@ type CategoriesProps = {
       const categories = ['Все', 'Сейчас онлайн', 'Новые пользователи'];
 
     return (
-        <div className="categories">
+        <div className={styles.categories}>
             <ul>
                 {categories.map((categoryName, i) => (
                 <li key={i} onClick={() => onChangeCategory(i)} className={value === i ? 'active' : ''}>
