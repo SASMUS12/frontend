@@ -24,7 +24,7 @@ const MainPage = () => {
             console.log('отправка запроса ---');
             const response = await api.api.usersList({
                 category: categoryId,
-                sort: sortType
+                sort: sortType,
             });
             console.log('ответ получен -', response);
             setIsUsersList(true);
@@ -47,7 +47,7 @@ const MainPage = () => {
             <Header/>
             <main className={styles.main}>
                 <section className={styles.content}>
-                    <div className="content__top">
+                    <div className={styles.content__top}>
                         <Categories value={categoryId} onChangeCategory={setCategortyId} />
                         <Sort value={sortType} onChangeSort={setSortType} />
                     </div>
