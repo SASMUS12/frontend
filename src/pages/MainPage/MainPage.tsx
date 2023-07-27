@@ -14,9 +14,8 @@ import styles from "./MainPage.module.scss";
 const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
-
-
-
+    const [categoryId, setCategortyId] = useState(0);
+    const [sortType, setSortType] = useState(0);
 
     const getUsersList = async () => {
         try {
@@ -36,20 +35,16 @@ const MainPage = () => {
 
     useEffect(() => {
         getUsersList();
-    }, []);
+    }, [categoryId, sortType]);
 
-    const onChangePage = (page: number) => {
-        dispatch(setCurrentPage(page));
-      };
-
-    return (
+       return (
         <>
             <Header/>
             <main className={styles.main}>
                 <section className={styles.content}>
                     <div className="content__top">
-                        <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-                        <Sort value={sort} />
+                        <Categories value={categoryId} onChangeCategory={setCategortyId} />
+                        <Sort value={sortType} onChangeSort={setSortType} />
                     </div>
                     <div className={styles.content__cardList}>
                         {isUsersList &&
