@@ -5,6 +5,8 @@ import {api} from "../../utils/constants"
 import {Card} from "../../components/Card/Card";
 
 import Header from "../../components/Header/Header";
+import Categories from "../../components/Categories/Categories";
+import Sort from "../../components/Sort/Sort"
 import Footer from "../../components/Footer/Footer";
 
 import styles from "./MainPage.module.scss";
@@ -12,6 +14,9 @@ import styles from "./MainPage.module.scss";
 const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
+
+
+
 
     const getUsersList = async () => {
         try {
@@ -33,11 +38,19 @@ const MainPage = () => {
         getUsersList();
     }, []);
 
+    const onChangePage = (page: number) => {
+        dispatch(setCurrentPage(page));
+      };
+
     return (
         <>
             <Header/>
             <main className={styles.main}>
                 <section className={styles.content}>
+                    <div className="content__top">
+                        <Categories value={categoryId} onChangeCategory={onChangeCategory} />
+                        <Sort value={sort} />
+                    </div>
                     <div className={styles.content__cardList}>
                         {isUsersList &&
                             usersList.map((partner) => (
