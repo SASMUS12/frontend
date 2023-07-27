@@ -1,7 +1,6 @@
 import {useEffect, useState } from "react";
 
-import {Api} from "../../utils/openapi";
-import {apiConfig} from "../../utils/constants"
+import {api} from "../../utils/constants"
 
 import {Card} from "../../components/Card/Card";
 
@@ -11,10 +10,9 @@ import Footer from "../../components/Footer/Footer";
 import styles from "./MainPage.module.scss";
 
 const MainPage = () => {
-    const api = new Api(apiConfig);
-
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
+
     const getUsersList = async () => {
         try {
             console.log('отправка запроса ---');
