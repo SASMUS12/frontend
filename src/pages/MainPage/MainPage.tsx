@@ -24,6 +24,7 @@ const MainPage = () => {
 
             if (response.data && response.data.results) {
                 setUsersList(response.data.results);
+                console.log(response.data.results);
             }
         } catch (error) {
             console.error('Ошибка при получении данных -', error);
@@ -40,28 +41,28 @@ const MainPage = () => {
             <Header/>
             <main className={styles.content}>
                 <h1 className={styles.content__header}>Поиск партнера</h1>
-                <div className={styles.content__filterTag}>
-                    <div className={styles.content__categories}>
+                {/*<div className={styles.content__filterTag}>*/}
+                {/*    <div className={styles.content__categories}>*/}
 
 
-                    </div>
+                {/*    </div>*/}
 
-                </div>
+                {/*</div>*/}
                     <div className={styles.content__cardList}>
                         {isUsersList &&
-                            usersList.map((partner) => (
+                            usersList.map((user) => (
                                 <Card
-                                    country={partner.country.code}
-                                    flag={partner.country.flag_icon}
-                                    status={partner.status}
-                                    avatar={partner.avatar}
-                                    first_name={partner.first_name}
-                                    gender={partner.gender}
-                                    age={partner.age}
-                                    about={partner.about}
-                                    indicator={partner.indicator}
-                                    nativeLanguages={partner.native_languages}
-                                    foreignLanguages={partner.foreign_languages}
+                                    country={user.country}
+                                    status={user.status}
+                                    avatar={user.avatar}
+                                    first_name={user.first_name}
+                                    gender={user.gender}
+                                    gender_is_hidden={user.gender_is_hidden}
+                                    age={user.age}
+                                    about={user.about}
+                                    indicator={user.indicator}
+                                    nativeLanguages={user.native_languages}
+                                    foreignLanguages={user.foreign_languages}
                                 />
                             ))}
                     </div>
