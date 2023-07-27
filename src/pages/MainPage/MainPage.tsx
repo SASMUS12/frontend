@@ -15,12 +15,17 @@ const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
     const [categoryId, setCategortyId] = useState(0);
-    const [sortType, setSortType] = useState(0);
+    const [sortType, setSortType] = useState({
+        //Объект параметров сортировки(шаблон)
+    });
 
     const getUsersList = async () => {
         try {
             console.log('отправка запроса ---');
-            const response = await api.api.usersList();
+            const response = await api.api.usersList({
+                category: categoryId,
+                sort: sortType
+            });
             console.log('ответ получен -', response);
             setIsUsersList(true);
 
