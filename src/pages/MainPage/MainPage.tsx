@@ -1,36 +1,30 @@
-import {useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 import {api} from "../../utils/constants"
 
 import {Card} from "../../components/Card/Card";
 
 import Header from "../../components/Header/Header";
-import Categories from "../../components/Categories/Categories";
-import Sort from "../../components/Sort/Sort"
 import Footer from "../../components/Footer/Footer";
+import {Button} from "../../components/UI/Button/Button";
 
 import styles from "./MainPage.module.scss";
+
 
 const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
-    const [categoryId, setCategortyId] = useState(0);
-    const [sortType, setSortType] = useState({
-        //Объект параметров сортировки(шаблон)
-    });
 
     const getUsersList = async () => {
         try {
             console.log('отправка запроса ---');
-            const response = await api.api.usersList({
-                category: categoryId,
-                sort: sortType,
-            });
+            const response = await api.api.usersList();
             console.log('ответ получен -', response);
             setIsUsersList(true);
 
             if (response.data && response.data.results) {
                 setUsersList(response.data.results);
+                console.log(response.data.results);
             }
         } catch (error) {
             console.error('Ошибка при получении данных -', error);
@@ -40,34 +34,44 @@ const MainPage = () => {
 
     useEffect(() => {
         getUsersList();
-    }, [categoryId, sortType]);
+    }, []);
 
-       return (
+    return (
         <>
             <Header/>
-            <main className={styles.main}>
-                <section className={styles.content}>
-                    <div className={styles.content__top}>
-                        <Categories value={categoryId} onChangeCategory={setCategortyId} />
-                        <Sort value={sortType} onChangeSort={setSortType} />
-                    </div>
+            <main className={styles.content}>
+                <h1 className={styles.content__header}>Поиск партнера</h1>
+                {/*<div className={styles.content__filterTag}>*/}
+                {/*    <div className={styles.content__categories}>*/}
+
+
+                {/*    </div>*/}
+
+                {/*</div>*/}
                     <div className={styles.content__cardList}>
                         {isUsersList &&
-                            usersList.map((partner) => (
+                            usersList.map((user) => (
                                 <Card
-                                    country={partner.country}
-                                    status={partner.status}
-                                    first_name={partner.first_name}
-                                    gender={partner.gender}
-                                    age={partner.age}
-                                    about={partner.about}
-                                    indicator={partner.indicator}
-                                    nativeLanguages={partner.native_languages}
-                                    foreignLanguages={partner.foreign_languages}
+                                    country={user.country}
+                                    status={user.status}
+                                    avatar={user.avatar}
+                                    first_name={user.first_name}
+                                    gender={user.gender}
+                                    gender_is_hidden={user.gender_is_hidden}
+                                    age={user.age}
+                                    about={user.about}
+                                    indicator={user.indicator}
+                                    nativeLanguages={user.native_languages}
+                                    foreignLanguages={user.foreign_languages}
                                 />
                             ))}
                     </div>
-                </section>
+                    <Button
+                        className={styles.content__continuingButton}
+                        variant="transparent"
+                    >
+                        Продолжить искать
+                    </Button>
             </main>
             <Footer/>
         </>

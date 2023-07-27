@@ -29,7 +29,7 @@ const Header = () => {
           <Button
             className={styles.button}
             type="submit"
-            variant="white"
+            variant="transparent"
             disabled={model.isLoading}
             onClick={() => navigate('/signup')}>
             {model.isLoading ? 'Loading' : 'Зарегистрироваться'}
