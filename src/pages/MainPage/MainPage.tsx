@@ -16,7 +16,7 @@ import styles from "./MainPage.module.scss";
 const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
-    const [categoryId, setCategortyId] = useState(0);
+    const [category, setCategorty] = useState({name: 'Все', path: ''});
     const [sortType, setSortType] = useState({
         //Объект параметров сортировки(шаблон)
     });
@@ -25,7 +25,7 @@ const MainPage = () => {
         try {
             console.log('отправка запроса ---');
             const response = await api.api.usersList(
-                //???? : categoryId,
+                // slug: category?.path,
                 // sort: sortType,
             );
             console.log('ответ получен -', response);
@@ -43,7 +43,7 @@ const MainPage = () => {
 
     useEffect(() => {
         getUsersList();
-    }, [categoryId, sortType]);
+    }, [category, sortType]);
 
     return (
         <>
@@ -51,19 +51,10 @@ const MainPage = () => {
             <main className={styles.content}>
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 <div className={styles.content__filterTag}>
-                    <Categories value={categoryId !== null ? categoryId : 0} onChangeCategory={setCategortyId} />
+                    <Categories value={category} onChangeCategory={setCategorty} />
                     <button className={styles.content__button}></button>
                 </div>
                 <Sort value={sortType} onChangeSort={setSortType} />
-
-
-                {/*<div className={styles.content__filterTag}>*/}
-                {/*    <div className={styles.content__categories}>*/}
-
-
-                {/*    </div>*/}
-
-                {/*</div>*/}
                     <div className={styles.content__cardList}>
                         {isUsersList &&
                             usersList.map((user) => (
