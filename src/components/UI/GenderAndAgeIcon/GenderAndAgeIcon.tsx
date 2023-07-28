@@ -12,38 +12,23 @@ interface GenderAndAgeIconProps {
 }
 
 const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({ gender, age, gender_is_hidden }) => {
-  const getGender = () => {
-    if (!gender_is_hidden) {
-      if (gender) {
-        return gender === 'Female' ? femaleGender : maleGender;
-      } else {
-        return 'styles.card__partnerPersonalInfo_partnerGender_hidden';
-      }
-    } else {
-      return '#';
-    }
-  };
-
-  const cardPartnerGenderClassName = `${
-    gender
-      ? !gender_is_hidden
-        ? ''
-        : styles.card__partnerPersonalInfo_partnerGender_hidden
-      : styles.card__partnerPersonalInfo_partnerGender_hidden
-  }`;
+  const isGenderVisible = gender && !gender_is_hidden;
+  const genderIcon = gender === 'Female' ? femaleGender : maleGender;
 
   return (
     <div
-      className={
-        gender && age
-          ? styles.card__partnerPersonalInfo_genderAndAge
-          : styles.card__partnerPersonalInfo_genderAndAge_hidden
-      }>
-      <img
-        className={cn(styles.card__partnerPersonalInfo_partnerGender, cardPartnerGenderClassName)}
-        src={getGender()}
-        alt="Пол пользователя"
-      />
+      className={cn(styles.card__partnerPersonalInfo_genderAndAge, {
+        [styles.card__partnerPersonalInfo_genderAndAge_hidden]: !gender || !age,
+      })}>
+      {isGenderVisible && (
+        <img
+          className={cn(styles.card__partnerPersonalInfo_partnerGender, {
+            [styles.card__partnerPersonalInfo_partnerGender_hidden]: gender_is_hidden,
+          })}
+          src={genderIcon}
+          alt="Пол пользователя"
+        />
+      )}
       <p className={styles.card__partnerPersonalInfo_partnerAge}>{age}</p>
     </div>
   );
