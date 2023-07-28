@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "../Sort/Sort.module.scss";
+import LanguageLevelp from "../LanguageLevel/LanguageLevel";
+import { Button } from "../UI/Button/Button";
 
 type SortProps = {
     value: any;
@@ -26,61 +28,34 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort }) => {
 
       return (
         <div className={styles.popup__sort}>
-            <div>
-              <h2 className={styles.popup__cantry}>Страна партнера</h2>
-              <input
-                type="text"
-                id="searchInput"
-                placeholder="Начните вводить название"
-                onChange={handleSearchInputChange}
-              />
+            <div className={styles.popup__cantry}>
+              <h2 >Страна партнера</h2>
+              <div className={styles.popup__enter}>
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Начните вводить название"
+                  onChange={handleSearchInputChange}
+                />
+              </div>
             </div>
-            <div className={styles.popup__language}>
-              <h2 >Язык партнера</h2>
-              <select onChange={handleLanguageChange}>
-                <option>Напишите или выберете</option>
-              </select>
+            <h3>Язык партнера</h3>
+            <LanguageLevelp/>
+            <div className={styles.popup__add}>
+              <img src="../../images/svg/plus-in-circle.svg" alt="11111111111" />
+              <Button children={"добавить язык"} />
             </div>
-            <div className={styles.popup__level}>
-              <label>
-                <input type="checkbox" name="Новичок" />
-                Новичок
-              </label>
-              <label className={styles.popup__level}>
-                <input type="checkbox" name="Любитель" />
-                Любитель
-              </label>
-              <label className={styles.popup__level}>
-                <input type="checkbox" name="Профи" />
-                  Профи
-              </label>
-              <label className={styles.popup__level}>
-                <input type="checkbox" name="Эксперт" />
-                 Эксперт
-              </label>
-              <label className={styles.popup__level}>
-               <input type="checkbox" name="Гуру" />
-                 Гуру
-              </label>
-              <label className={styles.popup__level}>
-                <input type="checkbox" name="Носитель" />
-                 Носитель
-              </label>
-            </div>
-            <button><img src="../../images/svg/plus in circle.svg" alt="ДобавитьЯзык" />добавить язык</button>
-            <div>
-              <h2 className={styles.popup__partner__info}>О партнере</h2>
+            <div className={styles.popup__partner__info}>
+              <h2 >О партнере</h2>
               <h3>Пол</h3>
-              <button>Мужчина</button>
-              <button>Женщина</button>
+              <Button children={"Мужчина"} />
+              <Button children={"Женщина"} />
             </div>
             <div>
               <h3>Возраст</h3>
               <input type="range" min="18" max="100" />
             </div>
-            <div className={styles.popap__search}>
-              <button>Найти</button>
-            </div>
+            <Button children={"Найти"} />
         </div>
       );
     };
