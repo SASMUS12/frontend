@@ -26,7 +26,7 @@ interface IProps {
   foreignLanguages?: any;
 }
 
-export const Card: FC<IProps> = ({
+const Card: FC<IProps> = ({
   country = null,
   avatar,
   status,
@@ -60,7 +60,7 @@ export const Card: FC<IProps> = ({
                 <ul className={styles.languages}>
                   {nativeLanguages &&
                     nativeLanguages.map((languages: UserNativeLanguage) => (
-                      <LanguagesTag languages={languages} />
+                      <LanguagesTag languages={languages} key={languages.id} />
                     ))}
                 </ul>
               </div>
@@ -77,7 +77,7 @@ export const Card: FC<IProps> = ({
                 <ul className={styles.languages}>
                   {foreignLanguages &&
                     foreignLanguages.map((languages: UserForeignLanguage) => (
-                      <LanguagesTag languages={languages} />
+                      <LanguagesTag languages={languages} key={languages.id} />
                     ))}
                 </ul>
               </div>
@@ -89,3 +89,5 @@ export const Card: FC<IProps> = ({
     </article>
   );
 };
+
+export default Card;
