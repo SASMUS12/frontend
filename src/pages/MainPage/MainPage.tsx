@@ -25,7 +25,7 @@ const MainPage = () => {
         try {
             console.log('отправка запроса ---');
             const response = await api.api.usersList(
-                // category: categoryId,
+                //category: categoryId,
                 // sort: sortType,
             );
             console.log('ответ получен -', response);
