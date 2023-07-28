@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { LanguagesTag } from './LanguagesTag';
+import LanguagesTag from '../UI/LanguagesTag/LanguagesTag';
 
 import avatarSquare from '../../images/svg/card-avatar-square.svg';
 import arrows from '../../images/svg/card-arrows-parallel.svg';
@@ -8,7 +8,7 @@ import arrows from '../../images/svg/card-arrows-parallel.svg';
 import CountryIcon from '../UI/CountryIcon/CountryIcon';
 import UserStatusIndicator from '../UI/UserStatusIndicator/UserStatusIndicator';
 import GenderAndAgeIcon from '../UI/GenderAndAgeIcon/GenderAndAgeIcon';
-import { Country } from '../../utils/openapi';
+import { Country, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
 
 import styles from './Card.module.scss';
 
@@ -26,7 +26,7 @@ interface IProps {
   foreignLanguages?: any;
 }
 
-export const Card: FC<IProps> = ({
+const Card: FC<IProps> = ({
   country = null,
   avatar,
   status,
@@ -59,7 +59,9 @@ export const Card: FC<IProps> = ({
               <div className={styles.card__partnerPersonalInfo_languages}>
                 <ul className={styles.languages}>
                   {nativeLanguages &&
-                    nativeLanguages.map((languages: any) => <LanguagesTag languages={languages} />)}
+                    nativeLanguages.map((languages: UserNativeLanguage) => (
+                      <LanguagesTag languages={languages} key={languages.id} />
+                    ))}
                 </ul>
               </div>
               <img
@@ -74,8 +76,8 @@ export const Card: FC<IProps> = ({
               <div className={styles.card__partnerPersonalInfo_languages}>
                 <ul className={styles.languages}>
                   {foreignLanguages &&
-                    foreignLanguages.map((languages: any) => (
-                      <LanguagesTag languages={languages} />
+                    foreignLanguages.map((languages: UserForeignLanguage) => (
+                      <LanguagesTag languages={languages} key={languages.id} />
                     ))}
                 </ul>
               </div>
@@ -87,3 +89,5 @@ export const Card: FC<IProps> = ({
     </article>
   );
 };
+
+export default Card;
