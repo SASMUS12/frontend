@@ -3,18 +3,17 @@ import { FC } from 'react';
 import { LanguagesTag } from './LanguagesTag';
 
 import avatarSquare from '../../images/svg/card-avatar-square.svg';
-import femaleGender from '../../images/svg/card-gender-female.svg';
-import maleGender from '../../images/svg/card-gender-male.svg';
 import arrows from '../../images/svg/card-arrows-parallel.svg';
 
-import styles from './Card.module.scss';
-import cn from 'classnames';
 import CountryIcon from '../UI/CountryIcon/CountryIcon';
 import UserStatusIndicator from '../UI/UserStatusIndicator/UserStatusIndicator';
 import GenderAndAgeIcon from '../UI/GenderAndAgeIcon/GenderAndAgeIcon';
+import { Country } from '../../utils/openapi';
+
+import styles from './Card.module.scss';
 
 interface IProps {
-  country?: any;
+  country?: Country | null;
   status: string;
   indicator: boolean;
   avatar?: string;
@@ -28,7 +27,7 @@ interface IProps {
 }
 
 export const Card: FC<IProps> = ({
-  country,
+  country = null,
   avatar,
   status,
   first_name,
