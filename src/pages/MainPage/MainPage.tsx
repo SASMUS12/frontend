@@ -25,7 +25,7 @@ const MainPage = () => {
         try {
             console.log('отправка запроса ---');
             const response = await api.api.usersList(
-                //category: categoryId,
+                //???? : categoryId,
                 // sort: sortType,
             );
             console.log('ответ получен -', response);
@@ -51,10 +51,10 @@ const MainPage = () => {
             <main className={styles.content}>
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 <div className={styles.content__filterTag}>
-                    <Categories value={categoryId} onChangeCategory={setCategortyId} />
+                    <Categories value={categoryId !== null ? categoryId : 0} onChangeCategory={setCategortyId} />
                     <button className={styles.content__button}></button>
-                    {/* <Sort value={sortType} onChangeSort={setSortType} /> */}
                 </div>
+                <Sort value={sortType} onChangeSort={setSortType} />
 
 
                 {/*<div className={styles.content__filterTag}>*/}

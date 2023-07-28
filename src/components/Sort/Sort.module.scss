@@ -1,0 +1,32 @@
+.popup__sort {
+    width: 336px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__level {
+      display: flex;
+      flex-direction: column;  
+    }
+    
+    &__level label {
+        margin-bottom: 8px;
+      }
+    
+  
+    // .language select {
+    //   width: 100%;
+    // }
+  
+    // .language-level label {
+    //   display: block;
+    // }
+  
+    // .partner-info button {
+    //   margin-right: 8px;
+    // }
+  
+    input[type="range"] {
+      width: 100%;
+    }
+  }
