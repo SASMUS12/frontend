@@ -1,54 +1,65 @@
 .popup__sort {
+  background: #fff;
+  padding: 20px;
   width: 336px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  gap: 54px;
+  align-self: stretch;
+  border-radius: 20px;
+  box-shadow: 0px 0px 8px 0px rgba(17, 17, 26, 0.10), 0px 1px 0px 0px rgba(17, 17, 26, 0.05);
+  
 
   .popup__cantry {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-  }
-
-  .popup__enter {
-    height: 36px;
-    display: flex;
-    padding: 8px 0px;
-    margin-left: 20px;
-    margin-bottom: 12px;
-    flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
+    gap: 16px;
+    align-self: stretch;
   }
 
   h2 {
-    margin-left: 20px;
+    align-self: stretch;
     color: #323944;
     font-family: Inter;
     font-size: 18px;
+    font-style: normal;
     font-weight: 500;
+    line-height: normal;
+  }
 
+  .popup__enter {
+    display: flex;
+    padding: 8px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    height: 52px;   
   }
 
   input[type="text"] {
     width: 296px;
-    height: 52px;
+    height: 36px;
+    font-family: Inter;
     font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     border: 1px solid var(--soft-violet, #A5A0C5);
     border-radius: 20px;
     padding: 8px 12px;
     background-color: rgba(240, 242, 244, 1);
     color: var(--grey-gradient-500, #323944);
+    //вставка лупы
+    background-image: url("../../images/svg/search.svg");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 20px 20px;
+    padding-left: 40px;
   }
 
-  h3 {
-    margin-left: 20px;
-    color: #323944;
-    font-family: Inter;
-    font-size: 18px;
-    font-weight: 500;
-  }
-
+  
   .popup__add {
     display: flex;
   }

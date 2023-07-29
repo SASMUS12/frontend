@@ -39,14 +39,14 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort }) => {
                 />
               </div>
             </div>
-            <h3>Язык партнера</h3>
+            <h2>Язык партнера</h2>
             <LanguageLevelp/>
             <div className={styles.popup__add}>
               <img src="../../images/svg/plus-in-circle.svg" alt="11111111111" />
               <Button children={"добавить язык"} />
             </div>
             <div className={styles.popup__partner__info}>
-              <h2 >О партнере</h2>
+              <h2>О партнере</h2>
               <h3>Пол</h3>
               <Button children={"Мужчина"} />
               <Button children={"Женщина"} />

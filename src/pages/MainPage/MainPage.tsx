@@ -50,9 +50,9 @@ const MainPage = () => {
       <main className={styles.content}>
         <h1 className={styles.content__header}>Поиск партнера</h1>
         <div className={styles.content__filterTag}>
-                    <Categories value={category} onChangeCategory={setCategorty} />
-                    <button className={styles.content__button}></button>
-                </div>
+            <Categories value={category} onChangeCategory={setCategorty} />
+            <button className={styles.content__button}></button>
+        </div>
         <div className={styles.content__cardList}>
         <Sort value={sortType} onChangeSort={setSortType} />
           {isUsersList &&
