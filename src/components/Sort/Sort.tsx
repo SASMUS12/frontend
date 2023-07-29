@@ -48,8 +48,16 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort }) => {
             <div className={styles.popup__partner__info}>
               <h2>О партнере</h2>
               <h3>Пол</h3>
-              <Button children={"Мужчина"} />
-              <Button children={"Женщина"} />
+              <Button 
+                className={styles.popup__partner__info}
+                // type={type}
+                // onClick={onClick}
+                children={"Мужчина"} 
+              />
+              <Button
+                className={styles.popup__partner__info}
+                children={"Женщина"} 
+              />
             </div>
             <div>
               <h3>Возраст</h3>
