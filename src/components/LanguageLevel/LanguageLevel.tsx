@@ -8,9 +8,6 @@ const LanguageLevel = () => {
             <div className={styles.language__option}>
               <select >
                 <option>Напишите или выберете</option>
-                <option>Напишите или выберете</option>
-                <option>Напишите или выберете</option>
-                <option>Напишите или выберете</option>
               </select>
             </div>
             <div className={styles.language__level}>
