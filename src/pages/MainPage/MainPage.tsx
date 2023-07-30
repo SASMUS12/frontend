@@ -16,7 +16,7 @@ const MainPage = () => {
   const [usersList, setUsersList] = useState<any[]>([]);
   const [isUsersList, setIsUsersList] = useState(false);
   const [category, setCategorty] = useState({name: 'Все', path: ''});
-  const [sortType, setSortType] = useState({});
+  // const [sortType, setSortType] = useState({});
 
   const getUsersList = async () => {
     try {
@@ -40,7 +40,7 @@ const MainPage = () => {
 
   useEffect(() => {
     getUsersList();
-  }, [category, sortType]);
+  }, [category]);
 
   return (
     <>
@@ -52,7 +52,7 @@ const MainPage = () => {
             <button className={styles.content__button}></button>
         </div>
         <div className={styles.content__cardList}>
-        <Sort value={sortType} onChangeSort={setSortType} />
+        <Sort className={styles.content__cardList}/>
           {isUsersList &&
             usersList.map((user) => (
               <Card
