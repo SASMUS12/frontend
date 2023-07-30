@@ -1,0 +1,19 @@
+.card__tag {
+  display: flex;
+  align-items: center;
+
+  .card__text {
+    font: var(--font-text-13-108-400);
+    color: var(--grey-color-90);
+  }
+
+  .card__flag {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+
+    .card_hidden {
+      display: none;
+    }
+  }
+}
