@@ -1,62 +1,87 @@
+import type {ChangeEvent, InputHTMLAttributes} from 'react';
 import cn from 'classnames';
 
 import styles from './Input.module.scss';
 
-import type { ChangeEvent } from 'react';
+export interface InputProps<T extends string>
+    extends InputHTMLAttributes<HTMLInputElement> {
+    className?: string;
+    onValue: ({value, name}: { value: string; name: T }) => void;
+    value: string;
+    name: T;
+    label?: string;
+    type?: string;
+    placeholder?: string;
+    hint?: string;
+    required?: boolean;
+    hasError?: boolean;
+    error?: string;
+}
 
-type InputProps<T> = {
-  className?: string;
-  onValue?: (value: T | string) => void;
-  value: T;
-  name: string;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-  hasError?: boolean;
-  error?: string;
-  hint?: string;
-};
+export const Input = <T extends string>({
+                                            className,
+                                            onValue,
+                                            value,
+                                            name,
+                                            label,
+                                            type,
+                                            placeholder,
+                                            hint,
+                                            required,
+                                            hasError,
+                                            error,
+                                            ...rest
+                                        }: InputProps<T>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const {value, name} = event.currentTarget;
+        onValue({value, name: name as T});
+    };
 
-export const Input = <T extends string | number>({
-  className,
-  onValue,
-  value,
-  name,
-  type,
-  placeholder,
-  required,
-  hasError,
-  error,
-  hint,
-}: InputProps<T>) => {
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    onValue?.(value as T);
-    console.log(value, name);
-  };
-
-  return (
-    <>
-      <input
-        className={cn(
-          styles.input,
-          {
-            [styles.hasError]: hasError,
-          },
-          className,
-        )}
-        name={name}
-        value={value}
-        type={type}
-        placeholder={placeholder}
-        required={required}
-        onChange={handleChange}
-      />
-      {hasError ? (
-        <span className={styles.error}>{error}</span>
-      ) : (
-        hint && <span className={styles.hint}>{hint}</span>
-      )}
-    </>
-  );
+    return label ? (
+        <label className={styles.root}>
+            <span className={styles.root__label}>{label}</span>
+            <input
+                className={cn(
+                    styles.root__input,
+                    className,
+                )}
+                name={name}
+                value={value}
+                type={type}
+                placeholder={placeholder}
+                required={required}
+                onChange={handleChange}
+                {...rest}
+            />
+            {hasError ? (
+                <span className={styles.root__input_error}>{error}</span>
+            ) : (
+                hint && <span className={styles.root__input_hint}>{hint}</span>
+            )}
+        </label>
+    ) : (
+        <div className={styles.root}>
+            <input
+                className={cn(
+                    styles.root__input,
+                    {
+                        [styles.root__input_hasError]: hasError,
+                    },
+                    className,
+                )}
+                name={name}
+                value={value}
+                type={type}
+                placeholder={placeholder}
+                required={required}
+                onChange={handleChange}
+                {...rest}
+            />
+            {hasError ? (
+                <span className={styles.root__input_error}>{error}</span>
+            ) : (
+                hint && <span className={styles.root__input_hint}>{hint}</span>
+            )}
+        </div>
+    );
 };
