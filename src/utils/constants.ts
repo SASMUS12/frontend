@@ -1,7 +1,7 @@
 import {Api} from "./openapi";
 
 export const apiConfig = {
-  baseUrl: 'https://5.181.255.32',
+  baseUrl: 'https://lingvogo.acceleratorpracticum.ru',
 };
 
 export const api = new Api(apiConfig);
