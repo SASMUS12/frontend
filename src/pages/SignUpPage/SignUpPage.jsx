@@ -4,13 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '../../components/UI/Input/Input';
 import { Button } from '../../components/UI/Button/Button';
 import Header from '../../components/Header/Header';
+import PicturesBlock from '../../components/PicturesBlock/PicturesBlock';
 
 import { useModel } from './model';
 
 import logo from '../../images/svg/logo.svg';
-import googleLogo from '../../images/svg/logo-google.svg';
-import yandexLogo from '../../images/svg/logo-yandex.svg';
-import weiboLogo from '../../images/svg/logo-weibo.svg';
 
 import styles from './SignUpPage.module.scss';
 
@@ -22,35 +20,8 @@ const SignUpPage = () => {
     <>
       <Header />
       <main className={styles.content}>
-        <h1 className={styles.title}>Зарегистрироваться при помощи</h1>
-        <Button
-          className={styles.button}
-          type="submit"
-          variant="white"
-          size="l"
-          disabled={model.isLoading}>
-          <img className={styles.logo} src={googleLogo} alt="Логотип гугл" />
-          {model.isLoading ? 'Loading' : 'Вход через аккаунт Google'}
-        </Button>
-        <Button
-          className={styles.button}
-          type="submit"
-          variant="white"
-          size="l"
-          disabled={model.isLoading}>
-          <img className={styles.logo} src={yandexLogo} alt="Логотип гугл" />
-          {model.isLoading ? 'Loading' : 'Вход через аккаунт Yandex'}
-        </Button>
-        <Button
-          className={styles.button}
-          type="submit"
-          variant="white"
-          size="l"
-          disabled={model.isLoading}>
-          <img className={styles.logo} src={weiboLogo} alt="Логотип гугл" />
-          {model.isLoading ? 'Loading' : 'Вход через аккаунт Weibo'}
-        </Button>
-        <p className={styles.text}>или</p>
+        <div className={styles.content__div1}>
+          <div>
         <Input
           type="text"
           name="email"
@@ -79,6 +50,9 @@ const SignUpPage = () => {
         <a className={styles.link} href="#">
           Не можешь вспомнить свой пароль?
         </a>
+          </div>
+          <PicturesBlock />
+        </div>
       </main>
     </>
   );
