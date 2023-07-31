@@ -15,8 +15,8 @@ import styles from './MainPage.module.scss';
 const MainPage = () => {
   const [usersList, setUsersList] = useState<any[]>([]);
   const [isUsersList, setIsUsersList] = useState(false);
-  const [category, setCategorty] = useState({name: 'Все', path: ''});
-  const [sortType, setSortType] = useState({
+    const [category, setCategorty] = useState({name: 'Все', path: ''});
+    const [sortType, setSortType] = useState({
         //Объект параметров сортировки(шаблон)
     });
 
