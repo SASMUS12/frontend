@@ -17,6 +17,7 @@ export const useModel = () => {
                         password: "",
                         confirmPassword: "",
                         isModalOpen: false,
+                        isLoggedIn: false,
 
                         handleUsernameChange({value}: { value: string }) {
                             model.username = value
@@ -62,6 +63,7 @@ export const useModel = () => {
                                 model.isLoading = false;
                             } catch (error) {
                                 console.error('Ошибка при получении данных -', error);
+                                model.isLoading = false;
                             }
                         },
 
@@ -74,18 +76,19 @@ export const useModel = () => {
                                 const response = await api.api.authJwtCreateCreate({
                                     password: model.password,
                                     username: model.username
-
                                 });
 
                                 console.log('ответ получен -', response);
 
                                 if (response.data && response.data) {
                                     console.log(response.data);
+                                    model.isLoggedIn = true;
                                 }
 
                                 model.isLoading = false;
                             } catch (error) {
                                 console.error('Ошибка при получении данных -', error);
+                                model.isLoading = false;
                             }
                         }
                     };

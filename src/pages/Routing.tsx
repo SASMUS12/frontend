@@ -2,10 +2,6 @@ import React from 'react';
 import {lazy} from 'react';
 import {Route, Routes} from 'react-router-dom';
 
-import InfoTooltip from "../components/InfoTooltip/InfoTooltip";
-import styles from "./MainPage/MainPage.module.scss";
-import {useModel} from "../components/SignUpAndSignInForm/model";
-
 // import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 
 const SignInPage = lazy(() => import('../pages/SignUpAndSignInPages/SignUpAndSignInPages'));

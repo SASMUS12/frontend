@@ -13,9 +13,22 @@ import styles from './MainPage.module.scss';
 import cn from "classnames";
 
 import {useModel} from "../../components/SignUpAndSignInForm/model";
+import {useNavigate, useParams} from "react-router-dom";
 
 const MainPage = () => {
     const model = useModel();
+
+    const {authPath} = useParams();
+    const navigate = useNavigate();
+
+    const getAuthPath = () => {
+        if (authPath !== undefined ) {
+            console.log(authPath.slice(0, 51));
+            navigate("/");
+        }
+    }
+
+// && authPath.slice(0, 51) === 'https://lingvogo.acceleratorpracticum.ru/'
 
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
@@ -26,6 +39,11 @@ const MainPage = () => {
     const [isSortPopupOpen, setSortPopupOpen] = useState(true);
 
     const isModalOpen = model.isModalOpen;
+
+
+    useEffect(() => {
+        getAuthPath();
+    }, []);
 
     const handleOpenSortPopup = () => {
         setSortPopupOpen(!isSortPopupOpen);
