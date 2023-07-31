@@ -28,22 +28,55 @@
     display: flex;
   }
 
-  &__cardList {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin: 0 auto;
+  &__cardListAndSortPopup {
+    display: flex;
+
+    &_cardList {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 0 auto;
+
+      &_narrow {
+        grid-template-columns: repeat(3, 1fr);
+        margin: 0 16px 0 0;
+      }
+    }
   }
 
   &__continuingButton {
     margin: 40px auto 0;
   }
-  &__button {
+
+  &__sortButton {
     background-image: url("../../images/svg/Filter.svg");
     width: 26px;
     height: 26px;
     border: none;
     cursor: pointer;
+  }
+
+  &__modal {
+    &_header {
+      font: var(--font-header-24-120-600);
+      color: var(--dark-violet);
+      letter-spacing: 0.48px;
+    }
+
+    &_text {
+      &_main {
+        font: var(--font-text-18-140-400);
+        color: var(--dark-violet-gradient-400);
+        letter-spacing: 0.36px;
+      }
+
+      &_additional {
+        font: var(--font-text-16-120-400);
+        color: var(--grey-gradient-400);
+        font-style: italic;
+        letter-spacing: 0.32px;
+      }
+    }
   }
 }

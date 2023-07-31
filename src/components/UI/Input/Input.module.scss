@@ -1,11 +1,24 @@
-.root {
+.inputElement {
   display: flex;
   flex-direction: column;
 
   &__label {
     font: var(--font-text-16-120-400);
     color: var(--dark-violet);
-    margin-bottom: 12px;
+  }
+
+  &__hint {
+    margin-top: 12px;
+    font: var(--font-text-14-120-400);
+    color: var(--dark-violet-gradient-400);
+
+    &_true {
+      display: none;
+    }
+
+    &_false {
+        display: inline-block;
+    }
   }
 
   &__input {
@@ -14,10 +27,11 @@
     height: 40px;
     box-sizing: border-box;
     align-items: center;
-    //background-color: var(--color-base-white);
+    background-color: var(--color-base-white);
     border: 1px solid var(--soft-violet);
     border-radius: 20px;
     padding: 8px 12px;
+    margin-top: 12px;
     font: var(--font-text-14-100-400);
     color: var(--dark-violet);
 

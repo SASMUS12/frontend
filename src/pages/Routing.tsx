@@ -3,8 +3,8 @@ import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 // import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 
-const SignInPage = lazy(() => import('./SignInPage/SignInPage'));
-const SignUpPage = lazy(() => import('./SignUpPage/SignUpPage'));
+const SignInPage = lazy(() => import('../pages/SignUpAndSignInPages/SignUpAndSignInPages'));
+const SignUpPage = lazy(() => import('../pages/SignUpAndSignInPages/SignUpAndSignInPages'));
 const MainPage = lazy(() => import('./MainPage/MainPage'));
 const NotFoundPage = lazy(() => import('./NotFoundPage/NotFoundPage'));
 

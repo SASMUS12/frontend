@@ -18,6 +18,8 @@
   --grey-color-500: #323944;
   --accent-color-violet: #6D47D1;
   --dark-violet: #403A6D;
+  --dark-violet-gradient-400: #66618A;
+  --soft-violet: #A5A0C5;
   --primory-button-hover: #A083E0;
   --secondary-button-hover: #E1D6FF;
 
@@ -39,6 +41,7 @@
   --font-text-14-120-400: 400 14px/1.2 var(--font-sans);
   --font-text-14-140-400: 400 14px/1.4 var(--font-sans);
   --font-text-16-120-400: 400 16px/1.2 var(--font-sans);
+  --font-text-18-140-400: 400 18px/1.4 var(--font-sans);
   --font-header-18-120-600: 600 18px/1.2 var(--font-sans);
   --font-header-24-120-600: 600 24px/1.2 var(--font-sans);
 }

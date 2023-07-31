@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { FC } from "react";
 import ReactDOM from 'react-dom'
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import "./modal.css";
@@ -19,7 +19,7 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
 
   React.useEffect(() => {
     const closeByClick = (event: MouseEvent) => {
-      if (event !== null && event.target) {if ((event.target as Element).classList.contains('modalOverlay')) {
+      if (event !== null && event.currentTarget) {if ((event.currentTarget as Element).classList.contains('modalOverlay')) {
         handleClose();
       }}
     };
