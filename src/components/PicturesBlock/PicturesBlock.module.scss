@@ -1,0 +1,48 @@
+.picturesBlock {
+  
+  width: 947px;
+  height: 900px;
+  background-color: #6D47D1;
+  position: relative;
+  /*display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 18px 24px;
+  margin: 0px auto;
+  justify-content: center;*/
+  p {
+    font-weight: 600;
+    font-size: 28px;
+    color: white;
+    line-height: 33px;
+    position: absolute;
+    top: 70px;
+    margin: 0;
+    padding: 0;
+    width: 627px;
+    height: 66px;
+  }
+ 
+  span {
+    color: #C3EE11;
+  }
+
+  &__img {
+    position: absolute;
+    top: 170px;
+  }
+
+  &__container {
+    display: flex;
+  }
+
+  &__buttonContainer {
+    display: flex;
+    gap: 40px;
+  }
+
+  &__picActive {
+    color: #C3EE11;
+  }
+}
