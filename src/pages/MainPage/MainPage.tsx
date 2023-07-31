@@ -1,4 +1,4 @@
-import React React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {api} from '../../utils/constants';
 
@@ -32,8 +32,8 @@ const MainPage = () => {
 
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
-  const [category, setCategory] = useState({name: 'Все', path: ''});
-  // const [sortType, setSortType] = useState({});
+    const [category, setCategory] = useState({name: 'Все', path: ''});
+    const [sortType, setSortType] = useState({});
     const [isSortPopupOpen, setSortPopupOpen] = useState(true);
 
     const isModalOpen = model.isModalOpen;
@@ -70,7 +70,7 @@ const MainPage = () => {
 
     useEffect(() => {
         getUsersList();
-    }, [category]);
+    }, [category, sortType]);
 
     const popupRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
