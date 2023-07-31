@@ -67,6 +67,12 @@
   
   .popup__add {
     display: flex;
+
+    button {
+      background-color: white;
+      border: none;
+      color: #6D47D1;
+    }
   }
 
   button {

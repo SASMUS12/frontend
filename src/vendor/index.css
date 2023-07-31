@@ -3,8 +3,5 @@
 @import url("root.css");
 
 body {
-    min-width: 320px;
-    max-width: 1440px;
-    height: 100%;
-    margin: 0 auto;
+  background: var(--grey-color-50);
 }

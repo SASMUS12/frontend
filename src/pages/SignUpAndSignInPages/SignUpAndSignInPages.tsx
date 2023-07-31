@@ -7,6 +7,7 @@ import styles from './SignUpAndSignInPages.module.scss';
 import {useModel} from './model';
 
 import logo from "../../images/svg/logo.svg";
+import PicturesBlock from "../../components/PicturesBlock/PicturesBlock";
 
 const SignUpAndSignInPages = () => {
     const model = useModel();
@@ -30,7 +31,7 @@ const SignUpAndSignInPages = () => {
                     <SignUpAndSignInForm />
                 </div>
                 <div className={styles.content__picturesContainer}>
-
+                    <PicturesBlock />
                 </div>
             </section>
         </>

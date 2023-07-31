@@ -1,4 +1,23 @@
 .categories {
+  &__item {
+    padding: 8px 16px 25px 16px;
+    border-radius: 16px;
+    font-weight: 400;
+    font-size: 15px;
+    height: 26px;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+  }
+  &__active {
+    padding: 8px 16px 25px 16px;
+    border-radius: 16px;
+    font-weight: 400;
+    font-size: 15px;
+    height: 26px;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+    background-color: rgba(195, 238, 17, 1);
+  }
   ul {
     display: flex;
     list-style: none;
@@ -6,11 +25,11 @@
     padding-left: 0px;
 
     li {
-      padding: 4px, 12px, 4px, 12px;
+      padding: 8px 16px 25px 16px;
       border-radius: 16px;
       font-weight: 400;
       font-size: 15px;
-      height: 18px;
+      height: 26px;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
       
@@ -24,7 +43,6 @@
 
       &.active {
         background-color: rgba(195, 238, 17, 1);
-        color: rgba(195, 238, 17, 1);
       }
     }
   }

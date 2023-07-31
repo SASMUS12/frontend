@@ -12,29 +12,31 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <Link to={`/`} className={styles.header__link}>
-        <img src={logo} alt="Логотип проекта" />
-      </Link>  
-      <div className={styles.header__buttonContainer}>
-        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && 
-        <>
-          <Button
-            className={styles.button}
-            type="submit"
-            variant="primary"
-            disabled={model.isLoading}
-            onClick={() => navigate('/signin')}>
-            {model.isLoading ? 'Loading' : 'Войти'}
-          </Button>
-          <Button
-            className={styles.button}
-            type="submit"
-            variant="transparent"
-            disabled={model.isLoading}
-            onClick={() => navigate('/signup')}>
-            {model.isLoading ? 'Loading' : 'Зарегистрироваться'}
-          </Button>
-        </>}
+      <div className={styles.header__container}>
+        <Link to={`/`} className={styles.header__link}>
+          <img src={logo} alt="Логотип проекта" />
+        </Link>  
+        <div className={styles.header__buttonContainer}>
+         {(location.pathname !== "/signup") && (location.pathname !== "/signin") && 
+          <>
+            <Button
+              className={styles.button}
+              type="submit"
+              variant="primary"
+              disabled={model.isLoading}
+              onClick={() => navigate('/signin')}>
+              {model.isLoading ? 'Loading' : 'Войти'}
+            </Button>
+            <Button
+              className={styles.button}
+              type="submit"
+              variant="transparent"
+              disabled={model.isLoading}
+              onClick={() => navigate('/signup')}>
+              {model.isLoading ? 'Loading' : 'Зарегистрироваться'}
+            </Button>
+          </>}
+        </div>
       </div>
     </header>
   );

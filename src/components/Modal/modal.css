@@ -1,11 +1,11 @@
 .modal__container {
-  min-width: 501px;
+  min-width: 720px;
   min-height: 539px;
   background-color: #1C1C21;
   display: flex;
   align-items: center;
   text-align: center;
-  padding: 60px 40px;
+  padding: 40px 40px 40px 40px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 40px;
   flex-direction: column;
