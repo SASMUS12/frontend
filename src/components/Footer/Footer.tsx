@@ -29,28 +29,27 @@ function Footer() {
         </div>
         <nav className={styles.footer__rightColumn}>
           <div className={styles.footer__textColumn}>
-
-            <Link to={`/`} className={styles.footer__link}>
+            <a className={styles.footer__link} href="mailto:linguachat@ro.ru"> 
               <p className={styles.footer__text}>Связаться с нами</p>
-            </Link>
-            <Link to={`/`} className={styles.footer__link}>
+            </a>
+            <a className={styles.footer__link} href="mailto:linguachat@ro.ru"> 
               <p className={styles.footer__text}>Сообщить об ошибке</p>
-            </Link>
+            </a>
           </div>
           <div className={styles.footer__linksColumn}>
-          <Link to={`/`} className={styles.footer__linkText}>
+          <Link to={`/rules`} className={styles.footer__linkText}>
               <p className={styles.footer__linkText}>Правила сообщества</p>
             </Link>
-            <Link to={`/`} className={styles.footer__linkText}>
+            <Link to={`/policy`} className={styles.footer__linkText}>
               <p className={styles.footer__linkText}>Политика конфиденциальности</p>
             </Link>
-            <Link to={`/`} className={styles.footer__linkText}>
+            <Link to={`/agreement`} className={styles.footer__linkText}>
               <p className={styles.footer__linkText}>Пользовательское соглашение</p>
             </Link>
-            <Link to={`/`} className={styles.footer__linkText}>
+            <Link to={`/reviews`} className={styles.footer__linkText}>
               <p className={styles.footer__text}>Отзывы</p>
             </Link>
-            <Link to={`/`} className={styles.footer__linkText}>
+            <Link to={`/faq`} className={styles.footer__linkText}>
               <p className={styles.footer__text}>FAQ</p>
             </Link>
           </div>
