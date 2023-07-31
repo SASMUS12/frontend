@@ -102,24 +102,12 @@
     width: 135px;
     height: 20px;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-   
-    color: var(--accent-color-violet, #6D47D1);
-    font-family: Inter;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    background-image: url("../../images/svg/plus-in-circle.svg");
-    background-repeat: no-repeat;
-    background-position: left 0px center;
-    background-size: 20px 20px;
-    padding-left: 20px;
-    border: none;
-    background-color: #fff;
-    margin-bottom: 40px;
 
+    button {
+      background-color: white;
+      border: none;
+      color: #6D47D1;
+    }
   }
 
   button {
