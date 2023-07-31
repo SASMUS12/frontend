@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, {FC, useRef} from "react";
 import ReactDOM from 'react-dom'
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import "./modal.css";
@@ -15,11 +15,11 @@ interface IModalProps {
 
 const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
 
-  const overlay = React.useRef<HTMLDivElement | null>(null);
+  const overlay = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   React.useEffect(() => {
     const closeByClick = (event: MouseEvent) => {
-      if (event !== null && event.currentTarget) {if ((event.currentTarget as Element).classList.contains('modalOverlay')) {
+      if (event !== null && event.target) {if ((event.target as Element).classList.contains('modalOverlay')) {
         handleClose();
       }}
     };
