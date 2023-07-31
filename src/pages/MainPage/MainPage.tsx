@@ -52,7 +52,7 @@ const MainPage = () => {
             <button className={styles.content__button}></button>
         </div>
         <div className={styles.content__cardList}>
-        <Sort className={styles.content__cardList}/>
+        <Sort className={styles.content__sortList}/>
           {isUsersList &&
             usersList.map((user) => (
               <Card

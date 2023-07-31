@@ -101,23 +101,24 @@
   
   .slider_value_left,
   .slider_value_right {
-    font-size: 14px;
-    transform: translateX(-50%);
-    user-select: none;
-    pointer-events: none;
-    position: absolute;
-    top: -25px;
-    font-size: 14px;
-    color: #323944;
-    font-family: Inter;
-  }
+      transform: translateX(-50%);
+      user-select: none;
+      pointer-events: none;
+      position: absolute;
+      top: -22px;
+      color: #323944;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+    }
   
-  .slider_value_right {
-    
-    right: 0;
+  .slider_value_right {    
+    transform: translateX(56%);
   }
 
   .slider_value_left {
+    transform: translateX(-24%);
     left: 0;
   }
  

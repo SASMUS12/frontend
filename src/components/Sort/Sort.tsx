@@ -41,7 +41,7 @@ const Sort: React.FC<SliderComponentProps> = () => {
     //     // и передать его в функцию onChangeSort
     //   };
 
-    return (
+  return (
       <div className={ styles.popup__sort}>
         <div className={styles.popup__cantry}>
           <h2 >Страна партнера</h2>
@@ -76,18 +76,20 @@ const Sort: React.FC<SliderComponentProps> = () => {
             </div>
             <div className={styles.popup__age}>
               <h3>Возраст</h3>
-            <MultiRangeSlider 
-              minValue={0}
-              maxValue={100}
-              leftValue={leftValue}
-              rightValue={rightValue}
-              onChange={handleSliderChange}
-            />
-            <div>
-              <Button children={"Найти"} />
+              <MultiRangeSlider 
+                minValue={0}
+                maxValue={100}
+                leftValue={leftValue}
+                rightValue={rightValue}
+                onChange={handleSliderChange}
+              />
             </div>
-        </div>
+            <Button
+              className={styles.popup__findButton}
+              children={"Найти"}
+            />
       </div>
+
   );
 };
     
