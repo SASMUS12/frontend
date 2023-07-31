@@ -7,9 +7,10 @@ import plus from '../../images/svg/plus-in-circle.svg';
 type SortProps = {
     value: any;
     onChangeSort: (sortType: any) => void;
+    isOpen: boolean;
   };
 
-const Sort: React.FC<SortProps> = ({ value, onChangeSort }) => {
+const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen }) => {
     
     const [open, setOpen] = useState(false);
 
@@ -28,7 +29,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort }) => {
       };
 
       return (
-        <div className={styles.popup__sort}>
+        <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
             <div className={styles.popup__cantry}>
               <h2 >Страна партнера</h2>
               <div className={styles.popup__enter}>
