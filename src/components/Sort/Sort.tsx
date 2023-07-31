@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../Sort/Sort.module.scss";
 import LanguageLevelp from "../LanguageLevel/LanguageLevel";
 import { Button } from "../UI/Button/Button";
+import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 
 interface SliderComponentProps {
   styles: {
@@ -15,8 +16,14 @@ interface SliderComponentProps {
 
 const Sort: React.FC<SliderComponentProps> = () => {
 
-  const [sliderValue, setSliderValue] = useState<number[]>([18, 100]);
+  const [leftValue, setLeftValue] = useState<number>(18);
+  const [rightValue, setRightValue] = useState<number>(40);
 
+  const handleSliderChange = (left: number, right: number) => {
+    setLeftValue(left);
+    setRightValue(right);
+    // Дополнительная логика при изменении значений слайдера, если необходимо
+  };
 
     // const [open, setOpen] = useState(false);
 
@@ -33,16 +40,6 @@ const Sort: React.FC<SliderComponentProps> = () => {
     //     // Например, вы можете обновить состояние сортировки по языку на основе этого значения
     //     // и передать его в функцию onChangeSort
     //   };
-
-    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = parseInt(event.target.value, 10);
-  
-      if (event.target.name === "from") {
-        setSliderValue([value, sliderValue[1]]);
-      } else if (event.target.name === "to") {
-        setSliderValue([sliderValue[0], value]);
-      }
-    };
 
     return (
       <div className={ styles.popup__sort}>
@@ -79,23 +76,13 @@ const Sort: React.FC<SliderComponentProps> = () => {
             </div>
             <div className={styles.popup__age}>
               <h3>Возраст</h3>
-
-
-              <div className={styles.slider_wrapper}>
-                <div className={styles.container}>
-                  <div className={styles.slider_track}></div>
-                  <input type="range" min={18} max={100} value={18} name="" id="slider-1" />
-                  <input type="range" min={18} max={100} value={40} name="" id="slider-2" />     
-                </div>
-                <div className={styles.slider_values}>
-                  <span id="range1">
-                    {}
-                  </span>
-                  <span id="range2">
-                    {}
-                  </span>
-                </div>                
-              </div>
+            <MultiRangeSlider 
+              minValue={0}
+              maxValue={100}
+              leftValue={leftValue}
+              rightValue={rightValue}
+              onChange={handleSliderChange}
+            />
             <div>
               <Button children={"Найти"} />
             </div>
