@@ -1,0 +1,42 @@
+.card__partnerPersonalInfo {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 12px;
+
+  &_firstName {
+    font: var(--font-text-16-120-400);
+    color: var(--grey-color-500);
+  }
+
+  &_genderAndAge {
+    min-width: 58px;
+    width: max-content;
+    min-height: 23px;
+    display: flex;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: var(--grey-color-50);
+    margin-top: 4px;
+
+    &_hidden {
+      display: none;
+    }
+  }
+
+  &_partnerGender {
+    width: 16px;
+    height: 16px;
+
+    &_hidden {
+      display: none;
+    }
+  }
+
+  &_partnerAge {
+    margin-left: 8px;
+    font: var(--font-text-14-100-400);
+    color: var(--soft-grey);
+  }
+}

@@ -1,0 +1,50 @@
+.content {
+  width: 100%;
+  min-height: 933px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-background-content);
+
+  &__div1 {
+    display: flex;
+    flex-direction: row;
+    width: 1440px;
+
+    div {
+      width: 490px;
+    }
+  }
+}
+
+.title {
+  margin: 172px 0 0;
+  font: var(--font-text-xl-regular);
+  color: var(--color-primary);
+}
+
+.button {
+  margin-top: 44px;
+}
+
+.logo {
+  margin-left: 36px;
+  margin-right: 43px;
+}
+
+.text {
+  margin: 27px 0;
+  font: var(--font-text-lg-regular);
+  color: var(--color-primary);
+}
+
+.input {
+  margin-top: 44px;
+}
+
+.link {
+  font: var(--font-text-lg-regular);
+  color: var(--color-primary);
+  cursor: pointer;
+  margin-top: 10px;
+}
