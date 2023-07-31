@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../Sort/Sort.module.scss";
 import LanguageLevelp from "../LanguageLevel/LanguageLevel";
 import { Button } from "../UI/Button/Button";
+import plus from '../../images/svg/plus-in-circle.svg';
 
 type SortProps = {
     value: any;
@@ -42,7 +43,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort }) => {
             <h2>Язык партнера</h2>
             <LanguageLevelp/>
             <div className={styles.popup__add}>
-              <img src="../../images/svg/plus-in-circle.svg" alt="11111111111" />
+              <img src={plus} alt="кнопка добавления" />
               <Button children={"добавить язык"} />
             </div>
             <div className={styles.popup__partner__info}>
