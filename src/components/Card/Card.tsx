@@ -11,8 +11,10 @@ import GenderAndAgeIcon from '../UI/GenderAndAgeIcon/GenderAndAgeIcon';
 import { Country, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
 
 import styles from './Card.module.scss';
+import cn from "classnames";
 
 interface IProps {
+  className?: string;
   country?: Country | null;
   status: string;
   indicator: boolean;
@@ -27,6 +29,7 @@ interface IProps {
 }
 
 const Card: FC<IProps> = ({
+  className,
   country = null,
   avatar,
   status,
@@ -40,7 +43,7 @@ const Card: FC<IProps> = ({
   foreignLanguages,
 }) => {
   return (
-    <article className={styles.card}>
+    <article className={cn(styles.card, className)}>
       <div className={styles.card__countryAndStatusTag}>
         <CountryIcon country={country} />
         <UserStatusIndicator indicator={indicator} status={status} />
