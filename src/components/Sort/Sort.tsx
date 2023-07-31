@@ -4,17 +4,15 @@ import LanguageLevelp from "../LanguageLevel/LanguageLevel";
 import { Button } from "../UI/Button/Button";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 
-interface SliderComponentProps {
-  styles: {
-    slider_container: string;
-    slider: string;
-    slider_value: string;
-    popup__sort: string;
-  };
-}
+
+interface SortProps {
+  isOpen: boolean;
+  value: any;
+  onChangeSort: (sortType: any) => void;
+};
 
 
-const Sort: React.FC<SliderComponentProps> = () => {
+const Sort: React.FC<SortProps> = ({isOpen, value, onChangeSort}) => {
 
   const [leftValue, setLeftValue] = useState<number>(18);
   const [rightValue, setRightValue] = useState<number>(40);
@@ -22,27 +20,10 @@ const Sort: React.FC<SliderComponentProps> = () => {
   const handleSliderChange = (left: number, right: number) => {
     setLeftValue(left);
     setRightValue(right);
-    // Дополнительная логика при изменении значений слайдера, если необходимо
   };
 
-    // const [open, setOpen] = useState(false);
-
-    // const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     // Ваша логика для обработки изменения в поле поиска
-    //     // Можете использовать event.target.value, чтобы получить введенное значение
-    //     // Например, вы можете обновить состояние сортировки по стране на основе этого значения
-    //     // и передать его в функцию onChangeSort
-    //   };
-    
-    //   const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //     // Ваша логика для обработки изменения выбранного языка
-    //     // Можете использовать event.target.value, чтобы получить выбранный язык
-    //     // Например, вы можете обновить состояние сортировки по языку на основе этого значения
-    //     // и передать его в функцию onChangeSort
-    //   };
-
   return (
-      <div className={ styles.popup__sort}>
+      <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
         <div className={styles.popup__cantry}>
           <h2 >Страна партнера</h2>
           <div className={styles.popup__enter}>

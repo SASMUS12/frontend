@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React { useEffect, useState } from 'react';
 
 import { api } from '../../utils/constants';
 
@@ -52,7 +52,7 @@ const MainPage = () => {
             <button className={styles.content__button}></button>
         </div>
         <div className={styles.content__cardList}>
-        <Sort className={styles.content__sortList}/>
+        <Sort className={styles.content__sortList} isOpen value onChangeSort />
           {isUsersList &&
             usersList.map((user) => (
               <Card
