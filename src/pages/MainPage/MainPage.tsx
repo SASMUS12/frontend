@@ -33,9 +33,7 @@ const MainPage = () => {
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
     const [category, setCategory] = useState({name: 'Все', path: ''});
-    const [sortType, setSortType] = useState({
-        //Объект параметров сортировки(шаблон)
-    });
+    const [sortType, setSortType] = useState({});
     const [isSortPopupOpen, setSortPopupOpen] = useState(true);
 
     const isModalOpen = model.isModalOpen;
@@ -54,7 +52,7 @@ const MainPage = () => {
         try {
             console.log('отправка запроса ---');
             const response = await api.api.usersList(
-                // {}, {path: `/api/v1/users/${category.path}`}
+                //{}, {path: `/api/v1/users/${category.path}`}
                 // sort: sortType,
             );
             console.log('ответ получен -', response);
