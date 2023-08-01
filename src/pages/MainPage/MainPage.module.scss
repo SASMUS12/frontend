@@ -57,6 +57,11 @@
     height: 26px;
     border: none;
     cursor: pointer;
+    
+  }
+   
+  &__sortButton_open {
+    background-image: url("../../images/svg/Filter_red.svg"); // Замените 'AnotherImage.svg' на путь к вашей второй картинке
   }
 
   &__modal {

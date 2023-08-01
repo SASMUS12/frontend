@@ -34,7 +34,7 @@ const MainPage = () => {
     const [isUsersList, setIsUsersList] = useState(false);
     const [category, setCategory] = useState({name: 'Все', path: ''});
     const [sortType, setSortType] = useState({});
-    const [isSortPopupOpen, setSortPopupOpen] = useState(true);
+    const [isSortPopupOpen, setIsSortPopupOpen] = useState(true);
 
     const isModalOpen = model.isModalOpen;
 
@@ -44,7 +44,7 @@ const MainPage = () => {
     }, []);
 
     const handleOpenSortPopup = () => {
-        setSortPopupOpen(!isSortPopupOpen);
+        setIsSortPopupOpen(!isSortPopupOpen);
         console.log(isSortPopupOpen);
     }
 
@@ -114,7 +114,12 @@ const MainPage = () => {
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 <div className={styles.content__filterTag}>
                     <Categories value={category} onChangeCategory={setCategory}/>
-                    <button className={styles.content__sortButton} onClick={handleOpenSortPopup}></button>
+                    <button
+                        className={cn(styles.content__sortButton, {
+                            [styles.content__sortButton_open]: isSortPopupOpen,
+                          })}
+                        onClick={handleOpenSortPopup}
+                    ></button>
                 </div>
                 <div className={styles.content__cardListAndSortPopup}>
                     <div
