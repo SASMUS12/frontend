@@ -7,6 +7,7 @@ import { useModel } from './MainPage/model';
 const SignInPage = lazy(() => import('./SignInPage/SignInPage'));
 const SignUpPage = lazy(() => import('./SignUpPage/SignUpPage'));
 const MainPage = lazy(() => import('./MainPage/MainPage'));
+const UserProfile = lazy(() => import('../pages/UserProfile/UserProfile'));
 const NotFoundPage = lazy(() => import('./NotFoundPage/NotFoundPage'));
 
 export const Routing = () => {
@@ -21,6 +22,7 @@ export const Routing = () => {
       <Route path="/signin" element={<SignInPage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/" element={<MainPage />} />
+      <Route path="/profile" element={<UserProfile />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

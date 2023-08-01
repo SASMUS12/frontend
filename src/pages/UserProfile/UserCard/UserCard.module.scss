@@ -1,0 +1,99 @@
+.profile__card {
+	width: 1158px;
+	max-height: 698px;
+	margin: 0 auto;
+}
+
+.profile__accent {
+	height: 77px;
+	background-color: #6d47d1;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.profile__generalInfo {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+	height: 228px;
+	background-color: var(--color-base-white);
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	margin-top: -20px;
+}
+
+.profile__partnerAbout {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	padding: 16px 0;
+}
+
+.profile__partnerAvatar {
+	width: 180px;
+	height: 100%;
+	border-radius: 20px;
+	margin: 24px 24px 24px;
+	background-repeat: no-repeat;
+}
+
+.profile__partnerInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 100%;
+}
+
+.profile__name {
+	font-family: var(--font-sans);
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 39px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet);
+}
+
+.profile__sex {
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 19px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet-gradient);
+}
+
+.profile__country {
+	display: flex;
+	align-items: center;
+	padding-top: 24px;
+}
+
+.profile__flag {
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+}
+
+.profile__city {
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 22px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet-gradient);
+}
+
+.profile__buttons {
+	display: flex;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.profile__moreAbout {
+	display: flex;
+}

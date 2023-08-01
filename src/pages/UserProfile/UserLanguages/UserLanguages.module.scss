@@ -1,0 +1,36 @@
+.profile__languages {
+	display: flex;
+	justify-content: space-between;
+	width: 454px;
+	height: 107px;
+	background-color: var(--color-base-white);
+	border-radius: 20px;
+	margin: 16px 16px 16px 0;
+	padding: 20px;
+}
+
+.profile__title {
+	font-family: var(--font-sans);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 25px;
+	letter-spacing: 0em;
+	text-align: left;
+	margin-bottom: 16px;
+	color: var(--dark-violet);
+}
+
+.profile__subtitle {
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 14px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet-gradient);
+}
+
+.profile__help {
+	width: 20px;
+	height: 20px;
+}
