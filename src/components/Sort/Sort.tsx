@@ -15,11 +15,17 @@ interface SortProps {
     //const [open, setOpen] = useState(false);
     const [leftValue, setLeftValue] = useState<number>(18);
     const [rightValue, setRightValue] = useState<number>(40);
+    const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
     
     const handleSliderChange = (left: number, right: number) => {
       setLeftValue(left);
       setRightValue(right);
     };
+
+    const handleOpenLanguageMenu = () => {
+      setLanguageMenuOpen(true);
+    };
+  
 
     return (
       <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
@@ -36,8 +42,10 @@ interface SortProps {
             </div>
             <h2>Язык партнера</h2>
             <LanguageLevelp/>
+            {isLanguageMenuOpen && <LanguageLevelp />}
             <div className={styles.popup__add}>
               <Button 
+                onClick={handleOpenLanguageMenu}
                 className={styles.popup__addButton}
                 children={"добавить язык"} 
               />
