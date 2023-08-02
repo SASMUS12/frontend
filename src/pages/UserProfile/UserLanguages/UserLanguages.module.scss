@@ -20,6 +20,18 @@
 	color: var(--dark-violet);
 }
 
+.profile__language {
+	min-width: 161px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.profile__levels {
+	display: flex;
+	justify-content: space-between;
+}
+
 .profile__subtitle {
 	font-family: var(--font-sans);
 	font-size: 16px;

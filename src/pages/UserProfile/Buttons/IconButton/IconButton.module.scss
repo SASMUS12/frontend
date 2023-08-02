@@ -3,9 +3,14 @@
 	border: none;
 	background-color: var(--color-base-white);
 	color: var(--dark-violet);
-}
 
-.profile__icon {
-	width: 36px;
-	height: 36px;
+	&:hover {
+		cursor: pointer;
+		opacity: 0.7;
+	}
+
+	&__icon {
+		width: 36px;
+		height: 36px;
+	}
 }
