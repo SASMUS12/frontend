@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../Sort/Sort.module.scss";
-import LanguageLevelp from "../LanguageLevel/LanguageLevel";
+import LanguageLevel, {Language} from "../LanguageLevel/LanguageLevel";
 import { Button } from "../UI/Button/Button";
 import plus from '../../images/svg/plus-in-circle.svg';
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
@@ -9,14 +9,20 @@ interface SortProps {
   value: any;
   onChangeSort: (sortType: any) => void;
   isOpen: boolean;
+  languagesData: Language[];
+
 }
- 
- const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen }) => {    
-    //const [open, setOpen] = useState(false);
+
+ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData }) => {    
     const [leftValue, setLeftValue] = useState<number>(18);
     const [rightValue, setRightValue] = useState<number>(40);
     const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
+    const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
+    const [sortValue, setSortValue] = useState({});
+    // const [languageCounter, setLanguageCounter] = useState(0);
     
+
+
     const handleSliderChange = (left: number, right: number) => {
       setLeftValue(left);
       setRightValue(right);
@@ -25,6 +31,21 @@ interface SortProps {
     const handleOpenLanguageMenu = () => {
       setLanguageMenuOpen(true);
     };
+
+    const handleAddLanguage = (language: Language) => {
+      setSelectedLanguages([...selectedLanguages, language]);
+      setLanguageMenuOpen(false);
+    };
+
+    const handleRemoveLanguage = (language: Language) => {
+      const updatedLanguages = selectedLanguages.filter((lang) => lang.id !== language.id);
+      setSelectedLanguages(updatedLanguages);
+    };
+
+    // const generateLanguageId = () => {
+    //   setLanguageCounter(languageCounter + 1);
+    //   return languageCounter;
+    // };
   
 
     return (
@@ -36,13 +57,26 @@ interface SortProps {
                   type="text"
                   id="searchInput"
                   placeholder="Начните вводить название"
-                  //onChange={handleSearchInputChange}
                 />
               </div>
             </div>
             <h2>Язык партнера</h2>
-            <LanguageLevelp/>
-            {isLanguageMenuOpen && <LanguageLevelp />}
+            <LanguageLevel
+              languages={languagesData}
+              onAdd={(language) => handleAddLanguage(language)}
+              onRemove={(language) => handleRemoveLanguage(language)}
+            />
+            {selectedLanguages.map((language, index) => (
+              <LanguageLevel
+                key={index}
+                languages={languagesData}
+                onAdd={(language) => handleAddLanguage(language)}
+                onRemove={(language) => handleRemoveLanguage(language)}
+              />
+            ))}
+            {isLanguageMenuOpen && (
+              <LanguageLevel languages={languagesData} onAdd={(name) => handleAddLanguage(name)} />
+            )}
             <div className={styles.popup__add}>
               <Button 
                 onClick={handleOpenLanguageMenu}

@@ -35,6 +35,7 @@ const MainPage = () => {
     const [category, setCategory] = useState({name: 'Все', path: ''});
     const [sortType, setSortType] = useState({});
     const [isSortPopupOpen, setIsSortPopupOpen] = useState(true);
+    const [languagesData, setLanguagesData] = useState<Language[]>([]);
 
     const isModalOpen = model.isModalOpen;
 
@@ -67,6 +68,24 @@ const MainPage = () => {
             setIsUsersList(false);
         }
     };
+
+    //Запрос массива языков
+    const fetchLanguagesData = async () => {
+        try {
+          console.log('отправка запроса ---');
+          const response = await api.api.languagesList();
+          console.log('ответ получен -', response);
+          const languages = response.data;
+          setLanguagesData(languages);
+        } catch (error) {
+          console.error("Ошибка при получении данных о языках:", error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchLanguagesData();
+    }, []);
+    
 
     useEffect(() => {
         getUsersList();
@@ -146,6 +165,7 @@ const MainPage = () => {
                         value={sortType}
                         onChangeSort={setSortType}
                         isOpen={isSortPopupOpen}
+                        languagesData={languagesData}
                     />
                 </div>
                 <Button className={styles.content__continuingButton} variant="transparent">
