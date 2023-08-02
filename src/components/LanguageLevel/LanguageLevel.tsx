@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "../../components/LanguageLevel/LanguageLevel.module.scss"
 
 export interface Language {
@@ -14,6 +14,15 @@ interface LanguageLevelProps {
 
 const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemove }) => {
 
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const languageName = e.target.value;
+    const language = languages.find((lang) => lang.name === languageName);
+    setSelectedLanguage(language || null);
+  };
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const languageName = e.target.name;
     const language = languages.find((lang) => lang.name === languageName);
@@ -27,9 +36,11 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
     return(
         <>
             <div className={styles.language__option}>
-              <select >                
+              <select value={selectedLanguage?.name || ''} onChange={handleSelectChange}>                
                 {languages.map((language) => (
-                  <option key={language.id}>{language.name}</option>
+                  <option key={language.id} value={language.name}>
+                    {language.name}
+                  </option>
                 ))}
               </select>
             </div>

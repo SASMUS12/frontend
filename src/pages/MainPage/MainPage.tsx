@@ -8,6 +8,7 @@ import Categories from "../../components/Categories/Categories";
 import Sort from "../../components/Sort/Sort";
 import Footer from '../../components/Footer/Footer';
 import {Button} from '../../components/UI/Button/Button';
+import { Language } from '../../components/LanguageLevel/LanguageLevel';
 
 import styles from './MainPage.module.scss';
 import cn from "classnames";
