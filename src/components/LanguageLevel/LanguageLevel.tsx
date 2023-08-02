@@ -19,7 +19,7 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
     const language = languages.find((lang) => lang.name === languageName);
     if (e.target.checked && language) {
       onAdd(language);
-    } else {
+    } else if (!e.target.checked && language) {
       onRemove?.(language);
     }
   };
