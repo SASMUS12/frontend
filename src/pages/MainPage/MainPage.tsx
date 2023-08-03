@@ -23,7 +23,7 @@ const MainPage = () => {
     const [isUsersList, setIsUsersList] = useState(false);
     const [category, setCategory] = useState({name: 'Все', path: ''});
     const [sortType, setSortType] = useState({});
-    const [isSortPopupOpen, setSortPopupOpen] = useState(true);
+    const [isSortPopupOpen, setSortPopupOpen] = useState(false);
 
     const handleOpenSortPopup = () => {
         setSortPopupOpen(!isSortPopupOpen);

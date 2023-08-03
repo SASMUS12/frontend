@@ -16,7 +16,7 @@ export const useModel = () => {
                         email: "",
                         password: "",
                         confirmPassword: "",
-                        isModalOpen: true,
+                        isModalOpen: false,
                         isLoggedIn: false,
 
                         handleUsernameChange({value}: { value: string }) {
