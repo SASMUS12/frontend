@@ -1,68 +1,71 @@
-import React, {FC, useRef} from "react";
-import ReactDOM from 'react-dom'
-import ModalOverlay from '../ModalOverlay/ModalOverlay';
-import "./modal.css";
+import React, {useRef, useEffect, FC, ReactNode} from "react";
+import {observer} from "mobx-react-lite";
 
-type ScriptEvent = () => void;
+import styles from "./Modal.module.scss"
+import cn from "classnames";
 
-const modalRoot = (document.getElementById("react-modals") as Element);
+import {useModel} from "../SignupSigninForm/model";
 
-interface IModalProps {
-  isOpen: boolean;
-  onClose: ScriptEvent; 
-  children: React.ReactNode;
+interface ModalProps {
+    className?: string;
+    children?: ReactNode;
 }
 
-const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: FC<ModalProps> = ({
+                                   className,
+                                   children
+                               }) => {
+    const model = useModel();
 
-  const overlay = useRef() as React.MutableRefObject<HTMLDivElement>;
+    const modalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
-  React.useEffect(() => {
-    const closeByClick = (event: MouseEvent) => {
-      if (event !== null && event.target) {if ((event.target as Element).classList.contains('modalOverlay')) {
-        handleClose();
-      }}
-    };
-    const element = overlay.current;
-    if (element && overlay && overlay.current) {
-      element.addEventListener('click', closeByClick);
-        return () => {
-          element.removeEventListener('click', closeByClick);
-        };
+    const setCloseByOverlayListener = (modal: any) => {
+        modal.addEventListener("mousedown", (event: MouseEvent) => {
+            const targetClasses = (event.target as Element).classList;
+            const regExp = /^(Modal_modal_opened__)[\w]?/;
+            for (let i = 0; i < targetClasses.length; i++) {
+                if (regExp.test(targetClasses[i])) {
+                    model.handleCloseModal();
+                }
+            }
+        });
     }
-  }, []);
 
-  function handleClose() {
-    onClose()
-  }
-
-  React.useEffect(() => {
-    const escFunction = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        handleClose();
-      }
+    const handleCloseByEsc = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            model.handleCloseModal();
+        }
     };
-    document.addEventListener("keydown", escFunction); 
-    return () => {
-    document.removeEventListener("keydown", escFunction);
-    }
-  }, [])
 
-  return ReactDOM.createPortal (
-    <div className={`modal ${isOpen ? 'modal_opened' : ''}`}>
-      <div ref={overlay}>
-        <ModalOverlay isOpen={isOpen} />
-      </div>
-      <div className='modal__container'>
-        <div className="modal__button-container" test-id="modalCloseIconContainer">
-          <div
-            onClick={handleClose}
-          />
+    useEffect(() => {
+        setCloseByOverlayListener(modalRef.current);
+    }, []);
+
+    // Закрытие popup при нажатии на Esc
+    useEffect(() => {
+        if (model.isModalOpen) {
+            // Список действий внутри одного хука
+            document.addEventListener("keydown", handleCloseByEsc);
+            // Возвращаем функцию, которая удаляет эффекты
+            return () => {
+                document.removeEventListener("keydown", handleCloseByEsc);
+            };
+        }
+    }, [model.isModalOpen]);
+
+    return (
+        <div ref={modalRef} className={cn(styles.modal, model.isModalOpen ? styles.modal_opened : {})}>
+            <div className={styles.modal__container}>
+                <button
+                    type="button"
+                    className={styles.modal__closeButton}
+                    onClick={model.handleCloseModal}
+                >
+                </button>
+                {children}
+            </div>
         </div>
-        {children}
-       </div>
-    </div>, modalRoot
-  );
+    );
 }
 
-export default Modal;
+export default observer(Modal);

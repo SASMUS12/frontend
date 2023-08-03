@@ -16,7 +16,7 @@ export const useModel = () => {
                         email: "",
                         password: "",
                         confirmPassword: "",
-                        isModalOpen: false,
+                        isModalOpen: true,
                         isLoggedIn: false,
 
                         handleUsernameChange({value}: { value: string }) {
@@ -37,6 +37,11 @@ export const useModel = () => {
 
                         handleCloseModal() {
                             model.isModalOpen = false;
+                        },
+
+                        handleOpenModal() {
+                            model.isModalOpen = true;
+                            console.log(model.isModalOpen);
                         },
 
                         async handleRegister(event: FormEvent<HTMLFormElement>) {
