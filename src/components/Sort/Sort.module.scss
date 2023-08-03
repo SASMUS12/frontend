@@ -32,6 +32,7 @@
   .popup__findButton {
     width: 100%;
     height: 26px;
+    margin-bottom: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +40,7 @@
     background-color: #6D47D1;
     color: #fff;
     font-family: Inter;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 16px;
     cursor: pointer;
@@ -52,6 +53,23 @@
   
   .popup__findButton:active {
     background-color: #4c2a89;
+  }
+
+  .popup__cleanButton {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: var(--accent-color-violet, #6D47D1);
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
 
   h2 {

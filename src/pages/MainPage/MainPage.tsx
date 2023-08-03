@@ -9,6 +9,7 @@ import Sort from "../../components/Sort/Sort";
 import Footer from '../../components/Footer/Footer';
 import {Button} from '../../components/UI/Button/Button';
 import { Language } from '../../components/LanguageLevel/LanguageLevel';
+import { Country } from '../../components/Sort/Sort';
 
 import styles from './MainPage.module.scss';
 import cn from "classnames";
@@ -37,6 +38,7 @@ const MainPage = () => {
     const [sortType, setSortType] = useState({});
     const [isSortPopupOpen, setIsSortPopupOpen] = useState(true);
     const [languagesData, setLanguagesData] = useState<Language[]>([]);
+    const [countriesData, setCountriesData] = useState<Country[]>([]);
 
     const isModalOpen = model.isModalOpen;
 
@@ -70,6 +72,10 @@ const MainPage = () => {
         }
     };
 
+    useEffect(() => {
+        getUsersList();
+    }, [category, sortType]);
+
     //Запрос массива языков
     const fetchLanguagesData = async () => {
         try {
@@ -86,12 +92,28 @@ const MainPage = () => {
     useEffect(() => {
         fetchLanguagesData();
     }, []);
-    
+       
+    //Запрос страны
+    const fetchCountriesData = async () => {
+    try {
+      console.log('отправка запроса ---');
+      const response = await api.api.countriesList();
+      console.log('ответ получен -', response);
+      const countries = response.data.map((country) => ({
+        code: country.code,
+        name: country.name,
+      }));
+      setCountriesData(countries);
+    } catch (error) {
+      console.error("Ошибка при получении данных о странах:", error);
+    }
+    };
 
     useEffect(() => {
-        getUsersList();
-    }, [category, sortType]);
+        fetchCountriesData();
+      }, []);
 
+    
     const popupRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
     useEffect(() => {
@@ -167,6 +189,7 @@ const MainPage = () => {
                         onChangeSort={setSortType}
                         isOpen={isSortPopupOpen}
                         languagesData={languagesData}
+                        countriesData={countriesData}
                     />
                 </div>
                 <Button className={styles.content__continuingButton} variant="transparent">

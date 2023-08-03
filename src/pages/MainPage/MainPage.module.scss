@@ -52,6 +52,7 @@
   }
 
   &__sortButton {
+    
     background-image: url("../../images/svg/Filter.svg");
     width: 26px;
     height: 26px;
@@ -61,7 +62,7 @@
   }
    
   &__sortButton_open {
-    background-image: url("../../images/svg/Filter_red.svg"); // Замените 'AnotherImage.svg' на путь к вашей второй картинке
+    background-image: url("../../images/svg/Filter_green.svg");
   }
 
   &__modal {
