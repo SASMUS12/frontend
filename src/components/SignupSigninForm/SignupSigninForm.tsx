@@ -5,11 +5,11 @@ import {observer} from 'mobx-react-lite';
 import {Input} from '../UI/Input/Input';
 import {Button} from '../UI/Button/Button';
 
-import styles from './SignUpAndSignInForm.module.scss';
+import styles from './SignupSigninForm.module.scss';
 import {useModel} from './model';
 import cn from "classnames";
 
-const SignUpAndSignInForm = () => {
+const SignupSigninForm = () => {
     const model = useModel();
 
     const location = useLocation();
@@ -133,4 +133,4 @@ const SignUpAndSignInForm = () => {
     );
 };
 
-export default observer(SignUpAndSignInForm);
+export default observer(SignupSigninForm);
