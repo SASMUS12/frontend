@@ -1,71 +1,29 @@
-import React, {useRef, useEffect, FC, ReactNode} from "react";
-import {observer} from "mobx-react-lite";
+import React, {FC, ReactNode} from "react";
+
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 import styles from "./Modal.module.scss"
-import cn from "classnames";
 
-import {useModel} from "../SignupSigninForm/model";
-
-interface ModalProps {
-    className?: string;
+interface IModalProps {
+    isOpen: boolean;
+    onClose: () => void;
     children?: ReactNode;
 }
 
-const Modal: FC<ModalProps> = ({
-                                   className,
-                                   children
-                               }) => {
-    const model = useModel();
-
-    const modalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-
-    const setCloseByOverlayListener = (modal: any) => {
-        modal.addEventListener("mousedown", (event: MouseEvent) => {
-            const targetClasses = (event.target as Element).classList;
-            const regExp = /^(Modal_modal_opened__)[\w]?/;
-            for (let i = 0; i < targetClasses.length; i++) {
-                if (regExp.test(targetClasses[i])) {
-                    model.handleCloseModal();
-                }
-            }
-        });
-    }
-
-    const handleCloseByEsc = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-            model.handleCloseModal();
-        }
-    };
-
-    useEffect(() => {
-        setCloseByOverlayListener(modalRef.current);
-    }, []);
-
-    // Закрытие popup при нажатии на Esc
-    useEffect(() => {
-        if (model.isModalOpen) {
-            // Список действий внутри одного хука
-            document.addEventListener("keydown", handleCloseByEsc);
-            // Возвращаем функцию, которая удаляет эффекты
-            return () => {
-                document.removeEventListener("keydown", handleCloseByEsc);
-            };
-        }
-    }, [model.isModalOpen]);
-
+const Modal: FC<IModalProps> = ({isOpen, onClose, children}) => {
     return (
-        <div ref={modalRef} className={cn(styles.modal, model.isModalOpen ? styles.modal_opened : {})}>
+        <ModalOverlay isOpen={isOpen} onClose={onClose}>
             <div className={styles.modal__container}>
                 <button
                     type="button"
                     className={styles.modal__closeButton}
-                    onClick={model.handleCloseModal}
+                    onClick={onClose}
                 >
                 </button>
                 {children}
             </div>
-        </div>
+        </ModalOverlay>
     );
 }
 
-export default observer(Modal);
+export default Modal;

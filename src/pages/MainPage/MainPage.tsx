@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {observer} from "mobx-react-lite";
 
 import {api} from '../../utils/constants';
 
@@ -16,6 +17,8 @@ import cn from "classnames";
 import {useModel} from "../../components/SignupSigninForm/model";
 
 const MainPage = () => {
+    const model = useModel();
+
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
     const [category, setCategory] = useState({name: 'Все', path: ''});
@@ -89,19 +92,22 @@ const MainPage = () => {
                 <Button className={styles.content__continuingButton} variant="transparent">
                     Продолжить искать
                 </Button>
+
+                <Modal isOpen={model.isModalOpen} onClose={model.handleCloseModal}>
+                    <h2 className={styles.modal_header}>Подтвердите адрес электронной почты</h2>
+                    <p className={styles.modal_text_main}>Пожалуйста, проверьте электронную почту, которую
+                        указали
+                        при регистрации, и перейдите по ссылке для подтверждения</p>
+                    <p className={styles.modal_text_additional}>Ссылка будет активна в течении 24 часов</p>
+                </Modal>
+
             </main>
             <Footer/>
 
-            <Modal>
-                <h2 className={styles.modal_header}>Подтвердите адрес электронной почты</h2>
-                <p className={styles.modal_text_main}>Пожалуйста, проверьте электронную почту, которую
-                    указали
-                    при регистрации, и перейдите по ссылке для подтверждения</p>
-                <p className={styles.modal_text_additional}>Ссылка будет активна в течении 24 часов</p>
-            </Modal>
+
 
         </>
     );
 };
 
-export default MainPage;
+export default observer(MainPage);
