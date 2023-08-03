@@ -228,7 +228,7 @@ export interface TokenObtainPair {
 }
 
 export interface TokenRefresh {
-  access: string;
+  access?: string;
   refresh: string;
 }
 

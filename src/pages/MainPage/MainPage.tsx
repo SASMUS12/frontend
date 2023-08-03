@@ -20,17 +20,6 @@ import {useNavigate, useParams} from "react-router-dom";
 const MainPage = () => {
     const model = useModel();
 
-    const {authPath} = useParams();
-    const navigate = useNavigate();
-
-    const getAuthPath = () => {
-        if (authPath !== undefined ) {
-            console.log(authPath.slice(0, 51));
-            navigate("/");
-        }
-    }
-
-// && authPath.slice(0, 51) === 'https://lingvogo.acceleratorpracticum.ru/'
 
     const [usersList, setUsersList] = useState<any[]>([]);
     const [isUsersList, setIsUsersList] = useState(false);
@@ -42,21 +31,17 @@ const MainPage = () => {
 
     const isModalOpen = model.isModalOpen;
 
-
-    useEffect(() => {
-        getAuthPath();
-    }, []);
-
     const handleOpenSortPopup = () => {
         setIsSortPopupOpen(!isSortPopupOpen);
         console.log(isSortPopupOpen);
     }
 
+
     const getUsersList = async () => {
         try {
             console.log('отправка запроса ---');
             const response = await api.api.usersList(
-                //{}, {path: `/api/v1/users/${category.path}`}
+                {ordering: `${category.path}`}
                 // sort: sortType,
             );
             console.log('ответ получен -', response);
