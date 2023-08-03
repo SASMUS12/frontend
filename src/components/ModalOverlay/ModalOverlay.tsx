@@ -17,10 +17,16 @@ const ModalOverlay: FC<IModalOverlayProps> = ({isOpen, onClose, children}) => {
         modal.addEventListener("mousedown", (event: MouseEvent) => {
             const targetClasses = (event.target as Element).classList;
             const regExp = /^(ModalOverlay_modalOverlay_opened__)[\w]?/;
-            for (let i = 0; i < targetClasses.length; i++) {
-                if (regExp.test(targetClasses[i])) {
-                    onClose();
-                }
+            const getClassName = () => {
+                let isClassName = false;
+                Array.from(targetClasses).filter((className) => {
+                    isClassName = regExp.test(className);
+                });
+                return isClassName;
+            }
+
+            if (getClassName()) {
+                onClose();
             }
         });
     }
