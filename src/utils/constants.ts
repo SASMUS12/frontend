@@ -1,1 +1,7 @@
-export const bazeUrl = 'http://5.181.255.32/api/v1/';
+import {Api} from "./openapi";
+
+export const apiConfig = {
+  baseUrl: 'https://lingvogo.acceleratorpracticum.ru',
+};
+
+export const api = new Api(apiConfig);

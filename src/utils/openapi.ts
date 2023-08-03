@@ -59,7 +59,6 @@ export enum GenderEnum {
 
 /** Сериализатор модели языка. */
 export interface Language {
-  id: number;
   /**
    * Название языка
    * @maxLength 256
@@ -103,38 +102,6 @@ export interface PaginatedChatListList {
   results?: ChatList[];
 }
 
-export interface PaginatedCountryList {
-  /** @example 123 */
-  count?: number;
-  /**
-   * @format uri
-   * @example "http://api.example.org/accounts/?page=4"
-   */
-  next?: string | null;
-  /**
-   * @format uri
-   * @example "http://api.example.org/accounts/?page=2"
-   */
-  previous?: string | null;
-  results?: Country[];
-}
-
-export interface PaginatedLanguageList {
-  /** @example 123 */
-  count?: number;
-  /**
-   * @format uri
-   * @example "http://api.example.org/accounts/?page=4"
-   */
-  next?: string | null;
-  /**
-   * @format uri
-   * @example "http://api.example.org/accounts/?page=2"
-   */
-  previous?: string | null;
-  results?: Language[];
-}
-
 export interface PaginatedUserList {
   /** @example 123 */
   count?: number;
@@ -167,14 +134,21 @@ export interface PatchedUser {
    */
   email?: string;
   /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   * Имя пользователя
+   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
    * @maxLength 150
    * @pattern ^[\w.@+-]+$
    */
   username?: string;
-  /** @maxLength 128 */
+  /**
+   * Пароль
+   * @maxLength 128
+   */
   password?: string;
-  /** @maxLength 150 */
+  /**
+   * Имя
+   * @maxLength 150
+   */
   first_name?: string;
   /** @format uri */
   avatar?: string | null;
@@ -215,6 +189,10 @@ export interface PatchedUser {
    * @maxLength 100
    */
   about?: string;
+  /** Поле для скрытия/отображения пола пользователя */
+  gender_is_hidden?: boolean;
+  /** Поле для скрытия/отображения возраста пользователя */
+  age_is_hidden?: boolean;
 }
 
 export interface SendEmailReset {
@@ -245,8 +223,8 @@ export enum SkillLevelEnum {
 export interface TokenObtainPair {
   username: string;
   password: string;
-  access: string;
-  refresh: string;
+  access?: string;
+  refresh?: string;
 }
 
 export interface TokenRefresh {
@@ -268,14 +246,21 @@ export interface User {
    */
   email: string;
   /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   * Имя пользователя
+   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
    * @maxLength 150
    * @pattern ^[\w.@+-]+$
    */
   username: string;
-  /** @maxLength 128 */
+  /**
+   * Пароль
+   * @maxLength 128
+   */
   password: string;
-  /** @maxLength 150 */
+  /**
+   * Имя
+   * @maxLength 150
+   */
   first_name?: string;
   /** @format uri */
   avatar?: string | null;
@@ -316,6 +301,10 @@ export interface User {
    * @maxLength 100
    */
   about?: string;
+  /** Поле для скрытия/отображения пола пользователя */
+  gender_is_hidden: boolean;
+  /** Поле для скрытия/отображения возраста пользователя */
+  age_is_hidden: boolean;
 }
 
 export interface UserCreate {
@@ -327,18 +316,24 @@ export interface UserCreate {
    */
   email: string;
   /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   * Имя пользователя
+   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
    * @maxLength 150
    * @pattern ^[\w.@+-]+$
    */
   username: string;
-  id: number;
+  id?: number;
   password: string;
 }
 
 /** Сериализатор промежутоной модели Пользователь-иностранный язык. */
 export interface UserForeignLanguage {
   id: number;
+  /**
+   * ISO 639-1 Код языка
+   * 2-символьный код языка без страны
+   */
+  code: string;
   /** Название языка */
   language: string;
   /**
@@ -357,6 +352,11 @@ export interface UserForeignLanguage {
 /** Сериализатор промежутоной модели Пользователь-родной язык. */
 export interface UserNativeLanguage {
   id: number;
+  /**
+   * ISO 639-1 Код языка
+   * 2-символьный код языка без страны
+   */
+  code: string;
   /** Название языка */
   language: string;
 }
@@ -735,7 +735,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Вьюсет модели страны.
      *
      * @tags countries
      * @name CountriesList
@@ -744,16 +744,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     countriesList: (
       query?: {
-        /** Number of results to return per page. */
-        limit?: number;
-        /** A page number within the paginated result set. */
-        page?: number;
         /** A search term. */
         search?: string;
       },
       params: RequestParams = {},
     ) =>
-      this.request<PaginatedCountryList, any>({
+      this.request<Country[], any>({
         path: `/api/v1/countries/`,
         method: "GET",
         query: query,
@@ -763,7 +759,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Вьюсет модели страны.
      *
      * @tags countries
      * @name CountriesRetrieve
@@ -780,7 +776,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Вьюсет модели языка.
      *
      * @tags languages
      * @name LanguagesList
@@ -789,16 +785,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     languagesList: (
       query?: {
-        /** Number of results to return per page. */
-        limit?: number;
-        /** A page number within the paginated result set. */
-        page?: number;
         /** A search term. */
         search?: string;
       },
       params: RequestParams = {},
     ) =>
-      this.request<PaginatedLanguageList, any>({
+      this.request<Language[], any>({
         path: `/api/v1/languages/`,
         method: "GET",
         query: query,
@@ -808,7 +800,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Вьюсет модели языка.
      *
      * @tags languages
      * @name LanguagesRetrieve
@@ -834,9 +826,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     usersList: (
       query?: {
-        age?: number;
-        country?: number;
-        /** Название языка */
+        age?: string;
+        /**
+         * Код
+         * Код страны
+         */
+        country?: string | null;
+        /**
+         * ISO 639-1 Код языка
+         * 2-символьный код языка без страны
+         */
         foreign_languages?: string;
         /**
          * Пол
@@ -848,8 +847,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         gender?: "Female" | "Male" | null;
         /** Number of results to return per page. */
         limit?: number;
+        /**
+         * ISO 639-1 Код языка
+         * 2-символьный код языка без страны
+         */
+        native_languages?: string;
+        /** Which field to use when ordering the results. */
+        ordering?: string;
         /** A page number within the paginated result set. */
         page?: number;
+        /**
+         * Уровень владения языком
+         * Укажите уровень вашего владения языком.
+         *
+         * * `Newbie` - Новичок
+         * * `Amateur` - Любитель
+         * * `Profi` - Профи
+         * * `Expert` - Эксперт
+         * * `Guru` - Гуру
+         */
+        skill_level?: "Amateur" | "Expert" | "Guru" | "Newbie" | "Profi";
       },
       params: RequestParams = {},
     ) =>
@@ -895,41 +912,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "GET",
         secure: true,
         format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Вьюсет модели пользователя.
-     *
-     * @tags users
-     * @name UsersPartialUpdate
-     * @request PATCH:/api/v1/users/{slug}/
-     * @secure
-     */
-    usersPartialUpdate: (slug: string, data: PatchedUser, params: RequestParams = {}) =>
-      this.request<User, any>({
-        path: `/api/v1/users/${slug}/`,
-        method: "PATCH",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Вьюсет модели пользователя.
-     *
-     * @tags users
-     * @name UsersDestroy
-     * @request DELETE:/api/v1/users/{slug}/
-     * @secure
-     */
-    usersDestroy: (slug: string, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/v1/users/${slug}/`,
-        method: "DELETE",
-        secure: true,
         ...params,
       }),
 

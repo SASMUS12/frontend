@@ -1,3 +1,7 @@
 @import url("normalize.css");
 @import url("reset.css");
 @import url("root.css");
+
+body {
+  background: var(--grey-color-50);
+}

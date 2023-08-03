@@ -1,18 +1,16 @@
 import React from 'react';
-import { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
-// import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
-import { useModel } from './MainPage/model';
+import {lazy} from 'react';
+import {Route, Routes} from 'react-router-dom';
 
-const SignInPage = lazy(() => import('./SignInPage/SignInPage'));
-const SignUpPage = lazy(() => import('./SignUpPage/SignUpPage'));
+// import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+
+const SignInPage = lazy(() => import('../pages/SignUpAndSignInPages/SignUpAndSignInPages'));
+const SignUpPage = lazy(() => import('../pages/SignUpAndSignInPages/SignUpAndSignInPages'));
 const MainPage = lazy(() => import('./MainPage/MainPage'));
 const UserProfile = lazy(() => import('../pages/UserProfile/UserProfile'));
 const NotFoundPage = lazy(() => import('./NotFoundPage/NotFoundPage'));
 
 export const Routing = () => {
-  const model = useModel();
-  const isLoggedIn = model.isLoggedIn;
 
   return (
     <Routes>

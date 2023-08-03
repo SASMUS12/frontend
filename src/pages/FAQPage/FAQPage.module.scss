@@ -1,0 +1,44 @@
+.main {
+  background: var(--grey-color-50);
+  padding: 80px 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 20px 24px 81px;
+  background: var(--grey-color-50);
+
+  &__header {
+    color: var(--dark-violet);
+    font-size: 28px;
+    font-weight: 600;
+    padding: 40px 0 40px 0;
+    border-bottom: 1px solid rgb(218, 211, 211);
+  }
+
+  &__textBlock {
+    width: 1140px;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      font-size: 22px;
+      font-weight: 600;
+      padding: 40px 0px 20px 0px;
+      color: var(--dark-violet);
+      max-width: 1140px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 22px;
+      font-weight: 400;
+      padding: 20px 0 20px 0;
+      max-width: 1140px;
+    }
+  }
+
+}

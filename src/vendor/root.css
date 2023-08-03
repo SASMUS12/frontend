@@ -1,40 +1,49 @@
 :root {
-	/* Typography */
-	--font-sans: 'Inter', sans-serif;
+  /* Typography */
+  --font-sans: "Inter", sans-serif;
 
-	/* Color scheme */
+  /* Color scheme */
 
-	/* Colors */
-	/*Старые для путей пользователя, потом убрать*/
-	--color-primary: #1172cb;
-	--color-background-header: #9ccaf4;
-	--color-background-content: #c4dcf2;
-	--color-input-placeholder: #8fa1b2;
+  /* Colors */
+  /*Старые для путей пользователя, потом убрать*/
+  --color-primary: #1172CB;
+  --color-background-header: #9CCAF4;
+  --color-background-content: #C4DCF2;
+  --color-input-placeholder: #8FA1B2;
 
-	/*По макету*/
-	--soft-grey: #9a98a8;
-	--grey-color-50: #f0f2f4;
-	--grey-color-90: #909090;
-	--grey-color-500: #323944;
-	--rose-violet: #ca60d3;
-	--dark-violet: #403a6d;
-	--dark-violet-gradient: #66618a;
+  /*По макету*/
+  --soft-grey: #9A98A8;
+  --grey-color-50: #F0F2F4;
+  --grey-color-90: #909090;
+  --grey-gradient-400: #8995A9;
+  --grey-color-500: #323944;
+  --accent-color-violet: #6D47D1;
+  --dark-violet: #403A6D;
+  --dark-violet-gradient-400: #66618A;
+  --soft-violet: #A5A0C5;
+  --primory-button-hover: #A083E0;
+  --secondary-button-hover: #E1D6FF;
 
-	/* Base */
-	--color-base-black: #000;
-	--color-base-white: #fff;
+  /* Base */
+  --color-base-black: #000;
+  --color-base-white: #fff;
 
-	/* Shadows */
-	--card-shadow: 0px 0px 8px 0px rgba(17, 17, 26, 0.1), 0px 1px 0px 0px rgba(17, 17, 26, 0.05);
+  /* Shadows */
+  --card-shadow: 0px 0px 8px 0px rgba(17, 17, 26, 0.10), 0px 1px 0px 0px rgba(17, 17, 26, 0.05);
 
-	/* Typography */
-	/*Старые для путей пользователя, потом убрать*/
-	--font-text-xl-regular: 400 36px/43.57px var(--font-sans);
-	--font-text-lg-regular: 400 24px/29.05px var(--font-sans);
+  /* Typography */
+  /*Старые для путей пользователя, потом убрать*/
+  --font-text-xl-regular: 400 36px/43.57px var(--font-sans);
+  --font-text-lg-regular: 400 24px/29.05px var(--font-sans);
 
-	/*По макету*/
-	--font-text-13-108-normal: 400 13px/14px var(--font-sans);
-	--font-text-14-100-normal: 400 14px/14px var(--font-sans);
-	--font-text-14-140-normal: 400 14px/1.4 var(--font-sans);
-	--font-text-16-120-normal: 400 16px/1.2 var(--font-sans);
+  /*По макету*/
+  --font-text-13-108-400: 400 13px/14px var(--font-sans);
+  --font-text-14-100-400: 400 14px/14px var(--font-sans);
+  --font-text-14-120-400: 400 14px/1.2 var(--font-sans);
+  --font-text-14-140-400: 400 14px/1.4 var(--font-sans);
+  --font-text-16-120-400: 400 16px/1.2 var(--font-sans);
+  --font-text-18-140-400: 400 18px/1.4 var(--font-sans);
+  --font-header-18-120-600: 600 18px/1.2 var(--font-sans);
+  --font-header-24-120-600: 600 24px/1.2 var(--font-sans);
 }
+
