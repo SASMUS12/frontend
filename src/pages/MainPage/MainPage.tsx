@@ -14,7 +14,7 @@ import { Country } from '../../components/Sort/Sort';
 import styles from './MainPage.module.scss';
 import cn from "classnames";
 
-import {useModel} from "../../components/SignUpAndSignInForm/model";
+import {useModel} from "../../components/SignupSigninForm/model";
 import {useNavigate, useParams} from "react-router-dom";
 
 const MainPage = () => {
