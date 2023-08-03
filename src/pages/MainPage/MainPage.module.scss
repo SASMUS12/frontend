@@ -51,18 +51,38 @@
     margin: 40px auto 0;
   }
 
+  &__filter {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  
+    h3 {
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: var(--dark-violet, #403A6D);
+    }
+  }
+
   &__sortButton {
-    
-    background-image: url("../../images/svg/Filter.svg");
     width: 26px;
     height: 26px;
+    background-size: 26px 26px;
+    background-image: url("../../images/svg/Filter.svg");
+    background-repeat: no-repeat;
     border: none;
     cursor: pointer;
-    
+    background-color: #F0F2F6;
   }
    
   &__sortButton_open {
+    width: 26px;
+    height: 26px;
+    background-size: 26px 26px;
     background-image: url("../../images/svg/Filter_green.svg");
+
   }
 
   &__modal {

@@ -141,12 +141,15 @@ const MainPage = () => {
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 <div className={styles.content__filterTag}>
                     <Categories value={category} onChangeCategory={setCategory}/>
+                    <div className={styles.content__filter}>
+                        <h3>Фильтр</h3>
                     <button
                         className={cn(styles.content__sortButton, {
                             [styles.content__sortButton_open]: isSortPopupOpen,
                           })}
                         onClick={handleOpenSortPopup}
                     ></button>
+                    </div>
                 </div>
                 <div className={styles.content__cardListAndSortPopup}>
                     <div
