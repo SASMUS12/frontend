@@ -228,8 +228,8 @@ export interface TokenObtainPair {
 }
 
 export interface TokenRefresh {
-  access: string;
-  refresh?: string;
+  access?: string;
+  refresh: string;
 }
 
 export interface TokenVerify {
@@ -824,7 +824,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/v1/users/
      * @secure
      */
-    usersList: (slug: string,
+    usersList: (
       query?: {
         age?: string;
         /**
@@ -871,7 +871,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<PaginatedUserList, any>({
-        path: `/api/v1/users/${slug}`,
+        path: `/api/v1/users/`,
         method: "GET",
         query: query,
         secure: true,

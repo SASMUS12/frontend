@@ -37,7 +37,7 @@ const MainPage = () => {
         try {
             console.log('отправка запроса ---');
             const response = await api.api.usersList(
-                `${category.path}`,
+                {ordering: `${category.path}`}
                 // sort: sortType,
             );
             console.log('ответ получен -', response);
