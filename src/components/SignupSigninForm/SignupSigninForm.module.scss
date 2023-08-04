@@ -1,0 +1,64 @@
+.form {
+  width: 453px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+
+  &_input {
+    width: 336px;
+    margin-bottom: 24px;
+  }
+
+  &_textTag {
+    width: 336px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    cursor: pointer;
+  }
+
+  &_checkbox {
+    display: flex;
+    //align-items: center;
+    color: var(--dark-violet);
+
+    &_input {
+      width: 18px;
+      height: 18px;
+      margin-right: 12px;
+      border: 1px solid var(--soft-violet);
+
+      &_signUp {
+        font: var(--font-text-16-120-400);
+
+        &_span {
+          text-decoration: underline;
+        }
+      }
+
+      &_signIn {
+        font: var(--font-text-14-120-400);
+      }
+    }
+  }
+
+  &_forgotLink {
+    font: var(--font-text-14-120-400);
+    color: var(--dark-violet-gradient-400);
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  &_button {
+    margin-top: 32px;
+
+    &_signUp {
+      width: 148px;
+    }
+
+    &_signIn {
+      width: 336px;
+    }
+  }
+}

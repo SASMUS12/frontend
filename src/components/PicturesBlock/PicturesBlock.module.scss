@@ -1,0 +1,91 @@
+.picturesBlock {
+  width: 947px;
+  height: 900px;
+  background-color: #6D47D1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  p {
+    font-weight: 600;
+    font-size: 28px;
+    color: white;
+    line-height: 33px;
+    position: absolute;
+    top: 196px;
+    margin: 0;
+    padding: 0;
+    width: 627px;
+    height: 66px;
+    text-align: center;
+  }
+ 
+  span {
+    color: #C3EE11;
+  }
+
+  &__img {
+    position: absolute;
+    top: 220px;
+  }
+
+  &__container {
+    display: flex;
+    gap: 30px;
+    position: absolute;
+    bottom: 197px;  
+  }
+
+  &__picActive {
+    color: #C3EE11;
+    width: 54px;
+    height: 4px;
+  }
+
+  &__item {
+    color: #C3EE11;
+    width: 54px;
+    height: 4px;
+  }
+
+  &__item1 {
+    position: absolute;
+    width: 194px;
+    height: 277px;
+    top: 320px;
+    right: 515px;
+  }
+
+  &__item2 {
+    position: absolute;
+    width: 167px;
+    height: 239px;
+    top: 306px;
+    right: 306px;
+  }
+
+  &__item3 {
+    position: absolute;
+    width: 109px;
+    height: 100px;
+    top: 320px;
+    right: 226px;
+    z-index: 3;
+  }
+
+  &__img3 {
+    position: absolute;
+    width: 456px;
+    height: 456px;
+    top: 248px;
+    right: 245px;
+  }
+
+  &__img4 {
+    position: absolute;
+    width: 456px;
+    height: 413px;
+    top: 255px;
+    right: 245px;
+  }
+}
