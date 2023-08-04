@@ -21,6 +21,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [leftValue, setLeftValue] = useState<number>(18);
   const [rightValue, setRightValue] = useState<number>(40);
   const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
+  const [isCountryListVisible, setCountryListVisible] = useState(false);
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [filteredCountries, setFilteredCountries] = useState<Country[]>(countriesData);
@@ -29,12 +30,14 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
+  const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);//Создайте состояние для хранения списка подсказок:
 
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
     if (selectedCountries.length < 5 && !selectedCountries.includes(country)) {
       setSelectedCountries([...selectedCountries, country]);
-      setSelectedCountry(country); // Фиксируем выбранную страну в состоянии selectedCountry
+      setSelectedCountry(country);
+      setCountryListVisible(false);
       setSearchValue('');
     }
   };
@@ -97,17 +100,57 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchValue = e.target.value.toLowerCase();
+    console.log('handleSearchInputChange called');
+    const newSearchValue = e.target.value;
+    setSearchValue(newSearchValue);
+
+    if (newSearchValue) {
+      setCountryListVisible(true);
+    } else {
+      setCountryListVisible(false);
+    }
+
+    const searchValueLower = newSearchValue.toLocaleLowerCase('ru');
     const filtered = countriesData.filter((country) =>
-      country.name.toLowerCase().includes(searchValue)
+      country.name.toLocaleLowerCase('ru').includes(searchValueLower) && !selectedCountries.includes(country)
     );
     setFilteredCountries(filtered);
-    setSearchValue(e.target.value);
 
-     // Получаем первую букву из введенного значения
-    const firstLetter = searchValue.length > 0 ? searchValue.charAt(0) : null;
+    const suggested = countriesData.filter((country) =>
+    country.name.toLocaleLowerCase('ru').startsWith(searchValueLower)
+    );
+    setSuggestedCountries(suggested);
+
+    
+    const firstLetter = searchValueLower.length > 0 ? searchValueLower.charAt(0) : null;
     setLastPressedLetter(firstLetter);
+    
+    setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
   };
+  
+  const handleSelectCountryFromList = (countryName: string) => {
+    const selectedCountry = countriesData.find(country => country.name.toLocaleLowerCase('ru') === countryName);
+    if (selectedCountry) {
+      handleSelectCountry(selectedCountry);
+    }
+  };
+
+  const countrySuggestions = suggestedCountries.map((country) => (
+    <div
+      key={country.code}
+      onClick={() => handleSelectCountryFromList(country)}
+      className={classNames(styles.popup__countryOption, {
+        [styles.selected]: selectedCountry?.code === country.code,
+      })}
+    >
+      {country.name}
+    </div>
+  ));
+
+
+  const countryOptions = filteredCountries.map((country) => (
+    <option key={country.code} value={country.name} />
+  ));
 
   // Очистка фильтра
   const handleClearFilter = () => {
@@ -166,27 +209,43 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             value={searchValue}
             onChange={handleSearchInputChange}
             onKeyDown={handleEnterPress}
+            list="countryOptions"
+            className={styles.popup__input}
           />
+          <div className={styles.popup__suggestions}>
+            {countrySuggestions}
+          </div>
+          <datalist id="countryOptions">
+            {suggestedCountries.map((country) => (
+              <option key={country.code} value={country.name} />
+            ))}  
+          </datalist>
           <div className={styles.popup__selectedCountriesContainer}>
             {getSelectedCountryNames()}
+            {isCountryListVisible && (
+              <div className={classNames(styles.popup__countryList, {
+                [styles.popup__countryList_visible]: sortCountriesByLastLetter().length > 0,
+              })}>
+              {sortCountriesByLastLetter().map((country) => (
+                <div
+                  key={country.code}
+                  onClick={() => handleSelectCountryFromList(country.name.toLocaleLowerCase('ru'))}
+                  className={classNames(styles.popup__countryOption, {
+                    [styles.selected]: selectedCountry?.code === country.code,
+                  })}
+                >
+                  {country.name}
+                </div>
+              ))}
+             </div>
+            )}
           </div>
-          {sortCountriesByLastLetter().map((country) => (
-            <div
-              key={country.code}
-              onClick={() => handleSelectCountry(country)}
-              className={classNames(styles.popup__countryOption, {
-                [styles.selected]: selectedCountry?.code === country.code,
-              })}
-            >
-              {country.name}
-            </div>
-          ))}
-          <Button
+          {/* <Button
             onClick={handleOpenLanguageMenu}
             className={styles.popup__languageButton}
           >
             {selectedLanguage ? selectedLanguage.name : ""}
-          </Button>
+          </Button> */}
         </div>
       </div>
       <h2>Язык партнера</h2>
