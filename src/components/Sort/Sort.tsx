@@ -8,12 +8,6 @@ import { Button } from "../UI/Button/Button";
 import { Language } from '../../utils/openapi';
 import { Country } from '../../utils/openapi';
 import classNames from 'classnames';
-import removeSvg from '../../images/svg/16px.svg';
-
-enum Gender {
-  Male = 'Мужчина',
-  Female = 'Женщина',
-}
 
 interface SortProps {
   value: any;
@@ -64,17 +58,10 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
       return selectedCountries.map((country) => (
         <div key={country.code} className={styles.popup__selectedCountry}>
           <span className={styles.popup__countryName}>{country.name}</span>
-          <button
+          <Button
             className={styles.popup__removeButton}
             onClick={() => handleRemoveCountry(country)}
-          >
-          <img
-            src={removeSvg}
-            alt="Remove"
-            width="12"
-            height="12"
           />
-          </button>
         </div>
       ));
     } else {
@@ -82,9 +69,9 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     }
   };
 
-  // const handleGenderSelection = (gender: string) => {
-  //   setSelectedGender(gender);
-  // };
+  const handleGenderSelection = (gender: string) => {
+    setSelectedGender(gender);
+  };
 
   const handleSliderChange = (left: number, right: number) => {
     setLeftValue(left);
@@ -232,17 +219,15 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         <div className={styles.popup__gender}>
           <h3>Пол</h3>
           <Button
-            onClick={() => setSelectedGender(Gender.Male)}
-            selected={selectedGender === Gender.Male}
-          >
-            {Gender.Male}
-          </Button>
+            children={"Мужчина"}
+            onClick={() => handleGenderSelection('Мужчина')}
+            className={selectedGender === 'Мужчина' ? styles.selected : ''}
+          />
           <Button
-            onClick={() => setSelectedGender(Gender.Female)}
-            selected={selectedGender === Gender.Female}
-          >
-            {Gender.Female}
-          </Button>
+            children={"Женщина"}
+            onClick={() => handleGenderSelection('Женщина')}
+            className={selectedGender === 'Женщина' ? styles.selected : ''}
+          />
         </div>
       </div>
       <div className={styles.popup__age}>
@@ -255,12 +240,16 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           onChange={handleSliderChange}
         />
       </div>
-      <Button onClick={handleFindButtonClick}>
-        {"Найти"}
-      </Button>
-      <Button onClick={handleClearFilter}>
-        {"Очистить фильтр"}
-      </Button>
+      <Button
+        className={styles.popup__findButton}
+        children={"Найти"}
+        onClick={handleFindButtonClick}
+      />
+      <Button
+        className={styles.popup__cleanButton}
+        children={"Очистить фильтр"}
+        onClick={handleClearFilter}
+      />
     </div>
   );
 };
