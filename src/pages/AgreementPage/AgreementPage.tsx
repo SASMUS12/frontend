@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
 import styles from './AgreementPage.module.scss';
 
-const AgreementPage = () => {
+const AgreementPage= () => {
   
   return (
     <>

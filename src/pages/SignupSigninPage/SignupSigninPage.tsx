@@ -24,9 +24,9 @@ const SignupSigninPage = () => {
                     </a>
                     <ul className={styles.content__signInContainer_links}>
                         <a className={styles.content__signInContainer_links_linkItem}
-                           href="/signin">Вход</a>
+                            href="/signin">Вход</a>
                         <a className={styles.content__signInContainer_links_linkItem}
-                           href="/signup">Регистрация</a>
+                            href="/signup">Регистрация</a>
                     </ul>
                     <SignupSigninForm />
                 </div>

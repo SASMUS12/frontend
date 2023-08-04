@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState } from 'react';
 import {observer} from "mobx-react-lite";
 
 import {api} from '../../utils/constants';
@@ -55,7 +55,7 @@ const MainPage = () => {
 
     return (
         <>
-            <Header/>
+            <Header />
             <main className={styles.content}>
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 <div className={styles.content__filterTag}>

@@ -45,7 +45,7 @@ const PicturesBlock= () => {
           <p>
             Организуй и вступай в<span> групповые чаты </span>и оттачивай языковые навыки
           </p>
-          <img src={step3} alt="Картинки с довольными людьми" className={styles.picturesBlock__img} />
+          <img src={step3} alt="Картинки с довольными людьми" className={styles.picturesBlock__img3} />
         </>
       }
       {pic === 4 && 
@@ -53,7 +53,7 @@ const PicturesBlock= () => {
           <p>
             <span>Делись новостями </span>и следи за обновлениями друзей
           </p>
-          <img src={step4} alt="Картинки с довольными людьми" className={styles.picturesBlock__img} />
+          <img src={step4} alt="Картинки с довольными людьми" className={styles.picturesBlock__img4} />
         </>
       }
       {pic === 5 && 
