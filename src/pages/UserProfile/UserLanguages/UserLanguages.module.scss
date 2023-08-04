@@ -2,7 +2,6 @@
 	display: flex;
 	justify-content: space-between;
 	width: 454px;
-	height: 107px;
 	background-color: var(--color-base-white);
 	border-radius: 20px;
 	margin: 16px 16px 16px 0;
@@ -25,11 +24,28 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 16px;
 }
 
 .profile__levels {
 	display: flex;
 	justify-content: space-between;
+}
+
+.profile__level {
+	display: flex;
+	justify-content: left;
+}
+
+.profile__langAdd {
+	font-family: var(--font-sans);
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 18px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--accent-color-violet);
+	padding-left: 6px;
 }
 
 .profile__subtitle {
@@ -39,7 +55,7 @@
 	line-height: 14px;
 	letter-spacing: 0em;
 	text-align: left;
-	color: var(--dark-violet-gradient);
+	color: var(--dark-violet-gradient-400);
 }
 
 .profile__help {

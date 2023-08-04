@@ -1,16 +1,11 @@
-import icon from '../../../../images/userProfile/settings.png';
 import styles from "./IconButton.module.scss";
 
-const IconButton = () => {
-  
-  const handleButtonClick = () => {
-    // Действия
-  };
+const IconButton = ({icon, handleFunction}) => {
 
   return(
     <>
-      <button className={styles.profile__button} onClick={handleButtonClick}>
-        <img className={styles.profile__icon} src={icon} alt="перейти в настройки"/>
+      <button className={styles.profile__button} onClick={handleFunction}>
+        <img className={styles.profile__icon} src={icon} alt="иконка настроек профиля"/>
       </button>
     </>
   )
