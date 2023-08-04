@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import styles from "../Sort/Sort.module.scss";
-import LanguageLevel, { Language } from "../LanguageLevel/LanguageLevel";
+import LanguageLevel from "../LanguageLevel/LanguageLevel";
 import { Button } from "../UI/Button/Button";
-import plus from '../../images/svg/plus-in-circle.svg';
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
+import { Language } from '../../utils/openapi';
+import { Country } from '../../utils/openapi';
+import classNames from 'classnames';
+import removeSvg from '../../images/svg/16px.svg';
 
-
-export interface Country {
-  code: string;
-  name: string;
-}
 
 interface SortProps {
   value: any;
   onChangeSort: (sortType: any) => void;
   isOpen: boolean;
   languagesData: Language[];
-  countriesData: {
-    code: string;
-    name: string;
-  }[];
+  countriesData: Country[];
 }
 
 const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData, countriesData }) => {
@@ -30,6 +25,60 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [searchValue, setSearchValue] = useState('');
   const [filteredCountries, setFilteredCountries] = useState<Country[]>(countriesData);
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
+  const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
+
+  // Функция для обработки выбора страны
+  const handleSelectCountry = (country: Country) => {
+    if (selectedCountries.length < 5 && !selectedCountries.includes(country)) {
+      setSelectedCountries([...selectedCountries, country]);
+      setSelectedCountry(country); // Фиксируем выбранную страну в состоянии selectedCountry
+      setSearchValue('');
+    }
+  };
+
+  // Функция для удаления выбранной страны
+  const handleRemoveCountry = (country: Country) => {
+    const updatedCountries = selectedCountries.filter((c) => c.code !== country.code);
+    setSelectedCountries(updatedCountries);
+  };
+
+  // Функция для обработки нажатия клавиши Enter в поле поиска
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && selectedCountry) {
+      handleSelectCountry(selectedCountry);
+    }
+  };
+
+  // Функция для отображения выбранных стран
+  const getSelectedCountryNames = () => {
+    if (selectedCountries.length > 0) {
+      return selectedCountries.map((country) => (
+        <div key={country.code} className={styles.popup__selectedCountry}>
+          <span className={styles.popup__countryName}>{country.name}</span>
+          <button
+            className={styles.popup__removeButton}
+            onClick={() => handleRemoveCountry(country)}
+          >
+          <img
+            src={removeSvg}
+            alt="Remove"
+            width="12"
+            height="12"
+          />
+          </button>
+        </div>
+      ));
+    } else {
+      return <div></div>;
+    }
+  };
+
+  const handleGenderSelection = (gender: string) => {
+    setSelectedGender(gender);
+  };
 
   const handleSliderChange = (left: number, right: number) => {
     setLeftValue(left);
@@ -50,7 +99,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   };
 
   const handleRemoveLanguage = (language: Language) => {
-    const updatedLanguages = selectedLanguages.filter((lang) => lang.id !== language.id);
+    const updatedLanguages = selectedLanguages.filter((lang) => lang.isocode !== language.isocode);
     setSelectedLanguages(updatedLanguages);
   };
 
@@ -61,8 +110,56 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     );
     setFilteredCountries(filtered);
     setSearchValue(e.target.value);
+
+     // Получаем первую букву из введенного значения
+    const firstLetter = searchValue.length > 0 ? searchValue.charAt(0) : null;
+    setLastPressedLetter(firstLetter);
   };
 
+  // Очистка фильтра
+  const handleClearFilter = () => {
+    setSelectedLanguages([]);
+    setLeftValue(18);
+    setRightValue(40);
+    setSearchValue('');
+    setSelectedCountry(null);
+    setSelectedCountries([]);
+    setLastPressedLetter(null); 
+  };
+
+  // Функция для сортировки списка стран по последней нажатой букве
+  const sortCountriesByLastLetter = () => {
+    if (lastPressedLetter) {
+      return filteredCountries.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if (nameA.startsWith(lastPressedLetter) && !nameB.startsWith(lastPressedLetter)) {
+          return -1;
+        }
+        if (!nameA.startsWith(lastPressedLetter) && nameB.startsWith(lastPressedLetter)) {
+          return 1;
+        }
+        return nameA.localeCompare(nameB);
+      });
+    } else {
+      return filteredCountries;
+    }
+  };
+
+
+  // Функция запуска фильтрации и передачи ее в родительский компонент
+  const handleFindButtonClick = () => {
+    const filters = {
+      languages: selectedLanguages,
+      gender: selectedGender,
+      age: {
+        min: leftValue,
+        max: rightValue,
+      },
+      country: selectedCountries,
+    };
+    onChangeSort(filters);
+  };
  
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
@@ -75,12 +172,26 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             placeholder="Начните вводить название"
             value={searchValue}
             onChange={handleSearchInputChange}
+            onKeyDown={handleEnterPress}
           />
-          {filteredCountries.map((country) => (
-            <div key={country.code}>{country.name}</div>
+          <div className={styles.popup__selectedCountriesContainer}>
+            {getSelectedCountryNames()}
+          </div>
+          {sortCountriesByLastLetter().map((country) => (
+            <div
+              key={country.code}
+              onClick={() => handleSelectCountry(country)}
+              className={classNames(styles.popup__countryOption, {
+                [styles.selected]: selectedCountry?.code === country.code,
+              })}
+            >
+              {country.name}
+            </div>
           ))}
+          {/* Отображение выбранных стран */}
+          
           <Button onClick={handleOpenLanguageMenu} className={styles.popup__languageButton}>
-            {selectedLanguage ? selectedLanguage.name : "Выберите язык"}
+            {selectedLanguage ? selectedLanguage.name : ""}
           </Button>
         </div>
       </div>
@@ -114,9 +225,13 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           <h3>Пол</h3>
           <Button
             children={"Мужчина"}
+            onClick={() => handleGenderSelection('Мужчина')}
+            className={selectedGender === 'Мужчина' ? styles.selected : ''}
           />
           <Button
             children={"Женщина"}
+            onClick={() => handleGenderSelection('Женщина')}
+            className={selectedGender === 'Женщина' ? styles.selected : ''}
           />
         </div>
       </div>
@@ -124,7 +239,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         <h3>Возраст</h3>
         <MultiRangeSlider
           minValue={18}
-          maxValue={100}
+          maxValue={90}
           leftValue={leftValue}
           rightValue={rightValue}
           onChange={handleSliderChange}
@@ -133,10 +248,12 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
       <Button
         className={styles.popup__findButton}
         children={"Найти"}
+        onClick={handleFindButtonClick}
       />
       <Button
         className={styles.popup__cleanButton}
         children={"Очистить фильтр"}
+        onClick={handleClearFilter}
       />
     </div>
   );

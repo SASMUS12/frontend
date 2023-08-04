@@ -1,15 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 
 import {api} from '../../utils/constants';
+import { Country } from '../../utils/openapi';
+import { Language } from '../../utils/openapi';
 
 import Card from '../../components/Card/Card';
 import Header from '../../components/Header/Header';
 import Categories from "../../components/Categories/Categories";
 import Sort from "../../components/Sort/Sort";
 import Footer from '../../components/Footer/Footer';
+
 import {Button} from '../../components/UI/Button/Button';
-import { Language } from '../../components/LanguageLevel/LanguageLevel';
-import { Country } from '../../components/Sort/Sort';
 
 import styles from './MainPage.module.scss';
 import cn from "classnames";
@@ -143,12 +144,12 @@ const MainPage = () => {
                     <Categories value={category} onChangeCategory={setCategory}/>
                     <div className={styles.content__filter}>
                         <h3>Фильтр</h3>
-                    <button
-                        className={cn(styles.content__sortButton, {
-                            [styles.content__sortButton_open]: isSortPopupOpen,
-                          })}
-                        onClick={handleOpenSortPopup}
-                    ></button>
+                        <button
+                            className={cn(styles.content__sortButton, {
+                                [styles.content__sortButton_open]: isSortPopupOpen,
+                            })}
+                            onClick={handleOpenSortPopup}
+                        ></button>
                     </div>
                 </div>
                 <div className={styles.content__cardListAndSortPopup}>

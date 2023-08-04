@@ -1,10 +1,6 @@
 import React, {useState} from "react";
 import styles from "../../components/LanguageLevel/LanguageLevel.module.scss"
-
-export interface Language {
-  id: number;
-  name: string;
-}
+import { Language } from '../../utils/openapi';
 
 interface LanguageLevelProps {
   languages: Language[];
@@ -38,7 +34,7 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
             <div className={styles.language__option}>
               <select value={selectedLanguage?.name || ''} onChange={handleSelectChange}>                
                 {languages.map((language) => (
-                  <option key={language.id} value={language.name}>
+                  <option key={language.isocode} value={language.name}>
                     {language.name}
                   </option>
                 ))}

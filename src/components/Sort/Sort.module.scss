@@ -90,8 +90,41 @@
     align-items: flex-start;
     gap: 6px;
     height: 52px;
-    margin-bottom: 40px;  
+    margin-bottom: 40px;
   }
+
+    .popup__selectedCountriesContainer {
+      width: 296px;
+      padding: 4px 6px 4px 12px;
+      display: flex;
+    }
+
+    .popup__countryName {
+      flex: 1;
+      padding-left: 12px;
+    }
+
+    .popup__selectedCountry {
+      max-width: 280px;
+      height: 25px;
+      border-radius: 12px;
+      background: var(--accent-color-salad, #C3EE11);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: fit-content;
+    }
+
+    .popup__removeButton {
+      border: none;
+      background-image: src('../../images/svg/16px.svg');
+      //background: var(--accent-color-salad, #C3EE11);
+      width: 12px;
+      height: 12px;
+      padding: 2px;
+      margin-right: 6px;
+    }
 
   input[type="text"] {
     width: 296px;
