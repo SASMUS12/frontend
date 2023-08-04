@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {observer} from "mobx-react-lite";
 
 import {api} from '../../utils/constants';
@@ -101,14 +101,16 @@ const MainPage = () => {
     const popupRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
     useEffect(() => {
-      popupRef.current.addEventListener("mousedown", (event: MouseEvent) => {
-        const targetClasses = (event.target as Element).classList;
-        if (targetClasses.contains("popup_opened")) {
-            model.handleCloseModal();
-            console.log(targetClasses);
-            console.log(model.isModalOpen);
-        }
-      });
+        if (popupRef.current) {
+            popupRef.current.addEventListener("mousedown", (event: MouseEvent) => {
+              const targetClasses = (event.target as Element).classList;
+              if (targetClasses.contains("popup_opened")) {
+                  model.handleCloseModal();
+                  console.log(targetClasses);
+                  console.log(model.isModalOpen);
+              }
+            });
+          }
     }, [model.isModalOpen]);
 
     // Закрытие popup при нажатии на Esc

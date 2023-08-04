@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+
 import styles from "../Sort/Sort.module.scss";
+
 import LanguageLevel from "../LanguageLevel/LanguageLevel";
-import { Button } from "../UI/Button/Button";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
+import { Button } from "../UI/Button/Button";
 import { Language } from '../../utils/openapi';
 import { Country } from '../../utils/openapi';
 import classNames from 'classnames';
 import removeSvg from '../../images/svg/16px.svg';
 
+enum Gender {
+  Male = 'Мужчина',
+  Female = 'Женщина',
+}
 
 interface SortProps {
   value: any;
@@ -72,13 +78,13 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         </div>
       ));
     } else {
-      return <div></div>;
+      return null;
     }
   };
 
-  const handleGenderSelection = (gender: string) => {
-    setSelectedGender(gender);
-  };
+  // const handleGenderSelection = (gender: string) => {
+  //   setSelectedGender(gender);
+  // };
 
   const handleSliderChange = (left: number, right: number) => {
     setLeftValue(left);
@@ -188,9 +194,10 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
               {country.name}
             </div>
           ))}
-          {/* Отображение выбранных стран */}
-          
-          <Button onClick={handleOpenLanguageMenu} className={styles.popup__languageButton}>
+          <Button
+            onClick={handleOpenLanguageMenu}
+            className={styles.popup__languageButton}
+          >
             {selectedLanguage ? selectedLanguage.name : ""}
           </Button>
         </div>
@@ -216,23 +223,26 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         <Button
           onClick={handleOpenLanguageMenu}
           className={styles.popup__addButton}
-          children={"добавить язык"}
-        />
+        >
+          {"добавить язык"}
+        </Button>
       </div>
       <div className={styles.popup__partner}>
         <h2>О партнере</h2>
         <div className={styles.popup__gender}>
           <h3>Пол</h3>
           <Button
-            children={"Мужчина"}
-            onClick={() => handleGenderSelection('Мужчина')}
-            className={selectedGender === 'Мужчина' ? styles.selected : ''}
-          />
+            onClick={() => setSelectedGender(Gender.Male)}
+            selected={selectedGender === Gender.Male}
+          >
+            {Gender.Male}
+          </Button>
           <Button
-            children={"Женщина"}
-            onClick={() => handleGenderSelection('Женщина')}
-            className={selectedGender === 'Женщина' ? styles.selected : ''}
-          />
+            onClick={() => setSelectedGender(Gender.Female)}
+            selected={selectedGender === Gender.Female}
+          >
+            {Gender.Female}
+          </Button>
         </div>
       </div>
       <div className={styles.popup__age}>
@@ -245,16 +255,12 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           onChange={handleSliderChange}
         />
       </div>
-      <Button
-        className={styles.popup__findButton}
-        children={"Найти"}
-        onClick={handleFindButtonClick}
-      />
-      <Button
-        className={styles.popup__cleanButton}
-        children={"Очистить фильтр"}
-        onClick={handleClearFilter}
-      />
+      <Button onClick={handleFindButtonClick}>
+        {"Найти"}
+      </Button>
+      <Button onClick={handleClearFilter}>
+        {"Очистить фильтр"}
+      </Button>
     </div>
   );
 };
