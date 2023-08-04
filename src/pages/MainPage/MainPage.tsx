@@ -27,7 +27,6 @@ const MainPage = () => {
     const [category, setCategory] = useState({name: 'Все', path: ''});
     const [sortType, setSortType] = useState({});
     const [isSortPopupOpen, setSortPopupOpen] = useState(false);
-    const [isSortPopupOpen, setIsSortPopupOpen] = useState(true);
     const [languagesData, setLanguagesData] = useState<Language[]>([]);
     const [countriesData, setCountriesData] = useState<Country[]>([]);
 
