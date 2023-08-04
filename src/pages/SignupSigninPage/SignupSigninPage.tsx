@@ -1,15 +1,15 @@
 import {useLocation} from "react-router-dom";
 import {observer} from 'mobx-react-lite';
 
-import SignUpAndSignInForm from "../../components/SignUpAndSignInForm/SignUpAndSignInForm"
+import SignupSigninForm from "../../components/SignupSigninForm/SignupSigninForm"
 
-import styles from './SignUpAndSignInPages.module.scss';
+import styles from './SignupSigninPage.module.scss';
 import {useModel} from './model';
 
 import logo from "../../images/svg/logo.svg";
 import PicturesBlock from "../../components/PicturesBlock/PicturesBlock";
 
-const SignUpAndSignInPages = () => {
+const SignupSigninPage = () => {
     const model = useModel();
 
     const location = useLocation();
@@ -28,7 +28,7 @@ const SignUpAndSignInPages = () => {
                         <a className={styles.content__signInContainer_links_linkItem}
                            href="/signup">Регистрация</a>
                     </ul>
-                    <SignUpAndSignInForm />
+                    <SignupSigninForm />
                 </div>
                 <div className={styles.content__picturesContainer}>
                     <PicturesBlock />
@@ -38,4 +38,4 @@ const SignUpAndSignInPages = () => {
     );
 };
 
-export default observer(SignUpAndSignInPages);
+export default observer(SignupSigninPage);

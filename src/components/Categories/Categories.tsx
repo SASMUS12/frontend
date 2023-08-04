@@ -14,8 +14,8 @@ type CategoriesProps = {
 const Categories: React.FC<CategoriesProps> = memo(({ value, onChangeCategory }) => {
   const categories: Category[] = [
     {name: 'Все', path: ''},
-    {name: "Сейчас онлайн", path: "?is_online=True"},
-    {name: 'Новые пользователи', path: "?ordering=-date_joined" }
+    {name: "Сейчас онлайн", path: "True"},
+    {name: 'Новые пользователи', path: "-date_joined" }
   ];
   const [isActive, setIsActive] = useState('Все');
 

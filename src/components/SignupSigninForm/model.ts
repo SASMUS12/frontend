@@ -39,6 +39,11 @@ export const useModel = () => {
                             model.isModalOpen = false;
                         },
 
+                        handleOpenModal() {
+                            model.isModalOpen = true;
+                            console.log(model.isModalOpen);
+                        },
+
                         async handleRegister(event: FormEvent<HTMLFormElement>) {
                             event.preventDefault();
                             try {
