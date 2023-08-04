@@ -1,0 +1,26 @@
+.profile__button {
+	display: flex;
+	align-items: center;
+	border: none;
+	background-color: var(--color-base-white);
+	color: var(--dark-violet);
+
+	&:hover {
+		cursor: pointer;
+		opacity: 0.7;
+	}
+
+	&__icon {
+		margin-right: 8px;
+	}
+
+	&__text {
+		font-family: var(--font-sans);
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 19px;
+		letter-spacing: 0em;
+		text-align: left;
+		color: var(--dark-violet);
+	}
+}

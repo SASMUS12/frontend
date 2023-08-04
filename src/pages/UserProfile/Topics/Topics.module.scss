@@ -1,0 +1,68 @@
+.topics {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 454px;
+	background-color: var(--color-base-white);
+	border-radius: 20px;
+	margin: 16px 16px 16px 0;
+	padding: 20px;
+}
+
+.ded {
+	position: relative;
+}
+
+.title {
+	font-family: var(--font-sans);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 25px;
+	letter-spacing: 0em;
+	text-align: left;
+	margin-bottom: 16px;
+	color: var(--dark-violet);
+}
+
+.topics__searchIcon {
+	position: absolute;
+	top: 17%;
+	left: 12px;
+	width: 20px;
+	height: 20px;
+}
+
+.lystThemes {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.themes {
+	border: 1px solid #c4cad4;
+	border-radius: 20px;
+	padding: 8px 12px;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 18px;
+	letter-spacing: 0em;
+	margin: 0 12px 12px 0;
+	color: var(--dark-violet);
+}
+
+.themes__icon {
+	margin-left: 8px;
+}
+
+.topics__input {
+	width: 380px;
+	height: 36px;
+	margin-bottom: 16px;
+	padding-left: 40px;
+	border-radius: 20px;
+	font-family: var(--font-sans);
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 17px;
+	border: 1px solid var(--soft-violet);
+}

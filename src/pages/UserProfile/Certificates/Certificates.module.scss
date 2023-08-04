@@ -1,0 +1,21 @@
+.certificates {
+	display: flex;
+	justify-content: space-between;
+	width: 454px;
+	height: 107px;
+	background-color: var(--color-base-white);
+	border-radius: 20px;
+	margin: 16px 16px 16px 0;
+	padding: 20px;
+}
+
+.certificates__title {
+	font-family: var(--font-sans);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 25px;
+	letter-spacing: 0em;
+	text-align: left;
+	margin-bottom: 16px;
+	color: var(--dark-violet);
+}

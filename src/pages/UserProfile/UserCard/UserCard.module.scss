@@ -1,0 +1,193 @@
+.profile__card {
+	width: 1158px;
+	max-height: 698px;
+	margin: 0 auto;
+}
+
+.profile__accent {
+	height: 77px;
+	background-color: #6d47d1;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.profile__generalInfo {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+	height: 228px;
+	background-color: var(--color-base-white);
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	margin-top: -20px;
+}
+
+.profile__partnerAbout {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	padding: 16px 0;
+}
+
+.profile__partnerAvatar {
+	width: 180px;
+	height: 100%;
+	border-radius: 20px;
+	margin: 24px 24px 24px;
+	background-repeat: no-repeat;
+}
+
+.profile__partnerInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+}
+
+.profile__name {
+	font-family: var(--font-sans);
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 39px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet);
+}
+
+.profile__sex {
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 19px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet-gradient-400);
+}
+
+.profile__country {
+	display: flex;
+	align-items: center;
+	padding-top: 24px;
+}
+
+.profile__flag {
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+}
+
+.profile__city {
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 22px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet-gradient-400);
+}
+
+.profile__time {
+	display: flex;
+	padding-top: 17px;
+}
+
+.profile__current {
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 19px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet-gradient-400);
+	padding-right: 12px;
+}
+
+.profile__clock {
+	width: 20px;
+	height: 20px;
+}
+
+.profile__formattedTime {
+	padding-left: 4px;
+}
+
+.profile__buttons {
+	display: flex;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.profile__flexColumn {
+	display: flex;
+	flex-direction: column;
+	padding-right: 32px;
+}
+
+.profile__form {
+	display: flex;
+	padding-top: 20px;
+}
+
+.profile__input {
+	width: 264px;
+	height: 40px;
+	padding: 8px 12px 8px 12px;
+	border-radius: 20px;
+	border: 1px solid var(--soft-violet);
+}
+
+.profile__gender {
+	padding: 4px 12px 4px 12px;
+	border-radius: 12px;
+	border: none;
+	margin-right: 6px;
+	margin-top: 8px;
+	font-family: var(--font-sans);
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 16px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet);
+}
+
+.selected {
+	padding: 4px 12px 4px 12px;
+	border-radius: 12px;
+	background-color: var(--accent-color-salad);
+	border: none;
+	margin-right: 6px;
+	margin-top: 8px;
+	font-family: var(--font-sans);
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 16px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: var(--dark-violet);
+}
+
+input {
+	cursor: pointer;
+}
+
+label {
+	font-family: var(--font-sans);
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 17px;
+	letter-spacing: 0em;
+	text-align: left;
+	padding-bottom: 6px;
+	color: var(--grey-gradient-600);
+}
+
+.profile__labelForLocation {
+	padding: 28px 0 6px;
+}
+
+.profile__labelForBirthday {
+	padding-top: 20px;
+}

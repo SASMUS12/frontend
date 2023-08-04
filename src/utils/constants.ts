@@ -5,3 +5,7 @@ export const apiConfig = {
 };
 
 export const api = new Api(apiConfig);
+
+const array = ['Русская культура', 'Путешествия', 'Дизайн', 'Кулинария', 'Книги', 'Языки', 'Спорт'];
+
+export default array;

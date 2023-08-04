@@ -1,0 +1,25 @@
+.review {
+	width: 100%;
+	padding-top: 32px;
+	margin-bottom: 80px;
+
+	&__title {
+		font-family: var(--font-sans);
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 22px;
+		letter-spacing: 0em;
+		text-align: left;
+		padding-bottom: 16px;
+		color: var(--dark-violet);
+	}
+	&__text {
+		font-family: var(--font-sans);
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 26px;
+		letter-spacing: 0em;
+		text-align: left;
+		color: var(--dark-violet-gradient-400);
+	}
+}
