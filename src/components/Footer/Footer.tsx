@@ -14,17 +14,16 @@ function Footer() {
       <div className={styles.footer__container}>
         <div className={styles.footer__leftColumn}>
           <img src={logo} alt="Логотип проекта" />
-          <div className={styles.footer__icons}>
-            <Link to={`/`}>
-              <img src={tlg} alt="Иконка Телеграм" />
-            </Link>
-            <Link to={`/`}>
-              <img src={vk} alt="Иконка ВКонтакте" />
-            </Link>
-          </div>
-          <div className="footer__yearText">
-            <p>{currentYear}</p>
-            <p>Все права защищены</p>
+          <div className={styles.footer__yearText}>
+            <div className={styles.footer__icons}>
+              <Link to={`/`}>
+                <img src={tlg} alt="Иконка Телеграм" />
+              </Link>
+              <Link to={`/`}>
+                <img src={vk} alt="Иконка ВКонтакте" />
+              </Link>
+            </div>
+            <p>{currentYear}, © Все права защищены</p>
           </div>
         </div>
         <nav className={styles.footer__rightColumn}>
@@ -37,7 +36,7 @@ function Footer() {
             </a>
           </div>
           <div className={styles.footer__linksColumn}>
-          <Link to={`/rules`} className={styles.footer__linkText}>
+            <Link to={`/rules`} className={styles.footer__linkText}>
               <p className={styles.footer__linkText}>Правила сообщества</p>
             </Link>
             <Link to={`/policy`} className={styles.footer__linkText}>

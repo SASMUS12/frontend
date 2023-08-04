@@ -12,7 +12,7 @@
     color: white;
     line-height: 33px;
     position: absolute;
-    top: 160px;
+    top: 196px;
     margin: 0;
     padding: 0;
     width: 627px;
@@ -31,46 +31,61 @@
 
   &__container {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     position: absolute;
-    top: 700px;  }
+    bottom: 197px;  
+  }
 
   &__picActive {
     color: #C3EE11;
     width: 54px;
     height: 4px;
-    margin: 15px 0;
   }
 
   &__item {
     color: #C3EE11;
     width: 54px;
     height: 4px;
-    margin: 15px 0;
   }
 
   &__item1 {
     position: absolute;
     width: 194px;
     height: 277px;
-    top: 300px;
-    right: 470px;
+    top: 320px;
+    right: 515px;
   }
 
   &__item2 {
     position: absolute;
     width: 167px;
     height: 239px;
-    top: 340px;
-    right: 280px;
+    top: 306px;
+    right: 306px;
   }
 
   &__item3 {
     position: absolute;
-    width: 100px;
-    height: 109px;
-    top: 300px;
-    right: 210px;
+    width: 109px;
+    height: 100px;
+    top: 320px;
+    right: 226px;
     z-index: 3;
+  }
+
+  &__img3 {
+    position: absolute;
+    width: 456px;
+    height: 456px;
+    top: 248px;
+    right: 245px;
+  }
+
+  &__img4 {
+    position: absolute;
+    width: 456px;
+    height: 413px;
+    top: 255px;
+    right: 245px;
   }
 }

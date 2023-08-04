@@ -137,7 +137,7 @@ const MainPage = () => {
 
     return (
         <>
-            <Header/>
+            <Header />
             <main className={styles.content}>
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 <div className={styles.content__filterTag}>
