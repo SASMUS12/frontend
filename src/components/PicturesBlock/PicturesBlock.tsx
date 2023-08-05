@@ -13,6 +13,15 @@ import line2 from '../../images/line2.png';
 const PicturesBlock= () => {
   const [pic, setPic] = useState(1);
 
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (pic < 5) setPic(pic + 1);
+      if (pic === 5) setPic(1)
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [pic]);
+
   return (
     <div className={styles.picturesBlock}>
       {pic === 1 && 
