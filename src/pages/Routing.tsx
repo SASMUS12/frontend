@@ -12,6 +12,7 @@ const ReviewsPage = lazy(() => import('./ReviewsPage/ReviewsPage'));
 const PolicyPage = lazy(() => import('./PolicyPage/PolicyPage'));
 const RulesPage = lazy(() => import('./RulesPage/RulesPage'));
 const AgreementPage = lazy(() => import('./AgreementPage/AgreementPage'));
+const ProfilePage = lazy(() => import('./UserProfile/UserProfile'));
 
 export const Routing = () => {
 
@@ -23,6 +24,7 @@ export const Routing = () => {
             <Route path="/signin" element={<SignInPage />}/>
             <Route path="/signup" element={<SignUpPage />}/>
             <Route path="/" element={<MainPage />}/>
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="/policy" element={<PolicyPage />} />

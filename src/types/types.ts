@@ -1,4 +1,5 @@
-export default interface IProps {
-  loggedIn: boolean;
-  setLoggedIn?: any;
+export default interface IQuestion {
+  question: string;
+  text: string[];
+  id: number
 }
