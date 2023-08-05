@@ -86,6 +86,7 @@ const MainPage = () => {
       const countries = response.data.map((country) => ({
         code: country.code,
         name: country.name,
+        flag_icon: country.flag_icon,
       }));
       setCountriesData(countries);
     } catch (error) {

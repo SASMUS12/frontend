@@ -1,13 +1,13 @@
 .popup__sort {
   background: #fff;
+  border-radius: 20px;
   padding: 20px;
   width: 336px;
-  max-height: 756px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   align-self: stretch;
-  border-radius: 20px;
   box-shadow: 0px 0px 8px 0px rgba(17, 17, 26, 0.10), 0px 1px 0px 0px rgba(17, 17, 26, 0.05);
   position: relative;
 
@@ -61,8 +61,7 @@
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    color: var(--accent-color-violet, #6D47D1);
-    font-family: Inter;
+    color: var(--grey-gradient-200, #C4CAD4);
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
@@ -71,31 +70,50 @@
     transition: background-color 0.3s ease;
   }
 
+  .popup__help {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    width: 100%;
+    padding-top: 31px;
+    gap: 16px;
+  }
+
+  .popup__helpButton {
+    background:  #fff url('../../images/svg/help_20px.svg') no-repeat center;
+    border: none;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+  }
+  
   h2 {
     align-self: stretch;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
     width: 296px;
     color: #323944;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    margin-bottom: 16px;
   }
 
   .popup__enter {
     display: flex;
-    padding: 8px 0px;
     flex-direction: column;
     align-items: flex-start;
-    //gap: 6px;
-    height: 52px;
-    margin-bottom: 40px;
   }
 
     .popup__selectedCountriesContainer {
       position: relative;
       width: 296px;
-      height: 25px;
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
@@ -115,6 +133,7 @@
 
     .popup__selectedCountry {
       margin-right: 12px;
+      margin-bottom: 12px;
       padding: 4px 6px 4px 12px;
       height: 25px;
       border-radius: 12px;
@@ -128,7 +147,6 @@
       background-size: 16px 16px;
       width: 16px;
       height: 16px;
-      border: none;
       background-image: url("../../images/svg/16px.svg");
       background-color: var(--accent-color-salad, #C3EE11);
       background-repeat: no-repeat;
@@ -165,41 +183,19 @@
       line-height: normal;
       border: 1px solid var(--soft-violet, #A5A0C5);
       border-radius: 20px;
-      background: var(--white, #FFF);
       padding: 8px 12px;
-      gap: 8px;
-      background-color: rgba(240, 242, 244, 1);
+      background-color: var(--white, #FFF);
       color: var(--grey-gradient-500, #323944);
       background-image: url("../../images/svg/search.svg");
       background-repeat: no-repeat;
       background-position: left 12px center;
       background-size: 20px 20px;
       padding-left: 40px;
-      margin-bottom: 12px;
-    
-    }
-    
-    .popup__input {
-      /* Стили для поля ввода */
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      margin-bottom: 9px;
+      margin-top: 16px;
     }
 
-    .popup__suggestions {
-      /* Стили для блока с подсказками */
-      position: relative; /* Для позиционирования подсказок относительно поля ввода */
-      z-index: 1; /* Чтобы подсказки были выше других элементов */
-      background-color: white;
-      border: 1px solid #ccc;
-      border-top: none; /* Убираем верхнюю границу, чтобы выглядело как раскрывающийся список */
-      border-radius: 0 0 4px 4px;
-      max-height: 26px; /* Максимальная высота блока с подсказками */
-      //overflow-y: auto; /* Включаем вертикальную прокрутку при необходимости */
-    }
-
-  
+ 
   .popup__add {
     width: 135px;
     height: 20px;
@@ -232,8 +228,7 @@
   }
 
   button {
-    height: 32px;
-    
+    height: 32px;    
     border: 1px solid var(--soft-violet, #A5A0C5);
     border-radius: 12px;
     background-color: rgba(240, 242, 244, 1);
@@ -260,6 +255,7 @@
     align-self: stretch;
     width: 296px;
     height: 25px;
+    margin: 20px 0;
 
     h3 {
       color: var(--grey-gradient-600, #566276);
@@ -300,7 +296,6 @@
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      margin-top: 20px;
     }
 
     .slider_wrapper {
@@ -365,8 +360,6 @@
       color: #fff;
       border-color: #000;
       cursor: pointer;
-      //border-radius: 10px;
-      //margin-top: -9px;
       pointer-events: auto;
     }
 
@@ -376,8 +369,7 @@
       width: 12px;
       color: #fff;
       cursor: pointer;
-      //border-radius: 10px;
-      //margin-top: -9px;
+
       border-color: #000;
       pointer-events: auto;
     }
@@ -387,7 +379,6 @@
       height: 12px;
       width: 12px;
       cursor: pointer;
-      //border-radius: 50%;
       border-color: #000;
       pointer-events: auto;
     }

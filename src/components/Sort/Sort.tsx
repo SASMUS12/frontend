@@ -25,7 +25,6 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [filteredCountries, setFilteredCountries] = useState<Country[]>(countriesData);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
@@ -135,24 +134,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     }
   };
 
-  const countrySuggestions = suggestedCountries.map((country) => (
-    <div
-      key={country.code}
-      onClick={() => handleSelectCountryFromList(country)}
-      className={classNames(styles.popup__countryOption, {
-        [styles.selected]: selectedCountry?.code === country.code,
-      })}
-    >
-      {country.name}
-    </div>
-  ));
-
-
-  const countryOptions = filteredCountries.map((country) => (
-    <option key={country.code} value={country.name} />
-  ));
-
-  // Очистка фильтра
+    // Очистка фильтра
   const handleClearFilter = () => {
     setSelectedLanguages([]);
     setLeftValue(18);
@@ -182,7 +164,6 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     }
   };
 
-
   // Функция запуска фильтрации и передачи ее в родительский компонент
   const handleFindButtonClick = () => {
     const filters = {
@@ -209,17 +190,8 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             value={searchValue}
             onChange={handleSearchInputChange}
             onKeyDown={handleEnterPress}
-            list="countryOptions"
             className={styles.popup__input}
           />
-          <div className={styles.popup__suggestions}>
-            {countrySuggestions}
-          </div>
-          <datalist id="countryOptions">
-            {suggestedCountries.map((country) => (
-              <option key={country.code} value={country.name} />
-            ))}  
-          </datalist>
           <div className={styles.popup__selectedCountriesContainer}>
             {getSelectedCountryNames()}
             {isCountryListVisible && (
@@ -248,7 +220,12 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           </Button> */}
         </div>
       </div>
-      <h2>Язык партнера</h2>
+      <div className={styles.popup__help}>
+        <h2>Язык партнера</h2>
+        <Button
+          className={styles.popup__helpButton}
+        />
+      </div>
       <LanguageLevel
         languages={languagesData}
         onAdd={handleAddLanguage}
