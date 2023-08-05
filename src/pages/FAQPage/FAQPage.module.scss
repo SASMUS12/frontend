@@ -1,13 +1,14 @@
 .main {
   background: var(--grey-color-50);
+
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  max-width: 1140px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 20px 24px 81px;
+  padding: 0 0 0 141px;
   background: var(--grey-color-50);
   min-height: calc(100vh - 465px);
 
