@@ -44,6 +44,7 @@ const SignupSigninForm = () => {
                 required
                 onValue={model.handleUsernameChange}
             />
+            {isSignUp && (
             <Input
                 className={styles.form_input}
                 type="email"
@@ -60,6 +61,7 @@ const SignupSigninForm = () => {
                 error={model.error}
                 onValue={model.handleEmailChange}
             />
+            )}
             <Input
                 className={styles.form_input}
                 type="password"
@@ -102,7 +104,6 @@ const SignupSigninForm = () => {
                             required
                         />
                         <span className={styles.form_checkbox_visible}></span>
-                        <span className={styles.form_checkbox_visible1}></span>
                         <span className={styles.form_checkbox_span_text}>
                             Продолжая, вы соглашаетесь с 
                             <span

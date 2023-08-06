@@ -7,7 +7,7 @@ import {api} from "../../utils/constants";
 export const useModel = () => {
     const navigate = useNavigate();
 
-         const model = useLocalObservable(() => {
+        const model = useLocalObservable(() => {
                     return {
                         isLoading: false,
                         error: "",
@@ -79,8 +79,8 @@ export const useModel = () => {
                                     model.message = "",
                                     model.isLoading = true;
                                 const response = await api.api.authJwtCreateCreate({
-                                    password: model.password,
-                                    username: model.username
+                                    username: model.username,
+                                    password: model.password
                                 });
 
                                 console.log('ответ получен -', response);

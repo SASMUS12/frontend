@@ -47,10 +47,10 @@ interface SortProps {
             <div className={styles.popup__gender}>
               <h3>Пол</h3>
               <Button                   
-                children={"Мужчина"} 
+                children={"мужчина"} 
               />
               <Button
-                children={"Женщина"} 
+                children={"женщина"} 
               />
              </div>
             </div>
