@@ -13,19 +13,28 @@ import line2 from '../../images/line2.png';
 const PicturesBlock= () => {
   const [pic, setPic] = useState(1);
 
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (pic < 5) setPic(pic + 1);
+      if (pic === 5) setPic(1)
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [pic]);
+
   return (
     <div className={styles.picturesBlock}>
       {pic === 1 && 
         <>
           <p>
-            Учи и практикуй иностранный язык <span>с носителями из более чем 50 стран</span>
+            Учи и практикуй иностранный язык <span><br></br>с носителями из более чем 50 стран</span>
           </p>
           <img src={step1} alt="Картинки с довольными людьми" className={styles.picturesBlock__img}/>
         </>
       }
       {pic === 2 && <>
         <p>
-          Находи новых друзей и единомышленников <span>с помощью гибкого поиска собеседника</span>
+          Находи новых друзей и единомышленников <span><br></br>с помощью гибкого поиска собеседника</span>
         </p>
         <img 
           src={step21} 
@@ -43,7 +52,7 @@ const PicturesBlock= () => {
       {pic === 3 && 
         <>
           <p>
-            Организуй и вступай в<span> групповые чаты </span>и оттачивай языковые навыки
+            Организуй и вступай в<span> групповые чаты </span><br></br>и оттачивай языковые навыки
           </p>
           <img src={step3} alt="Картинки с довольными людьми" className={styles.picturesBlock__img3} />
         </>

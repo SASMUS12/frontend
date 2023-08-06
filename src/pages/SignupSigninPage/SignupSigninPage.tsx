@@ -22,12 +22,6 @@ const SignupSigninPage = () => {
                     <a className={styles.content__signInContainer_logoLink} href="/">
                         <img className={styles.content__signInContainer_logo} src={logo} alt="Логотип проекта"/>
                     </a>
-                    <ul className={styles.content__signInContainer_links}>
-                        <a className={styles.content__signInContainer_links_linkItem}
-                            href="/signin">Вход</a>
-                        <a className={styles.content__signInContainer_links_linkItem}
-                            href="/signup">Регистрация</a>
-                    </ul>
                     <SignupSigninForm />
                 </div>
                 <div className={styles.content__picturesContainer}>

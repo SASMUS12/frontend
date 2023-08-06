@@ -43,26 +43,32 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
             <div className={styles.language__level}>
               <label>
                 <input type="checkbox" name="Новичок" onChange={handleCheckboxChange} />
+                <span className={styles.languageLevel_checkbox_visible}></span>
                 Новичок
               </label>
               <label>
                 <input type="checkbox" name="Любитель" onChange={handleCheckboxChange} />
+                <span className={styles.languageLevel_checkbox_visible}></span>
                 Любитель
               </label>
               <label>
                 <input type="checkbox" name="Профи" onChange={handleCheckboxChange} />
+                <span className={styles.languageLevel_checkbox_visible}></span>
                   Профи
               </label>
               <label>
                 <input type="checkbox" name="Эксперт" onChange={handleCheckboxChange} />
+                <span className={styles.languageLevel_checkbox_visible}></span>
                  Эксперт
               </label>
               <label>
                <input type="checkbox" name="Гуру" onChange={handleCheckboxChange} />
+               <span className={styles.languageLevel_checkbox_visible}></span>
                  Гуру
               </label>
               <label>
                 <input type="checkbox" name="Носитель" onChange={handleCheckboxChange} />
+                <span className={styles.languageLevel_checkbox_visible}></span>
                  Носитель
               </label>
             </div>

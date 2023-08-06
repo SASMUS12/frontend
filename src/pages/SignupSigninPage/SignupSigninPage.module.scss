@@ -20,33 +20,7 @@
       width: 186px;
       height: 32px;
     }
-
-    &_links {
-      display: flex;
-      margin-top: 68px;
-      padding: 0;
-
-      &_linkItem {
-        margin-left: 44px;
-        padding: 8px 12px 8px 0px;
-        box-sizing: border-box;
-        font: var(--font-header-24-120-600);
-        text-decoration: none;
-        color: var(--dark-violet);
-        list-style-type: none;
-        border-bottom: 1px solid transparent;
-
-        &:first-child {
-          margin-left: 0;
-        }
-
-        &:hover {
-          border-bottom: 1px solid var(--dark-violet);
-        }
-      }
-    }
- }
-
+  }
   &__picturesContainer {
     width: 947px;
   }

@@ -182,7 +182,7 @@ const MainPage = () => {
                         countriesData={countriesData}
                     />
                 </div>
-                <Button className={styles.content__continuingButton} variant="transparent">
+                <Button className={!isSortPopupOpen ? styles.content__continuingButton : styles.content__continuingButton_withSort} variant="transparent">
                     Продолжить искать
                 </Button>
 
