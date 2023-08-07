@@ -33,47 +33,66 @@
   &__cardListAndSortPopup {
     display: flex;
 
-    &_cardList {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin: 0 auto;
+    &_cardListArea {
+      display: flex;
+      flex-direction: column;
 
-      &_narrow {
-        grid-template-columns: repeat(3, 1fr);
-        margin: 0 16px 0 0;
+      &_cardList {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin: 0 auto;
+
+        &_narrow {
+          grid-template-columns: repeat(3, 1fr);
+          margin: 0 16px 0 0;
+        }
+      }
+
+      &_continuingButton {
+        margin: 40px auto 0;
       }
     }
   }
 
-  &__continuingButton {
-    margin: 40px auto 0;
+  &__filter {
+    max-width: 100%;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: var(--dark-violet, #403A6D);
+    }
   }
 
   &__sortButton {
-    background-image: url("../../images/svg/Filter.svg");
     width: 26px;
     height: 26px;
+    background-size: 26px 26px;
+    background-image: url("../../images/svg/Filter.svg");
+    background-repeat: no-repeat;
     border: none;
     cursor: pointer;
+    background-color: #F0F2F6;
+  }
+
+  &__sortButton_open {
+    width: 26px;
+    height: 26px;
+    background-size: 26px 26px;
+    background-image: url("../../images/svg/Filter_green.svg");
+
   }
 }
 
 .modal {
-  width: 100%;
-
-  &_container {
-    width: 501px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    background-color: var(--color-base-white);
-    border-radius: 20px;
-    padding: 60px 40px;
-    margin: 0;
-  }
-
   &_header {
     font: var(--font-header-24-120-600);
     color: var(--dark-violet);
