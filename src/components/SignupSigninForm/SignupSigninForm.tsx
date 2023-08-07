@@ -33,6 +33,7 @@ const SignupSigninForm = () => {
                 <a className={!isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem} href="/signin">Вход</a>
                 <a className={isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem} href="/signup">Регистрация</a>
             </ul>
+            {isSignUp && (
             <Input
                 className={styles.form_input}
                 type="text"
@@ -44,7 +45,7 @@ const SignupSigninForm = () => {
                 required
                 onValue={model.handleUsernameChange}
             />
-            {isSignUp && (
+            )}
             <Input
                 className={styles.form_input}
                 type="email"
@@ -61,7 +62,6 @@ const SignupSigninForm = () => {
                 error={model.error}
                 onValue={model.handleEmailChange}
             />
-            )}
             <Input
                 className={styles.form_input}
                 type="password"
@@ -98,14 +98,14 @@ const SignupSigninForm = () => {
             <div className={styles.form_textTag}>
                 {isSignUp && (
                     <label className={styles.form_checkbox}>
-                        <input 
+                        <input
                             className={cn(styles.form_checkbox_input, styles.form_checkbox_input_signUp)}
                             type="checkbox"
                             required
                         />
                         <span className={styles.form_checkbox_visible}></span>
                         <span className={styles.form_checkbox_span_text}>
-                            Продолжая, вы соглашаетесь с 
+                            Продолжая, вы соглашаетесь с
                             <span
                                 className={styles.form_checkbox_span_text_underline}> Условиями пользования Сервисом</span>
                         </span>
@@ -113,7 +113,7 @@ const SignupSigninForm = () => {
                 )}
                 {!isSignUp && (
                     <label className={styles.form_checkbox}>
-                        <input 
+                        <input
                             className={cn(styles.form_checkbox_input, styles.form_checkbox_input_signIn)}
                             type="checkbox"/>
                         <span className={styles.form_checkbox_visible}></span>
