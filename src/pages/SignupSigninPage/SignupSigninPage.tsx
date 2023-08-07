@@ -1,20 +1,11 @@
-import {useLocation} from "react-router-dom";
-import {observer} from 'mobx-react-lite';
-
 import SignupSigninForm from "../../components/SignupSigninForm/SignupSigninForm"
 
 import styles from './SignupSigninPage.module.scss';
-import {useModel} from './model';
 
 import logo from "../../images/svg/logo.svg";
 import PicturesBlock from "../../components/PicturesBlock/PicturesBlock";
 
 const SignupSigninPage = () => {
-    const model = useModel();
-
-    const location = useLocation();
-    const pathName = location.pathname;
-
     return (
         <>
             <section className={styles.content}>
@@ -38,4 +29,4 @@ const SignupSigninPage = () => {
     );
 };
 
-export default observer(SignupSigninPage);
+export default SignupSigninPage;

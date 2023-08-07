@@ -1,4 +1,4 @@
-import type {ChangeEvent, HTMLInputTypeAttribute, InputHTMLAttributes} from 'react';
+import type {ChangeEvent, InputHTMLAttributes} from 'react';
 import cn from 'classnames';
 
 import styles from './Input.module.scss';

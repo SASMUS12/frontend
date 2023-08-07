@@ -103,9 +103,6 @@ const MainPage = () => {
 
             </main>
             <Footer/>
-
-
-
         </>
     );
 };

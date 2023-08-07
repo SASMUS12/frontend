@@ -2,105 +2,106 @@ import {useLocalObservable} from "mobx-react-lite";
 import {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
+import FormValidator from "../FormValidator/FormValidator";
+
 import {api} from "../../utils/constants";
 
 export const useModel = () => {
     const navigate = useNavigate();
 
-         const model = useLocalObservable(() => {
-                    return {
-                        isLoading: false,
-                        error: "",
-                        message: "",
-                        username: "",
-                        email: "",
-                        password: "",
-                        confirmPassword: "",
-                        isModalOpen: false,
-                        isLoggedIn: false,
+    const {values, handleChange, errors, isFormValid, resetForm} = FormValidator();
 
-                        handleUsernameChange({value}: { value: string }) {
-                            model.username = value
-                        },
+    const model = useLocalObservable(() => {
+        return {
+            isLoading: false,
+            error: "",
+            message: "",
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            isModalOpen: false,
+            isLoggedIn: false,
 
-                        handleEmailChange({value}: { value: string }) {
-                            model.email = value;
-                        },
+            handleUsernameChange({value}: { value: string }) {
+                model.username = value;
+            },
 
-                        handlePasswordChange({value}: { value: string }) {
-                            model.password = value;
-                        },
+            handleEmailChange({value}: { value: string }) {
+                model.email = value;
+            },
 
-                        handleConfirmPasswordChange({value}: { value: string }) {
-                            model.confirmPassword = value;
-                        },
+            handlePasswordChange({value}: { value: string }) {
+                model.password = value;
+            },
 
-                        handleCloseModal() {
-                            model.isModalOpen = false;
-                        },
+            handleConfirmPasswordChange({value}: { value: string }) {
+                model.confirmPassword = value;
+            },
 
-                        handleOpenModal() {
-                            model.isModalOpen = true;
-                            console.log(model.isModalOpen);
-                        },
+            handleCloseModal() {
+                model.isModalOpen = false;
+            },
 
-                        async handleRegister(event: FormEvent<HTMLFormElement>) {
-                            event.preventDefault();
-                            try {
-                                model.error = "",
-                                    model.message = "",
-                                    model.isLoading = true;
-                                const response = await api.api.usersCreate({
-                                    email: model.email,
-                                    username: model.username,
-                                    password: model.password,
-                                });
+            handleOpenModal() {
+                model.isModalOpen = true;
+                console.log(model.isModalOpen);
+            },
 
-                                console.log('ответ получен -', response);
+            async handleRegister(event: FormEvent<HTMLFormElement>) {
+                event.preventDefault();
+                try {
+                    model.error = "",
+                        model.message = "",
+                        model.isLoading = true;
+                    const response = await api.api.usersCreate({
+                        email: model.email,
+                        username: model.username,
+                        password: model.password,
+                    });
 
-                                if (response.data && response.data) {
-                                    navigate("/");
-                                    model.isModalOpen = true;
+                    console.log('ответ получен -', response);
 
-                                    console.log(response.data);
-                                }
+                    if (response.data && response.data) {
+                        navigate("/");
+                        model.isModalOpen = true;
 
-                                model.isLoading = false;
-                            } catch (error) {
-                                console.error('Ошибка при получении данных -', error);
-                                model.isLoading = false;
-                            }
-                        },
+                        console.log(response.data);
+                    }
 
-                        async handleLogin(event: FormEvent<HTMLFormElement>) {
-                            event.preventDefault();
-                            try {
-                                model.error = "",
-                                    model.message = "",
-                                    model.isLoading = true;
-                                const response = await api.api.authJwtCreateCreate({
-                                    password: model.password,
-                                    username: model.username
-                                });
-
-                                console.log('ответ получен -', response);
-
-                                if (response.data && response.data) {
-                                    console.log(response.data);
-                                    model.isLoggedIn = true;
-                                }
-
-                                model.isLoading = false;
-                            } catch (error) {
-                                console.error('Ошибка при получении данных -', error);
-                                model.isLoading = false;
-                            }
-                        }
-                    };
+                    model.isLoading = false;
+                } catch (error) {
+                    console.error('Ошибка при получении данных -', error);
+                    model.isLoading = false;
                 }
-            )
-        ;
+            },
 
-        return model;
-    }
-;
+            async handleLogin(event: FormEvent<HTMLFormElement>) {
+                event.preventDefault();
+                try {
+                    model.error = "",
+                        model.message = "",
+                        model.isLoading = true;
+                    const response = await api.api.authJwtCreateCreate({
+                        password: model.password,
+                        username: model.username
+                    });
+
+                    console.log('ответ получен -', response);
+
+                    if (response.data && response.data) {
+                        console.log(response.data);
+                        model.isLoggedIn = true;
+                    }
+
+                    model.isLoading = false;
+                } catch (error) {
+                    console.error('Ошибка при получении данных -', error);
+                    model.isLoading = false;
+                }
+            }
+        };
+    });
+
+    return model;
+};
