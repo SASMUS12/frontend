@@ -98,6 +98,10 @@ const MainPage = () => {
         fetchCountriesData();
     }, []);
 
+    useEffect(() => {
+        console.log(model.isLoggedIn);
+    }, [model.isLoggedIn]);
+
 
     const popupRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 

@@ -27,6 +27,10 @@ const SignupSigninForm = () => {
         checkIsSignUp();
     }, [pathName]);
 
+    useEffect(() => {
+        model.getCurrentUser();
+    }, [model.isLoggedIn]);
+
     return (
         <form className={styles.form} onSubmit={isSignUp ? model.handleRegister : model.handleLogin}>
             <ul className={styles.form_links}>
