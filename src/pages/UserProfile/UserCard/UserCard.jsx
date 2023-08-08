@@ -7,18 +7,14 @@ import styles from "./UserCard.module.scss";
 
 const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, setGender, setLocation }) => {
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
+  const handleChange = (setState) => (event) => {
+    setState(event.target.value);
+  }
 
   const handleChangeAge = (event) => {
     const birthDate = new Date(event.target.value);
     const calculatedAge = calculateAge(birthDate);
     setAge(calculatedAge);
-  }
-
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
   }
 
   const calculateAge = (birthdate) => {
@@ -76,7 +72,7 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
                       name='partnerName' 
                       className={styles.profile__input}
                       value={name}
-                      onChange={handleNameChange}
+                      onChange={handleChange(setName)}
                       />
                   </div>
                   <div className={styles.profile__flexColumn}>
@@ -127,7 +123,7 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
                       name='partnerLocation' 
                       className={styles.profile__input}
                       value={location}
-                      onChange={handleLocationChange}
+                      onChange={handleChange(setLocation)}
                       />
                   </div>                
                 </div>

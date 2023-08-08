@@ -13,8 +13,6 @@ import edit from '../../images/userProfile/edit.png';
 import array from '../../utils/constants';
 import styles from "./UserProfile.module.scss";
 
-
-
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false)
 
