@@ -29,7 +29,9 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
-  const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);//Создайте состояние для хранения списка подсказок:
+  const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
+
 
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
@@ -38,6 +40,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
       setSelectedCountry(country);
       setCountryListVisible(false);
       setSearchValue('');
+      console.log(country)
     }
   };
 
@@ -45,13 +48,6 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const handleRemoveCountry = (country: Country) => {
     const updatedCountries = selectedCountries.filter((c) => c.code !== country.code);
     setSelectedCountries(updatedCountries);
-  };
-
-  // Функция для обработки нажатия клавиши Enter в поле поиска
-  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && selectedCountry) {
-      handleSelectCountry(selectedCountry);
-    }
   };
 
   // Функция для отображения выбранных стран
@@ -89,8 +85,10 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   };
 
   const handleAddLanguage = (language: Language) => {
+    console.log("Вызвана функция handleAddLanguage");
     setSelectedLanguages([...selectedLanguages, language]);
     setLanguageMenuOpen(false);
+    console.log("Выбранный язык:", language);
   };
 
   const handleRemoveLanguage = (language: Language) => {
@@ -125,6 +123,74 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLastPressedLetter(firstLetter);
     
     setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
+
+    setSelectedSuggestionIndex(null);
+  };
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return 0;
+        } else if (prevIndex < suggestedCountries.length - 1) {
+          return prevIndex + 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return suggestedCountries.length - 1;
+        } else if (prevIndex > 0) {
+          return prevIndex - 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedSuggestionIndex !== null) {
+        handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
+      } else if (selectedCountry) {
+        handleSelectCountry(selectedCountry);
+      }
+    }
+  };
+
+  const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return 0;
+        } else if (prevIndex < suggestedCountries.length - 1) {
+          return prevIndex + 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return suggestedCountries.length - 1;
+        } else if (prevIndex > 0) {
+          return prevIndex - 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedSuggestionIndex !== null) {
+        handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
+      } else if (selectedCountry) {
+        handleSelectCountry(selectedCountry);
+      }
+    }
   };
   
   const handleSelectCountryFromList = (countryName: string) => {
@@ -168,14 +234,15 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const handleFindButtonClick = () => {
     const filters = {
       languages: selectedLanguages,
-      gender: selectedGender,
+      gender: selectedGender,//+
       age: {
-        min: leftValue,
-        max: rightValue,
+        min: leftValue,//+
+        max: rightValue,//+
       },
-      country: selectedCountries,
+      country: selectedCountries,//+
     };
     onChangeSort(filters);
+    console.log(filters);
   };
  
   return (
@@ -189,7 +256,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             placeholder="Начните вводить название"
             value={searchValue}
             onChange={handleSearchInputChange}
-            onKeyDown={handleEnterPress}
+            onKeyDown={handleKeyDown}
             className={styles.popup__input}
           />
           <div className={styles.popup__selectedCountriesContainer}>
@@ -197,27 +264,26 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             {isCountryListVisible && (
               <div className={classNames(styles.popup__countryList, {
                 [styles.popup__countryList_visible]: sortCountriesByLastLetter().length > 0,
-              })}>
+              })}
+              onKeyDown={handleDropdownKeyDown}
+              >
               {sortCountriesByLastLetter().map((country) => (
+                country && country.name ? (
                 <div
                   key={country.code}
                   onClick={() => handleSelectCountryFromList(country.name.toLocaleLowerCase('ru'))}
                   className={classNames(styles.popup__countryOption, {
                     [styles.selected]: selectedCountry?.code === country.code,
+                    [styles.suggested]: suggestedCountries.includes(country),
                   })}
                 >
                   {country.name}
                 </div>
-              ))}
+              ) : null
+            ))}
              </div>
             )}
           </div>
-          {/* <Button
-            onClick={handleOpenLanguageMenu}
-            className={styles.popup__languageButton}
-          >
-            {selectedLanguage ? selectedLanguage.name : ""}
-          </Button> */}
         </div>
       </div>
       <div className={styles.popup__help}>
@@ -256,13 +322,13 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           <h3>Пол</h3>
           <Button
             children={"Мужчина"}
-            onClick={() => handleGenderSelection('Мужчина')}
-            className={selectedGender === 'Мужчина' ? styles.selected : ''}
+            onClick={() => handleGenderSelection('Male')}
+            className={selectedGender === 'Male' ? styles.selected : ''}
           />
           <Button
             children={"Женщина"}
-            onClick={() => handleGenderSelection('Женщина')}
-            className={selectedGender === 'Женщина' ? styles.selected : ''}
+            onClick={() => handleGenderSelection('Female')}
+            className={selectedGender === 'Female' ? styles.selected : ''}
           />
         </div>
       </div>

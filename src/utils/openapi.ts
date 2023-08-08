@@ -206,6 +206,7 @@ export interface SetPassword {
 }
 
 /**
+    const filters = {
  * * `Newbie` - Новичок
  * * `Amateur` - Любитель
  * * `Profi` - Профи
