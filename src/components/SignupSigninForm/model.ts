@@ -55,11 +55,11 @@ export const useModel = () => {
 
                                 console.log('ответ получен -', response);
 
-                                if (response.data && response.data) {
+                                if (response) {
                                     navigate("/");
                                     model.handleOpenModal();
 
-                                    console.log(response.data);
+                                    console.log(response);
                                 }
 
                                 model.isLoading = false;

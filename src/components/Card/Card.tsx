@@ -8,7 +8,7 @@ import arrows from '../../images/svg/card-arrows-parallel.svg';
 import CountryIcon from '../UI/CountryIcon/CountryIcon';
 import UserStatusIsOnline from '../UI/UserStatusIsOnline/UserStatusIsOnline';
 import GenderAndAgeIcon from '../UI/GenderAndAgeIcon/GenderAndAgeIcon';
-import {Country, UserForeignLanguage} from '../../utils/openapi';
+import {Country, UserNativeLanguage, UserForeignLanguage} from '../../utils/openapi';
 
 import styles from './Card.module.scss';
 import cn from "classnames";
@@ -70,8 +70,8 @@ const Card: FC<ICards> = ({
                             <div className={styles.card__partnerPersonalInfo_languages}>
                                 <ul className={styles.languages}>
                                     {nativeLanguages &&
-                                        nativeLanguages.map((languages) => (
-                                            <LanguagesTag languages={languages} key={languages.id}/>
+                                        nativeLanguages.map((languages: UserNativeLanguage) => (
+                                            <LanguagesTag languages={languages} key={languages.isocode}/>
                                         ))}
                                 </ul>
                             </div>

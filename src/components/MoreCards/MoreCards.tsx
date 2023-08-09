@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect} from "react";
 
 import {Button} from "../UI/Button/Button";
 
@@ -9,7 +9,6 @@ interface IMoreCards {
     cardsList: any[];
     cardsListLength: number;
     setCardsListLength: any;
-
 }
 
 const MoreCards: FC<IMoreCards> = ({cardsList, cardsListLength, setCardsListLength}) => {
