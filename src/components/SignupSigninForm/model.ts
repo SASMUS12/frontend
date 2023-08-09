@@ -1,5 +1,5 @@
 import {useLocalObservable} from "mobx-react-lite";
-import {FormEvent, useState} from "react";
+import {FormEvent} from "react";
 import {useNavigate} from "react-router-dom";
 
 import {api} from "../../utils/constants";
@@ -37,13 +37,8 @@ export const useModel = () => {
                             model.confirmPassword = value;
                         },
 
-                        handleCloseModal() {
-                            model.isModalOpen = false;
-                        },
-
                         handleOpenModal() {
                             model.isModalOpen = true;
-                            console.log(model.isModalOpen);
                         },
 
                         async handleRegister(event: FormEvent<HTMLFormElement>) {
@@ -60,11 +55,11 @@ export const useModel = () => {
 
                                 console.log('ответ получен -', response);
 
-                                if (response.data && response.data) {
+                                if (response) {
                                     navigate("/");
-                                    model.isModalOpen = true;
+                                    model.handleOpenModal();
 
-                                    console.log(response.data);
+                                    console.log(response);
                                 }
 
                                 model.isLoading = false;
@@ -107,8 +102,7 @@ export const useModel = () => {
                                 model.error = "",
                                     model.message = "",
                                     model.isLoading = true;
-                                const response = await api.api.usersMeRetrieve({
-                                });
+                                const response = await api.api.usersMeRetrieve({cancelToken: 'Bearer ' + `${localStorage.getItem('accessToken')}`});
 
                                 console.log('ответ user получен -', response);
 
