@@ -1,5 +1,5 @@
 import {useLocalObservable} from "mobx-react-lite";
-import {FormEvent, useState} from "react";
+import {FormEvent} from "react";
 import {useNavigate} from "react-router-dom";
 
 import {api} from "../../utils/constants";
@@ -35,13 +35,8 @@ export const useModel = () => {
                             model.confirmPassword = value;
                         },
 
-                        handleCloseModal() {
-                            model.isModalOpen = false;
-                        },
-
                         handleOpenModal() {
                             model.isModalOpen = true;
-                            console.log(model.isModalOpen);
                         },
 
                         async handleRegister(event: FormEvent<HTMLFormElement>) {
@@ -60,7 +55,7 @@ export const useModel = () => {
 
                                 if (response.data && response.data) {
                                     navigate("/");
-                                    model.isModalOpen = true;
+                                    model.handleOpenModal();
 
                                     console.log(response.data);
                                 }

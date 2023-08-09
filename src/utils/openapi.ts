@@ -9,9 +9,8 @@
  * ---------------------------------------------------------------
  */
 
-export interface Activation {
-  uid: string;
-  token: string;
+export interface AgeVisibility {
+  age_is_hidden: boolean;
 }
 
 /** Сериализатор для создания чата. */
@@ -26,18 +25,25 @@ export interface ChatList {
   companion: string;
 }
 
+/** Сериализатор для создания чата. */
+export interface ChatRequest {
+  /**
+   * @minLength 1
+   * @pattern ^[-a-zA-Z0-9_]+$
+   */
+  companion: string;
+}
+
 /** Сериализатор модели страны. */
 export interface Country {
   /**
    * Код
    * Код страны
-   * @maxLength 32
    */
-  code?: string | null;
+  code: string | null;
   /**
    * Название
    * Наименование
-   * @maxLength 255
    */
   name: string;
   /**
@@ -57,31 +63,26 @@ export enum GenderEnum {
   Female = "Female",
 }
 
+export interface GenderVisibility {
+  gender_is_hidden: boolean;
+}
+
 /** Сериализатор модели языка. */
 export interface Language {
-  /**
-   * Название языка
-   * @maxLength 256
-   */
+  /** Название языка */
   name: string;
-  /**
-   * Название языка (на этом языке)
-   * @maxLength 256
-   */
-  name_local?: string;
+  /** Название языка (на этом языке) */
+  name_local: string;
   /**
    * ISO 639-1 Код языка
    * 2-символьный код языка без страны
-   * @maxLength 2
    */
   isocode: string;
   /**
    * Порядок сортировки
    * Увеличьте, чтобы поднять в выборке
-   * @min 0
-   * @max 2147483647
    */
-  sorting?: number;
+  sorting: number;
 }
 
 export type NullEnum = null;
@@ -102,7 +103,7 @@ export interface PaginatedChatListList {
   results?: ChatList[];
 }
 
-export interface PaginatedUserList {
+export interface PaginatedUserReprList {
   /** @example 123 */
   count?: number;
   /**
@@ -115,60 +116,32 @@ export interface PaginatedUserList {
    * @example "http://api.example.org/accounts/?page=2"
    */
   previous?: string | null;
-  results?: User[];
+  results?: UserRepr[];
 }
 
-export interface PasswordResetConfirm {
-  uid: string;
-  token: string;
-  new_password: string;
-}
-
-/** Сериализатор модели пользователя. */
-export interface PatchedUser {
-  /**
-   * Электронная почта
-   * Адрес email
-   * @format email
-   * @maxLength 254
-   */
-  email?: string;
-  /**
-   * Имя пользователя
-   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
-   * @maxLength 150
-   * @pattern ^[\w.@+-]+$
-   */
-  username?: string;
-  /**
-   * Пароль
-   * @maxLength 128
-   */
-  password?: string;
+/** Сериализатор для заполнения профиля пользователя. */
+export interface PatchedUserProfileRequest {
   /**
    * Имя
    * @maxLength 150
    */
   first_name?: string;
-  /** @format uri */
-  avatar?: string | null;
-  age?: string;
+  /** @format binary */
+  avatar?: File | null;
   /**
-   * Слаг
-   * Слаг
-   * @maxLength 150
-   * @pattern ^[-a-zA-Z0-9_]+$
+   * Код
+   * Код страны
+   * @minLength 1
    */
-  slug?: string | null;
-  country?: Country;
+  country?: string | null;
   /**
    * Дата рождения
    * Дата рождения пользователя
    * @format date
    */
   birth_date?: string | null;
-  native_languages?: UserNativeLanguage[];
-  foreign_languages?: UserForeignLanguage[];
+  native_languages?: string[];
+  foreign_languages?: UserForeignLanguageRequest[];
   /**
    * Пол
    * Пол пользователя
@@ -186,22 +159,20 @@ export interface PatchedUser {
   /**
    * О себе
    * О себе
-   * @maxLength 100
+   * @maxLength 256
    */
   about?: string;
-  /** Поле для скрытия/отображения пола пользователя */
-  gender_is_hidden?: boolean;
-  /** Поле для скрытия/отображения возраста пользователя */
-  age_is_hidden?: boolean;
-}
-
-export interface SendEmailReset {
-  /** @format email */
-  email: string;
 }
 
 export interface SetPassword {
   new_password: string;
+  current_password: string;
+}
+
+export interface SetPasswordRequest {
+  /** @minLength 1 */
+  new_password: string;
+  /** @minLength 1 */
   current_password: string;
 }
 
@@ -221,42 +192,97 @@ export enum SkillLevelEnum {
 }
 
 export interface TokenObtainPair {
-  username: string;
-  password: string;
-  access?: string;
-  refresh?: string;
-}
-
-export interface TokenRefresh {
-  access?: string;
+  access: string;
   refresh: string;
 }
 
-export interface TokenVerify {
+export interface TokenObtainPairRequest {
+  /** @minLength 1 */
+  username: string;
+  /** @minLength 1 */
+  password: string;
+}
+
+export interface TokenRefresh {
+  access: string;
+}
+
+export interface TokenRefreshRequest {
+  /** @minLength 1 */
+  refresh: string;
+}
+
+export interface TokenVerifyRequest {
+  /** @minLength 1 */
   token: string;
 }
 
-/** Сериализатор модели пользователя. */
-export interface User {
+/** Сериализатор создания пользователя. */
+export interface UserCreateRequest {
   /**
    * Электронная почта
    * Адрес email
    * @format email
-   * @maxLength 254
+   * @minLength 1
+   * @maxLength 30
    */
   email: string;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+   * @minLength 1
    * @maxLength 150
    * @pattern ^[\w.@+-]+$
    */
   username: string;
-  /**
-   * Пароль
-   * @maxLength 128
-   */
+  /** @minLength 1 */
   password: string;
+}
+
+/** Сериализатор промежутоной модели Пользователь-иностранный язык. */
+export interface UserForeignLanguage {
+  isocode: string;
+  /** Название языка */
+  language: string;
+  /**
+   * Уровень владения языком
+   * Укажите уровень вашего владения языком.
+   *
+   * * `Newbie` - Новичок
+   * * `Amateur` - Любитель
+   * * `Profi` - Профи
+   * * `Expert` - Эксперт
+   * * `Guru` - Гуру
+   */
+  skill_level: SkillLevelEnum;
+}
+
+/** Сериализатор промежутоной модели Пользователь-иностранный язык. */
+export interface UserForeignLanguageRequest {
+  /** @minLength 1 */
+  isocode: string;
+  /**
+   * Уровень владения языком
+   * Укажите уровень вашего владения языком.
+   *
+   * * `Newbie` - Новичок
+   * * `Amateur` - Любитель
+   * * `Profi` - Профи
+   * * `Expert` - Эксперт
+   * * `Guru` - Гуру
+   */
+  skill_level: SkillLevelEnum;
+}
+
+/** Сериализатор промежутоной модели Пользователь-родной язык. */
+export interface UserNativeLanguage {
+  isocode: string;
+  /** Название языка */
+  language: string;
+}
+
+/** Сериализатор для заполнения профиля пользователя. */
+export interface UserProfile {
   /**
    * Имя
    * @maxLength 150
@@ -264,23 +290,19 @@ export interface User {
   first_name?: string;
   /** @format uri */
   avatar?: string | null;
-  age: string;
   /**
-   * Слаг
-   * Слаг
-   * @maxLength 150
-   * @pattern ^[-a-zA-Z0-9_]+$
+   * Код
+   * Код страны
    */
-  slug?: string | null;
-  country: Country;
+  country?: string | null;
   /**
    * Дата рождения
    * Дата рождения пользователя
    * @format date
    */
   birth_date?: string | null;
-  native_languages: UserNativeLanguage[];
-  foreign_languages: UserForeignLanguage[];
+  native_languages?: string[];
+  foreign_languages?: UserForeignLanguage[];
   /**
    * Пол
    * Пол пользователя
@@ -298,67 +320,62 @@ export interface User {
   /**
    * О себе
    * О себе
-   * @maxLength 100
+   * @maxLength 256
    */
   about?: string;
+}
+
+/** Сериализатор для просмотра пользователя. */
+export interface UserRepr {
+  /**
+   * Имя пользователя
+   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+   */
+  username: string;
+  /** Имя */
+  first_name: string;
+  /** @format uri */
+  avatar: string;
+  age: string;
+  /**
+   * Слаг
+   * Слаг
+   * @pattern ^[-a-zA-Z0-9_]+$
+   */
+  slug: string | null;
+  country: Country;
+  native_languages: UserNativeLanguage[];
+  foreign_languages: UserForeignLanguage[];
+  /**
+   * Пол
+   * Пол пользователя
+   *
+   * * `Male` - Мужской
+   * * `Female` - Женский
+   */
+  gender: GenderEnum | NullEnum | null;
+  /**
+   * Темы для разговора
+   * Темы для разговора
+   */
+  topics_for_discussion: string;
+  /**
+   * О себе
+   * О себе
+   */
+  about: string;
+  /**
+   * Последняя активность
+   * Последнее время активности пользователя
+   * @format date-time
+   */
+  last_activity: string | null;
+  is_online: string;
   /** Поле для скрытия/отображения пола пользователя */
   gender_is_hidden: boolean;
   /** Поле для скрытия/отображения возраста пользователя */
   age_is_hidden: boolean;
-}
-
-export interface UserCreate {
-  /**
-   * Электронная почта
-   * Адрес email
-   * @format email
-   * @maxLength 254
-   */
-  email: string;
-  /**
-   * Имя пользователя
-   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
-   * @maxLength 150
-   * @pattern ^[\w.@+-]+$
-   */
-  username: string;
-  id?: number;
-  password: string;
-}
-
-/** Сериализатор промежутоной модели Пользователь-иностранный язык. */
-export interface UserForeignLanguage {
-  id: number;
-  /**
-   * ISO 639-1 Код языка
-   * 2-символьный код языка без страны
-   */
-  code: string;
-  /** Название языка */
-  language: string;
-  /**
-   * Уровень владения языком
-   * Укажите уровень вашего владения языком.
-   *
-   * * `Newbie` - Новичок
-   * * `Amateur` - Любитель
-   * * `Profi` - Профи
-   * * `Expert` - Эксперт
-   * * `Guru` - Гуру
-   */
-  skill_level: SkillLevelEnum;
-}
-
-/** Сериализатор промежутоной модели Пользователь-родной язык. */
-export interface UserNativeLanguage {
-  id: number;
-  /**
-   * ISO 639-1 Код языка
-   * 2-символьный код языка без страны
-   */
-  code: string;
-  /** Название языка */
-  language: string;
+  role: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -572,10 +589,10 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title Lang_Exchange API
+ * @title LinguaChat API
  * @version 1.0.0
  *
- * API-endpoints for "Lang_Exchange" project
+ * API endpoints for LinguaChat
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   api = {
@@ -586,7 +603,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name AuthJwtCreateCreate
      * @request POST:/api/v1/auth/jwt/create/
      */
-    authJwtCreateCreate: (data: TokenObtainPair, params: RequestParams = {}) =>
+    authJwtCreateCreate: (data: TokenObtainPairRequest, params: RequestParams = {}) =>
       this.request<TokenObtainPair, any>({
         path: `/api/v1/auth/jwt/create/`,
         method: "POST",
@@ -603,7 +620,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name AuthJwtRefreshCreate
      * @request POST:/api/v1/auth/jwt/refresh/
      */
-    authJwtRefreshCreate: (data: TokenRefresh, params: RequestParams = {}) =>
+    authJwtRefreshCreate: (data: TokenRefreshRequest, params: RequestParams = {}) =>
       this.request<TokenRefresh, any>({
         path: `/api/v1/auth/jwt/refresh/`,
         method: "POST",
@@ -620,13 +637,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name AuthJwtVerifyCreate
      * @request POST:/api/v1/auth/jwt/verify/
      */
-    authJwtVerifyCreate: (data: TokenVerify, params: RequestParams = {}) =>
-      this.request<TokenVerify, any>({
+    authJwtVerifyCreate: (data: TokenVerifyRequest, params: RequestParams = {}) =>
+      this.request<void, any>({
         path: `/api/v1/auth/jwt/verify/`,
         method: "POST",
         body: data,
         type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -668,7 +684,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/v1/chats/
      * @secure
      */
-    chatsCreate: (data: Chat, params: RequestParams = {}) =>
+    chatsCreate: (data: ChatRequest, params: RequestParams = {}) =>
       this.request<Chat, any>({
         path: `/api/v1/chats/`,
         method: "POST",
@@ -704,7 +720,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/v1/chats/{id}/clear/
      * @secure
      */
-    chatsClearCreate: (id: number, data: Chat, params: RequestParams = {}) =>
+    chatsClearCreate: (id: number, data: ChatRequest, params: RequestParams = {}) =>
       this.request<Chat, any>({
         path: `/api/v1/chats/${id}/clear/`,
         method: "POST",
@@ -723,7 +739,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/v1/chats/{id}/send_message/
      * @secure
      */
-    chatsSendMessageCreate: (id: number, data: Chat, params: RequestParams = {}) =>
+    chatsSendMessageCreate: (id: number, data: ChatRequest, params: RequestParams = {}) =>
       this.request<Chat, any>({
         path: `/api/v1/chats/${id}/send_message/`,
         method: "POST",
@@ -735,10 +751,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели страны.
+     * @description Просмотреть все страны с возможностью поиска по их кодам и названиям
      *
      * @tags countries
      * @name CountriesList
+     * @summary Просмотреть все страны
      * @request GET:/api/v1/countries/
      * @secure
      */
@@ -759,10 +776,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели страны.
+     * @description Просмотреть информацию о стране с соответствующим кодом
      *
      * @tags countries
      * @name CountriesRetrieve
+     * @summary Просмотреть информацию о стране
      * @request GET:/api/v1/countries/{code}/
      * @secure
      */
@@ -776,10 +794,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели языка.
+     * @description Просмотреть все языки с возможностью поиска по их кодам и названиям
      *
      * @tags languages
      * @name LanguagesList
+     * @summary Просмотреть все языки
      * @request GET:/api/v1/languages/
      * @secure
      */
@@ -800,10 +819,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели языка.
+     * @description Просмотреть информацию об языке с соответствующим кодом
      *
      * @tags languages
      * @name LanguagesRetrieve
+     * @summary Просмотреть информацию об языке
      * @request GET:/api/v1/languages/{isocode}/
      * @secure
      */
@@ -817,10 +837,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
+     * @description Просмотреть всех пользователей с применением фильтров и сортировки. Админы и модераторы из выборки исключены
      *
      * @tags users
      * @name UsersList
+     * @summary Просмотреть всех пользователей
      * @request GET:/api/v1/users/
      * @secure
      */
@@ -845,6 +866,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * * `Female` - Женский
          */
         gender?: "Female" | "Male" | null;
+        is_online?: boolean;
         /** Number of results to return per page. */
         limit?: number;
         /**
@@ -870,7 +892,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<PaginatedUserList, any>({
+      this.request<PaginatedUserReprList, any>({
         path: `/api/v1/users/`,
         method: "GET",
         query: query,
@@ -880,34 +902,35 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
+     * @description Создать нового пользователя
      *
      * @tags users
      * @name UsersCreate
+     * @summary Зарегистрироваться
      * @request POST:/api/v1/users/
      * @secure
      */
-    usersCreate: (data: UserCreate, params: RequestParams = {}) =>
-      this.request<UserCreate, any>({
+    usersCreate: (data: UserCreateRequest, params: RequestParams = {}) =>
+      this.request<void, any>({
         path: `/api/v1/users/`,
         method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
+     * @description Просмотреть профиль пользователя с соответствующим slug
      *
      * @tags users
      * @name UsersRetrieve
+     * @summary Просмотреть профиль пользователя
      * @request GET:/api/v1/users/{slug}/
      * @secure
      */
     usersRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.request<User, any>({
+      this.request<UserRepr, any>({
         path: `/api/v1/users/${slug}/`,
         method: "GET",
         secure: true,
@@ -916,66 +939,120 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
+     * @description Заблокировать пользователя
      *
      * @tags users
-     * @name UsersActivationCreate
-     * @request POST:/api/v1/users/activation/
+     * @name UsersBlockUserCreate
+     * @summary Заблокировать пользователя
+     * @request POST:/api/v1/users/{slug}/block_user/
      * @secure
      */
-    usersActivationCreate: (data: Activation, params: RequestParams = {}) =>
-      this.request<Activation, any>({
-        path: `/api/v1/users/activation/`,
+    usersBlockUserCreate: (slug: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/users/${slug}/block_user/`,
         method: "POST",
-        body: data,
         secure: true,
-        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * @description Просмотреть все жалобы на пользователя (для админов и модераторов)
+     *
+     * @tags users
+     * @name UsersReportUserRetrieve
+     * @summary Просмотреть все жалобы на пользователя
+     * @request GET:/api/v1/users/{slug}/report_user/
+     * @secure
+     */
+    usersReportUserRetrieve: (slug: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/users/${slug}/report_user/`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * @description Отправить жалобу на пользователя
+     *
+     * @tags users
+     * @name UsersReportUserCreate
+     * @summary Отправить жалобу на пользователя
+     * @request POST:/api/v1/users/{slug}/report_user/
+     * @secure
+     */
+    usersReportUserCreate: (slug: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/users/${slug}/report_user/`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * @description Разблокировать пользователя
+     *
+     * @tags users
+     * @name UsersUnblockUserCreate
+     * @summary Разблокировать пользователя
+     * @request POST:/api/v1/users/{slug}/unblock_user/
+     * @secure
+     */
+    usersUnblockUserCreate: (slug: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/users/${slug}/unblock_user/`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * @description Изменить видимость возраста в своем профиле
+     *
+     * @tags users
+     * @name UsersHideShowAgePartialUpdate
+     * @summary Изменить видимость возраста в своем профиле
+     * @request PATCH:/api/v1/users/hide_show_age/
+     * @secure
+     */
+    usersHideShowAgePartialUpdate: (params: RequestParams = {}) =>
+      this.request<AgeVisibility, any>({
+        path: `/api/v1/users/hide_show_age/`,
+        method: "PATCH",
+        secure: true,
         format: "json",
         ...params,
       }),
 
     /**
-     * @description Метод для отображения/скрытия возраста.
-     *
-     * @tags users
-     * @name UsersHideShowAgePartialUpdate
-     * @request PATCH:/api/v1/users/hide_show_age/
-     * @secure
-     */
-    usersHideShowAgePartialUpdate: (params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/v1/users/hide_show_age/`,
-        method: "PATCH",
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * @description Метод для отображения/скрытия пола.
+     * @description Изменить видимость пола в своем профиле
      *
      * @tags users
      * @name UsersHideShowGenderPartialUpdate
+     * @summary Изменить видимость пола в своем профиле
      * @request PATCH:/api/v1/users/hide_show_gender/
      * @secure
      */
     usersHideShowGenderPartialUpdate: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<GenderVisibility, any>({
         path: `/api/v1/users/hide_show_gender/`,
         method: "PATCH",
         secure: true,
+        format: "json",
         ...params,
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
+     * @description Просмотреть свой профиль
      *
      * @tags users
      * @name UsersMeRetrieve
+     * @summary Просмотреть свой профиль
      * @request GET:/api/v1/users/me/
      * @secure
      */
     usersMeRetrieve: (params: RequestParams = {}) =>
-      this.request<User, any>({
+      this.request<UserRepr, any>({
         path: `/api/v1/users/me/`,
         method: "GET",
         secure: true,
@@ -984,15 +1061,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
+     * @description Редактировать свой профиль
      *
      * @tags users
      * @name UsersMePartialUpdate
+     * @summary Редактировать свой профиль
      * @request PATCH:/api/v1/users/me/
      * @secure
      */
-    usersMePartialUpdate: (data: PatchedUser, params: RequestParams = {}) =>
-      this.request<User, any>({
+    usersMePartialUpdate: (data: PatchedUserProfileRequest, params: RequestParams = {}) =>
+      this.request<UserProfile, any>({
         path: `/api/v1/users/me/`,
         method: "PATCH",
         body: data,
@@ -1003,10 +1081,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
+     * @description Удалить свой аккаунт
      *
      * @tags users
      * @name UsersMeDestroy
+     * @summary Удалить свой аккаунт
      * @request DELETE:/api/v1/users/me/
      * @secure
      */
@@ -1019,71 +1098,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Вьюсет модели пользователя.
-     *
-     * @tags users
-     * @name UsersResendActivationCreate
-     * @request POST:/api/v1/users/resend_activation/
-     * @secure
-     */
-    usersResendActivationCreate: (data: SendEmailReset, params: RequestParams = {}) =>
-      this.request<SendEmailReset, any>({
-        path: `/api/v1/users/resend_activation/`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Вьюсет модели пользователя.
-     *
-     * @tags users
-     * @name UsersResetPasswordCreate
-     * @request POST:/api/v1/users/reset_password/
-     * @secure
-     */
-    usersResetPasswordCreate: (data: SendEmailReset, params: RequestParams = {}) =>
-      this.request<SendEmailReset, any>({
-        path: `/api/v1/users/reset_password/`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Вьюсет модели пользователя.
-     *
-     * @tags users
-     * @name UsersResetPasswordConfirmCreate
-     * @request POST:/api/v1/users/reset_password_confirm/
-     * @secure
-     */
-    usersResetPasswordConfirmCreate: (data: PasswordResetConfirm, params: RequestParams = {}) =>
-      this.request<PasswordResetConfirm, any>({
-        path: `/api/v1/users/reset_password_confirm/`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Вьюсет модели пользователя.
+     * @description Изменить пароль на новый
      *
      * @tags users
      * @name UsersSetPasswordCreate
+     * @summary Изменить пароль на новый
      * @request POST:/api/v1/users/set_password/
      * @secure
      */
-    usersSetPasswordCreate: (data: SetPassword, params: RequestParams = {}) =>
+    usersSetPasswordCreate: (data: SetPasswordRequest, params: RequestParams = {}) =>
       this.request<SetPassword, any>({
         path: `/api/v1/users/set_password/`,
         method: "POST",
