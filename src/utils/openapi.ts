@@ -222,8 +222,8 @@ export enum SkillLevelEnum {
 }
 
 export interface TokenObtainPair {
-  username: string;
-  password: string;
+  username?: string;
+  password?: string;
   access?: string;
   refresh?: string;
 }
@@ -388,12 +388,14 @@ export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" 
 
 export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
-  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
+  baseApiParams1?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (securityData: SecurityDataType | null) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
 
 export interface HttpResponse<D extends unknown, E extends unknown = unknown> extends Response {
+  access: 'string';
+  refresh: 'string';
   data: D;
   error: E;
 }
@@ -417,6 +419,15 @@ export class HttpClient<SecurityDataType = unknown> {
   private baseApiParams: RequestParams = {
     credentials: "same-origin",
     headers: {},
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  };
+
+  private baseApiParams1: RequestParams = {
+    credentials: "same-origin",
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + `${localStorage.getItem('accessToken')}`},
     redirect: "follow",
     referrerPolicy: "no-referrer",
   };
@@ -478,11 +489,11 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
     return {
-      ...this.baseApiParams,
+      ...this.baseApiParams1,
       ...params1,
       ...(params2 || {}),
       headers: {
-        ...(this.baseApiParams.headers || {}),
+        ...(this.baseApiParams1.headers || {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
@@ -524,7 +535,7 @@ export class HttpClient<SecurityDataType = unknown> {
     ...params
   }: FullRequestParams): Promise<HttpResponse<T, E>> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
+      ((typeof secure === "boolean" ? secure : this.baseApiParams1.secure) &&
         this.securityWorker &&
         (await this.securityWorker(this.securityData))) ||
       {};
