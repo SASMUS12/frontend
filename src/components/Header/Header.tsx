@@ -1,4 +1,5 @@
 import React, {useEffect, useState } from 'react';
+import {observer} from "mobx-react-lite";
 import styles from './Header.module.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../UI/Button/Button';
@@ -22,7 +23,9 @@ const Header = () => {
   const location = useLocation();
   const model1 = useModel1();
 
-  
+  useEffect(() => {
+    console.log(`header: ${model1.isLoggedIn}`);
+  }, [model1.isLoggedIn]);
 
   return (
     <header className={styles.header}>
@@ -66,4 +69,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default observer(Header);
