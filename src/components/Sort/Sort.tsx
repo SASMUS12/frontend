@@ -232,17 +232,25 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
 
   // Функция запуска фильтрации и передачи ее в родительский компонент
   const handleFindButtonClick = () => {
-    const filters = {
-      languages: selectedLanguages,
-      gender: selectedGender,//+
-      age: {
-        min: leftValue,//+
-        max: rightValue,//+
-      },
-      country: selectedCountries,//+
-    };
-    onChangeSort(filters);
-    console.log(filters);
+    if (leftValue <= rightValue) {
+      const countryCodes = selectedCountries.map(country => country.code).join(',');
+
+      const languageLevels = selectedLanguages.map(level => ({
+        language: level.language.isocode,
+        skillLevel: level.skillLevel
+      }));
+
+      const filters = {
+        languages: languageLevels,
+        gender: selectedGender,
+        age: `${leftValue},${rightValue}`,
+        country: countryCodes,
+      };
+      onChangeSort(filters);
+      console.log(filters);
+    } else {
+      console.log('Ошибка: начальный возраст должен быть меньше или равен конечному возрасту.');
+    }
   };
  
   return (
