@@ -2,7 +2,7 @@ import {FC} from 'react';
 
 import LanguagesTag from '../UI/LanguagesTag/LanguagesTag';
 
-import {сardRandomMaleAvatar, сardRandomFemaleAvatar} from "./Card-random-avatar";
+import {сardRandomMaleAvatar, сardRandomFemaleAvatar} from "./CardRandomAvatar";
 import arrows from '../../images/svg/card-arrows-parallel.svg';
 
 import CountryIcon from '../UI/CountryIcon/CountryIcon';
