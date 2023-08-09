@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 
 import {api} from '../../utils/constants';
@@ -11,7 +11,7 @@ import Categories from "../../components/Categories/Categories";
 import Sort from "../../components/Sort/Sort";
 import Footer from '../../components/Footer/Footer';
 
-import {Button} from '../../components/UI/Button/Button';
+import MoreCards from "../../components/MoreCards/MoreCards";
 import Modal from "../../components/Modal/Modal";
 
 import styles from './MainPage.module.scss';
@@ -22,15 +22,18 @@ import {useModel} from "../../components/SignupSigninForm/model";
 const MainPage = () => {
     const model = useModel();
 
+    const handleCloseModal = () => {
+        model.isModalOpen = false;
+    };
+
     const [usersList, setUsersList] = useState<any[]>([]);
+    const [cardsListLength, setCardsListLength] = useState<number>(0);
     const [isUsersList, setIsUsersList] = useState(false);
     const [category, setCategory] = useState({name: 'Все', path: ''});
     const [sortType, setSortType] = useState({});
     const [isSortPopupOpen, setSortPopupOpen] = useState(false);
     const [languagesData, setLanguagesData] = useState<Language[]>([]);
     const [countriesData, setCountriesData] = useState<Country[]>([]);
-
-    const isModalOpen = model.isModalOpen;
 
     const handleOpenSortPopup = () => {
         setSortPopupOpen(!isSortPopupOpen);
@@ -40,7 +43,7 @@ const MainPage = () => {
         try {
             console.log('отправка запроса ---');
             const response = await api.api.usersList(
-                {ordering: `${category.path}`}
+                {ordering: `${category.path}`},
                 // sort: sortType,
             );
             console.log('ответ получен -', response);
@@ -98,48 +101,6 @@ const MainPage = () => {
         fetchCountriesData();
     }, []);
 
-    useEffect(() => {
-        console.log(model.isLoggedIn);
-    }, [model.isLoggedIn]);
-
-
-    const popupRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-
-    useEffect(() => {
-        if (popupRef.current) {
-            popupRef.current.addEventListener("mousedown", (event: MouseEvent) => {
-                const targetClasses = (event.target as Element).classList;
-                if (targetClasses.contains("popup_opened")) {
-                    model.handleCloseModal();
-                    console.log(targetClasses);
-                    console.log(model.isModalOpen);
-                }
-            });
-        }
-    }, [model.isModalOpen]);
-
-    // Закрытие popup при нажатии на Esc
-    const handleCloseByEsc = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-            model.handleCloseModal();
-            console.log(popupRef);
-            const targetClasses = (event.target as Element).classList;
-            console.log(targetClasses);
-            console.log(model.isModalOpen);
-        }
-    };
-
-    useEffect(() => {
-        if (isModalOpen) {
-            // Список действий внутри одного хука
-            document.addEventListener("keydown", handleCloseByEsc);
-            // Возвращаем функцию, которая удаляет эффекты
-            return () => {
-                document.removeEventListener("keydown", handleCloseByEsc);
-            };
-        }
-    }, [model.isModalOpen]);
-
     return (
         <>
             <Header/>
@@ -163,26 +124,26 @@ const MainPage = () => {
                             className={cn(styles.content__cardListAndSortPopup_cardListArea_cardList,
                                 isSortPopupOpen && styles.content__cardListAndSortPopup_cardListArea_cardList_narrow)}>
                             {isUsersList &&
-                                usersList.map((user, i) => (
-                                    <Card
-                                        country={user.country}
-                                        status={user.status}
-                                        avatar={user.avatar}
-                                        first_name={user.first_name}
-                                        gender={user.gender}
-                                        gender_is_hidden={user.gender_is_hidden}
-                                        age={user.age}
-                                        about={user.about}
-                                        indicator={user.indicator}
-                                        nativeLanguages={user.native_languages}
-                                        foreignLanguages={user.foreign_languages}
-                                        key={user.id}
-                                    />
-                                ))}
+                                usersList.map((user, i) => {
+                                        return ((i < cardsListLength) &&
+                                            <Card
+                                                country={user.country}
+                                                avatar={user.avatar}
+                                                first_name={user.first_name}
+                                                gender={user.gender}
+                                                gender_is_hidden={user.gender_is_hidden}
+                                                age={user.age}
+                                                about={user.about}
+                                                is_online={user.is_online}
+                                                nativeLanguages={user.native_languages}
+                                                foreignLanguages={user.foreign_languages}
+                                                key={user.id}
+                                            />
+                                        );
+                                    }
+                                )}
                         </div>
-                        <Button className={styles.content__cardListAndSortPopup_cardListArea_continuingButton} variant="transparent">
-                            Продолжить искать
-                        </Button>
+                        <MoreCards cardsList={usersList} cardsListLength={cardsListLength} setCardsListLength={setCardsListLength} />
                     </div>
                     <Sort
                         value={sortType}
@@ -193,7 +154,7 @@ const MainPage = () => {
                     />
                 </div>
 
-                <Modal isOpen={model.isModalOpen} onClose={model.handleCloseModal}>
+                <Modal isOpen={model.isModalOpen} onClose={handleCloseModal}>
                     <h2 className={styles.modal_header}>Подтвердите адрес электронной почты</h2>
                     <p className={styles.modal_text_main}>Пожалуйста, проверьте электронную почту, которую
                         указали
