@@ -107,8 +107,7 @@ export const useModel = () => {
                                 model.error = "",
                                     model.message = "",
                                     model.isLoading = true;
-                                const response = await api.api.usersMeRetrieve({
-                                });
+                                const response = await api.api.usersMeRetrieve({cancelToken: 'Bearer ' + `${localStorage.getItem('accessToken')}`});
 
                                 console.log('ответ user получен -', response);
 

@@ -991,9 +991,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "GET",
         secure: true,
         format: "json",
-        headers: {
+        /*headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + `${localStorage.getItem('accessToken')}`},
+          Authorization: 'Bearer ' + `${localStorage.getItem('accessToken')}`},*/
         ...params,
       }),
 
