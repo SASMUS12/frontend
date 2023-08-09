@@ -11,6 +11,7 @@ interface LanguageLevelProps {
 const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemove }) => {
 
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
   
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -42,32 +43,32 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
             </div>
             <div className={styles.language__level}>
               <label>
-                <input type="checkbox" name="Новичок" onChange={handleCheckboxChange} />
+                <input type="checkbox" name="Новичок" value="Newbie" onChange={handleCheckboxChange} />
                 <span className={styles.languageLevel_checkbox_visible}></span>
                 Новичок
               </label>
               <label>
-                <input type="checkbox" name="Любитель" onChange={handleCheckboxChange} />
+                <input type="checkbox" name="Любитель" value="Amateur" onChange={handleCheckboxChange} />
                 <span className={styles.languageLevel_checkbox_visible}></span>
                 Любитель
               </label>
               <label>
-                <input type="checkbox" name="Профи" onChange={handleCheckboxChange} />
+                <input type="checkbox" name="Профи"  value="Profi"onChange={handleCheckboxChange} />
                 <span className={styles.languageLevel_checkbox_visible}></span>
                   Профи
               </label>
               <label>
-                <input type="checkbox" name="Эксперт" onChange={handleCheckboxChange} />
+                <input type="checkbox" name="Эксперт" value="Expert" onChange={handleCheckboxChange} />
                 <span className={styles.languageLevel_checkbox_visible}></span>
                  Эксперт
               </label>
               <label>
-               <input type="checkbox" name="Гуру" onChange={handleCheckboxChange} />
+               <input type="checkbox" name="Гуру" value="Guru" onChange={handleCheckboxChange} />
                <span className={styles.languageLevel_checkbox_visible}></span>
                  Гуру
               </label>
               <label>
-                <input type="checkbox" name="Носитель" onChange={handleCheckboxChange} />
+                <input type="checkbox" name="Носитель" value="Native"onChange={handleCheckboxChange} />
                 <span className={styles.languageLevel_checkbox_visible}></span>
                  Носитель
               </label>
