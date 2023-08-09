@@ -16,6 +16,8 @@ export const useModel = () => {
                         email: "",
                         password: "",
                         confirmPassword: "",
+                        refresh: "",
+                        access: "",
                         isModalOpen: false,
                         isLoggedIn: false,
 
@@ -74,16 +76,36 @@ export const useModel = () => {
                                     model.message = "",
                                     model.isLoading = true;
                                 const response = await api.api.authJwtCreateCreate({
-                                    username: model.username,
+                                    username: model.email,
                                     password: model.password
                                 });
+                                console.log('ответ login получен -', response);
 
-                                console.log('ответ получен -', response);
-
-                                if (response.data && response.data) {
-                                    console.log(response.data);
+                                if (response && response.data.refresh && response.data.access) {
+                                    model.refresh = response.data.refresh;
+                                    model.access = response.data.access;
+                                    localStorage.setItem('accessToken', response.data.access);
+                                    localStorage.setItem('refreshToken', response.data.refresh);
                                     model.isLoggedIn = true;
+                                    navigate("/");
                                 }
+
+                                model.isLoading = false;
+                            } catch (error) {
+                                console.error('Ошибка при получении данных -', error);
+                                model.isLoading = false;
+                            }
+                        },
+
+                        async getCurrentUser() {
+                            try {
+                                model.error = "",
+                                    model.message = "",
+                                    model.isLoading = true;
+                                const response = await api.api.usersMeRetrieve({
+                                });
+
+                                console.log('ответ user получен -', response);
 
                                 model.isLoading = false;
                             } catch (error) {
