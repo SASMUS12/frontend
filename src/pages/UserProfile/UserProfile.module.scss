@@ -1,0 +1,70 @@
+.profile {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100%;
+	padding-top: 32px;
+	background-color: var(--grey-color-50);
+}
+
+.profile__card {
+	position: relative;
+	max-width: 1158px;
+	margin: 0 auto;
+}
+
+.profile__buttons {
+	position: absolute;
+	right: 20px;
+	top: 75px;
+	display: flex;
+}
+
+.profile__moreAbout {
+	display: flex;
+}
+
+.profile__buttonsDown {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 40px 0 80px;
+}
+
+.profile__buttons_first {
+	width: 222px;
+	height: 36px;
+	padding: 9px 24px 8px 24px;
+	margin-bottom: 12px;
+	border-radius: 20px;
+	border: 0;
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 19px;
+	background-color: var(--accent-color-violet);
+	color: var(--color-base-white);
+	cursor: pointer;
+
+	&:hover {
+		cursor: pointer;
+		opacity: 0.7;
+	}
+}
+
+.profile__buttons_second {
+	border: none;
+	background-color: transparent;
+	font-family: var(--font-sans);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 19px;
+	color: var(--dark-violet);
+	cursor: pointer;
+
+	&:hover {
+		cursor: pointer;
+		opacity: 0.7;
+	}
+}

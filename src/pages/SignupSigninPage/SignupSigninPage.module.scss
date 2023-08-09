@@ -1,0 +1,27 @@
+.content {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 900px;
+  display: flex;
+  margin: 0 auto;
+
+  &__signInContainer {
+    width: 470px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 133px 0 24px;
+    background-color: var(--grey-color-50);
+
+    &_logoLink {
+      cursor: pointer;
+    }
+
+    &_logo {
+      width: 186px;
+      height: 32px;
+    }
+  }
+  &__picturesContainer {
+    width: 947px;
+  }
+}

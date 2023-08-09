@@ -1,0 +1,40 @@
+.header {
+  height: 95px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  margin: 0px auto;
+  justify-content: center;
+
+  a:hover {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.5s;
+  }
+
+  &__container {
+    width: 1440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 16px 24px;
+  }
+
+  &__buttonContainer {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__iconsContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  &__img {
+    height: 24px;
+    width: 24px;
+  }
+}
