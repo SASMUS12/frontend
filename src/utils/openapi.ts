@@ -387,7 +387,7 @@ export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" 
 
 export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
-  baseApiParams1?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
+  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (securityData: SecurityDataType | null) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
@@ -492,7 +492,7 @@ export class HttpClient<SecurityDataType = unknown> {
       ...params1,
       ...(params2 || {}),
       headers: {
-        ...(this.baseApiParams1.headers || {}),
+        ...(this.baseApiParams.headers || {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
@@ -534,7 +534,7 @@ export class HttpClient<SecurityDataType = unknown> {
     ...params
   }: FullRequestParams): Promise<HttpResponse<T, E>> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
+      ((typeof secure === "boolean" ? this.baseApiParams1.secure : this.baseApiParams.secure) &&
         this.securityWorker &&
         (await this.securityWorker(this.securityData))) ||
       {};
@@ -991,6 +991,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "GET",
         secure: true,
         format: "json",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + `${localStorage.getItem('accessToken')}`},
         ...params,
       }),
 
