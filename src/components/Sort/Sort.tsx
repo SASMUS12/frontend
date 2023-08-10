@@ -5,8 +5,7 @@ import styles from "../Sort/Sort.module.scss";
 import LanguageLevel from "../LanguageLevel/LanguageLevel";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import { Button } from "../UI/Button/Button";
-import { Language } from '../../utils/openapi';
-import { Country } from '../../utils/openapi';
+import { Country, Language, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
 import classNames from 'classnames';
 
 interface SortProps {
@@ -16,6 +15,8 @@ interface SortProps {
   languagesData: Language[];
   countriesData: Country[];
 }
+
+
 
 const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData, countriesData }) => {
   const [leftValue, setLeftValue] = useState<number>(18);
@@ -84,16 +85,33 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLanguageMenuOpen(false);
   };
 
-  const handleAddLanguage = (language: Language) => {
-    console.log("Вызвана функция handleAddLanguage");
-    setSelectedLanguages([...selectedLanguages, language]);
-    setLanguageMenuOpen(false);
-    console.log("Выбранный язык:", language);
+  // Функция для добавления выбранного языка в список и закрытия меню выбора языков
+  const handleAddLanguage = (language: UserForeignLanguage | UserNativeLanguage) => {
+  console.log("Вызвана функция handleAddLanguage");
+
+  // Преобразование выбранного языка в формат Language для добавления в список
+  const convertedLanguage: Language = {
+    isocode: language.isocode,
+    name: language.language,
+    name_local: language.language,
+    sorting: 0,
   };
 
-  const handleRemoveLanguage = (language: Language) => {
-    const updatedLanguages = selectedLanguages.filter((lang) => lang.isocode !== language.isocode);
-    setSelectedLanguages(updatedLanguages);
+  // Добавление преобразованного языка в список выбранных языков
+  setSelectedLanguages(prevLanguages => [...prevLanguages, convertedLanguage]);
+
+  // Закрытие меню выбора языков
+  setLanguageMenuOpen(false);
+
+  console.log("Выбранный язык:", language);
+  };
+
+  // Функция для удаления выбранного языка из списка
+  const handleRemoveLanguage = (language: UserForeignLanguage | UserNativeLanguage) => {
+  // Удаление выбранного языка из списка выбранных языков
+  setSelectedLanguages(prevLanguages =>
+    prevLanguages.filter(lang => (lang as Language).isocode !== language.isocode)
+    );
   };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,47 +229,56 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLastPressedLetter(null); 
   };
 
-  // Функция для сортировки списка стран по последней нажатой букве
-  const sortCountriesByLastLetter = () => {
-    if (lastPressedLetter) {
-      return filteredCountries.sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-        if (nameA.startsWith(lastPressedLetter) && !nameB.startsWith(lastPressedLetter)) {
-          return -1;
+// Функция запуска фильтрации и передачи ее в родительский компонент
+const handleFindButtonClick = () => {
+  // Проверка, что начальный возраст меньше или равен конечному возрасту
+  if (leftValue <= rightValue) {
+    // Создание строки с кодами выбранных стран, разделенных запятыми
+    const countryCodes = selectedCountries.map(country => country.code).join(',');
+
+    // Создание строки с названиями выбранных родных языков, разделенных запятыми
+    const nativeLanguages = selectedLanguages
+      .filter(language => !('skill_level' in language))
+      .map(language => language.name)
+      .join(',');
+
+    // Создание массива объектов с выбранными иностранными языками и их уровнем владения
+    const foreignLanguages = selectedLanguages
+      .filter(language => 'skill_level' in language)
+      .map(language => {
+        if ('language' in language && 'skill_level' in language) {
+          const userForeignLanguage = language;
+          return {
+            language: userForeignLanguage.language,
+            skill_level: userForeignLanguage.skill_level,
+          };
         }
-        if (!nameA.startsWith(lastPressedLetter) && nameB.startsWith(lastPressedLetter)) {
-          return 1;
-        }
-        return nameA.localeCompare(nameB);
-      });
-    } else {
-      return filteredCountries;
-    }
-  };
+        return null;
+      })
+      .filter(language => language !== null) as { language: string; skill_level: }[];
 
-  // Функция запуска фильтрации и передачи ее в родительский компонент
-  const handleFindButtonClick = () => {
-    if (leftValue <= rightValue) {
-      const countryCodes = selectedCountries.map(country => country.code).join(',');
+    // Формирование объекта с фильтрами для запроса
+    const filters = {
+      native_languages: nativeLanguages,
+      foreign_languages: foreignLanguages,
+      gender: selectedGender,
+      age: `${leftValue},${rightValue}`,
+      country: countryCodes,
+    };
 
-      const languageLevels = selectedLanguages.map(level => ({
-        language: level.language.isocode,
-        skillLevel: level.skillLevel
-      }));
+    // Преобразование фильтров в строку параметров запроса
+    const queryString = new URLSearchParams(filters).toString();
 
-      const filters = {
-        languages: languageLevels,
-        gender: selectedGender,
-        age: `${leftValue},${rightValue}`,
-        country: countryCodes,
-      };
-      onChangeSort(filters);
-      console.log(filters);
-    } else {
-      console.log('Ошибка: начальный возраст должен быть меньше или равен конечному возрасту.');
-    }
-  };
+    // Вызов функции для передачи параметров сортировки
+    onChangeSort(queryString);
+
+    // Вывод параметров запроса в консоль для проверки
+    console.log(queryString);
+  } else {
+    console.log('Ошибка: начальный возраст должен быть меньше или равен конечному возрасту.');
+  }
+};
+
  
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
