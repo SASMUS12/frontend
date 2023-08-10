@@ -39,13 +39,13 @@ const MainPage = () => {
         setSortPopupOpen(!isSortPopupOpen);
     }
 
-    const getUsersList = async () => {
+    const getUsersList = async (filters:any) => {
         try {
             console.log('отправка запроса ---');
-            const response = await api.api.usersList(
-                {ordering: `${category.path}`},
-                // sort: sortType,
-            );
+            const response = await api.api.usersList({
+                ordering: `${category.path}`,
+                ...filters,
+        });
             console.log('ответ получен -', response);
             setIsUsersList(true);
 
@@ -60,7 +60,7 @@ const MainPage = () => {
     };
 
     useEffect(() => {
-        getUsersList();
+        getUsersList(sortType);
     }, [category, sortType]);
 
     //Запрос массива языков

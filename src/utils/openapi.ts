@@ -177,6 +177,7 @@ export interface SetPasswordRequest {
 }
 
 /**
+    const filters = {
  * * `Newbie` - Новичок
  * * `Amateur` - Любитель
  * * `Profi` - Профи
