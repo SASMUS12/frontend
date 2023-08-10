@@ -4,15 +4,16 @@ import styles from './SignupSigninPage.module.scss';
 
 import logo from "../../images/svg/logo.svg";
 import PicturesBlock from "../../components/PicturesBlock/PicturesBlock";
+import { Link } from 'react-router-dom';
 
 const SignupSigninPage = () => {
     return (
         <>
             <section className={styles.content}>
                 <div className={styles.content__signInContainer}>
-                    <a className={styles.content__signInContainer_logoLink} href="/">
-                        <img className={styles.content__signInContainer_logo} src={logo} alt="Логотип проекта"/>
-                    </a>
+                    <Link to={`/`} className={styles.content__signInContainer_logoLink}>
+                        <img src={logo} className={styles.content__signInContainer_logo} alt="Логотип проекта" />
+                    </Link>
                     <SignupSigninForm />
                 </div>
                 <div className={styles.content__picturesContainer}>
