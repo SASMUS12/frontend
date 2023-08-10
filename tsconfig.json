@@ -23,7 +23,12 @@
   },
   "include": [
     "src",
+    "src/*.ts",
+    "src/*.tsx",
     "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/**/*.ts",
+    "src/**/**/*.tsx",
     "src/types/declarations.d.ts",
     "src/components", "src/types/declarations.d.ts"
   ],

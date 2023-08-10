@@ -20,6 +20,7 @@ export const useModel = () => {
                         access: "",
                         isModalOpen: false,
                         isLoggedIn: false,
+                        user: {},
 
                         handleUsernameChange({value}: { value: string }) {
                             model.username = value
@@ -105,6 +106,11 @@ export const useModel = () => {
                                 const response = await api.api.usersMeRetrieve({cancelToken: 'Bearer ' + `${localStorage.getItem('accessToken')}`});
 
                                 console.log('ответ user получен -', response);
+
+                                if (response ) {
+                                    model.user = response;
+                                }
+
 
                                 model.isLoading = false;
                             } catch (error) {

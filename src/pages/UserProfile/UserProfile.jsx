@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import Footer from "../../components/Footer/Footer";
 import UserCard from './UserCard/UserCard';
@@ -12,11 +12,15 @@ import settings from '../../images/userProfile/settings.png';
 import edit from '../../images/userProfile/edit.png';
 import array from '../../utils/constants';
 import styles from "./UserProfile.module.scss";
-
-
+import {useModel } from "../../components/SignupSigninForm/model";
 
 const UserProfile = () => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
+  const model = useModel();
+
+  useEffect(() => {
+    console.log(`userPage: ${model.user}`);
+  }, [model.user]);
 
   // UserCard
   const [name, setName] = useState('Светлана');
