@@ -107,6 +107,11 @@
 
       &_underline {
         text-decoration: underline;
+        &:hover {
+          cursor: pointer;
+          opacity: 0.6;
+          transition: 0.4s;
+        }
       }
     }
   }
