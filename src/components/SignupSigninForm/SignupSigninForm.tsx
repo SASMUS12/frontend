@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, Link, useNavigate } from "react-router-dom";
 import {observer} from 'mobx-react-lite';
 
 import {Input} from '../UI/Input/Input';
@@ -11,6 +11,7 @@ import cn from "classnames";
 
 const SignupSigninForm = () => {
     const model = useModel();
+    const navigate = useNavigate();
 
     const location = useLocation();
     const pathName: string = location.pathname;
@@ -34,8 +35,12 @@ const SignupSigninForm = () => {
     return (
         <form className={styles.form} onSubmit={isSignUp ? model.handleRegister : model.handleLogin}>
             <ul className={styles.form_links}>
-                <a className={!isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem} href="/signin">Вход</a>
-                <a className={isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem} href="/signup">Регистрация</a>
+                <Link to={`/signin`} className={!isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem}>
+                    Вход
+                </Link>
+                <Link to={`/signup`} className={isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem}>
+                    Регистрация
+                </Link>
             </ul>
             {isSignUp && (
             <Input
@@ -47,6 +52,7 @@ const SignupSigninForm = () => {
                 isLabelHintHidden={true}
                 placeholder="Имя"
                 required
+                maxLength={12}
                 onValue={model.handleUsernameChange}
             />
             )}
@@ -84,6 +90,7 @@ const SignupSigninForm = () => {
                 required
                 error={model.error}
                 onValue={model.handlePasswordChange}
+                maxLength={12}
             />
             {isSignUp && (
                 <Input
@@ -97,6 +104,7 @@ const SignupSigninForm = () => {
                     required
                     error={model.error}
                     onValue={model.handleConfirmPasswordChange}
+                    maxLength={12}
                 />
             )}
             <div className={styles.form_textTag}>
@@ -111,7 +119,8 @@ const SignupSigninForm = () => {
                         <span className={styles.form_checkbox_span_text}>
                             Продолжая, вы соглашаетесь с
                             <span
-                                className={styles.form_checkbox_span_text_underline}> Условиями пользования Сервисом</span>
+                                className={styles.form_checkbox_span_text_underline} 
+                                > Условиями пользования Сервисом</span>
                         </span>
                     </label>
                 )}
