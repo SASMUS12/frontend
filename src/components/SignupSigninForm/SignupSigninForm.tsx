@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, Link} from "react-router-dom";
 import {observer} from 'mobx-react-lite';
 
 import {Input} from '../UI/Input/Input';
@@ -34,8 +34,12 @@ const SignupSigninForm = () => {
     return (
         <form className={styles.form} onSubmit={isSignUp ? model.handleRegister : model.handleLogin}>
             <ul className={styles.form_links}>
-                <a className={!isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem} href="/signin">Вход</a>
-                <a className={isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem} href="/signup">Регистрация</a>
+                <Link to={`/signin`} className={!isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem}>
+                    Вход
+                </Link>
+                <Link to={`/signup`} className={isSignUp ? styles.form_links_activeLinkItem : styles.form_links_linkItem}>
+                    Регистрация
+                </Link>
             </ul>
             {isSignUp && (
             <Input
