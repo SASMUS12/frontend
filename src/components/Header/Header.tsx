@@ -3,14 +3,14 @@ import {observer} from "mobx-react-lite";
 import styles from './Header.module.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../UI/Button/Button';
-import { useModel } from './model';
+//import { useModel } from './model';
 import logo from '../../images/svg/logo.svg';
 import bell from '../../images/svg/header-bell.svg';
 import bubble from '../../images/20px.png';
 import k from '../../images/headerK.png';
 import { useLocation } from "react-router";
 
-import {useModel as useModel1} from "../SignupSigninForm/model";
+import {useModel } from "../SignupSigninForm/model";
 
 
 interface IProps {
@@ -18,14 +18,21 @@ interface IProps {
 }
 
 const Header = () => {
-  const model = useModel();
   const navigate = useNavigate();
   const location = useLocation();
-  const model1 = useModel1();
+  const model = useModel();
 
   useEffect(() => {
-    console.log(`header: ${model1.isLoggedIn}`);
-  }, [model1.isLoggedIn]);
+    console.log(`header_loggedIn: ${model.isLoggedIn}`);
+  }, [model.isLoggedIn]);
+
+  useEffect(() => {
+    console.log(`header_user: ${model.user}`);
+  }, [model.user]);
+
+  useEffect(() => {
+    console.log(`header_user: ${model.access}`);
+  }, [model.user]);
 
   return (
     <header className={styles.header}>
@@ -33,7 +40,7 @@ const Header = () => {
         <Link to={`/`} className={styles.header__link}>
           <img src={logo} alt="Логотип проекта" />
         </Link>  
-        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !model1.isLoggedIn && 
+        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !model.isLoggedIn && 
           <div className={styles.header__buttonContainer}>
             <Button
               className={styles.button}
@@ -52,7 +59,7 @@ const Header = () => {
               {model.isLoading ? 'Loading' : 'Зарегистрироваться'}
             </Button>
           </div>}
-          {(location.pathname !== "/signup") && (location.pathname !== "/signin") && model1.isLoggedIn &&
+          {(location.pathname !== "/signup") && (location.pathname !== "/signin") && model.isLoggedIn &&
           <div className={styles.header__iconsContainer}>
             <Link to={`/chats`} className={styles.header__link}>
               <img src={bubble} alt="Иконка чатов" className={styles.header__img}/>

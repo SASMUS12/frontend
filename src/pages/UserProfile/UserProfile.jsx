@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {observer} from "mobx-react-lite";
 import Header from '../../components/Header/Header';
 import Footer from "../../components/Footer/Footer";
 import UserCard from './UserCard/UserCard';
@@ -165,4 +166,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default observer(UserProfile);
