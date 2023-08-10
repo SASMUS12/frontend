@@ -5,8 +5,19 @@ import styles from "../Sort/Sort.module.scss";
 import LanguageLevel from "../LanguageLevel/LanguageLevel";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import { Button } from "../UI/Button/Button";
-import { Country, Language, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
+import { Country, Language, UserForeignLanguage, UserNativeLanguage, SkillLevelEnum } from '../../utils/openapi';
 import classNames from 'classnames';
+
+type Filters = {
+  native_languages: string;
+  foreign_languages: {
+    language: string;
+    skill_level: SkillLevelEnum;
+  }[];
+  gender: string | null;
+  age: string;
+  country: string;
+};
 
 interface SortProps {
   value: any;
@@ -229,10 +240,31 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLastPressedLetter(null); 
   };
 
-// Функция запуска фильтрации и передачи ее в родительский компонент
-const handleFindButtonClick = () => {
-  // Проверка, что начальный возраст меньше или равен конечному возрасту
-  if (leftValue <= rightValue) {
+
+  // Функция для сортировки списка стран по последней нажатой букве
+  const sortCountriesByLastLetter = () => {
+    if (lastPressedLetter) {
+      return filteredCountries.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if (nameA.startsWith(lastPressedLetter) && !nameB.startsWith(lastPressedLetter)) {
+          return -1;
+        }
+        if (!nameA.startsWith(lastPressedLetter) && nameB.startsWith(lastPressedLetter)) {
+          return 1;
+        }
+        return nameA.localeCompare(nameB);
+      });
+    } else {
+      return filteredCountries;
+    }
+  };
+
+
+  // Функция запуска фильтрации и передачи ее в родительский компонент
+  const handleFindButtonClick = () => {
+    // Проверка, что начальный возраст меньше или равен конечному возрасту
+    if (leftValue <= rightValue) {
     // Создание строки с кодами выбранных стран, разделенных запятыми
     const countryCodes = selectedCountries.map(country => country.code).join(',');
 
@@ -247,38 +279,34 @@ const handleFindButtonClick = () => {
       .filter(language => 'skill_level' in language)
       .map(language => {
         if ('language' in language && 'skill_level' in language) {
-          const userForeignLanguage = language;
+          const userForeignLanguage = language as UserForeignLanguage;
           return {
             language: userForeignLanguage.language,
-            skill_level: userForeignLanguage.skill_level,
+            skill_level: userForeignLanguage.skill_level as SkillLevelEnum,
           };
         }
         return null;
       })
-      .filter(language => language !== null) as { language: string; skill_level: }[];
+      .filter(language => language !== null) as { language: string; skill_level: SkillLevelEnum}[];
 
     // Формирование объекта с фильтрами для запроса
-    const filters = {
+    const filters: Filters = {
+      country: countryCodes,
       native_languages: nativeLanguages,
       foreign_languages: foreignLanguages,
       gender: selectedGender,
       age: `${leftValue},${rightValue}`,
-      country: countryCodes,
     };
 
-    // Преобразование фильтров в строку параметров запроса
-    const queryString = new URLSearchParams(filters).toString();
-
     // Вызов функции для передачи параметров сортировки
-    onChangeSort(queryString);
+    onChangeSort(filters);
 
     // Вывод параметров запроса в консоль для проверки
-    console.log(queryString);
+    console.log(filters);
   } else {
     console.log('Ошибка: начальный возраст должен быть меньше или равен конечному возрасту.');
   }
-};
-
+  };
  
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
