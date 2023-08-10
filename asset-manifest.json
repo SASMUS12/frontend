@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/frontend/static/css/main.c1154da6.css",
-    "main.js": "/frontend/static/js/main.4291aefe.js",
+    "main.js": "/frontend/static/js/main.b2334cf1.js",
     "static/css/135.a3e4615c.chunk.css": "/frontend/static/css/135.a3e4615c.chunk.css",
     "static/js/135.185b0a0d.chunk.js": "/frontend/static/js/135.185b0a0d.chunk.js",
     "static/css/555.c04bd8ce.chunk.css": "/frontend/static/css/555.c04bd8ce.chunk.css",
@@ -64,7 +64,7 @@
     "static/media/card-indicator-logOut.svg": "/frontend/static/media/card-indicator-logOut.c1cd8ce757f2e67786e07e4cebea25a4.svg",
     "static/media/card-indicator-logIn.svg": "/frontend/static/media/card-indicator-logIn.bef9a4f935656871659f6acb4f0ab641.svg",
     "main.c1154da6.css.map": "/frontend/static/css/main.c1154da6.css.map",
-    "main.4291aefe.js.map": "/frontend/static/js/main.4291aefe.js.map",
+    "main.b2334cf1.js.map": "/frontend/static/js/main.b2334cf1.js.map",
     "135.a3e4615c.chunk.css.map": "/frontend/static/css/135.a3e4615c.chunk.css.map",
     "135.185b0a0d.chunk.js.map": "/frontend/static/js/135.185b0a0d.chunk.js.map",
     "555.c04bd8ce.chunk.css.map": "/frontend/static/css/555.c04bd8ce.chunk.css.map",
@@ -89,6 +89,6 @@
   },
   "entrypoints": [
     "static/css/main.c1154da6.css",
-    "static/js/main.4291aefe.js"
+    "static/js/main.b2334cf1.js"
   ]
 }
