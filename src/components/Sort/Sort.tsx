@@ -225,7 +225,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const handleSelectCountryFromList = (countryName: string) => {
     const selectedCountry = countriesData.find(country => country.name.toLocaleLowerCase('ru') === countryName);
     if (selectedCountry) {
-      handleSelectCountry(selectedCountry);
+      handleSelectCountry(selectedCountry as Country);
     }
   };
 
@@ -240,11 +240,19 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLastPressedLetter(null); 
   };
 
+  //массив с кодами популярных языков
+  const popularCountryCodes = ['cn', 'es', 'england', 'sa', 'bd', 'pt', 'ru', 'jp', 'pc', 'my'];
 
   // Функция для сортировки списка стран по последней нажатой букве
   const sortCountriesByLastLetter = () => {
     if (lastPressedLetter) {
-      return filteredCountries.sort((a, b) => {
+      const popularCountries = filteredCountries.filter(country => popularCountryCodes.includes(country.code));
+      const otherCountries = filteredCountries.filter(country => !popularCountryCodes.includes(country.code));
+  
+      popularCountries.sort((a, b) => a.name.localeCompare(b.name));
+      otherCountries.sort((a, b) => a.name.localeCompare(b.name));
+  
+      return [...popularCountries, ...otherCountries].sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
         if (nameA.startsWith(lastPressedLetter) && !nameB.startsWith(lastPressedLetter)) {
@@ -338,6 +346,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
                   className={classNames(styles.popup__countryOption, {
                     [styles.selected]: selectedCountry?.code === country.code,
                     [styles.suggested]: suggestedCountries.includes(country),
+                    [styles.popular]: popularCountryCodes.includes(country.code),
                   })}
                 >
                   {country.name}
