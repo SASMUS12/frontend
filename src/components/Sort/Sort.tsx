@@ -346,7 +346,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
                   className={classNames(styles.popup__countryOption, {
                     [styles.selected]: selectedCountry?.code === country.code,
                     [styles.suggested]: suggestedCountries.includes(country),
-                    [styles.popular]: popularCountryCodes.includes(country.code),
+                    [styles.popular]: popularCountryCodes.includes(country.name),
                   })}
                 >
                   {country.name}
@@ -358,10 +358,10 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           </div>
         </div>
       </div>
-      <div className={styles.popup__help}>
+      <div className={styles.languageHelp}>
         <h2 className={styles.subtitle}>Язык партнера</h2>
         <Button
-          className={styles.popup__helpButton}
+          className={styles.languageHelp__button}
         />
       </div>
       <LanguageLevel
