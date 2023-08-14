@@ -1,7 +1,9 @@
+import IconButton from '../Buttons/IconButton/IconButton';
 import formattedTime from '../../../utils/getTime';
 import cardPartnerAvatar from '../../../images/userProfile/card-partner-avatar.png';
 import cardPartnerFlag from '../../../images/userProfile/russia.svg';
 import clock from '../../../images/userProfile/clock.png';
+import camera from '../../../images/userProfile/camera.svg';
 
 import styles from "./UserCard.module.scss";
 
@@ -9,6 +11,10 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
 
   const handleChange = (setState) => (event) => {
     setState(event.target.value);
+  }
+
+  const handleClickAvatar = () => {
+    // Action
   }
 
   const handleChangeAge = (event) => {
@@ -60,7 +66,16 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
         <div className={styles.profile__accent}></div>
         <div className={styles.profile__generalInfo}>
           <div className={styles.profile__partnerAbout}>
+            <div className={styles.profile__onlyAvatar}>
             <img className={styles.profile__partnerAvatar} src={cardPartnerAvatar} alt="Аватар пользователя"/>
+            <div className={styles.profile__partnerAvatarButton}>
+              <IconButton icon={camera} handleFunction={handleClickAvatar} iconWidth={54} iconHeight={54} />
+            </div>
+            <div className={styles.profile__additionalButtons}>
+              <button class="button1">Button 1</button>
+              <button class="button2">Button 2</button>
+            </div>
+            </div>
             <div className={styles.profile__partnerInfo}>
               <form className={styles.profile__form}>
                 <div>

@@ -19,6 +19,11 @@ const Topics = ({ isEditing, themes, setThemes, inputValue, setInputValue }) => 
     }
   };
 
+  const handleRemoveTheme = (index) => {
+    const updatedThemes = themes.filter((_, i) => i !== index);
+    setThemes(updatedThemes);
+  };
+
 
   return(
     <>
@@ -50,7 +55,13 @@ const Topics = ({ isEditing, themes, setThemes, inputValue, setInputValue }) => 
         <div className={styles.lystThemes}>
           {themes.map((item, index) => (
             <span key={index} className={styles.themes}>{item}
-              <span className={styles.themes__icon}><IconButton icon={control} /></span>
+              <span className={styles.themes__icon}>
+                <IconButton 
+                  icon={control} 
+                  handleFunction={() => handleRemoveTheme(index)}
+                  iconWidth={16} 
+                  iconHeight={16}
+                /></span>
             </span>            
         ))}
         </div>
