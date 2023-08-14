@@ -10,11 +10,17 @@ const array = ['Русская культура', 'Путешествия', 'Д�
 
 export default array;
 
+
 interface IQuestion {
   question: string;
   text: string[];
   id: number
 }
+
+export const headersWithToken = {
+  'Content-Type': 'application/json',
+  Authorization: 'Bearer ' + `${localStorage.getItem('accessToken')}`
+};
 
 export const FAQArray: IQuestion[] = [
   {
