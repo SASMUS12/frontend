@@ -391,25 +391,25 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
       <div className={styles.partner}>
         <h2 className={styles.subtitle}>О партнере</h2>
         <div className={styles.partner__gender}>
-          <h3>Пол</h3>
+          <h3 className={styles.partner__gender_subtitle}>Пол</h3>
           <Button
             type="button"
             variant="transparent"
             children={"Мужчина"}
             onClick={() => handleGenderSelection('Male')}
-            className={selectedGender === 'Male' ? styles.selected : ''}
+            className={`${styles.partner__gender_button} ${selectedGender === 'Male' ? styles.selected : ''}`}
           />
           <Button
             type="button"
             variant="transparent"
             children={"Женщина"}
             onClick={() => handleGenderSelection('Female')}
-            className={selectedGender === 'Female' ? styles.selected : ''}
+            className={`${styles.partner__gender_button} ${selectedGender === 'Female' ? styles.selected : ''}`}
           />
         </div>
       </div>
-      <div className={styles.popup__age}>
-        <h3>Возраст</h3>
+      <div className={styles.age}>
+        <h3 className={styles.age__subtitle}>Возраст</h3>
         <MultiRangeSlider
           minValue={18}
           maxValue={90}
@@ -419,12 +419,16 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         />
       </div>
       <Button
-        className={styles.popup__findButton}
+        type="button"
+        variant="primary"
+        className={styles.findButton}
         children={"Найти"}
         onClick={handleFindButtonClick}
       />
       <Button
-        className={styles.popup__cleanButton}
+        type="submit"
+        variant="transparent"
+        className={styles.cleanButton}
         children={"Очистить фильтр"}
         onClick={handleClearFilter}
       />
