@@ -5,9 +5,19 @@ import styles from "../Sort/Sort.module.scss";
 import LanguageLevel from "../LanguageLevel/LanguageLevel";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import { Button } from "../UI/Button/Button";
-import { Language } from '../../utils/openapi';
-import { Country } from '../../utils/openapi';
+import { Country, Language, UserForeignLanguage, UserNativeLanguage, SkillLevelEnum } from '../../utils/openapi';
 import classNames from 'classnames';
+
+type Filters = {
+  native_languages: string;
+  foreign_languages: {
+    language: string;
+    skill_level: SkillLevelEnum;
+  }[];
+  gender: string | null;
+  age: string;
+  country: string;
+};
 
 interface SortProps {
   value: any;
@@ -16,6 +26,8 @@ interface SortProps {
   languagesData: Language[];
   countriesData: Country[];
 }
+
+
 
 const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData, countriesData }) => {
   const [leftValue, setLeftValue] = useState<number>(18);
@@ -29,7 +41,9 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
-  const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);//Создайте состояние для хранения списка подсказок:
+  const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
+
 
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
@@ -38,6 +52,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
       setSelectedCountry(country);
       setCountryListVisible(false);
       setSearchValue('');
+      console.log(country)
     }
   };
 
@@ -45,13 +60,6 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const handleRemoveCountry = (country: Country) => {
     const updatedCountries = selectedCountries.filter((c) => c.code !== country.code);
     setSelectedCountries(updatedCountries);
-  };
-
-  // Функция для обработки нажатия клавиши Enter в поле поиска
-  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && selectedCountry) {
-      handleSelectCountry(selectedCountry);
-    }
   };
 
   // Функция для отображения выбранных стран
@@ -88,14 +96,33 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLanguageMenuOpen(false);
   };
 
-  const handleAddLanguage = (language: Language) => {
-    setSelectedLanguages([...selectedLanguages, language]);
-    setLanguageMenuOpen(false);
+  // Функция для добавления выбранного языка в список и закрытия меню выбора языков
+  const handleAddLanguage = (language: UserForeignLanguage | UserNativeLanguage) => {
+  console.log("Вызвана функция handleAddLanguage");
+
+  // Преобразование выбранного языка в формат Language для добавления в список
+  const convertedLanguage: Language = {
+    isocode: language.isocode,
+    name: language.language,
+    name_local: language.language,
+    sorting: 0,
   };
 
-  const handleRemoveLanguage = (language: Language) => {
-    const updatedLanguages = selectedLanguages.filter((lang) => lang.isocode !== language.isocode);
-    setSelectedLanguages(updatedLanguages);
+  // Добавление преобразованного языка в список выбранных языков
+  setSelectedLanguages(prevLanguages => [...prevLanguages, convertedLanguage]);
+
+  // Закрытие меню выбора языков
+  setLanguageMenuOpen(false);
+
+  console.log("Выбранный язык:", language);
+  };
+
+  // Функция для удаления выбранного языка из списка
+  const handleRemoveLanguage = (language: UserForeignLanguage | UserNativeLanguage) => {
+  // Удаление выбранного языка из списка выбранных языков
+  setSelectedLanguages(prevLanguages =>
+    prevLanguages.filter(lang => (lang as Language).isocode !== language.isocode)
+    );
   };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,6 +152,74 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLastPressedLetter(firstLetter);
     
     setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
+
+    setSelectedSuggestionIndex(null);
+  };
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return 0;
+        } else if (prevIndex < suggestedCountries.length - 1) {
+          return prevIndex + 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return suggestedCountries.length - 1;
+        } else if (prevIndex > 0) {
+          return prevIndex - 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedSuggestionIndex !== null) {
+        handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
+      } else if (selectedCountry) {
+        handleSelectCountry(selectedCountry);
+      }
+    }
+  };
+
+  const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return 0;
+        } else if (prevIndex < suggestedCountries.length - 1) {
+          return prevIndex + 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return suggestedCountries.length - 1;
+        } else if (prevIndex > 0) {
+          return prevIndex - 1;
+        } else {
+          return prevIndex;
+        }
+      });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedSuggestionIndex !== null) {
+        handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
+      } else if (selectedCountry) {
+        handleSelectCountry(selectedCountry);
+      }
+    }
   };
   
   const handleSelectCountryFromList = (countryName: string) => {
@@ -145,6 +240,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setLastPressedLetter(null); 
   };
 
+
   // Функция для сортировки списка стран по последней нажатой букве
   const sortCountriesByLastLetter = () => {
     if (lastPressedLetter) {
@@ -164,18 +260,52 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     }
   };
 
+
   // Функция запуска фильтрации и передачи ее в родительский компонент
   const handleFindButtonClick = () => {
-    const filters = {
-      languages: selectedLanguages,
+    // Проверка, что начальный возраст меньше или равен конечному возрасту
+    if (leftValue <= rightValue) {
+    // Создание строки с кодами выбранных стран, разделенных запятыми
+    const countryCodes = selectedCountries.map(country => country.code).join(',');
+
+    // Создание строки с названиями выбранных родных языков, разделенных запятыми
+    const nativeLanguages = selectedLanguages
+      .filter(language => !('skill_level' in language))
+      .map(language => language.name)
+      .join(',');
+
+    // Создание массива объектов с выбранными иностранными языками и их уровнем владения
+    const foreignLanguages = selectedLanguages
+      .filter(language => 'skill_level' in language)
+      .map(language => {
+        if ('language' in language && 'skill_level' in language) {
+          const userForeignLanguage = language as UserForeignLanguage;
+          return {
+            language: userForeignLanguage.language,
+            skill_level: userForeignLanguage.skill_level as SkillLevelEnum,
+          };
+        }
+        return null;
+      })
+      .filter(language => language !== null) as { language: string; skill_level: SkillLevelEnum}[];
+
+    // Формирование объекта с фильтрами для запроса
+    const filters: Filters = {
+      country: countryCodes,
+      native_languages: nativeLanguages,
+      foreign_languages: foreignLanguages,
       gender: selectedGender,
-      age: {
-        min: leftValue,
-        max: rightValue,
-      },
-      country: selectedCountries,
+      age: `${leftValue},${rightValue}`,
     };
+
+    // Вызов функции для передачи параметров сортировки
     onChangeSort(filters);
+
+    // Вывод параметров запроса в консоль для проверки
+    console.log(filters);
+  } else {
+    console.log('Ошибка: начальный возраст должен быть меньше или равен конечному возрасту.');
+  }
   };
  
   return (
@@ -189,7 +319,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             placeholder="Начните вводить название"
             value={searchValue}
             onChange={handleSearchInputChange}
-            onKeyDown={handleEnterPress}
+            onKeyDown={handleKeyDown}
             className={styles.popup__input}
           />
           <div className={styles.popup__selectedCountriesContainer}>
@@ -197,27 +327,26 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             {isCountryListVisible && (
               <div className={classNames(styles.popup__countryList, {
                 [styles.popup__countryList_visible]: sortCountriesByLastLetter().length > 0,
-              })}>
+              })}
+              onKeyDown={handleDropdownKeyDown}
+              >
               {sortCountriesByLastLetter().map((country) => (
+                country && country.name ? (
                 <div
                   key={country.code}
                   onClick={() => handleSelectCountryFromList(country.name.toLocaleLowerCase('ru'))}
                   className={classNames(styles.popup__countryOption, {
                     [styles.selected]: selectedCountry?.code === country.code,
+                    [styles.suggested]: suggestedCountries.includes(country),
                   })}
                 >
                   {country.name}
                 </div>
-              ))}
+              ) : null
+            ))}
              </div>
             )}
           </div>
-          {/* <Button
-            onClick={handleOpenLanguageMenu}
-            className={styles.popup__languageButton}
-          >
-            {selectedLanguage ? selectedLanguage.name : ""}
-          </Button> */}
         </div>
       </div>
       <div className={styles.popup__help}>
@@ -256,13 +385,13 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           <h3>Пол</h3>
           <Button
             children={"Мужчина"}
-            onClick={() => handleGenderSelection('Мужчина')}
-            className={selectedGender === 'Мужчина' ? styles.selected : ''}
+            onClick={() => handleGenderSelection('Male')}
+            className={selectedGender === 'Male' ? styles.selected : ''}
           />
           <Button
             children={"Женщина"}
-            onClick={() => handleGenderSelection('Женщина')}
-            className={selectedGender === 'Женщина' ? styles.selected : ''}
+            onClick={() => handleGenderSelection('Female')}
+            className={selectedGender === 'Female' ? styles.selected : ''}
           />
         </div>
       </div>

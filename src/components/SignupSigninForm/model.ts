@@ -1,6 +1,7 @@
 import {useLocalObservable} from "mobx-react-lite";
 import {FormEvent} from "react";
 import {useNavigate} from "react-router-dom";
+import { runInAction, makeAutoObservable } from "mobx"
 
 import {api} from "../../utils/constants";
 
@@ -20,6 +21,7 @@ export const useModel = () => {
                         access: "",
                         isModalOpen: false,
                         isLoggedIn: false,
+                        user: {},
 
                         handleUsernameChange({value}: { value: string }) {
                             model.username = value
@@ -39,6 +41,10 @@ export const useModel = () => {
 
                         handleOpenModal() {
                             model.isModalOpen = true;
+                        },
+
+                        handleLoggedInTrue() {
+                            model.isLoggedIn = true;
                         },
 
                         async handleRegister(event: FormEvent<HTMLFormElement>) {
@@ -87,10 +93,14 @@ export const useModel = () => {
                                     localStorage.setItem('accessToken', response.data.access);
                                     localStorage.setItem('refreshToken', response.data.refresh);
                                     model.isLoggedIn = true;
+                                    console.log(model.isLoggedIn);
                                     navigate("/");
                                 }
+                                runInAction(() => {
+                                    model.isLoggedIn = true;
+                                  })
 
-                                model.isLoading = false;
+                                
                             } catch (error) {
                                 console.error('Ошибка при получении данных -', error);
                                 model.isLoading = false;
@@ -102,9 +112,15 @@ export const useModel = () => {
                                 model.error = "",
                                     model.message = "",
                                     model.isLoading = true;
-                                const response = await api.api.usersMeRetrieve({cancelToken: 'Bearer ' + `${localStorage.getItem('accessToken')}`});
+                                const response = await api.api.usersMeRetrieve({/*cancelToken: 'Bearer ' + `${localStorage.getItem('accessToken')}`*/});
 
                                 console.log('ответ user получен -', response);
+
+                                if (response ) {
+                                    model.user = response;
+                                    console.log(model.user);
+                                }
+
 
                                 model.isLoading = false;
                             } catch (error) {
