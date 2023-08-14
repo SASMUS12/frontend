@@ -319,7 +319,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
       <div className={styles.popup__cantry}>
-        <h2>Страна партнера</h2>
+        <h2 className={styles.subtitle}>Страна партнера</h2>
         <div className={styles.popup__enter}>
           <input
             type="text"
@@ -359,7 +359,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         </div>
       </div>
       <div className={styles.popup__help}>
-        <h2>Язык партнера</h2>
+        <h2 className={styles.subtitle}>Язык партнера</h2>
         <Button
           className={styles.popup__helpButton}
         />
@@ -380,24 +380,28 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
       {isLanguageMenuOpen && (
         <LanguageLevel languages={languagesData} onAdd={handleAddLanguage} />
       )}
-      <div className={styles.popup__add}>
+      <div className={styles.languagesAdd}>
         <Button
           onClick={handleOpenLanguageMenu}
-          className={styles.popup__addButton}
+          className={styles.languagesAdd__button}
         >
           {"добавить язык"}
         </Button>
       </div>
-      <div className={styles.popup__partner}>
-        <h2>О партнере</h2>
-        <div className={styles.popup__gender}>
+      <div className={styles.partner}>
+        <h2 className={styles.subtitle}>О партнере</h2>
+        <div className={styles.partner__gender}>
           <h3>Пол</h3>
           <Button
+            type="button"
+            variant="transparent"
             children={"Мужчина"}
             onClick={() => handleGenderSelection('Male')}
             className={selectedGender === 'Male' ? styles.selected : ''}
           />
           <Button
+            type="button"
+            variant="transparent"
             children={"Женщина"}
             onClick={() => handleGenderSelection('Female')}
             className={selectedGender === 'Female' ? styles.selected : ''}

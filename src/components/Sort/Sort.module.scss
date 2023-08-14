@@ -92,15 +92,13 @@
     align-items: center;
   }
   
-  h2 {
+  .subtitle {
     align-self: stretch;
     align-items: center;
     display: flex;
     justify-content: space-between;
-    width: 296px;
     color: #323944;
     font-size: 18px;
-    font-style: normal;
     font-weight: 500;
     line-height: normal;
   }
@@ -172,9 +170,7 @@
       border: 1px solid #ccc;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-    }
-
-    
+    }    
     
     input[type="text"] {
       width: 296px;
@@ -196,36 +192,49 @@
       margin-bottom: 9px;
       margin-top: 16px;
     }
-
- 
-  .popup__add {
+/////Кнопка добавить язык
+  .languagesAdd {
     width: 135px;
     height: 20px;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: flex-end;
+    align-items: flex-start;
+    flex-direction: row;
     color: var(--accent-color-violet, #6D47D1);
-    font-family: Inter;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     background-image: url("../../images/svg/plus-in-circle.svg");
     background-repeat: no-repeat;
-    background-position: left 0px center;
+    background-position: left 0 center;
     background-size: 20px 20px;
     padding-left: 20px;
     border: none;
     background-color: #fff;
     margin-bottom: 40px;
 
-    .popup__addButton {
-      width: 135px;
+    &__button {
       height: 20px;
       padding: 0;
       background-color: white;
       border: none;
       color: #6D47D1;
+
+      &:hover {
+        color: var(--hover-text-color, #A083E0);
+      }
+
+      &:active {
+        color: var(--hover-text-color, #6236C7);
+      }
+    }
+    &:hover {      
+      background-image: url("../../images/svg/plus-in-circle_hover.svg");   
+    }
+
+    &:active {
+      background-image: url("../../images/svg/plus-in-circle_active.svg");
     }
   }
 
@@ -243,21 +252,21 @@
     justify-content: center;
   }
 
-  .popup__partner {
+  .partner {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
-  }
 
-  .popup__gender {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: stretch;
-    width: 296px;
-    height: 25px;
-    margin: 20px 0;
+    &__gender {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-self: stretch;
+      width: 296px;
+      height: 25px;
+      margin: 20px 0;
+    }
 
     h3 {
       color: var(--grey-gradient-600, #566276);
@@ -269,13 +278,12 @@
     }
 
     button {
-      width: 87px;
-      height: 25px;
-      display: flex;
+      width: 82px;
+      height: 24px;
       padding: 4px 12px;
+      display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 12px;
       background: #F0F2F6;
       border: none;
       background-color: #F0F2F6;

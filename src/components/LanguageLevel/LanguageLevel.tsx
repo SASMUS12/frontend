@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "../../components/LanguageLevel/LanguageLevel.module.scss";
 import { Language, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
+import { Select } from "react-select";
 
 // Определение перечисления для уровней владения языком
 export enum SkillLevelEnum {
@@ -35,18 +36,23 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
 
   // Обработчик изменения выбранного языка
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
     const languageName = e.target.value;
-    const language = languages.find((lang) => lang.name === languageName);
-    if (language) {
-      setSelectedLanguage(language);
-      console.log("Выбран язык:", language.name);
+  
+    if (languageName === "") {
+      setSelectedLanguage(null); // Сбрасываем выбранный язык
+      console.log("Выбрана опция 'Напишите или выберете'");
     } else {
-      setSelectedLanguage(null);
-      console.log("Язык не найден:", languageName);
+      const language = languages.find((lang) => lang.name === languageName);
+      if (language) {
+        setSelectedLanguage(language);
+        console.log("Выбран язык:", language.name);
+      } else {
+        setSelectedLanguage(null);
+        console.log("Язык не найден:", languageName);
+      }
     }
   };
-
+  
   // Обработчик изменения выбранного уровня владения
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Получаем значение выбранного уровня владения
@@ -144,8 +150,9 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
 
   return (
     <>
-      <div className={styles.language__option}>
-        <select value={selectedLanguage?.name || ''} onChange={handleSelectChange}>
+      <div className={styles.language}>
+        <select className={styles.language__items} value={selectedLanguage?.name || ''} onChange={handleSelectChange}>
+          <option value="" disabled hidden>Напишите или выберете</option>          
           {languages.map((language) => (
             <option key={language.isocode} value={language.name}>
               {language.name}
@@ -155,12 +162,13 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
       </div>
       <div className={styles.language__level}>
         {Object.entries(SkillLevelEnum).map(([key, value]) => (
-          <label key={value}>
+          <label key={value} className={styles.language__level_label}>
             <input
               type="checkbox"
               name={key}
               value={SkillLevelEnum[value]}
               onChange={handleCheckboxChange}
+              className={styles.language__level_input}
               disabled={
                 (value === SkillLevelEnum.Native && selectedLevels.length >= 3) ||
                 (value !== SkillLevelEnum.Native &&
@@ -169,7 +177,7 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
                   ).length >= 5)
               }
             />
-            <span className={styles.languageLevel_checkbox_visible}></span>
+            <span className={styles.language__level_checkbox_visible}></span>
             {skillLevelNames[value]}
           </label>
         ))}
