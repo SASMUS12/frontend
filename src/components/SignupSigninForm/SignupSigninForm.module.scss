@@ -1,0 +1,137 @@
+.form {
+  width: 453px;
+  display: flex;
+  flex-direction: column;
+
+  &_input {
+    width: 336px;
+    margin-bottom: 24px;
+  }
+
+  &_textTag {
+    width: 336px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    cursor: pointer;
+  }
+
+  &_links {
+    display: flex;
+    margin: 60px 0 32px 0;
+    padding: 0;
+
+    a {
+      margin-left: 44px;
+      padding: 8px 12px 8px 0px;
+      box-sizing: border-box;
+      font: var(--font-text-24-120-400);
+      text-decoration: none;
+      color: var(--dark-violet);
+      list-style-type: none;
+      height: 45px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:hover {
+        border-bottom: 1px solid var(--dark-violet);
+      }
+    }
+
+    &_activeLinkItem {
+      border-bottom: 1px solid #C3EE11;
+    }
+
+    &_linkItem {
+      border-bottom: none;
+    }
+  }
+
+  &_checkbox {
+    display: flex;
+    color: var(--dark-violet);
+
+    &_input {
+      appearance: none;
+
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+
+      & + .form_checkbox_visible::before {
+        content: '';
+        display: inline-block;
+        width: 14px;
+        height: 15.5px;
+        flex-shrink: 0;
+        flex-grow: 0;
+        border-radius: 0.25em;
+        margin-right: 0.5em;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: 5;
+      }
+
+      &:checked + .form_checkbox_visible::before {
+        background-image: url(../../images/back.png);
+        z-index: 5;
+        position: absolute;
+        top: -4.5px;
+        left: 3px;
+      }
+    }
+
+    &_visible {
+      display: inline-block; 
+      vertical-align: middle; 
+      width: 16px;
+      height: 16px; 
+      border: 1px solid #A5A0C5;
+      border-radius: 4px;
+      background-color: white;
+      margin-right: 12px;
+      position: relative;
+    }
+
+    &_span_text {
+      max-width: 306px;
+      font-size: 14px;
+      line-height: 17px;
+      font-weight: 400;
+      color: #8995A9;
+
+      &_underline {
+        text-decoration: underline;
+        &:hover {
+          cursor: pointer;
+          opacity: 0.6;
+          transition: 0.4s;
+        }
+      }
+    }
+  }
+
+  &_forgotLink {
+    font: var(--font-text-14-120-400);
+    color: var(--dark-violet-gradient-400);
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  &_button {
+    margin-top: 32px;
+
+    &_signUp {
+      width: 148px;
+    }
+
+    &_signIn {
+      width: 336px;
+    }
+  }
+}

@@ -1,0 +1,87 @@
+@import 'src/vendor/_mixins.scss';
+
+.card {
+  @include flex-column;
+  width: 336px;
+  height: 200px;
+  padding: 16px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--color-base-white);
+  box-shadow: var(--card-shadow);
+
+  &__countryAndStatusTag {
+    @include flex-center-space-between;
+  }
+
+  &__partnerAbout {
+    @include flex-center;
+    padding: 16px 0;
+  }
+
+  &__partnerInfo {
+    @include flex-column-space-between;
+  }
+
+  &__partnerAvatar {
+    width: 80px;
+    height: 80px;
+    outline:none;
+    border: 0;
+    border-radius: 20px;
+    background-color: var(--color-gray-light);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    box-sizing: border-box;
+  }
+
+  &__partnerGreeting {
+    @include text-overflow-ellipsis-2-strings;
+    height: 40px;
+    font: var(--font-text-14-140-400);
+    color: #9a98a8;
+  }
+
+  &__partnerPersonalInfo {
+    @include flex-column-space-between;
+    height: 80px;
+    margin-left: 12px;
+
+    &_firstName {
+      font: var(--font-text-16-120-400);
+      color: var(--grey-color-500);
+    }
+
+    &_partnerAge {
+      margin-left: 8px;
+      font: var(--font-text-14-100-400);
+      color: var(--soft-grey);
+    }
+
+    &_languagesTag {
+      width: 100%;
+      display: flex;
+      overflow: hidden;
+    }
+
+    &_languages {
+      display: flex;
+    }
+
+    &_arrows {
+      width: 16px;
+      height: 16px;
+      margin: 0 8px;
+
+      &_hidden {
+        display: none;
+      }
+    }
+  }
+
+  .languages {
+    display: flex;
+    padding: 0;
+  }
+}

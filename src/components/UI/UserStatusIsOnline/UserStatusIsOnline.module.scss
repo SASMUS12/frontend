@@ -1,0 +1,15 @@
+.card__tag {
+  display: flex;
+  align-items: center;
+
+  .card__text {
+    font: var(--font-text-13-108-400);
+    color: var(--grey-color-90);
+  }
+
+  .card__isOnline {
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+  }
+}
