@@ -3,7 +3,8 @@ import {FormEvent} from "react";
 import {useNavigate} from "react-router-dom";
 import { runInAction, makeAutoObservable } from "mobx"
 
-import {api} from "../../utils/constants";
+import { api } from "../../utils/constants";
+import { headersWithToken as headers } from "../../utils/constants";
 
 export const useModel = () => {
     const navigate = useNavigate();
@@ -112,7 +113,7 @@ export const useModel = () => {
                                 model.error = "",
                                     model.message = "",
                                     model.isLoading = true;
-                                const response = await api.api.usersMeRetrieve({/*cancelToken: 'Bearer ' + `${localStorage.getItem('accessToken')}`*/});
+                                const response = await api.api.usersMeRetrieve({headers});
 
                                 console.log('ответ user получен -', response);
 
