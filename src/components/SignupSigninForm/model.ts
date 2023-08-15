@@ -1,50 +1,38 @@
 import {useLocalObservable} from "mobx-react-lite";
 import {FormEvent} from "react";
 import {useNavigate} from "react-router-dom";
-import { runInAction, makeAutoObservable } from "mobx"
+import {runInAction, makeAutoObservable} from "mobx"
 
 import {api} from "../../utils/constants";
 
 export const useModel = () => {
-    const navigate = useNavigate();
+        const navigate = useNavigate();
 
         const model = useLocalObservable(() => {
                     return {
-                        isLoading: false,
-                        error: "",
-                        message: "",
                         username: "",
                         email: "",
                         password: "",
                         confirmPassword: "",
+                        isLoading: false,
+                        error: "",
+                        message: "",
                         refresh: "",
                         access: "",
                         isModalOpen: false,
                         isLoggedIn: false,
                         user: {},
 
-                        handleUsernameChange({value}: { value: string }) {
-                            model.username = value
+                        handleValue({name, value}: { name: "username" | "email" | "password" | "confirmPassword"; value: string }) {
+                            model[name] = value;
                         },
 
-                        handleEmailChange({value}: { value: string }) {
-                            model.email = value;
+                        setModalOpen(newModalOpen: boolean) {
+                            model.isModalOpen = newModalOpen;
                         },
 
-                        handlePasswordChange({value}: { value: string }) {
-                            model.password = value;
-                        },
-
-                        handleConfirmPasswordChange({value}: { value: string }) {
-                            model.confirmPassword = value;
-                        },
-
-                        handleOpenModal() {
-                            model.isModalOpen = true;
-                        },
-
-                        handleLoggedInTrue() {
-                            model.isLoggedIn = true;
+                        setLoggedIn(newLoggedIn: boolean) {
+                            model.isLoggedIn = newLoggedIn;
                         },
 
                         async handleRegister(event: FormEvent<HTMLFormElement>) {
@@ -63,7 +51,7 @@ export const useModel = () => {
 
                                 if (response) {
                                     navigate("/");
-                                    model.handleOpenModal();
+                                    model.setModalOpen(true);
 
                                     console.log(response);
                                 }
@@ -79,8 +67,9 @@ export const useModel = () => {
                             event.preventDefault();
                             try {
                                 model.error = "",
-                                    model.message = "",
-                                    model.isLoading = true;
+                                model.message = "",
+                                model.isLoading = true;
+
                                 const response = await api.api.authJwtCreateCreate({
                                     username: model.email,
                                     password: model.password
@@ -92,15 +81,15 @@ export const useModel = () => {
                                     model.access = response.data.access;
                                     localStorage.setItem('accessToken', response.data.access);
                                     localStorage.setItem('refreshToken', response.data.refresh);
-                                    model.isLoggedIn = true;
+                                    runInAction(() => {
+                                        model.setLoggedIn(true);
+                                    })
                                     console.log(model.isLoggedIn);
                                     navigate("/");
                                 }
-                                runInAction(() => {
-                                    model.isLoggedIn = true;
-                                  })
 
-                                
+                                model.isLoading = false;
+
                             } catch (error) {
                                 console.error('Ошибка при получении данных -', error);
                                 model.isLoading = false;
@@ -116,7 +105,7 @@ export const useModel = () => {
 
                                 console.log('ответ user получен -', response);
 
-                                if (response ) {
+                                if (response) {
                                     model.user = response;
                                     console.log(model.user);
                                 }
