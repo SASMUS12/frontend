@@ -53,7 +53,7 @@ const SignupSigninForm = () => {
                 placeholder="Имя"
                 required
                 maxLength={12}
-                onValue={model.handleUsernameChange}
+                onValue={model.handleValue}
             />
             )}
             <Input
@@ -70,7 +70,7 @@ const SignupSigninForm = () => {
                 placeholder="Электронная почта"
                 required
                 error={model.error}
-                onValue={model.handleEmailChange}
+                onValue={model.handleValue}
             />
             <Input
                 className={styles.form_input}
@@ -89,7 +89,7 @@ const SignupSigninForm = () => {
                 placeholder="Пароль"
                 required
                 error={model.error}
-                onValue={model.handlePasswordChange}
+                onValue={model.handleValue}
                 maxLength={12}
             />
             {isSignUp && (
@@ -103,7 +103,7 @@ const SignupSigninForm = () => {
                     placeholder="Пароль"
                     required
                     error={model.error}
-                    onValue={model.handleConfirmPasswordChange}
+                    onValue={model.handleValue}
                     maxLength={12}
                 />
             )}
@@ -119,7 +119,7 @@ const SignupSigninForm = () => {
                         <span className={styles.form_checkbox_span_text}>
                             Продолжая, вы соглашаетесь с
                             <span
-                                className={styles.form_checkbox_span_text_underline} 
+                                className={styles.form_checkbox_span_text_underline}
                                 > Условиями пользования Сервисом</span>
                         </span>
                     </label>
