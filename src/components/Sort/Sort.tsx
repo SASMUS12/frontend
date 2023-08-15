@@ -66,10 +66,10 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const getSelectedCountryNames = () => {
     if (selectedCountries.length > 0) {
       return selectedCountries.map((country) => (
-        <div key={country.code} className={styles.popup__selectedCountry}>
-          <span className={styles.popup__countryName}>{country.name}</span>
+        <div key={country.code} className={styles.popup__cantry_selectCountry}>
+          <span className={styles.popup__cantry_countryName}>{country.name}</span>
           <Button
-            className={styles.popup__removeButton}
+            className={styles.popup__cantry_removeButton}
             onClick={() => handleRemoveCountry(country)}
           />
         </div>
@@ -326,7 +326,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
       <div className={styles.popup__cantry}>
         <h2 className={styles.subtitle}>Страна партнера</h2>
-        <div className={styles.popup__enter}>
+        <div className={styles.popup__cantry_enter}>
           <input
             type="text"
             id="searchInput"
@@ -334,13 +334,13 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             value={searchValue}
             onChange={handleSearchInputChange}
             onKeyDown={handleKeyDown}
-            className={styles.popup__input}
+            className={styles.popup__cantry_input}
           />
-          <div className={styles.popup__selectedCountriesContainer}>
+          <div className={styles.popup__cantry_selectedCountries}>
             {getSelectedCountryNames()}
             {isCountryListVisible && (
-              <div className={classNames(styles.popup__countryList, {
-                [styles.popup__countryList_visible]: sortCountriesByLastLetter().length > 0,
+              <div className={classNames(styles.popup__cantry_countryList, {
+                [styles.popup__cantry_countryList_visible]: sortCountriesByLastLetter().length > 0,
               })}
               onKeyDown={handleDropdownKeyDown}
               >
@@ -349,12 +349,17 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
                 <div
                   key={country.code}
                   onClick={() => handleSelectCountryFromList(country.name.toLocaleLowerCase('ru'))}
-                  className={classNames(styles.popup__countryOption, {
+                  className={classNames(styles.popup__cantry_countryList_option, {
                     [styles.selected]: selectedCountry?.code === country.code,
                     [styles.suggested]: suggestedCountries.includes(country),
                     [styles.popular]: popularCountryCodes.includes(country.name),
                   })}
                 >
+                  <img
+                    src={country.flag_icon}
+                    alt={`${country.name} Flag`}
+                    className={styles.popup__cantry_countryList_flagImage}
+                  />
                   {country.name}
                 </div>
               ) : null
