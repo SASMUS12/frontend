@@ -177,7 +177,6 @@ export interface SetPasswordRequest {
 }
 
 /**
-    const filters = {
  * * `Newbie` - Новичок
  * * `Amateur` - Любитель
  * * `Profi` - Профи
@@ -406,7 +405,6 @@ export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" 
 export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
   baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
-  secureApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (securityData: SecurityDataType | null) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
@@ -435,16 +433,6 @@ export class HttpClient<SecurityDataType = unknown> {
   private baseApiParams: RequestParams = {
     credentials: "same-origin",
     headers: {},
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  };
-
-  private secureApiParams: RequestParams = {
-    credentials: "same-origin",
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + `${localStorage.getItem('accessToken')}`
-    },
     redirect: "follow",
     referrerPolicy: "no-referrer",
   };
@@ -1069,10 +1057,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "GET",
         secure: true,
         format: "json",
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + `${localStorage.getItem('accessToken')}`
-        },
         ...params,
       }),
 
