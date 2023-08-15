@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "../../components/LanguageLevel/LanguageLevel.module.scss";
 import { Language, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
-import { Select } from "react-select";
 
 // Определение перечисления для уровней владения языком
 export enum SkillLevelEnum {
