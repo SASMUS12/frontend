@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../components/LanguageLevel/LanguageLevel.module.scss";
 import { Language, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
 
@@ -26,12 +26,33 @@ interface LanguageLevelProps {
   languages: Language[];
   onAdd: (language: UserForeignLanguage | UserNativeLanguage) => void;
   onRemove?: (language: UserForeignLanguage | UserNativeLanguage) => void;
+  onClearFilter: () => void;
 }
 
-const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemove }) => {
+const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemove, onClearFilter }) => {
 
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [selectedLevels, setSelectedLevels] = useState<(UserForeignLanguage | UserNativeLanguage)[]>([]);
+  const [filterCleared, setFilterCleared] = useState(false);// состояние очистки параметров компонента
+
+  useEffect(() => {
+    if (filterCleared) {
+      clearLanguageLevelState();
+      setFilterCleared(false);
+      onClearFilter();
+    }
+  }, [filterCleared, onClearFilter]);
+
+  const handleClearFilterClick = () => {
+    onClearFilter();
+  };
+
+  //функция, которая будет сбрасывать состояния внутри компонента LanguageLevel до значений по умолчанию
+  const clearLanguageLevelState = () => {
+    setSelectedLanguage(null);
+    setSelectedLevels([]);
+  };
+
 
   // Обработчик изменения выбранного языка
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

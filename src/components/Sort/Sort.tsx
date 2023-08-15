@@ -43,7 +43,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
   const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
-
+  const [filterCleared, setFilterCleared] = useState(false);//состояние очистки в компоненте LanguageLevel
 
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
@@ -237,7 +237,13 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setSearchValue('');
     setSelectedCountry(null);
     setSelectedCountries([]);
-    setLastPressedLetter(null); 
+    setLastPressedLetter(null);
+    setFilterCleared(true);
+  };
+
+  const handleLanguageLevelClearFilter = () => {
+    setFilterCleared(false);
+    console.log("Clearing LanguageLevel filter");
   };
 
   //массив с кодами популярных языков
@@ -246,8 +252,8 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   // Функция для сортировки списка стран по последней нажатой букве
   const sortCountriesByLastLetter = () => {
     if (lastPressedLetter) {
-      const popularCountries = filteredCountries.filter(country => popularCountryCodes.includes(country.code));
-      const otherCountries = filteredCountries.filter(country => !popularCountryCodes.includes(country.code));
+      const popularCountries = filteredCountries.filter(country => popularCountryCodes.includes(country.name));
+      const otherCountries = filteredCountries.filter(country => !popularCountryCodes.includes(country.name));
   
       popularCountries.sort((a, b) => a.name.localeCompare(b.name));
       otherCountries.sort((a, b) => a.name.localeCompare(b.name));
@@ -368,6 +374,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         languages={languagesData}
         onAdd={handleAddLanguage}
         onRemove={handleRemoveLanguage}
+        onClearFilter={handleLanguageLevelClearFilter}
       />
       {selectedLanguages.map((language, index) => (
         <LanguageLevel
@@ -375,10 +382,14 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           languages={languagesData}
           onAdd={handleAddLanguage}
           onRemove={handleRemoveLanguage}
+          onClearFilter={handleLanguageLevelClearFilter}
         />
       ))}
       {isLanguageMenuOpen && (
-        <LanguageLevel languages={languagesData} onAdd={handleAddLanguage} />
+        <LanguageLevel
+        languages={languagesData}
+        onAdd={handleAddLanguage} 
+        onClearFilter={handleLanguageLevelClearFilter} />
       )}
       <div className={styles.languagesAdd}>
         <Button
