@@ -31,19 +31,28 @@
       font-weight: 400;
       font-size: 15px;
       height: 26px;
+      background: var(--grey-gradient-100, #E2E5E9);
+      color: #566276;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
       
       &:hover {
-        background-color: rgba(195, 238, 17, 1);
+        background: var(--white, #FFF);
+        color: #323944;
       }
 
       &:active {
-        background-color: rgba(195, 238, 17, 1);
+        background: var(--accent-color-salad, #C3EE11);
+        color: #323944;
       }
 
-      &.active {
-        background-color: rgba(195, 238, 17, 1);
+      &:disabled {
+        background: var(--grey-gradient-100, #E2E5E9);
+        color: #A7B0BE;
+      }
+
+      &.categories__active {
+        background: var(--accent-color-salad, #C3EE11);
       }
     }
   }
