@@ -5,6 +5,7 @@ import { runInAction, makeAutoObservable } from "mobx"
 
 import { api } from "../../utils/constants";
 import { headersWithToken as headers } from "../../utils/constants";
+import { loggedIn } from '../../models/loggedIn';
 
 export const useModel = () => {
     const navigate = useNavigate();
@@ -18,10 +19,8 @@ export const useModel = () => {
                         email: "",
                         password: "",
                         confirmPassword: "",
-                        refresh: "",
-                        access: "",
                         isModalOpen: false,
-                        isLoggedIn: false,
+                        //isLoggedIn: false,
                         user: {},
 
                         handleUsernameChange({value}: { value: string }) {
@@ -45,7 +44,34 @@ export const useModel = () => {
                         },
 
                         handleLoggedInTrue() {
-                            model.isLoggedIn = true;
+                            //model.isLoggedIn = true;
+                            loggedIn.setLoggedInTrue();
+                        },
+
+                        handleLoggedInFalse() {
+                            //model.isLoggedIn = false;
+                            loggedIn.setLoggedInFalse();
+                        },
+
+                        handleLoadingTrue() {
+                            model.isLoading = true;
+                        },
+
+                        handleLoadingFalse() {
+                            model.isLoading = false;
+                        },
+
+                        handleLogOut() {
+                            model.error = "";
+                            model.message = "";
+                            model.username = "";
+                            model.email = "";
+                            model.password = "";
+                            model.confirmPassword = "";
+                            model.isModalOpen = false;
+                            //model.isLoggedIn = false;
+                            loggedIn.setLoggedInFalse();
+                            model.user = {};
                         },
 
                         async handleRegister(event: FormEvent<HTMLFormElement>) {
@@ -69,10 +95,10 @@ export const useModel = () => {
                                     console.log(response);
                                 }
 
-                                model.isLoading = false;
+                                model.handleLoadingFalse();
                             } catch (error) {
                                 console.error('Ошибка при получении данных -', error);
-                                model.isLoading = false;
+                                model.handleLoadingFalse();
                             }
                         },
 
@@ -81,7 +107,8 @@ export const useModel = () => {
                             try {
                                 model.error = "",
                                     model.message = "",
-                                    model.isLoading = true;
+                                    model.handleLoadingTrue();
+                                    console.log('try')
                                 const response = await api.api.authJwtCreateCreate({
                                     username: model.email,
                                     password: model.password
@@ -89,22 +116,20 @@ export const useModel = () => {
                                 console.log('ответ login получен -', response);
 
                                 if (response && response.data.refresh && response.data.access) {
-                                    model.refresh = response.data.refresh;
-                                    model.access = response.data.access;
                                     localStorage.setItem('accessToken', response.data.access);
                                     localStorage.setItem('refreshToken', response.data.refresh);
-                                    model.isLoggedIn = true;
-                                    console.log(model.isLoggedIn);
+                                    model.handleLoggedInTrue();
+                                    console.log(loggedIn);
                                     navigate("/");
                                 }
                                 runInAction(() => {
-                                    model.isLoggedIn = true;
+                                    model.handleLoggedInTrue();
                                   })
 
                                 
                             } catch (error) {
                                 console.error('Ошибка при получении данных -', error);
-                                model.isLoading = false;
+                                model.handleLoadingFalse();
                             }
                         },
 
@@ -112,21 +137,24 @@ export const useModel = () => {
                             try {
                                 model.error = "",
                                     model.message = "",
-                                    model.isLoading = true;
+                                    model.handleLoadingTrue();
                                 const response = await api.api.usersMeRetrieve({headers});
 
                                 console.log('ответ user получен -', response);
 
                                 if (response ) {
-                                    model.user = response;
+                                    model.user = response.data;
+                                    console.log('response!!!');
+                                    model.handleLoggedInTrue();
+                                    console.log(loggedIn);
                                     console.log(model.user);
                                 }
 
 
-                                model.isLoading = false;
+                                model.handleLoadingFalse();
                             } catch (error) {
                                 console.error('Ошибка при получении данных -', error);
-                                model.isLoading = false;
+                                model.handleLoadingFalse();
                             }
                         }
                     };

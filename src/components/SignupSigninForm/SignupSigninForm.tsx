@@ -8,6 +8,7 @@ import {Button} from '../UI/Button/Button';
 import styles from './SignupSigninForm.module.scss';
 import {useModel} from './model';
 import cn from "classnames";
+import { loggedIn } from '../../models/loggedIn';
 
 const SignupSigninForm = () => {
     const model = useModel();
@@ -30,7 +31,12 @@ const SignupSigninForm = () => {
 
     useEffect(() => {
         model.getCurrentUser();
-    }, [model.isLoggedIn]);
+    }, [loggedIn.loggedIn]);
+
+    useEffect(() => {
+        console.log('loginForm')
+        console.log(loggedIn.loggedIn)
+    }, [loggedIn.loggedIn]);
 
     return (
         <form className={styles.form} onSubmit={isSignUp ? model.handleRegister : model.handleLogin}>
@@ -53,6 +59,7 @@ const SignupSigninForm = () => {
                 placeholder="Имя"
                 required
                 maxLength={12}
+                minLength={3}
                 onValue={model.handleUsernameChange}
             />
             )}
@@ -71,6 +78,8 @@ const SignupSigninForm = () => {
                 required
                 error={model.error}
                 onValue={model.handleEmailChange}
+                maxLength={30}
+                minLength={5}
             />
             <Input
                 className={styles.form_input}
@@ -91,6 +100,7 @@ const SignupSigninForm = () => {
                 error={model.error}
                 onValue={model.handlePasswordChange}
                 maxLength={12}
+                minLength={5}
             />
             {isSignUp && (
                 <Input
@@ -105,6 +115,7 @@ const SignupSigninForm = () => {
                     error={model.error}
                     onValue={model.handleConfirmPasswordChange}
                     maxLength={12}
+                    minLength={5}
                 />
             )}
             <div className={styles.form_textTag}>
