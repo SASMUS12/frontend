@@ -43,7 +43,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
   const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
-
+  const [filterCleared, setFilterCleared] = useState(false);//состояние очистки в компоненте LanguageLevel
 
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
@@ -66,10 +66,10 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const getSelectedCountryNames = () => {
     if (selectedCountries.length > 0) {
       return selectedCountries.map((country) => (
-        <div key={country.code} className={styles.popup__selectedCountry}>
-          <span className={styles.popup__countryName}>{country.name}</span>
+        <div key={country.code} className={styles.popup__cantry_selectCountry}>
+          <span className={styles.popup__cantry_countryName}>{country.name}</span>
           <Button
-            className={styles.popup__removeButton}
+            className={styles.popup__cantry_removeButton}
             onClick={() => handleRemoveCountry(country)}
           />
         </div>
@@ -225,7 +225,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const handleSelectCountryFromList = (countryName: string) => {
     const selectedCountry = countriesData.find(country => country.name.toLocaleLowerCase('ru') === countryName);
     if (selectedCountry) {
-      handleSelectCountry(selectedCountry);
+      handleSelectCountry(selectedCountry as Country);
     }
   };
 
@@ -237,14 +237,28 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     setSearchValue('');
     setSelectedCountry(null);
     setSelectedCountries([]);
-    setLastPressedLetter(null); 
+    setLastPressedLetter(null);
+    setFilterCleared(true);
   };
 
+  const handleLanguageLevelClearFilter = () => {
+    setFilterCleared(false);
+    console.log("Clearing LanguageLevel filter");
+  };
+
+  //массив с кодами популярных языков
+  const popularCountryCodes = ['cn', 'es', 'england', 'sa', 'bd', 'pt', 'ru', 'jp', 'pc', 'my'];
 
   // Функция для сортировки списка стран по последней нажатой букве
   const sortCountriesByLastLetter = () => {
     if (lastPressedLetter) {
-      return filteredCountries.sort((a, b) => {
+      const popularCountries = filteredCountries.filter(country => popularCountryCodes.includes(country.name));
+      const otherCountries = filteredCountries.filter(country => !popularCountryCodes.includes(country.name));
+  
+      popularCountries.sort((a, b) => a.name.localeCompare(b.name));
+      otherCountries.sort((a, b) => a.name.localeCompare(b.name));
+  
+      return [...popularCountries, ...otherCountries].sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
         if (nameA.startsWith(lastPressedLetter) && !nameB.startsWith(lastPressedLetter)) {
@@ -311,8 +325,8 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
       <div className={styles.popup__cantry}>
-        <h2>Страна партнера</h2>
-        <div className={styles.popup__enter}>
+        <h2 className={styles.subtitle}>Страна партнера</h2>
+        <div className={styles.popup__cantry_enter}>
           <input
             type="text"
             id="searchInput"
@@ -320,13 +334,13 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             value={searchValue}
             onChange={handleSearchInputChange}
             onKeyDown={handleKeyDown}
-            className={styles.popup__input}
+            className={styles.popup__cantry_input}
           />
-          <div className={styles.popup__selectedCountriesContainer}>
+          <div className={styles.popup__cantry_selectedCountries}>
             {getSelectedCountryNames()}
             {isCountryListVisible && (
-              <div className={classNames(styles.popup__countryList, {
-                [styles.popup__countryList_visible]: sortCountriesByLastLetter().length > 0,
+              <div className={classNames(styles.popup__cantry_countryList, {
+                [styles.popup__cantry_countryList_visible]: sortCountriesByLastLetter().length > 0,
               })}
               onKeyDown={handleDropdownKeyDown}
               >
@@ -335,11 +349,17 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
                 <div
                   key={country.code}
                   onClick={() => handleSelectCountryFromList(country.name.toLocaleLowerCase('ru'))}
-                  className={classNames(styles.popup__countryOption, {
+                  className={classNames(styles.popup__cantry_countryList_option, {
                     [styles.selected]: selectedCountry?.code === country.code,
                     [styles.suggested]: suggestedCountries.includes(country),
+                    [styles.popular]: popularCountryCodes.includes(country.name),
                   })}
                 >
+                  <img
+                    src={country.flag_icon}
+                    alt={`${country.name} Flag`}
+                    className={styles.popup__cantry_countryList_flagImage}
+                  />
                   {country.name}
                 </div>
               ) : null
@@ -349,16 +369,17 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           </div>
         </div>
       </div>
-      <div className={styles.popup__help}>
-        <h2>Язык партнера</h2>
+      <div className={styles.languageHelp}>
+        <h2 className={styles.subtitle}>Язык партнера</h2>
         <Button
-          className={styles.popup__helpButton}
+          className={styles.languageHelp__button}
         />
       </div>
       <LanguageLevel
         languages={languagesData}
         onAdd={handleAddLanguage}
         onRemove={handleRemoveLanguage}
+        onClearFilter={handleLanguageLevelClearFilter}
       />
       {selectedLanguages.map((language, index) => (
         <LanguageLevel
@@ -366,37 +387,45 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
           languages={languagesData}
           onAdd={handleAddLanguage}
           onRemove={handleRemoveLanguage}
+          onClearFilter={handleLanguageLevelClearFilter}
         />
       ))}
       {isLanguageMenuOpen && (
-        <LanguageLevel languages={languagesData} onAdd={handleAddLanguage} />
+        <LanguageLevel
+        languages={languagesData}
+        onAdd={handleAddLanguage} 
+        onClearFilter={handleLanguageLevelClearFilter} />
       )}
-      <div className={styles.popup__add}>
+      <div className={styles.languagesAdd}>
         <Button
           onClick={handleOpenLanguageMenu}
-          className={styles.popup__addButton}
+          className={styles.languagesAdd__button}
         >
           {"добавить язык"}
         </Button>
       </div>
-      <div className={styles.popup__partner}>
-        <h2>О партнере</h2>
-        <div className={styles.popup__gender}>
-          <h3>Пол</h3>
+      <div className={styles.partner}>
+        <h2 className={styles.subtitle}>О партнере</h2>
+        <div className={styles.partner__gender}>
+          <h3 className={styles.partner__gender_subtitle}>Пол</h3>
           <Button
+            type="button"
+            variant="transparent"
             children={"Мужчина"}
             onClick={() => handleGenderSelection('Male')}
-            className={selectedGender === 'Male' ? styles.selected : ''}
+            className={`${styles.partner__gender_button} ${selectedGender === 'Male' ? styles.selected : ''}`}
           />
           <Button
+            type="button"
+            variant="transparent"
             children={"Женщина"}
             onClick={() => handleGenderSelection('Female')}
-            className={selectedGender === 'Female' ? styles.selected : ''}
+            className={`${styles.partner__gender_button} ${selectedGender === 'Female' ? styles.selected : ''}`}
           />
         </div>
       </div>
-      <div className={styles.popup__age}>
-        <h3>Возраст</h3>
+      <div className={styles.age}>
+        <h3 className={styles.age__subtitle}>Возраст</h3>
         <MultiRangeSlider
           minValue={18}
           maxValue={90}
@@ -406,12 +435,16 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
         />
       </div>
       <Button
-        className={styles.popup__findButton}
+        type="button"
+        variant="primary"
+        className={styles.findButton}
         children={"Найти"}
         onClick={handleFindButtonClick}
       />
       <Button
-        className={styles.popup__cleanButton}
+        type="submit"
+        variant="transparent"
+        className={styles.cleanButton}
         children={"Очистить фильтр"}
         onClick={handleClearFilter}
       />
