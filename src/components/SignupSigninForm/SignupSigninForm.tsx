@@ -8,6 +8,7 @@ import {Button} from '../UI/Button/Button';
 import styles from './SignupSigninForm.module.scss';
 import {useModel} from './model';
 import cn from "classnames";
+import { loggedIn } from '../../models/loggedIn';
 
 const SignupSigninForm = () => {
     const model = useModel();
@@ -30,7 +31,12 @@ const SignupSigninForm = () => {
 
     useEffect(() => {
         model.getCurrentUser();
-    }, [model.isLoggedIn]);
+    }, [loggedIn.loggedIn]);
+
+    useEffect(() => {
+        console.log('loginForm')
+        console.log(loggedIn.loggedIn)
+    }, [loggedIn.loggedIn]);
 
     return (
         <form className={styles.form} onSubmit={isSignUp ? model.handleRegister : model.handleLogin}>
@@ -53,7 +59,8 @@ const SignupSigninForm = () => {
                 placeholder="Имя"
                 required
                 maxLength={12}
-                onValue={model.handleValue}
+                minLength={3}
+                onValue={model.handleUsernameChange}
             />
             )}
             <Input
@@ -70,7 +77,9 @@ const SignupSigninForm = () => {
                 placeholder="Электронная почта"
                 required
                 error={model.error}
-                onValue={model.handleValue}
+                onValue={model.handleEmailChange}
+                maxLength={30}
+                minLength={5}
             />
             <Input
                 className={styles.form_input}
@@ -89,8 +98,9 @@ const SignupSigninForm = () => {
                 placeholder="Пароль"
                 required
                 error={model.error}
-                onValue={model.handleValue}
+                onValue={model.handlePasswordChange}
                 maxLength={12}
+                minLength={5}
             />
             {isSignUp && (
                 <Input
@@ -103,8 +113,9 @@ const SignupSigninForm = () => {
                     placeholder="Пароль"
                     required
                     error={model.error}
-                    onValue={model.handleValue}
+                    onValue={model.handleConfirmPasswordChange}
                     maxLength={12}
+                    minLength={5}
                 />
             )}
             <div className={styles.form_textTag}>
@@ -119,7 +130,7 @@ const SignupSigninForm = () => {
                         <span className={styles.form_checkbox_span_text}>
                             Продолжая, вы соглашаетесь с
                             <span
-                                className={styles.form_checkbox_span_text_underline}
+                                className={styles.form_checkbox_span_text_underline} 
                                 > Условиями пользования Сервисом</span>
                         </span>
                     </label>

@@ -1,38 +1,63 @@
 import React, {useEffect, useState } from 'react';
-import {observer} from "mobx-react-lite";
-import styles from './Header.module.scss';
+import { useLocation } from "react-router";
 import { useNavigate, Link } from 'react-router-dom';
+import {observer} from 'mobx-react-lite';
+
+import styles from './Header.module.scss';
 import { Button } from '../UI/Button/Button';
 //import { useModel } from './model';
+import { useModel } from '../SignupSigninForm/model';
 import logo from '../../images/svg/logo.svg';
 import bell from '../../images/svg/header-bell.svg';
 import bubble from '../../images/20px.png';
 import k from '../../images/headerK.png';
-import { useLocation } from "react-router";
+import cn from "classnames";
+import { loggedIn } from '../../models/loggedIn';
 
-import {useModel } from "../SignupSigninForm/model";
-
-
-interface IProps {
-  loggedIn: boolean;
-}
-
-const Header = () => {
+const Header = observer(() => {
+  const model = useModel();
   const navigate = useNavigate();
   const location = useLocation();
-  const model = useModel();
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isAaa, setAaa] = useState(false);
+
+  const checkIsSignUp = () => {
+    setMenuOpen(!isMenuOpen)
+  }
+
+  const checkLogout = () => {
+    localStorage.clear();
+    setMenuOpen(!isMenuOpen);
+    loggedIn.setLoggedInFalse();
+    //model.handleLoggedInFalse();
+    model.error = "";
+    model.message = "";
+    model.username = "";
+    model.email = "";
+    model.password = "";
+    model.confirmPassword = "";
+    model.isModalOpen = false;
+                            //model.isLoggedIn = false;
+    model.user = {};
+  }
 
   useEffect(() => {
-    console.log(`header_loggedIn: ${model.isLoggedIn}`);
-  }, [model.isLoggedIn]);
+    model.getCurrentUser();
+  }, [loggedIn.loggedIn]);
 
   useEffect(() => {
-    console.log(`header_user: ${model.user}`);
-  }, [model.user]);
+    setAaa(loggedIn.loggedIn);
+  }, [loggedIn.loggedIn]);
 
   useEffect(() => {
-    console.log(`header_user: ${model.access}`);
-  }, [model.user]);
+    console.log('header next try');
+    console.log(isAaa);
+  }, [isAaa]);
+
+  useEffect(() => {
+    console.log('header')
+    console.log(loggedIn.loggedIn)
+  }, [loggedIn.loggedIn]);
 
   return (
     <header className={styles.header}>
@@ -40,7 +65,7 @@ const Header = () => {
         <Link to={`/`} className={styles.header__link}>
           <img src={logo} alt="Логотип проекта" />
         </Link>  
-        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !model.isLoggedIn && 
+        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !loggedIn.loggedIn && 
           <div className={styles.header__buttonContainer}>
             <Button
               className={styles.button}
@@ -59,21 +84,42 @@ const Header = () => {
               {model.isLoading ? 'Loading' : 'Зарегистрироваться'}
             </Button>
           </div>}
-          {(location.pathname !== "/signup") && (location.pathname !== "/signin") && model.isLoggedIn &&
+          {isMenuOpen && 
+          <div className={styles.header__menuContainer}>
+            <Link to={`/profile`} className={styles.header__link}>
+              Посмотреть профиль
+            </Link>
+            <Link to={`/profile/edit`} className={styles.header__link}>
+              Редактировать профиль
+            </Link> 
+            <Link to={`/profile/settings`} className={styles.header__link}>
+              Настройки
+            </Link>
+            <p 
+              onClick={checkLogout}
+              className={styles.header__link}>
+                Выйти
+            </p>
+          </div>}
+          {(location.pathname !== "/signup") && (location.pathname !== "/signin") && loggedIn.loggedIn &&
           <div className={styles.header__iconsContainer}>
             <Link to={`/chats`} className={styles.header__link}>
               <img src={bubble} alt="Иконка чатов" className={styles.header__img}/>
             </Link>  
-            <Link to={`/messages`} className={styles.header__link}>
+            <Link 
+              to={`/messages`} 
+              className={styles.header__link}>
               <img src={bell} alt="Иконка уведомлений"  className={styles.header__img}/>
             </Link>  
-            <Link to={`/profile`} className={styles.header__link}>
-              <img src={k} alt="Переход в профиль пользователя"  className={styles.header__img}/>
-            </Link> 
+            <img 
+              src={k} 
+              alt="Переход в профиль пользователя" 
+              className={styles.header__img} 
+              onClick={checkIsSignUp}/>
           </div>}
         </div>
     </header>
   );
-};
+});
 
-export default observer(Header);
+export default Header;

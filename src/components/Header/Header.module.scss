@@ -6,6 +6,7 @@
   background-color: white;
   margin: 0px auto;
   justify-content: center;
+  position: relative;
 
   a:hover {
     cursor: pointer;
@@ -36,5 +37,39 @@
   &__img {
     height: 24px;
     width: 24px;
+  }
+
+  &__menuContainer {
+    height: 140px;
+    width: 189px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 0px 8px 0px rgba(17, 17, 26, 0.10), 0px 1px 0px 0px rgba(17, 17, 26, 0.05);
+    position: absolute;
+    right: 24px;
+    top: 60px;
+    z-index: 5;
+    a, p {
+      text-decoration: none;
+      display: flex;
+      height: 34px;
+      padding: 8px 12px;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+      color: var(--grey-gradient-500, #323944);
+/* Text 13 Regular */
+      font-family: Inter;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    p:hover {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: 0.5s;
+    }
+  
   }
 }
