@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from "../../components/LanguageLevel/LanguageLevel.module.scss";
 import { Language, UserForeignLanguage, UserNativeLanguage } from '../../utils/openapi';
 
-// Определение перечисления для уровней владения языком
 export enum SkillLevelEnum {
   Newbie = "Newbie",
   Amateur = "Amateur",
@@ -12,8 +11,7 @@ export enum SkillLevelEnum {
   Native = "Native",
 }
 
-// Названия уровней владения языком на русском
-const skillLevelNames: Record<SkillLevelEnum, string>  = {
+const skillLevelNames: Record<SkillLevelEnum, string> = {
   [SkillLevelEnum.Newbie]: "Новичок",
   [SkillLevelEnum.Amateur]: "Любитель",
   [SkillLevelEnum.Profi]: "Профи",
@@ -29,11 +27,22 @@ interface LanguageLevelProps {
   onClearFilter: () => void;
 }
 
-const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemove, onClearFilter }) => {
-
+const LanguageLevel: React.FC<LanguageLevelProps> = ({
+  languages,
+  onAdd,
+  onRemove,
+  onClearFilter,
+}) => {
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
-  const [selectedLevels, setSelectedLevels] = useState<(UserForeignLanguage | UserNativeLanguage)[]>([]);
-  const [filterCleared, setFilterCleared] = useState(false);// состояние очистки параметров компонента
+  const [selectedLevels, setSelectedLevels] = useState<
+    (UserForeignLanguage | UserNativeLanguage | any)[]
+  >([]);
+  const [filterCleared, setFilterCleared] = useState(false);
+
+  const clearLanguageLevelState = () => {
+    setSelectedLanguage(null);
+    setSelectedLevels([]);
+  };
 
   useEffect(() => {
     if (filterCleared) {
@@ -41,125 +50,68 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
       setFilterCleared(false);
       onClearFilter();
     }
-  }, [filterCleared, onClearFilter]);
-
-  const handleClearFilterClick = () => {
-    onClearFilter();
-  };
-
-  //функция, которая будет сбрасывать состояния внутри компонента LanguageLevel до значений по умолчанию
-  const clearLanguageLevelState = () => {
-    setSelectedLanguage(null);
-    setSelectedLevels([]);
-  };
+  }, [filterCleared, onClearFilter, selectedLevels, selectedLanguage]);
 
 
-  // Обработчик изменения выбранного языка
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const languageName = e.target.value;
-  
+
     if (languageName === "") {
-      setSelectedLanguage(null); // Сбрасываем выбранный язык
-      console.log("Выбрана опция 'Напишите или выберете'");
+      setSelectedLanguage(null);
     } else {
       const language = languages.find((lang) => lang.name === languageName);
-      if (language) {
-        setSelectedLanguage(language);
-        console.log("Выбран язык:", language.name);
-      } else {
-        setSelectedLanguage(null);
-        console.log("Язык не найден:", languageName);
-      }
+      setSelectedLanguage(language || null);
     }
   };
-  
-  // Обработчик изменения выбранного уровня владения
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Получаем значение выбранного уровня владения
     const skillLevel = e.target.value as keyof typeof SkillLevelEnum;
-     
-    // Получаем код языка (название)
-    const languageCode = e.target.name;
+    const languageCode = selectedLanguage?.name || ""; // Use selected language name
 
-    // Находим объект языка в списке доступных языков
     const language = languages.find((lang) => lang.name === languageCode);
-  
-    // Проверяем, найден ли язык
-    if (language) {
-      console.log("Выбран язык:", language.name);
-      // Если выбран носитель языка
-      if (skillLevel === SkillLevelEnum.Native) {
 
-        // Создаем объект для носителя языка
-        const userLanguage: UserNativeLanguage = {          
+    if (language) {
+      if (skillLevel === SkillLevelEnum.Native) {
+        const userLanguage: UserNativeLanguage = {
           language: language.name,
           isocode: language.isocode,
         };
 
-          // Проверяем, была ли галочка установлена
         if (e.target.checked) {
-
-           // Проверяем, что количество выбранных уровней меньше 3
           if (selectedLevels.length < 3) {
-             // Добавляем язык в список и обновляем состояние
             onAdd(userLanguage);
             setSelectedLevels((prevLevels) => [...prevLevels, userLanguage]);
-            console.log("Добавлен носитель языка:", userLanguage.language);
           } else {
             console.log("Нельзя выбрать более 3 уровней");
           }
         } else {
-
-          // Удаляем язык из списка и обновляем состояние
           onRemove?.(userLanguage);
           setSelectedLevels((prevLevels) =>
             prevLevels.filter((lang) => lang.language !== language.name)
           );
-          console.log("Удален носитель языка:", userLanguage.language);
         }
       } else {
-
-        // Если выбран иностранный язык
         const userLanguage: UserForeignLanguage = {
           language: language.name,
           isocode: language.isocode,
-          skill_level: SkillLevelEnum,
-        };        
-  
-        // Проверяем, была ли галочка установлена
+          skill_level: skillLevel,
+        };
+
         if (e.target.checked) {
-          
-          // Проверяем, что количество выбранных языков с уровнем владения меньше 5
           if (
             selectedLevels.filter(
               (lang) => "skill_level" in lang && lang.skill_level
             ).length < 5
           ) {
-
-            // Добавляем язык в список и обновляем состояние
             onAdd(userLanguage);
             setSelectedLevels((prevLevels) => [...prevLevels, userLanguage]);
-            console.log(
-              "Добавлен иностранный язык:",
-              userLanguage.language,
-              "Уровень владения:",
-              userLanguage.skill_level
-            );
           } else {
             console.log("Нельзя выбрать более 5 языков с уровнем владения");
           }
         } else {
-
-          // Удаляем язык из списка и обновляем состояние
           onRemove?.(userLanguage);
           setSelectedLevels((prevLevels) =>
             prevLevels.filter((lang) => lang.language !== language.name)
-          );
-          console.log(
-            "Удален иностранный язык:",
-            userLanguage.language,
-            "Уровень владения:",
-            userLanguage.skill_level
           );
         }
       }
@@ -171,8 +123,14 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
   return (
     <>
       <div className={styles.language}>
-        <select className={styles.language__items} value={selectedLanguage?.name || ''} onChange={handleSelectChange}>
-          <option value="" disabled hidden>Напишите или выберете</option>          
+        <select
+          className={styles.language__items}
+          value={selectedLanguage?.name || ""}
+          onChange={handleSelectChange}
+        >
+          <option value="" disabled hidden>
+            Напишите или выберете
+          </option>
           {languages.map((language) => (
             <option key={language.isocode} value={language.name}>
               {language.name}
@@ -185,7 +143,7 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
           <label key={value} className={styles.language__level_label}>
             <input
               type="checkbox"
-              name={key}
+              name={selectedLanguage?.name || ""}
               value={SkillLevelEnum[value]}
               onChange={handleCheckboxChange}
               className={styles.language__level_input}
@@ -193,7 +151,8 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({ languages, onAdd, onRemov
                 (value === SkillLevelEnum.Native && selectedLevels.length >= 3) ||
                 (value !== SkillLevelEnum.Native &&
                   selectedLevels.filter(
-                    (lang) => "skill_level" in lang && lang.skill_level === SkillLevelEnum[value]
+                    (lang) =>
+                      "skill_level" in lang && lang.skill_level === SkillLevelEnum[value]
                   ).length >= 5)
               }
             />

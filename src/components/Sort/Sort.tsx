@@ -29,13 +29,17 @@ interface SortProps {
 
 
 
-const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData, countriesData }) => {
+const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countriesData }) => {
   const [leftValue, setLeftValue] = useState<number>(18);
   const [rightValue, setRightValue] = useState<number>(40);
   const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [isCountryListVisible, setCountryListVisible] = useState(false);
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
+
   const [searchValue, setSearchValue] = useState('');
+  const [isError, setIsError] = useState(false); // Новое состояние для ошибки
+  const [errorMessage, setErrorMessage] = useState(''); // Сообщение об ошибке
+
   const [filteredCountries, setFilteredCountries] = useState<Country[]>(countriesData);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
@@ -44,7 +48,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
   const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
   const [filterCleared, setFilterCleared] = useState(false);//состояние очистки в компоненте LanguageLevel
-
+  
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
     if (selectedCountries.length < 5 && !selectedCountries.includes(country)) {
@@ -125,6 +129,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     );
   };
 
+  
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('handleSearchInputChange called');
     const newSearchValue = e.target.value;
@@ -140,16 +145,21 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
     const filtered = countriesData.filter((country) =>
       country.name.toLocaleLowerCase('ru').includes(searchValueLower) && !selectedCountries.includes(country)
     );
-    setFilteredCountries(filtered);
+     setFilteredCountries(filtered);
 
     const suggested = countriesData.filter((country) =>
     country.name.toLocaleLowerCase('ru').startsWith(searchValueLower)
     );
-    setSuggestedCountries(suggested);
+      setSuggestedCountries(suggested);
 
     
     const firstLetter = searchValueLower.length > 0 ? searchValueLower.charAt(0) : null;
-    setLastPressedLetter(firstLetter);
+      setLastPressedLetter(firstLetter);
+
+    const isInvalidSearch = newSearchValue.length > 0 && filtered.length === 0 && suggested.length === 0;
+    const errorMessage = isInvalidSearch ? 'Страны не существует, возможно ошибка' : '';
+    setIsError(isInvalidSearch);
+    setErrorMessage(errorMessage);
     
     setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
 
@@ -334,8 +344,11 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
             value={searchValue}
             onChange={handleSearchInputChange}
             onKeyDown={handleKeyDown}
-            className={styles.popup__cantry_input}
+            className={`${styles.popup__cantry_input} ${isCountryListVisible ? styles.popup__cantry_input_showSuggestions : ''}`}
           />
+          {isError && (
+          <span className={styles.popup__cantry_input_error}>{errorMessage}</span>
+        )}
           <div className={styles.popup__cantry_selectedCountries}>
             {getSelectedCountryNames()}
             {isCountryListVisible && (
@@ -393,7 +406,7 @@ const Sort: React.FC<SortProps> = ({ value, onChangeSort, isOpen, languagesData,
       {isLanguageMenuOpen && (
         <LanguageLevel
         languages={languagesData}
-        onAdd={handleAddLanguage} 
+        onAdd={handleAddLanguage}
         onClearFilter={handleLanguageLevelClearFilter} />
       )}
       <div className={styles.languagesAdd}>
