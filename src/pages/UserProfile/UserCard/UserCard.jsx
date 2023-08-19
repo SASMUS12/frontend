@@ -109,16 +109,16 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
                         value="мужчина"
                         name='partnerGender'
                         id='male'
-                        className={gender === 'мужчина' ? styles.selected : styles.profile__gender}
-                        onClick={() => setGender('мужчина')}
+                        className={gender === 'Male' ? styles.selected : styles.profile__gender}
+                        onClick={() => setGender('Male')}
                       />
                       <input
                         type="button"
                         value="женщина"
                         name='partnerGender'
                         id='female'
-                        className={gender === 'женщина' ? styles.selected : styles.profile__gender}
-                        onClick={() => setGender('женщина')}
+                        className={gender === 'Female' ? styles.selected : styles.profile__gender}
+                        onClick={() => setGender('Female')}
                       />
                       <input
                         type="button"

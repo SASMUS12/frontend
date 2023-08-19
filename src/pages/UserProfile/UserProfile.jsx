@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
+import { useModel } from "../../components/SignupSigninForm/model";
+import { api } from '../../utils/constants';
 import Header from '../../components/Header/Header';
 import Footer from "../../components/Footer/Footer";
 import UserCard from './UserCard/UserCard';
@@ -13,53 +15,116 @@ import settings from '../../images/userProfile/settings.png';
 import edit from '../../images/userProfile/edit.png';
 import array from '../../utils/constants';
 import styles from "./UserProfile.module.scss";
-import {useModel } from "../../components/SignupSigninForm/model";
+
 
 const UserProfile = () => {
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [editedData, setEditedData] = useState({
+    name: '',
+    avatar: null,
+    location: '',
+    age: null,
+    native_languages: [],
+    foreign_languages: [],
+    gender: '',
+    themes: [],
+    about: '',
+  });
   const model = useModel();
 
+    const fetchUserData = async () => {
+      try {
+        // eslint-disable-next-line no-undef
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          // eslint-disable-next-line no-undef
+          console.error('Токен не найден');
+          setIsLoading(false);
+          return;
+        }
+        const response = await api.api.usersMeRetrieve({
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        // eslint-disable-next-line no-undef
+        console.log('Успех', response.data);
+        setUserData(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        // eslint-disable-next-line no-undef
+        console.error('Ошибка при получении данных пользователя:', error);
+        setIsLoading(false);
+      }
+    };
+
   useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
     console.log(`userPage: ${model.user}`);
-  }, [model.user]);
-
-  // UserCard
-  const [name, setName] = useState('Светлана');
-  const [age, setAge] = useState(33);
-  const [gender, setGender] = useState('женщина');
-  const [location, setLocation] = useState('Россия, Москва');
-
-  // Topics
-  const [themes, setThemes] = useState(array);
-  const [inputValue, setInputValue] = useState('');
-
-  // About
-  const [aboutMe, setAboutMe] = useState('Hi! I work as an interior designer and often meet with foreign customers, I want to improve my English to communicate fluently. I am looking for a person who could guide me and correct pronunciation mistakes.');
-  const [learningLanguage, setLearningLanguage] = useState('improve conversational level');
+  }, []);
 
   const handleEditProfile = () => {
+    setEditedData({
+      first_name: editedData.name,
+      avatar: null,
+      country: editedData.location,
+      birth_date: editedData.age,
+      native_languages: [],
+      foreign_languages: [],
+      gender: editedData.gender,
+      topics_for_discussion: editedData.themes,
+      about: editedData.about,
+    });
     setIsEditing(!isEditing);
   };
 
+  
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
 
-  const handleSaveChanges = () => {
-    const userData = {
-      name,
-      age,
-      gender,
-      location,
-      themes,
-      aboutMe,
-      learningLanguage,
-    };
-    const userDataString = JSON.stringify(userData);
-    // eslint-disable-next-line no-undef
-    localStorage.setItem('userData', userDataString);
-    setIsEditing(false);
+  const handleSaveChanges = async () => {
+    try {
+      // eslint-disable-next-line no-undef
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        // eslint-disable-next-line no-undef
+        console.error('Токен не найден');
+        return;
+      }
+
+      const updatedUserData = { ...userData, ...editedData };
+      const response = await api.api.usersMePartialUpdate(updatedUserData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // eslint-disable-next-line no-undef
+      console.log('Успешно обновленные данные:', response.data);
+
+      setUserData(response.data);
+      setIsEditing(false);
+      // eslint-disable-next-line no-undef
+      console.log('updatedUserData', updatedUserData);
+      // eslint-disable-next-line no-undef
+      console.log('userData', userData);
+    } catch (error) {
+      // eslint-disable-next-line no-undef
+      console.error('Ошибка при сохранении данных:', error);
+    }
   };
+  // eslint-disable-next-line no-undef
+  console.log('fff', userData);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return(
     <>
@@ -69,37 +134,39 @@ const UserProfile = () => {
         <div className={styles.profile__card}>
         <UserCard
           isEditing={isEditing}
-          name={name}
-          age={age}
-          gender={gender}
-          location={location}
-          setName={setName}
-          setAge={setAge}
-          setGender={setGender}
-          setLocation={setLocation}
-        />       
+          editedData={editedData}
+          name={editedData.username}
+          age={editedData.age}
+          gender={editedData.gender}
+          location={editedData.location}
+          setName={(value) => setEditedData((prevData) => ({ ...prevData, name: value }))}
+          setAge={(value) => setEditedData((prevData) => ({ ...prevData, age: value }))}
+          setGender={(value) => setEditedData((prevData) => ({ ...prevData, gender: value }))}
+          setLocation={(value) => setEditedData((prevData) => ({ ...prevData, location: value }))}
+      />  
           <div className={styles.profile__buttons}>
             <IconButton icon={settings} />
           </div>
           <div className={styles.profile__moreAbout}>
           <div>
             <UserLanguages isEditing={isEditing}/>
-            <Topics 
+            {/* <Topics 
               isEditing={isEditing} 
               themes={themes} 
-              setThemes={setThemes} 
-              inputValue={inputValue} 
-              setInputValue={setInputValue} 
-            />
+              setThemes={setThemes}
+              isEditing={isEditing}
+              themes={editedData.themes} // Передаем данные из editedData
+              setThemes={(value) => setEditedData((prevData) => ({ ...prevData, themes: value }))}
+            /> */}
             <Certificates />
           </div>
           <div>
             <About 
               isEditing={isEditing}
-              aboutMe={aboutMe}
-              setAboutMe={setAboutMe}
-              learningLanguage={learningLanguage}
-              setLearningLanguage={setLearningLanguage}
+              aboutMe={editedData.about}
+              learningLanguage={editedData.learningLanguage}
+              setAboutMe={(value) => setEditedData((prevData) => ({ ...prevData, about: value }))}
+              setLearningLanguage={(value) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))}
             />
           </div>
           </div>
@@ -122,15 +189,15 @@ const UserProfile = () => {
         <div className={styles.profile__card}>
         <UserCard
           isEditing={isEditing}
-          name={name}
-          age={age}
-          gender={gender}
-          location={location}
-          setName={setName}
-          setAge={setAge}
-          setGender={setGender}
-          setLocation={setLocation}
-        />      
+          name={userData.username}
+          age={userData.age}
+          gender={userData.gender}
+          location={userData.location}
+          setName={(value) => setEditedData((prevData) => ({ ...prevData, name: value }))}
+          setAge={(value) => setEditedData((prevData) => ({ ...prevData, age: value }))}
+          setGender={(value) => setEditedData((prevData) => ({ ...prevData, gender: value }))}
+          setLocation={(value) => setEditedData((prevData) => ({ ...prevData, location: value }))}
+      />   
           <div className={styles.profile__buttons}>
             <IconButton icon={edit} handleFunction={handleEditProfile}/>
             <IconButton icon={settings} />
@@ -138,22 +205,22 @@ const UserProfile = () => {
           <div className={styles.profile__moreAbout}>
           <div>
             <UserLanguages isEditing={isEditing}/>
-            <Topics 
+            {/* <Topics 
               isEditing={isEditing} 
               themes={themes} 
               setThemes={setThemes} 
               inputValue={inputValue} 
               setInputValue={setInputValue} 
-            />
+            /> */}
             <Certificates isEditing={isEditing}/>
           </div>
           <div>
             <About 
               isEditing={isEditing}
-              aboutMe={aboutMe}
-              setAboutMe={setAboutMe}
-              learningLanguage={learningLanguage}
-              setLearningLanguage={setLearningLanguage}
+              aboutMe={userData.about}
+              learningLanguage={userData.learningLanguage}
+              setAboutMe={(value) => setEditedData((prevData) => ({ ...prevData, about: value }))}
+              setLearningLanguage={(value) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))}
             />
           </div>
           </div>
@@ -166,4 +233,4 @@ const UserProfile = () => {
   );
 };
 
-export default observer(UserProfile);
+export default UserProfile;

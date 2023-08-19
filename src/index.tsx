@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import ReactDOM from 'react-dom/client';
 import './vendor/index.css';
 import App from './components/App/App';
