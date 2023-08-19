@@ -18,6 +18,7 @@ import styles from './MainPage.module.scss';
 import cn from "classnames";
 
 import {useModel} from "../../components/SignupSigninForm/model";
+import { loggedIn } from '../../models/loggedIn';
 
 const MainPage = () => {
     const model = useModel();
@@ -25,6 +26,10 @@ const MainPage = () => {
     const handleCloseModal = () => {
         model.isModalOpen = false;
     };
+
+    useEffect(() => {
+        console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
+    }, []);
 
     const [usersList, setUsersList] = useState<any[]>([]);
     const [cardsListLength, setCardsListLength] = useState<number>(0);
