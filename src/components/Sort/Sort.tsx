@@ -34,7 +34,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   const [rightValue, setRightValue] = useState<number>(40);
   const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [isCountryListVisible, setCountryListVisible] = useState(false);
-  const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
+ 
 
   const [searchValue, setSearchValue] = useState('');
   const [isError, setIsError] = useState(false); // Новое состояние для ошибки
@@ -48,6 +48,10 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
   const [filterCleared, setFilterCleared] = useState(false);//состояние очистки в компоненте LanguageLevel
+
+
+  const [selectedLanguages, setSelectedLanguages] = useState<(UserForeignLanguage | UserNativeLanguage)[]>([]);
+
   
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
@@ -101,27 +105,13 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   };
 
   // Функция для добавления выбранного языка в список и закрытия меню выбора языков
-  const handleAddLanguage = (language: UserForeignLanguage | UserNativeLanguage) => {
-  console.log("Вызвана функция handleAddLanguage");
-
-  // Преобразование выбранного языка в формат Language для добавления в список
-  const convertedLanguage: Language = {
-    isocode: language.isocode,
-    name: language.language,
-    name_local: language.language,
-    sorting: 0,
+  const handleAddLanguage = (languageSelection: Language | UserNativeLanguage) => {
+    console.log("Вызвана функция handleAddLanguage");
+    setSelectedLanguages((prevSelectedLanguages) => [...prevSelectedLanguages, languageSelection]);
+    console.log("Выбранный язык:", languageSelection);
   };
 
-  // Добавление преобразованного языка в список выбранных языков
-  setSelectedLanguages(prevLanguages => [...prevLanguages, convertedLanguage]);
-
-  // Закрытие меню выбора языков
-  setLanguageMenuOpen(false);
-
-  console.log("Выбранный язык:", language);
-  };
-
-  // Функция для удаления выбранного языка из списка
+    // Функция для удаления выбранного языка из списка
   const handleRemoveLanguage = (language: UserForeignLanguage | UserNativeLanguage) => {
   // Удаление выбранного языка из списка выбранных языков
   setSelectedLanguages(prevLanguages =>
@@ -331,6 +321,11 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
     console.log('Ошибка: начальный возраст должен быть меньше или равен конечному возрасту.');
   }
   };
+
+  // Функция для получения популярных языков
+  const getPopularLanguages = (languages: Language[], limit: number) => {
+    return languages.slice(0, limit);
+  };
  
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
@@ -348,7 +343,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
           />
           {isError && (
           <span className={styles.popup__cantry_input_error}>{errorMessage}</span>
-        )}
+          )}
           <div className={styles.popup__cantry_selectedCountries}>
             {getSelectedCountryNames()}
             {isCountryListVisible && (
@@ -389,12 +384,11 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
         />
       </div>
       <LanguageLevel
-        languages={languagesData}
-        onAdd={handleAddLanguage}
-        onRemove={handleRemoveLanguage}
-        onClearFilter={handleLanguageLevelClearFilter}
+        languagesData={getPopularLanguages(languagesData, 10)}
+        onLanguageSelect={handleAddLanguage}
+        
       />
-      {selectedLanguages.map((language, index) => (
+      {/* {selectedLanguages.map((language, index) => (
         <LanguageLevel
           key={index}
           languages={languagesData}
@@ -408,7 +402,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
         languages={languagesData}
         onAdd={handleAddLanguage}
         onClearFilter={handleLanguageLevelClearFilter} />
-      )}
+      )} */}
       <div className={styles.languagesAdd}>
         <Button
           onClick={handleOpenLanguageMenu}

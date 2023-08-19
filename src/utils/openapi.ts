@@ -189,6 +189,7 @@ export enum SkillLevelEnum {
   Profi = "Profi",
   Expert = "Expert",
   Guru = "Guru",
+  Native ="Native"
 }
 
 export interface TokenObtainPair {
