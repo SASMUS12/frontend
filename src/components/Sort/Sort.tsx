@@ -5,7 +5,7 @@ import styles from "../Sort/Sort.module.scss";
 import LanguageLevel from "../LanguageLevel/LanguageLevel";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import { Button } from "../UI/Button/Button";
-import { Country, Language, UserForeignLanguage, UserNativeLanguage, SkillLevelEnum } from '../../utils/openapi';
+import { Country, Language, SkillLevelEnum } from '../../utils/openapi';
 import classNames from 'classnames';
 
 type Filters = {
@@ -50,9 +50,25 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   const [filterCleared, setFilterCleared] = useState(false);//состояние очистки в компоненте LanguageLevel
 
 
-  const [selectedLanguages, setSelectedLanguages] = useState<(UserForeignLanguage | UserNativeLanguage)[]>([]);
+  /////
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedSkillLevels, setSelectedSkillLevels] = useState<SkillLevelEnum[]>([]);
 
-  
+
+  const handleLanguageChange = (language: Language) => {
+    setSelectedLanguage(language);
+  };
+
+  const handleSkillLevelsChange = (skillLevels: SkillLevelEnum[]) => {
+    setSelectedSkillLevels(skillLevels);
+  };
+
+  const handleReset = () => {
+    setSelectedLanguage(null);
+    setSelectedSkillLevels([]);
+  };
+
+  ///////////////////////////////////
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
     if (selectedCountries.length < 5 && !selectedCountries.includes(country)) {
@@ -231,7 +247,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
 
     // Очистка фильтра
   const handleClearFilter = () => {
-    setSelectedLanguages([]);
+    handleReset();
     setLeftValue(18);
     setRightValue(40);
     setSearchValue('');
@@ -384,10 +400,14 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
         />
       </div>
       <LanguageLevel
-        languagesData={getPopularLanguages(languagesData, 10)}
-        onLanguageSelect={handleAddLanguage}
-        
+        languagesData={languagesData}
+        selectedLanguage={selectedLanguage}
+        selectedSkillLevels={selectedSkillLevels}
+        onLanguageChange={handleLanguageChange}
+        onSkillLevelsChange={handleSkillLevelsChange}
+        onReset={handleReset}
       />
+        
       {/* {selectedLanguages.map((language, index) => (
         <LanguageLevel
           key={index}

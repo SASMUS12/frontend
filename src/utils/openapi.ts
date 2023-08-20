@@ -67,6 +67,22 @@ export interface GenderVisibility {
   gender_is_hidden: boolean;
 }
 
+export interface Goal {
+  /** Название */
+  name: string;
+  /**
+   * Иконка
+   * @format uri
+   */
+  icon: string;
+}
+
+export interface Interest {
+  /** Название */
+  name: string;
+  sorting: string;
+}
+
 /** Сериализатор модели языка. */
 export interface Language {
   /** Название языка */
@@ -103,6 +119,38 @@ export interface PaginatedChatListList {
   results?: ChatList[];
 }
 
+export interface PaginatedGoalList {
+  /** @example 123 */
+  count?: number;
+  /**
+   * @format uri
+   * @example "http://api.example.org/accounts/?page=4"
+   */
+  next?: string | null;
+  /**
+   * @format uri
+   * @example "http://api.example.org/accounts/?page=2"
+   */
+  previous?: string | null;
+  results?: Goal[];
+}
+
+export interface PaginatedInterestList {
+  /** @example 123 */
+  count?: number;
+  /**
+   * @format uri
+   * @example "http://api.example.org/accounts/?page=4"
+   */
+  next?: string | null;
+  /**
+   * @format uri
+   * @example "http://api.example.org/accounts/?page=2"
+   */
+  previous?: string | null;
+  results?: Interest[];
+}
+
 export interface PaginatedUserReprList {
   /** @example 123 */
   count?: number;
@@ -123,7 +171,8 @@ export interface PaginatedUserReprList {
 export interface PatchedUserProfileRequest {
   /**
    * Имя
-   * @maxLength 150
+   * Имя пользователя
+   * @maxLength 12
    */
   first_name?: string;
   /** @format binary */
@@ -140,8 +189,7 @@ export interface PatchedUserProfileRequest {
    * @format date
    */
   birth_date?: string | null;
-  native_languages?: string[];
-  foreign_languages?: UserForeignLanguageRequest[];
+  languages?: UserLanguageRequest[];
   /**
    * Пол
    * Пол пользователя
@@ -150,12 +198,8 @@ export interface PatchedUserProfileRequest {
    * * `Female` - Женский
    */
   gender?: GenderEnum | NullEnum | null;
-  /**
-   * Темы для разговора
-   * Темы для разговора
-   * @maxLength 100
-   */
-  topics_for_discussion?: string;
+  goals?: string[];
+  interests?: string[];
   /**
    * О себе
    * О себе
@@ -182,6 +226,7 @@ export interface SetPasswordRequest {
  * * `Profi` - Профи
  * * `Expert` - Эксперт
  * * `Guru` - Гуру
+ * * `Native` - Носитель
  */
 export enum SkillLevelEnum {
   Newbie = "Newbie",
@@ -189,7 +234,7 @@ export enum SkillLevelEnum {
   Profi = "Profi",
   Expert = "Expert",
   Guru = "Guru",
-  Native ="Native"
+  Native = "Native",
 }
 
 export interface TokenObtainPair {
@@ -229,19 +274,17 @@ export interface UserCreateRequest {
    */
   email: string;
   /**
-   * Имя пользователя
-   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+   * Логин
    * @minLength 1
-   * @maxLength 150
-   * @pattern ^[\w.@+-]+$
+   * @maxLength 12
    */
   username: string;
   /** @minLength 1 */
   password: string;
 }
 
-/** Сериализатор промежутоной модели Пользователь-иностранный язык. */
-export interface UserForeignLanguage {
+/** Сериализатор языков пользователей. */
+export interface UserLanguage {
   isocode: string;
   /** Название языка */
   language: string;
@@ -254,12 +297,13 @@ export interface UserForeignLanguage {
    * * `Profi` - Профи
    * * `Expert` - Эксперт
    * * `Guru` - Гуру
+   * * `Native` - Носитель
    */
   skill_level: SkillLevelEnum;
 }
 
-/** Сериализатор промежутоной модели Пользователь-иностранный язык. */
-export interface UserForeignLanguageRequest {
+/** Сериализатор языков пользователей. */
+export interface UserLanguageRequest {
   /** @minLength 1 */
   isocode: string;
   /**
@@ -271,22 +315,17 @@ export interface UserForeignLanguageRequest {
    * * `Profi` - Профи
    * * `Expert` - Эксперт
    * * `Guru` - Гуру
+   * * `Native` - Носитель
    */
   skill_level: SkillLevelEnum;
-}
-
-/** Сериализатор промежутоной модели Пользователь-родной язык. */
-export interface UserNativeLanguage {
-  isocode: string;
-  /** Название языка */
-  language: string;
 }
 
 /** Сериализатор для заполнения профиля пользователя. */
 export interface UserProfile {
   /**
    * Имя
-   * @maxLength 150
+   * Имя пользователя
+   * @maxLength 12
    */
   first_name?: string;
   /** @format uri */
@@ -302,8 +341,7 @@ export interface UserProfile {
    * @format date
    */
   birth_date?: string | null;
-  native_languages?: string[];
-  foreign_languages?: UserForeignLanguage[];
+  languages?: UserLanguage[];
   /**
    * Пол
    * Пол пользователя
@@ -312,12 +350,8 @@ export interface UserProfile {
    * * `Female` - Женский
    */
   gender?: GenderEnum | NullEnum | null;
-  /**
-   * Темы для разговора
-   * Темы для разговора
-   * @maxLength 100
-   */
-  topics_for_discussion?: string;
+  goals?: string[];
+  interests?: string[];
   /**
    * О себе
    * О себе
@@ -328,12 +362,12 @@ export interface UserProfile {
 
 /** Сериализатор для просмотра пользователя. */
 export interface UserRepr {
-  /**
-   * Имя пользователя
-   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
-   */
+  /** Логин */
   username: string;
-  /** Имя */
+  /**
+   * Имя
+   * Имя пользователя
+   */
   first_name: string;
   /** @format uri */
   avatar: string;
@@ -345,8 +379,7 @@ export interface UserRepr {
    */
   slug: string | null;
   country: Country;
-  native_languages: UserNativeLanguage[];
-  foreign_languages: UserForeignLanguage[];
+  languages: UserLanguage[];
   /**
    * Пол
    * Пол пользователя
@@ -355,11 +388,8 @@ export interface UserRepr {
    * * `Female` - Женский
    */
   gender: GenderEnum | NullEnum | null;
-  /**
-   * Темы для разговора
-   * Темы для разговора
-   */
-  topics_for_discussion: string;
+  goals: Goal[];
+  interests: string[];
   /**
    * О себе
    * О себе
@@ -795,6 +825,62 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
+     * @description Просмотреть список целей
+     *
+     * @tags goals
+     * @name GoalsList
+     * @summary Список целей
+     * @request GET:/api/v1/goals/
+     * @secure
+     */
+    goalsList: (
+      query?: {
+        /** Number of results to return per page. */
+        limit?: number;
+        /** A page number within the paginated result set. */
+        page?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<PaginatedGoalList, any>({
+        path: `/api/v1/goals/`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Просмотреть список всех интересов пользователей
+     *
+     * @tags interests
+     * @name InterestsList
+     * @summary Список интересов
+     * @request GET:/api/v1/interests/
+     * @secure
+     */
+    interestsList: (
+      query?: {
+        /** Number of results to return per page. */
+        limit?: number;
+        /** A page number within the paginated result set. */
+        page?: number;
+        /** A search term. */
+        search?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<PaginatedInterestList, any>({
+        path: `/api/v1/interests/`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
      * @description Просмотреть все языки с возможностью поиска по их кодам и названиям
      *
      * @tags languages
@@ -855,11 +941,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         country?: string | null;
         /**
-         * ISO 639-1 Код языка
-         * 2-символьный код языка без страны
-         */
-        foreign_languages?: string;
-        /**
          * Пол
          * Пол пользователя
          *
@@ -868,13 +949,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         gender?: "Female" | "Male" | null;
         is_online?: boolean;
-        /** Number of results to return per page. */
-        limit?: number;
         /**
          * ISO 639-1 Код языка
          * 2-символьный код языка без страны
          */
-        native_languages?: string;
+        languages?: string;
+        /** Number of results to return per page. */
+        limit?: number;
         /** Which field to use when ordering the results. */
         ordering?: string;
         /** A page number within the paginated result set. */
@@ -888,8 +969,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * * `Profi` - Профи
          * * `Expert` - Эксперт
          * * `Guru` - Гуру
+         * * `Native` - Носитель
          */
-        skill_level?: "Amateur" | "Expert" | "Guru" | "Newbie" | "Profi";
+        skill_level?: "Amateur" | "Expert" | "Guru" | "Native" | "Newbie" | "Profi";
       },
       params: RequestParams = {},
     ) =>
