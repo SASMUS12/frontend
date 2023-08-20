@@ -12,7 +12,7 @@ const skillLevelNames: Record<SkillLevelEnum, string> = {
 };
 
 interface LanguagelevelProps {
-  languagesData: Language[];
+  languages: Language[];
   selectedLanguage: Language | null;
   selectedSkillLevels: SkillLevelEnum[];
   onLanguageChange: (language: Language | null) => void;
@@ -21,22 +21,22 @@ interface LanguagelevelProps {
 }
 
 const Languagelevel: React.FC<LanguagelevelProps> = ({
-  languagesData,
+  languages,
   selectedLanguage,
   selectedSkillLevels,
   onLanguageChange,
   onSkillLevelsChange,
-  onReset,//функция обнуленя состояний, сдесь присутствует как пропс
+  onReset,
 }) => {
-  // console.log("languagesData:", languagesData);
-  // console.log("selectedLanguage:", selectedLanguage);
-  // console.log("selectedSkillLevels:", selectedSkillLevels);
+  console.log("languagesData:", languages);
+  console.log("selectedLanguage:", selectedLanguage);
+  console.log("selectedSkillLevels:", selectedSkillLevels);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null);
 
-  const filteredLanguages = languagesData.filter(
+  const filteredLanguages = languages.filter(
     (language) =>
       language.name.toLowerCase().includes(inputValue.toLowerCase()) ||
       language.name_local.toLowerCase().includes(inputValue.toLowerCase())
@@ -130,10 +130,12 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
       />
         {isOpen && (
           <div className={styles.language__languageList}>
-            {sortedLanguages.map((language) => (
-              <div
+            {sortedLanguages.map((language, index) => (
+              <button
                 key={language.isocode}
                 className={styles.language__languageList_option}
+                role="option"
+                aria-selected={index === selectedSuggestionIndex}
                 onClick={() => {
                   onLanguageChange(language);
                   setInputValue(language.name);
@@ -141,7 +143,7 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
                 }}
               >
                 {language.name}
-              </div>
+              </button>
             ))}
           </div>
         )}

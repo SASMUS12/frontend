@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo  } from "react";
 
 import styles from "../Sort/Sort.module.scss";
 
@@ -27,18 +27,33 @@ interface SortProps {
   countriesData: Country[];
 }
 
-
-
 const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countriesData }) => {
   const [leftValue, setLeftValue] = useState<number>(18);
   const [rightValue, setRightValue] = useState<number>(40);
-  const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
+  
+  //добавления языка и уровня
+
+   const initialLanguageAndLevels = useMemo(() => {
+    return { language: null, skillLevels: [] };
+  }, []);
+
+  const [selectedLanguagesAndLevels, setSelectedLanguagesAndLevels] = useState<
+    { language: Language | null; skillLevels: SkillLevelEnum[] }[]
+  >([initialLanguageAndLevels]);
+
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedSkillLevels, setSelectedSkillLevels] = useState<SkillLevelEnum[]>([]);
+  const [languageLevels, setLanguageLevels] = useState<Language[]>([]);
+  const [showLanguageLevel, setShowLanguageLevel] = useState(false);
+
+  //const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
+
   const [isCountryListVisible, setCountryListVisible] = useState(false);
  
 
   const [searchValue, setSearchValue] = useState('');
-  const [isError, setIsError] = useState(false); // Новое состояние для ошибки
-  const [errorMessage, setErrorMessage] = useState(''); // Сообщение об ошибке
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [filteredCountries, setFilteredCountries] = useState<Country[]>(countriesData);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
@@ -47,28 +62,8 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
   const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
-  const [filterCleared, setFilterCleared] = useState(false);//состояние очистки в компоненте LanguageLevel
+  const [filterCleared, setFilterCleared] = useState(false);
 
-
-  /////
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
-  const [selectedSkillLevels, setSelectedSkillLevels] = useState<SkillLevelEnum[]>([]);
-
-
-  const handleLanguageChange = (language: Language) => {
-    setSelectedLanguage(language);
-  };
-
-  const handleSkillLevelsChange = (skillLevels: SkillLevelEnum[]) => {
-    setSelectedSkillLevels(skillLevels);
-  };
-
-  const handleReset = () => {
-    setSelectedLanguage(null);
-    setSelectedSkillLevels([]);
-  };
-
-  ///////////////////////////////////
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
     if (selectedCountries.length < 5 && !selectedCountries.includes(country)) {
@@ -112,30 +107,14 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
     setRightValue(right);
   };
 
-  const handleOpenLanguageMenu = () => {
-    setLanguageMenuOpen(true);
-  };
+  // const handleOpenLanguageMenu = () => {
+  //   setLanguageMenuOpen(true);
+  // };
 
-  const handleCloseLanguageMenu = () => {
-    setLanguageMenuOpen(false);
-  };
+  // const handleCloseLanguageMenu = () => {
+  //   setLanguageMenuOpen(false);
+  // };
 
-  // Функция для добавления выбранного языка в список и закрытия меню выбора языков
-  const handleAddLanguage = (languageSelection: Language | UserNativeLanguage) => {
-    console.log("Вызвана функция handleAddLanguage");
-    setSelectedLanguages((prevSelectedLanguages) => [...prevSelectedLanguages, languageSelection]);
-    console.log("Выбранный язык:", languageSelection);
-  };
-
-    // Функция для удаления выбранного языка из списка
-  const handleRemoveLanguage = (language: UserForeignLanguage | UserNativeLanguage) => {
-  // Удаление выбранного языка из списка выбранных языков
-  setSelectedLanguages(prevLanguages =>
-    prevLanguages.filter(lang => (lang as Language).isocode !== language.isocode)
-    );
-  };
-
-  
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('handleSearchInputChange called');
     const newSearchValue = e.target.value;
@@ -245,27 +224,55 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
     }
   };
 
-    // Очистка фильтра
+  // const handleLanguageChange = (language: Language) => {
+  //   setSelectedLanguage(language);
+  // };
+
+  // const handleSkillLevelsChange = (skillLevels: SkillLevelEnum[]) => {
+  //   setSelectedSkillLevels(skillLevels);
+  // };
+
+
+  // const handleOpenLanguageMenu = () => {
+  //   setShowLanguageLevel(true);
+  // };
+
+  // const handleCloseLanguageMenu = () => {
+  //   setShowLanguageLevel(false);
+  // };
+
+  const handleAddLanguageAndLevel = (language: Language, skillLevels: SkillLevelEnum[]) => {
+    const existingLanguageIndex = languageLevels.findIndex((lang) => lang.isocode === language.isocode);
+    if (existingLanguageIndex === -1) {
+      const updatedLanguageLevels = [...languageLevels, { ...language, skillLevels }];
+      setLanguageLevels(updatedLanguageLevels);
+    } else {
+      const updatedLanguageLevels = [...languageLevels];
+      updatedLanguageLevels[existingLanguageIndex].skillLevels = skillLevels;
+      setLanguageLevels(updatedLanguageLevels);
+    }
+  };
+
+  const handleRemoveLanguage = (index: number) => {
+    const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+    updatedLanguagesAndLevels.splice(index, 1);
+    setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+  };
+
   const handleClearFilter = () => {
-    handleReset();
-    setLeftValue(18);
-    setRightValue(40);
-    setSearchValue('');
+    setSelectedLanguage(null);
+    setSelectedSkillLevels([]);
     setSelectedCountry(null);
     setSelectedCountries([]);
     setLastPressedLetter(null);
-    setFilterCleared(true);
+    setSelectedLanguagesAndLevels([initialLanguageAndLevels]);
+    setLeftValue(18);
+    setRightValue(40);
+    setSearchValue('');
   };
 
-  const handleLanguageLevelClearFilter = () => {
-    setFilterCleared(false);
-    console.log("Clearing LanguageLevel filter");
-  };
-
-  //массив с кодами популярных языков
   const popularCountryCodes = ['cn', 'es', 'england', 'sa', 'bd', 'pt', 'ru', 'jp', 'pc', 'my'];
 
-  // Функция для сортировки списка стран по последней нажатой букве
   const sortCountriesByLastLetter = () => {
     if (lastPressedLetter) {
       const popularCountries = filteredCountries.filter(country => popularCountryCodes.includes(country.name));
@@ -291,45 +298,21 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   };
 
 
-  // Функция запуска фильтрации и передачи ее в родительский компонент
   const handleFindButtonClick = () => {
-    // Проверка, что начальный возраст меньше или равен конечному возрасту
     if (leftValue <= rightValue) {
-    // Создание строки с кодами выбранных стран, разделенных запятыми
     const countryCodes = selectedCountries.map(country => country.code).join(',');
 
-    // Создание строки с названиями выбранных родных языков, разделенных запятыми
-    const nativeLanguages = selectedLanguages
-      .filter(language => !('skill_level' in language))
-      .map(language => language.name)
-      .join(',');
-
-    // Создание массива объектов с выбранными иностранными языками и их уровнем владения
-    const foreignLanguages = selectedLanguages
-      .filter(language => 'skill_level' in language)
-      .map(language => {
-        if ('language' in language && 'skill_level' in language) {
-          const userForeignLanguage = language as UserForeignLanguage;
-          return {
-            language: userForeignLanguage.language,
-            skill_level: userForeignLanguage.skill_level as SkillLevelEnum,
-          };
-        }
-        return null;
-      })
-      .filter(language => language !== null) as { language: string; skill_level: SkillLevelEnum}[];
-
-    // Формирование объекта с фильтрами для запроса
     const filters: Filters = {
       country: countryCodes,
-      native_languages: nativeLanguages,
-      foreign_languages: foreignLanguages,
+      native_languages: '', // Обновите это значение на основе вашей логики
+      foreign_languages: selectedLanguage
+        ? [{ language: selectedLanguage.isocode, skill_level: selectedSkillLevels[0] }] // Измените это в соответствии с вашей логикой
+        : [],
       gender: selectedGender,
       age: `${leftValue},${rightValue}`,
     };
 
-    // Вызов функции для передачи параметров сортировки
-    onChangeSort(filters);
+  onChangeSort(filters);
 
     // Вывод параметров запроса в консоль для проверки
     console.log(filters);
@@ -338,11 +321,6 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   }
   };
 
-  // Функция для получения популярных языков
-  const getPopularLanguages = (languages: Language[], limit: number) => {
-    return languages.slice(0, limit);
-  };
- 
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
       <div className={styles.popup__cantry}>
@@ -395,42 +373,46 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
       </div>
       <div className={styles.languageHelp}>
         <h2 className={styles.subtitle}>Язык партнера</h2>
-        <Button
-          className={styles.languageHelp__button}
-        />
       </div>
-      <LanguageLevel
-        languagesData={languagesData}
-        selectedLanguage={selectedLanguage}
-        selectedSkillLevels={selectedSkillLevels}
-        onLanguageChange={handleLanguageChange}
-        onSkillLevelsChange={handleSkillLevelsChange}
-        onReset={handleReset}
-      />
-        
-      {/* {selectedLanguages.map((language, index) => (
+      {selectedLanguagesAndLevels.map((item, index) => (
         <LanguageLevel
           key={index}
           languages={languagesData}
-          onAdd={handleAddLanguage}
-          onRemove={handleRemoveLanguage}
-          onClearFilter={handleLanguageLevelClearFilter}
+          selectedLanguage={item.language}
+          selectedSkillLevels={item.skillLevels}
+          onLanguageChange={(language) => {
+            const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+            updatedLanguagesAndLevels[index].language = language;
+            setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+          }}
+          onSkillLevelsChange={(skillLevels) => {
+            const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+            updatedLanguagesAndLevels[index].skillLevels = skillLevels;
+            setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+          }}
+          onReset={() => {
+            const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+            updatedLanguagesAndLevels[index].language = null;
+            updatedLanguagesAndLevels[index].skillLevels = [];
+            setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+          }}
+          onRemoveLanguage={() => handleRemoveLanguage(index)}
         />
       ))}
-      {isLanguageMenuOpen && (
-        <LanguageLevel
-        languages={languagesData}
-        onAdd={handleAddLanguage}
-        onClearFilter={handleLanguageLevelClearFilter} />
-      )} */}
-      <div className={styles.languagesAdd}>
-        <Button
-          onClick={handleOpenLanguageMenu}
-          className={styles.languagesAdd__button}
-        >
-          {"добавить язык"}
-        </Button>
-      </div>
+      {selectedLanguagesAndLevels.length < 3 && (
+        <div className={styles.languagesAdd}>
+          <Button
+            onClick={() => {
+              const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+              updatedLanguagesAndLevels.push({ language: null, skillLevels: [] });
+              setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+            }}
+            className={styles.languagesAdd__button}
+          >
+            {"добавить язык"}
+          </Button>
+        </div>
+      )}
       <div className={styles.partner}>
         <h2 className={styles.subtitle}>О партнере</h2>
         <div className={styles.partner__gender}>

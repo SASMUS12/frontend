@@ -99,11 +99,14 @@
     &_option {
       font-size: 13px;
       padding: 8px 12px;
+      width: 100%;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       flex-wrap: nowrap;
       flex-direction: row;
+      border: none;
+      background-color: var(--white, #FFF);
     }
   }  
 }
