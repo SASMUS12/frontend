@@ -69,7 +69,7 @@ const QuestionsPage2 = () => {
                             label="Ваш родной язык, язык на котором вы свободно говорите"
                             labelStyles="label18"
                             isLabelHintHidden={true}
-                            // placeholder="Напишите или выберете"
+                            placeholder="Напишите или выберете"
                             required
                         >
                             <option value=""></option>
