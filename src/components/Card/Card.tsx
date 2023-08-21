@@ -76,10 +76,8 @@ const Card: FC<ICards> = ({
                                 </ul>
                             </div>
                             <img
-                                className={
-                                    nativeLanguages.length > 0 || foreignLanguages.length > 0
-                                        ? styles.card__partnerPersonalInfo_arrows
-                                        : styles.card__partnerPersonalInfo_arrows_hidden
+                                className={  styles.card__partnerPersonalInfo_arrows
+
                                 }
                                 src={arrows}
                                 alt="Параллельные стрелки между изученными и изучаемыми языками"

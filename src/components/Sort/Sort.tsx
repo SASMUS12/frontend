@@ -43,14 +43,8 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
 
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [selectedSkillLevels, setSelectedSkillLevels] = useState<SkillLevelEnum[]>([]);
-  const [languageLevels, setLanguageLevels] = useState<Language[]>([]);
-  const [showLanguageLevel, setShowLanguageLevel] = useState(false);
-
-  //const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
-
   const [isCountryListVisible, setCountryListVisible] = useState(false);
  
-
   const [searchValue, setSearchValue] = useState('');
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -60,10 +54,9 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
-  const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);// Создание состояние для хранения списка подсказок
-  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null); // Cостояние для отслеживания выбранной подсказки
-  const [filterCleared, setFilterCleared] = useState(false);
-
+  const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null);
+  
   // Функция для обработки выбора страны
   const handleSelectCountry = (country: Country) => {
     if (selectedCountries.length < 5 && !selectedCountries.includes(country)) {
@@ -106,14 +99,6 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
     setLeftValue(left);
     setRightValue(right);
   };
-
-  // const handleOpenLanguageMenu = () => {
-  //   setLanguageMenuOpen(true);
-  // };
-
-  // const handleCloseLanguageMenu = () => {
-  //   setLanguageMenuOpen(false);
-  // };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('handleSearchInputChange called');
@@ -224,34 +209,20 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
     }
   };
 
-  // const handleLanguageChange = (language: Language) => {
-  //   setSelectedLanguage(language);
-  // };
-
-  // const handleSkillLevelsChange = (skillLevels: SkillLevelEnum[]) => {
-  //   setSelectedSkillLevels(skillLevels);
-  // };
-
-
-  // const handleOpenLanguageMenu = () => {
-  //   setShowLanguageLevel(true);
-  // };
-
-  // const handleCloseLanguageMenu = () => {
-  //   setShowLanguageLevel(false);
-  // };
-
   const handleAddLanguageAndLevel = (language: Language, skillLevels: SkillLevelEnum[]) => {
-    const existingLanguageIndex = languageLevels.findIndex((lang) => lang.isocode === language.isocode);
+    const existingLanguageIndex = selectedLanguagesAndLevels.findIndex(
+      lang => lang.language?.isocode === language.isocode
+    );
+
     if (existingLanguageIndex === -1) {
-      const updatedLanguageLevels = [...languageLevels, { ...language, skillLevels }];
-      setLanguageLevels(updatedLanguageLevels);
+      setSelectedLanguagesAndLevels([...selectedLanguagesAndLevels, { language, skillLevels }]);
     } else {
-      const updatedLanguageLevels = [...languageLevels];
-      updatedLanguageLevels[existingLanguageIndex].skillLevels = skillLevels;
-      setLanguageLevels(updatedLanguageLevels);
+      const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+      updatedLanguagesAndLevels[existingLanguageIndex].skillLevels = skillLevels;
+      setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
     }
   };
+  
 
   const handleRemoveLanguage = (index: number) => {
     const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
@@ -266,6 +237,14 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
     setSelectedCountries([]);
     setLastPressedLetter(null);
     setSelectedLanguagesAndLevels([initialLanguageAndLevels]);
+
+    selectedLanguagesAndLevels.forEach(item => {
+      item.language = null;
+      item.skillLevels = [];
+    });
+
+    setSelectedLanguagesAndLevels([...selectedLanguagesAndLevels]);
+    
     setLeftValue(18);
     setRightValue(40);
     setSearchValue('');
@@ -379,6 +358,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
           key={index}
           languages={languagesData}
           selectedLanguage={item.language}
+          initialLanguageAndLevels={initialLanguageAndLevels}
           selectedSkillLevels={item.skillLevels}
           onLanguageChange={(language) => {
             const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
@@ -461,4 +441,4 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   );
 };
 
-export default Sort;
+export default Sort; 

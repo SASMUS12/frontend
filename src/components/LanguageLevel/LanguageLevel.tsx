@@ -18,6 +18,9 @@ interface LanguagelevelProps {
   onLanguageChange: (language: Language | null) => void;
   onSkillLevelsChange: (skillLevels: SkillLevelEnum[]) => void;
   onReset: () => void;
+  onRemoveLanguage: () => void;
+  initialLanguageAndLevels: { language: Language | null; skillLevels: SkillLevelEnum[] };
+
 }
 
 const Languagelevel: React.FC<LanguagelevelProps> = ({
@@ -26,11 +29,18 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
   selectedSkillLevels,
   onLanguageChange,
   onSkillLevelsChange,
+  onRemoveLanguage,
   onReset,
+  initialLanguageAndLevels,
 }) => {
   console.log("languagesData:", languages);
   console.log("selectedLanguage:", selectedLanguage);
   console.log("selectedSkillLevels:", selectedSkillLevels);
+
+  const handleReset = () => {
+    setLanguage(selectedLanguage);
+    setSkillLevels(selectedSkillLevels);
+  };
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
