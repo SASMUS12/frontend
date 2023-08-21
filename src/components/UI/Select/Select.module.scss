@@ -1,4 +1,4 @@
-.inputElement {
+.selectElement {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -26,62 +26,58 @@
     }
 
     &_false {
-        display: inline-block;
+      display: inline-block;
     }
   }
 
-  &__input {
+  &__select {
     display: inline-block;
     height: 40px;
     box-sizing: border-box;
-    background-color: var(--color-base-white);
+    background: url("../../../images/svg/select-arrow.svg") no-repeat var(--color-base-white);
+    background-position: right 12px bottom 10px;
     border: 1px solid var(--soft-violet);
     border-radius: 20px;
     padding: 8px 12px;
     margin-top: 12px;
-    font: var(--font-text-14-100-400);
+    font: var(--font-text-14-120-400);
     color: var(--dark-violet);
-    outline-offset: 0;
+
+    appearance: none; /* remove arrow        */
+    -webkit-appearance: none; /* remove arrow Chrome */
+    -moz-appearance: none; /* remove arrow FF     */
+
+    &::-ms-expand {
+      display: none; /* remove arrow IE     */
+    }
 
     &:hover {
       border: 2px solid var(--soft-violet);
+      background-position: right 11px bottom 9px;
     }
 
     &:active {
       border: 1px solid var(--dark-violet);
     }
-
-    &::placeholder {
-      color: var(--soft-violet);
-    }
-
-    &_dateInput::-webkit-calendar-picker-indicator {
-        color: transparent;
-        opacity: 1;
-        background: url("../../../images/svg/input-type-date-calendar.svg") no-repeat center;
-        background-size: contain;
-    }
-
-    &_dateInput::-webkit-datetime-edit-fields-wrapper {
-      color: var(--soft-violet);
-    }
-
-    &_searchInput {
-      padding-left: 40px;
-    }
   }
 
-  &__searchIcon {
+  &__placeholder {
     position: absolute;
-    left: 15px;
+    left: 12px;
+    font: var(--font-text-14-100-400);
+    color: var(--soft-violet);
+
+    &_withLabel {
+      top: 51px;
+    }
+
+    &_withoutLabel {
+      top: 26px;
+    }
   }
 
-  &__searchIcon_withLabel {
-    top: 48px;
-  }
-
-  &__searchIcon_withoutLabel {
-    top: 22px;
+  &__select:valid + &__placeholder {
+    display: none;
   }
 }
 

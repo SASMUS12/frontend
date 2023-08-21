@@ -12,6 +12,8 @@ import { useLocation } from "react-router";
 
 import {useModel } from "../SignupSigninForm/model";
 
+import { loggedIn } from "../../models/LoggedIn";
+
 
 interface IProps {
   loggedIn: boolean;
@@ -23,8 +25,8 @@ const Header = () => {
   const model = useModel();
 
   useEffect(() => {
-    console.log(`header_loggedIn: ${model.isLoggedIn}`);
-  }, [model.isLoggedIn]);
+    console.log(`header_loggedIn: ${loggedIn.loggedIn}`);
+  }, [loggedIn.loggedIn]);
 
   useEffect(() => {
     console.log(`header_user: ${model.user}`);
@@ -39,8 +41,8 @@ const Header = () => {
       <div className={styles.header__container}>
         <Link to={`/`} className={styles.header__link}>
           <img src={logo} alt="Логотип проекта" />
-        </Link>  
-        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !model.isLoggedIn && 
+        </Link>
+        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !model.isLoggedIn &&
           <div className={styles.header__buttonContainer}>
             <Button
               className={styles.button}
@@ -63,13 +65,13 @@ const Header = () => {
           <div className={styles.header__iconsContainer}>
             <Link to={`/chats`} className={styles.header__link}>
               <img src={bubble} alt="Иконка чатов" className={styles.header__img}/>
-            </Link>  
+            </Link>
             <Link to={`/messages`} className={styles.header__link}>
               <img src={bell} alt="Иконка уведомлений"  className={styles.header__img}/>
-            </Link>  
+            </Link>
             <Link to={`/profile`} className={styles.header__link}>
               <img src={k} alt="Переход в профиль пользователя"  className={styles.header__img}/>
-            </Link> 
+            </Link>
           </div>}
         </div>
     </header>

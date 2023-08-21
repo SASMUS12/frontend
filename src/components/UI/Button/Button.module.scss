@@ -1,14 +1,32 @@
+@import 'src/vendor/_mixins.scss';
+
 .button {
-  display: inline-flex;
+  display: inline-block;
   width: max-content;
-  height: 36px;
   box-sizing: border-box;
-  border-radius: 20px;
-  padding: 9px 24px 8px;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   font: var(--font-text-16-120-400);
+  text-align: center;
+}
+
+.fontSize-13 {
+  font: var(--font-text-13-120-400);
+}
+
+.fontSize-16 {
+  font: var(--font-text-16-120-400);
+}
+
+.size-small {
+  height: 27px;
+  border-radius: 12px;
+  padding: 4px 12px;
+}
+
+.size-big {
+  height: 36px;
+  border-radius: 20px;
+  padding: 9px 24px 8px;
 }
 
 .variant-primary {
@@ -16,12 +34,11 @@
   background-color: var(--accent-color-violet);
   border: none;
 
-    &:hover {
-      background-color: var(--primory-button-hover);
-      transition: 0.3s background-color ease;
-    }
+  &:hover {
+    background-color: var(--primory-button-hover);
+    transition: 0.3s background-color ease;
+  }
 }
-
 
 .variant-transparent {
   color: var(--dark-violet);
@@ -31,5 +48,22 @@
   &:hover {
     background-color: var(--secondary-button-hover);
     transition: 0.3s background-color ease;
-    }
+  }
 }
+
+.variant-gray {
+  color: var(--dark-violet);
+  background-color: var(--grey-gradient-100);
+  border: 1px solid var(--grey-gradient-100);
+
+  &:active {
+    border: 1px solid var(--grey-gradient-100);
+    background-color: var(--accent-color-salad);
+    transition: 0.3s background-color ease;
+  }
+}
+
+
+
+
+

@@ -32,7 +32,7 @@ const LanguagesTag: FC<IProps> = ({languages}) => {
                 src={getSkillLevel(languages.skill_level)}
                 alt="Уровень владения языком"
             />
-            <p className={styles.language}>{languages.code}</p>
+            <p className={styles.language}>{languages.isocode}</p>
         </li>
     );
 };

@@ -1,0 +1,29 @@
+@import 'src/vendor/_mixins.scss';
+
+.lines {
+  @include flex-center-space-between;
+  width: 668px;
+  height: 32px;
+  list-style: none;
+  padding: 0;
+
+  &__line {
+    width: 72px;
+    height: 6px;
+    border: 1px solid var(--grey-gradient-200);
+    background-color: var(--grey-gradient-200);
+    border-radius: 3px;
+
+    &_active {
+      border: 1px solid var(--primory-button-push);
+      background-color: var(--primory-button-push);
+    }
+
+    &_visited {
+      border: 1px solid var(--primory-button-hover);
+      background-color: var(--primory-button-hover);
+    }
+  }
+}
+
+

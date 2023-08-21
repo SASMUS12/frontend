@@ -28,4 +28,11 @@
   text-overflow: ellipsis;
 }
 
-
+@mixin questions-title {
+  color: var(--dark-violet);
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 40px;
+}
