@@ -1,7 +1,7 @@
 import React, { useState, useMemo  } from "react";
 
 import styles from "../Sort/Sort.module.scss";
-
+import CountrySelection from "../CountrySelection/CountrySelection";
 import LanguageLevel from "../LanguageLevel/LanguageLevel";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import { Button } from "../UI/Button/Button";
@@ -43,6 +43,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
 
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [selectedSkillLevels, setSelectedSkillLevels] = useState<SkillLevelEnum[]>([]);
+
   const [isCountryListVisible, setCountryListVisible] = useState(false);
  
   const [searchValue, setSearchValue] = useState('');
@@ -306,6 +307,11 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
       <div className={styles.popup__cantry}>
         <h2 className={styles.subtitle}>Страна партнера</h2>
+        <CountrySelection
+        countriesData={countriesData}
+        onSelectedCountriesChange={handleSelectedCountriesChange}
+        onSortCountry={handleSortCountry}
+      />
         <div className={styles.popup__cantry_enter}>
           <input
             type="text"
