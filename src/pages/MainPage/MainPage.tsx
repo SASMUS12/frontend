@@ -18,6 +18,7 @@ import styles from './MainPage.module.scss';
 import cn from "classnames";
 
 import {useModel} from "../../components/SignupSigninForm/model";
+import { loggedIn } from '../../models/loggedIn';
 
 const MainPage = () => {
     const model = useModel();
@@ -25,6 +26,10 @@ const MainPage = () => {
     const handleCloseModal = () => {
         model.isModalOpen = false;
     };
+
+    useEffect(() => {
+        console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
+    }, []);
 
     const [usersList, setUsersList] = useState<any[]>([]);
     const [cardsListLength, setCardsListLength] = useState<number>(0);
@@ -108,12 +113,10 @@ const MainPage = () => {
                 <h1 className={styles.content__header}>Поиск партнера</h1>
                 <div className={styles.content__filterTag}>
                     <Categories value={category} onChangeCategory={setCategory}/>
-                    <div className={styles.content__filter}>
-                        <h3>Фильтр</h3>
+                    <div className={styles.content__filterTag_filter}>
+                        <h3 className={styles.content__filterTag_filter_title}>Фильтр</h3>
                         <button
-                            className={cn(styles.content__sortButton, {
-                                [styles.content__sortButton_open]: isSortPopupOpen,
-                            })}
+                            className={styles.content__filterTag_filter_button}
                             onClick={handleOpenSortPopup}
                         ></button>
                     </div>

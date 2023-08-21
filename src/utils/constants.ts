@@ -60,3 +60,6 @@ export const FAQArray: IQuestion[] = [
     id: 7
   },
 ];
+
+export const usernameRegexp = /^[A-Za-zА-Яа-я]+[\wА-Яа-я-_. ]+/gm;
+export const passwordRegexp = /^(?=[^a-z\s]*[a-z])[\w@.\-(!,@,#,%,^,$,*,+,&);]+$/gm;
