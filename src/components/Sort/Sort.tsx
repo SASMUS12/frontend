@@ -225,9 +225,11 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   
 
   const handleRemoveLanguage = (index: number) => {
-    const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
-    updatedLanguagesAndLevels.splice(index, 1);
-    setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+    setSelectedLanguagesAndLevels((prevLanguages) => {
+      const updatedLanguages = [...prevLanguages];
+      updatedLanguages.splice(index, 1);
+      return updatedLanguages;
+    });
   };
 
   const handleClearFilter = () => {
