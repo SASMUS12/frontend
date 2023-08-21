@@ -7,13 +7,12 @@ class LoggedIn {
         makeObservable<LoggedIn>(this, {
             loggedIn: observable,
             setLoggedInTrue: action,
-            setLoggedInFalse:action,
+            setLoggedInFalse: action,
         })
     }
 
     setLoggedInTrue() {
         this.loggedIn = true;
-        console.log(this.loggedIn);
     }
 
     setLoggedInFalse() {
@@ -22,4 +21,3 @@ class LoggedIn {
 }
 
 export const loggedIn = new LoggedIn();
-

@@ -18,7 +18,7 @@ import styles from './MainPage.module.scss';
 import cn from "classnames";
 
 import {useModel} from "../../components/SignupSigninForm/model";
-import { loggedIn } from '../../models/loggedIn';
+import { loggedIn } from '../../models/LoggedIn';
 
 const MainPage = () => {
     const model = useModel();
