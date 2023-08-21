@@ -13,6 +13,7 @@ class LoggedIn {
 
     setLoggedInTrue() {
         this.loggedIn = true;
+        console.log(this.loggedIn);
     }
 
     setLoggedInFalse() {
