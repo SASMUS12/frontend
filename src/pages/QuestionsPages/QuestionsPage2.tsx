@@ -66,13 +66,11 @@ const QuestionsPage2 = () => {
                         <Select
                             className={styles.container__questionArea_input}
                             name="language"
-                            value={model.language}
                             label="Ваш родной язык, язык на котором вы свободно говорите"
                             labelStyles="label18"
                             isLabelHintHidden={true}
                             // placeholder="Напишите или выберете"
                             required
-                            onValue={model.handleValue}
                         >
                             <option value=""></option>
                             <option value="1">1</option>

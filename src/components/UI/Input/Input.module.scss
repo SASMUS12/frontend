@@ -45,10 +45,12 @@
 
     &:hover {
       border: 2px solid var(--soft-violet);
+      padding: 7px 11px;
     }
 
     &:active {
       border: 1px solid var(--dark-violet);
+      padding: 8px 12px;
     }
 
     &::placeholder {
@@ -67,6 +69,14 @@
     }
 
     &_searchInput {
+      padding-left: 40px;
+    }
+
+    &_searchInput:hover {
+      padding-left: 39px;
+    }
+
+    &_searchInput:active {
       padding-left: 40px;
     }
   }

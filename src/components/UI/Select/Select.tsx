@@ -6,8 +6,6 @@ import cn from "classnames";
 export interface ISelect<T extends string>
     extends SelectHTMLAttributes<HTMLSelectElement> {
     className?: string;
-    onValue: ({value, name}: { value: string; name: T }) => void;
-    value: string;
     name: T;
     label?: string;
     labelStyles?: string;
@@ -23,8 +21,6 @@ export interface ISelect<T extends string>
 
 export const Select = <T extends string>({
                                              className,
-                                             onValue,
-                                             value,
                                              name,
                                              label,
                                              labelStyles = "label16",
@@ -38,12 +34,6 @@ export const Select = <T extends string>({
                                              children,
                                              ...rest
                                          }: ISelect<T>) => {
-    const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        // const {value, name} = event.currentTarget;
-        // onValue({value, name: name as T});
-        console.log(event.currentTarget.value);
-    };
-
     return label ? (
         <label className={styles.selectElement}>
             <span className={cn(styles.selectElement__label, styles[`selectElement__${labelStyles}`])}>{label}</span>
@@ -60,9 +50,7 @@ export const Select = <T extends string>({
                     className,
                 )}
                 name={name}
-                value={value}
                 required={required}
-                onChange={handleChange}
                 {...rest}
             >
                 {children}
@@ -85,9 +73,7 @@ export const Select = <T extends string>({
                     className,
                 )}
                 name={name}
-                value={value}
                 required={required}
-                onChange={handleChange}
                 {...rest}
             >
                 {children}

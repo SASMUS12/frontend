@@ -8,10 +8,9 @@ export const useModel = () => {
             firstName: "",
             birthdate: "",
             country: "",
-            language: "",
             isLoading: false,
 
-            handleValue({name, value}: { name: "firstName" | "country" | "language"; value: string }) {
+            handleValue({name, value}: { name: "firstName" | "country" ; value: string }) {
                 model[name] = value;
             },
 

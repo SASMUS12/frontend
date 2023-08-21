@@ -54,10 +54,12 @@
     &:hover {
       border: 2px solid var(--soft-violet);
       background-position: right 11px bottom 9px;
+      padding: 7px 11px;
     }
 
     &:active {
       border: 1px solid var(--dark-violet);
+      padding: 8px 12px;
     }
   }
 
