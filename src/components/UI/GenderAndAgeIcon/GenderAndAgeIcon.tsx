@@ -11,7 +11,11 @@ interface GenderAndAgeIconProps {
   gender_is_hidden?: boolean;
 }
 
-const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({ gender, age, gender_is_hidden }) => {
+const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({
+  gender,
+  age,
+  gender_is_hidden,
+}) => {
   const isGenderVisible = gender && !gender_is_hidden;
   const genderIcon = gender === 'Female' ? femaleGender : maleGender;
 
@@ -19,14 +23,16 @@ const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({ gender, age, gender_is_hi
     <div
       className={cn(styles.card__partnerPersonalInfo_genderAndAge, {
         [styles.card__partnerPersonalInfo_genderAndAge_hidden]: !gender || !age,
-      })}>
+      })}
+    >
       {isGenderVisible && (
         <img
           className={cn(styles.card__partnerPersonalInfo_partnerGender, {
-            [styles.card__partnerPersonalInfo_partnerGender_hidden]: gender_is_hidden,
+            [styles.card__partnerPersonalInfo_partnerGender_hidden]:
+              gender_is_hidden,
           })}
           src={genderIcon}
-          alt="Пол пользователя"
+          alt='Пол пользователя'
         />
       )}
       <p className={styles.card__partnerPersonalInfo_partnerAge}>{age}</p>
