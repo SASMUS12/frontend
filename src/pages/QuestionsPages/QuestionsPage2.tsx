@@ -9,35 +9,47 @@ import cn from "classnames";
 
 import {useModel} from "./model";
 import {api} from "../../utils/constants";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Button} from "../../components/UI/Button/Button";
-import {Language} from "../../utils/openapi";
+import {Language, SkillLevelEnum} from "../../utils/openapi";
+import CountrySelection from "../../components/CountrySelection/CountrySelection";
+import Languagelevel from "../../components/LanguageLevel/LanguageLevel";
+import LanguageLevel from "../../components/LanguageLevel/LanguageLevel";
 
 const QuestionsPage2 = () => {
     const model = useModel();
 
-    const [languagesData, setLanguagesData] = useState<Language[]>([]);
-    const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
-
-    const fetchLanguagesData = async () => {
-        try {
-            console.log('отправка запроса ---');
-            const response = await api.api.languagesList();
-            console.log('ответ получен -', response);
-            const languages = response.data;
-            setLanguagesData(languages);
-        } catch (error) {
-            console.error("Ошибка при получении данных о языках:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchLanguagesData();
-    }, []);
-
-    const handleOpenLanguageMenu = () => {
-        setLanguageMenuOpen(true);
-    };
+    // const [languagesData, setLanguagesData] = useState<Language[]>([]);
+    // const [isLanguageMenuOpen, setLanguageMenuOpen] = useState(false);
+    //
+    // const initialLanguageAndLevels = useMemo(() => {
+    //     return {language: null, skillLevels: []};
+    // }, []);
+    //
+    // const [selectedLanguagesAndLevels, setSelectedLanguagesAndLevels] = useState<
+    //     { language: Language | null; skillLevels: SkillLevelEnum[] }[]
+    // >([initialLanguageAndLevels]);
+    //
+    //
+    // const fetchLanguagesData = async () => {
+    //     try {
+    //         console.log('отправка запроса ---');
+    //         const response = await api.api.languagesList();
+    //         console.log('ответ получен -', response);
+    //         const languages = response.data;
+    //         setLanguagesData(languages);
+    //     } catch (error) {
+    //         console.error("Ошибка при получении данных о языках:", error);
+    //     }
+    // };
+    //
+    // useEffect(() => {
+    //     fetchLanguagesData();
+    // }, []);
+    //
+    // const handleOpenLanguageMenu = () => {
+    //     setLanguageMenuOpen(true);
+    // };
 
 
     return (
@@ -48,47 +60,54 @@ const QuestionsPage2 = () => {
                     <ProgressLine pageNumber={2}/>
                     <h1 className={styles.container__title}>Укажите страну или город и родной язык</h1>
                     <QuestionArea>
-                        <Input
-                            className={styles.container__questionArea_input}
-                            type="search"
-                            name="country"
-                            value={model.country}
-                            label="Страна или город, в которых вы сейчас живете"
-                            labelStyles="label18"
-                            isLabelHintHidden={true}
-                            placeholder="Начните вводить название"
-                            required
-                            maxLength={12}
-                            onValue={model.handleValue}
-                        />
+                        {/*<Input*/}
+                        {/*    className={styles.container__questionArea_input}*/}
+                        {/*    type="search"*/}
+                        {/*    name="country"*/}
+                        {/*    value={model.country}*/}
+                        {/*    label="Страна или город, в которых вы сейчас живете"*/}
+                        {/*    labelStyles="label18"*/}
+                        {/*    isLabelHintHidden={true}*/}
+                        {/*    placeholder="Начните вводить название"*/}
+                        {/*    required*/}
+                        {/*    maxLength={12}*/}
+                        {/*    onValue={model.handleValue}*/}
+                        {/*/>*/}
+                        <CountrySelection />
                     </QuestionArea>
                     <QuestionArea>
-                        <Select
-                            className={styles.container__questionArea_input}
-                            name="language"
-                            label="Ваш родной язык, язык на котором вы свободно говорите"
-                            labelStyles="label18"
-                            isLabelHintHidden={true}
-                            placeholder="Напишите или выберете"
-                            required
-                        >
-                            <option value=""></option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            {languagesData &&
-                                languagesData.map((language: Language) => (
-                                    <option value={language.name}>{language.name}</option>
-                                ))
-                            }
+                        {/*<Select*/}
+                        {/*    className={styles.container__questionArea_input}*/}
+                        {/*    name="language"*/}
+                        {/*    label="Ваш родной язык, язык на котором вы свободно говорите"*/}
+                        {/*    labelStyles="label18"*/}
+                        {/*    isLabelHintHidden={true}*/}
+                        {/*    placeholder="Напишите или выберете"*/}
+                        {/*    required*/}
+                        {/*>*/}
+                        {/*    <option value=""></option>*/}
+                        {/*    <option value="1">1</option>*/}
+                        {/*    <option value="2">2</option>*/}
+                        {/*    <option value="3">3</option>*/}
+                        {/*    {languagesData &&*/}
+                        {/*        languagesData.map((language: Language) => (*/}
+                        {/*            <option value={language.name}>{language.name}</option>*/}
+                        {/*        ))*/}
+                        {/*    }*/}
 
-                        </Select>
-                        <Button
-                            onClick={handleOpenLanguageMenu}
-                            className={styles.popup__addButton}
-                        >
-                            {"добавить язык"}
-                        </Button>
+                        {/*</Select>*/}
+
+
+
+
+
+
+                        {/*<Button*/}
+                        {/*    onClick={handleOpenLanguageMenu}*/}
+                        {/*    className={styles.popup__addButton}*/}
+                        {/*>*/}
+                        {/*    {"добавить язык"}*/}
+                        {/*</Button>*/}
                     </QuestionArea>
                 </div>
             </main>

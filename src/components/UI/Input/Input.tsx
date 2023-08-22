@@ -8,7 +8,7 @@ import cn from 'classnames';
 export interface InputProps<T extends string>
     extends InputHTMLAttributes<HTMLInputElement> {
     className?: string;
-    onValue: ({value, name}: { value: string; name: T }) => void;
+    onValue?: ({value, name}: { value: string; name: T }) => void;
     value: string;
     name: T;
     label?: string;

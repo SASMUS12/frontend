@@ -53,6 +53,12 @@
       padding: 8px 12px;
     }
 
+    &:disabled {
+      background: var(--grey-gradient-50);
+      border: none;
+      color: var(--soft-violet);
+    }
+
     &::placeholder {
       color: var(--soft-violet);
     }
