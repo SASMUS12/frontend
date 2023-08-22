@@ -60,7 +60,7 @@ const SignupSigninForm = () => {
                 required
                 maxLength={12}
                 minLength={3}
-                onValue={model.handleUsernameChange}
+                onValue={model.handleValue}
             />
             )}
             <Input
@@ -77,7 +77,7 @@ const SignupSigninForm = () => {
                 placeholder="Электронная почта"
                 required
                 error={model.error}
-                onValue={model.handleEmailChange}
+                onValue={model.handleValue}
                 maxLength={30}
                 minLength={5}
             />
@@ -98,7 +98,7 @@ const SignupSigninForm = () => {
                 placeholder="Пароль"
                 required
                 error={model.error}
-                onValue={model.handlePasswordChange}
+                onValue={model.handleValue}
                 maxLength={12}
                 minLength={5}
             />
@@ -113,7 +113,7 @@ const SignupSigninForm = () => {
                     placeholder="Пароль"
                     required
                     error={model.error}
-                    onValue={model.handleConfirmPasswordChange}
+                    onValue={model.handleValue}
                     maxLength={12}
                     minLength={5}
                 />

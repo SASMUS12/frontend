@@ -5,7 +5,6 @@
   width: max-content;
   box-sizing: border-box;
   cursor: pointer;
-  font: var(--font-text-16-120-400);
   text-align: center;
 }
 
@@ -13,8 +12,17 @@
   font: var(--font-text-13-120-400);
 }
 
+.fontSize-15 {
+  font: var(--font-text-15-120-400);
+}
+
 .fontSize-16 {
   font: var(--font-text-16-120-400);
+}
+
+.size-xs {
+  height: 20px;
+  padding: 0;
 }
 
 .size-small {
@@ -62,6 +70,21 @@
     transition: 0.3s background-color ease;
   }
 }
+
+.variant-addLanguage {
+  background-color: var(--color-base-white);
+  color: var(--accent-color-violet);
+  border: none;
+
+  &:hover {
+    color: var(--primory-button-hover);
+  }
+
+  &:active {
+    color: var(--primory-button-push);
+  }
+}
+
 
 
 

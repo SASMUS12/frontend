@@ -7,10 +7,9 @@ import styles from './Button.module.scss';
 interface Props {
     className?: string;
     type?: "button" | "submit";
-    variant?: "primary" | "transparent" | "gray";
-    size?: "small" | "big";
-    fontSize?: "13" | "16";
-
+    variant?: "primary" | "transparent" | "gray" | "addLanguage";
+    size?: "xs" | "small" | "big";
+    fontSize?: "13" | "15" | "16";
     disabled?: boolean;
     onClick?: MouseEventHandler<HTMLButtonElement>;
     children?: ReactNode;

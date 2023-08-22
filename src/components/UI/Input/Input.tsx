@@ -71,9 +71,6 @@ export const Input = <T extends string>({
                 onChange={handleChange}
                 {...rest}
             />
-            {type === "search" && (
-                <img className={cn(styles.inputElement__searchIcon, styles.inputElement__searchIcon_withLabel)} src={search} alt="Иконка поиска - лупа" />
-            )}
             {hasError ? (
                 <span className={styles.inputElement__error}>{error}</span>
             ) : (
@@ -100,9 +97,6 @@ export const Input = <T extends string>({
                 onChange={handleChange}
                 {...rest}
             />
-            {type === "search" && (
-                <img className={cn(styles.inputElement__searchIcon, styles.inputElement__searchIcon_withoutLabel)} src={search} alt="Иконка поиска - лупа" />
-            )}
             {hasError ? (
                 <span className={styles.inputElement__error}>{error}</span>
             ) : (

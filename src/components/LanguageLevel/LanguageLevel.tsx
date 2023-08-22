@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
-import styles from "../LanguageLevel/LanguageLevel.module.scss";
-import { Language, SkillLevelEnum } from "../../utils/openapi";
+import React, {useState, useEffect} from "react";
+
+import {Language, SkillLevelEnum} from "../../utils/openapi";
+
+import styles from "./LanguageLevel.module.scss";
 
 const skillLevelNames: Record<SkillLevelEnum, string> = {
     [SkillLevelEnum.Newbie]: "Новичок",
@@ -11,7 +13,8 @@ const skillLevelNames: Record<SkillLevelEnum, string> = {
     [SkillLevelEnum.Native]: "Носитель",
 };
 
-interface LanguagelevelProps {
+interface LanguageLevelProps {
+    pageName: string;
     languages: Language[];
     selectedLanguage: Language | null;
     selectedSkillLevels: SkillLevelEnum[];
@@ -23,7 +26,8 @@ interface LanguagelevelProps {
 
 }
 
-const Languagelevel: React.FC<LanguagelevelProps> = ({
+const LanguageLevel: React.FC<LanguageLevelProps> = ({
+                                                         pageName,
                                                          languages,
                                                          selectedLanguage,
                                                          selectedSkillLevels,
@@ -81,7 +85,7 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
     };
 
     const sortedLanguages = filteredLanguages.sort((a, b) =>
-        a.name.localeCompare(b.name, 'ru', { sensitivity: 'base' })
+        a.name.localeCompare(b.name, 'ru', {sensitivity: 'base'})
     );
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -139,8 +143,6 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
         setSkillLevels(initialLanguageAndLevels.skillLevels);
     };
 
-
-
     return (
         <>
             <div className={styles.language}>
@@ -174,27 +176,28 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
                 )}
             </div>
             <div className={styles.language__level}>
-                {Object.entries(skillLevelNames).map(([key, level]) => (
-                    <label key={level} className={styles.language__level_label}>
-                        <input
-                            type="checkbox"
-                            value={level}
-                            checked={selectedSkillLevels.includes(key as SkillLevelEnum)}
-                            onChange={() => handleSkillLevelChange(key as SkillLevelEnum)}
-                            className={styles.language__level_input}
-                            disabled={
-                                (key === SkillLevelEnum.Native && selectedSkillLevels.length > 0) ||
-                                (key !== SkillLevelEnum.Native &&
-                                    selectedSkillLevels.includes(SkillLevelEnum.Native))
-                            }
-                        />
-                        <span className={styles.language__level_checkbox_visible}></span>
-                        {level}
-                    </label>
-                ))}
+                {pageName === "Sort" &&
+                    Object.entries(skillLevelNames).map(([key, level]) => (
+                        <label key={level} className={styles.language__level_label}>
+                            <input
+                                type="checkbox"
+                                value={level}
+                                checked={selectedSkillLevels.includes(key as SkillLevelEnum)}
+                                onChange={() => handleSkillLevelChange(key as SkillLevelEnum)}
+                                className={styles.language__level_input}
+                                disabled={
+                                    (key === SkillLevelEnum.Native && selectedSkillLevels.length > 0) ||
+                                    (key !== SkillLevelEnum.Native &&
+                                        selectedSkillLevels.includes(SkillLevelEnum.Native))
+                                }
+                            />
+                            <span className={styles.language__level_checkbox_visible}></span>
+                            {level}
+                        </label>
+                    ))}
             </div>
         </>
     );
 };
 
-export default Languagelevel;
+export default LanguageLevel;
