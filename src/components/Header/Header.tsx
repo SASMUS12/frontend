@@ -11,7 +11,7 @@ import bell from '../../images/svg/header-bell.svg';
 import bubble from '../../images/20px.png';
 import k from '../../images/headerK.png';
 import cn from "classnames";
-import { loggedIn } from '../../models/loggedIn';
+import { loggedIn } from '../../models/LoggedIn';
 
 const Header = observer(() => {
   const model = useModel();
@@ -64,8 +64,8 @@ const Header = observer(() => {
       <div className={styles.header__container}>
         <Link to={`/`} className={styles.header__link}>
           <img src={logo} alt="Логотип проекта" />
-        </Link>  
-        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !loggedIn.loggedIn && 
+        </Link>
+        {(location.pathname !== "/signup") && (location.pathname !== "/signin") && !loggedIn.loggedIn &&
           <div className={styles.header__buttonContainer}>
             <Button
               className={styles.button}
@@ -88,29 +88,29 @@ const Header = observer(() => {
           <div className={styles.header__iconsContainer}>
             <Link to={`/chats`} className={styles.header__link}>
               <img src={bubble} alt="Иконка чатов" className={styles.header__img}/>
-            </Link>  
-            <Link 
-              to={`/messages`} 
+            </Link>
+            <Link
+              to={`/messages`}
               className={styles.header__link}>
               <img src={bell} alt="Иконка уведомлений"  className={styles.header__img}/>
-            </Link>  
-            <img 
-              src={k} 
-              alt="Переход в профиль пользователя" 
-              className={styles.header__img} 
+            </Link>
+            <img
+              src={k}
+              alt="Переход в профиль пользователя"
+              className={styles.header__img}
               onClick={checkIsSignUp}/>
-            {isMenuOpen && 
+            {isMenuOpen &&
               <div className={styles.header__menuContainer}>
                 <Link to={`/profile`} className={styles.header__link}>
                   Посмотреть профиль
                 </Link>
                 <Link to={`/profile/edit`} className={styles.header__link}>
                   Редактировать профиль
-                </Link> 
+                </Link>
                 <Link to={`/profile/settings`} className={styles.header__link}>
                   Настройки
                 </Link>
-                <p 
+                <p
                   onClick={checkLogout}
                   className={styles.header__link}>
                     Выйти

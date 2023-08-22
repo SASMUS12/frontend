@@ -1,10 +1,19 @@
 .inputElement {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   &__label {
-    font: var(--font-text-16-120-400);
     color: var(--dark-violet);
+  }
+
+  &__label16 {
+    font: var(--font-text-16-120-400);
+  }
+
+  &__label18 {
+    font: var(--font-title-18-120-500);
+    margin-bottom: 4px;
   }
 
   &__hint {
@@ -22,11 +31,9 @@
   }
 
   &__input {
-    display: inline-flex;
-    width: 100%;
+    display: inline-block;
     height: 40px;
     box-sizing: border-box;
-    align-items: center;
     background-color: var(--color-base-white);
     border: 1px solid var(--soft-violet);
     border-radius: 20px;
@@ -34,18 +41,57 @@
     margin-top: 12px;
     font: var(--font-text-14-100-400);
     color: var(--dark-violet);
+    outline-offset: 0;
 
     &:hover {
       border: 2px solid var(--soft-violet);
+      padding: 7px 11px;
     }
 
-    :active {
+    &:active {
       border: 1px solid var(--dark-violet);
+      padding: 8px 12px;
     }
 
     &::placeholder {
       color: var(--soft-violet);
     }
+
+    &_dateInput::-webkit-calendar-picker-indicator {
+        color: transparent;
+        opacity: 1;
+        background: url("../../../images/svg/input-type-date-calendar.svg") no-repeat center;
+        background-size: contain;
+    }
+
+    &_dateInput::-webkit-datetime-edit-fields-wrapper {
+      color: var(--soft-violet);
+    }
+
+    &_searchInput {
+      padding-left: 40px;
+    }
+
+    &_searchInput:hover {
+      padding-left: 39px;
+    }
+
+    &_searchInput:active {
+      padding-left: 40px;
+    }
+  }
+
+  &__searchIcon {
+    position: absolute;
+    left: 15px;
+  }
+
+  &__searchIcon_withLabel {
+    top: 48px;
+  }
+
+  &__searchIcon_withoutLabel {
+    top: 22px;
   }
 }
 
