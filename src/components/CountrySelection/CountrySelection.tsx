@@ -12,9 +12,9 @@ interface CountrySelectionProps {
   
 
 const CountrySelection: React.FC<CountrySelectionProps> = ({
-    countriesData,
-    onSelectedCountriesChange,
-    onSortCountry
+    countriesData,//принимает список стран с сервера
+    onSelectedCountriesChange,//Обработчик изменения выбранных стран
+    onSortCountry,//Обработчик сортировки стран
   }) => {
     const [isCountryListVisible, setCountryListVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -233,4 +233,4 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
       );
     };
     
-    export default CountrySelection;
+    export default CountrySelection; 

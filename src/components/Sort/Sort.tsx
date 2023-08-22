@@ -53,7 +53,9 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
   const [filteredCountries, setFilteredCountries] = useState<Country[]>(countriesData);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
+  
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(null);
   const [suggestedCountries, setSuggestedCountries] = useState<Country[]>([]);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null);
@@ -308,9 +310,9 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen, languagesData, countr
       <div className={styles.popup__cantry}>
         <h2 className={styles.subtitle}>Страна партнера</h2>
         <CountrySelection
-        countriesData={countriesData}
-        onSelectedCountriesChange={handleSelectedCountriesChange}
-        onSortCountry={handleSortCountry}
+          countriesData={countriesData}
+          onSelectedCountriesChange={getSelectedCountryNames}
+          onSortCountry={handleSelectCountry}
       />
         <div className={styles.popup__cantry_enter}>
           <input
