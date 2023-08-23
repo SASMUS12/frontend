@@ -4,47 +4,50 @@ import type {ChangeEvent, InputHTMLAttributes} from 'react';
 
 import styles from './Input.module.scss';
 import cn from 'classnames';
+import cn from 'classnames';
 
 export interface InputProps<T extends string>
-    extends InputHTMLAttributes<HTMLInputElement> {
-    className?: string;
-    onValue?: ({value, name}: { value: string; name: T }) => void;
-    value: string;
-    name: T;
-    label?: string;
+  extends InputHTMLAttributes<HTMLInputElement> {
+  className?: string;
+  onValue?: ({ value, name }: { value: string; name: T }) => void;
+  value: string;
+  name: T;
+  label?: string;
+  labelStyles?: string;
     labelStyles?: string;
-    labelHint?: string;
-    isLabelHintHidden?: boolean;
-    type: string;
-    placeholder: string;
-    hint?: string;
-    required: boolean;
-    hasError?: boolean;
-    error?: string;
+  labelHint?: string;
+  isLabelHintHidden?: boolean;
+  type: string;
+  placeholder: string;
+  hint?: string;
+  required: boolean;
+  hasError?: boolean;
+  error?: string;
 }
 
 export const Input = <T extends string>({
-                                            className,
-                                            onValue,
-                                            value,
-                                            name,
-                                            label,
+  className,
+  onValue,
+  value,
+  name,
+  label,
+  labelStyles = 'label16',
                                             labelStyles = "label16",
-                                            labelHint,
-                                            isLabelHintHidden,
-                                            type,
-                                            placeholder,
-                                            hint,
-                                            required,
-                                            hasError,
-                                            error,
-                                            ...rest
-                                        }: InputProps<T>) => {
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const {value, name} = event.currentTarget;
-        onValue({value, name: name as T});
-        console.log(event.currentTarget.validationMessage);
-    };
+  labelHint,
+  isLabelHintHidden,
+  type,
+  placeholder,
+  hint,
+  required,
+  hasError,
+  error,
+  ...rest
+}: InputProps<T>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.currentTarget;
+    onValue({ value, name: name as T });
+    console.log(event.currentTarget.validationMessage);
+  };
 
     return label ? (
         <label className={styles.inputElement}>

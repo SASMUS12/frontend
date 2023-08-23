@@ -1,72 +1,89 @@
-import React, {useEffect, useState} from 'react';
-import {observer} from "mobx-react-lite";
+import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
-import {api} from '../../utils/constants';
-import {Country} from '../../utils/openapi';
-import {Language} from '../../utils/openapi';
+import { api } from '../../utils/constants';
+import { Country } from '../../utils/openapi';
+import { Language } from '../../utils/openapi';
 
 import Card from '../../components/Card/Card';
 import Header from '../../components/Header/Header';
-import Categories from "../../components/Categories/Categories";
-import Sort from "../../components/Sort/Sort";
+import Categories from '../../components/Categories/Categories';
+import Sort from '../../components/Sort/Sort';
 import Footer from '../../components/Footer/Footer';
 
-import MoreCards from "../../components/MoreCards/MoreCards";
-import Modal from "../../components/Modal/Modal";
+import MoreCards from '../../components/MoreCards/MoreCards';
+import Modal from '../../components/Modal/Modal';
 
 import styles from './MainPage.module.scss';
-import cn from "classnames";
+import cn from 'classnames';
 
-import {useModel} from "../../components/SignupSigninForm/model";
-import { loggedIn } from '../../models/loggedIn';
+import { useModel } from '../../components/SignupSigninForm/model';
+import { loggedIn } from '../../models/LoggedIn';
 
 const MainPage = () => {
-    const model = useModel();
+  const model = useModel();
 
-    const handleCloseModal = () => {
-        model.isModalOpen = false;
-    };
+  const handleCloseModal = () => {
+    model.isModalOpen = false;
+  };
 
-    useEffect(() => {
-        console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
-    }, []);
+  useEffect(() => {
+    console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
+  }, []);
 
-    const [usersList, setUsersList] = useState<any[]>([]);
-    const [cardsListLength, setCardsListLength] = useState<number>(0);
-    const [isUsersList, setIsUsersList] = useState(false);
-    const [category, setCategory] = useState({name: 'Все', path: ''});
-    const [sortType, setSortType] = useState({});
-    const [isSortPopupOpen, setSortPopupOpen] = useState(false);
-    const [languagesData, setLanguagesData] = useState<Language[]>([]);
-    const [countriesData, setCountriesData] = useState<Country[]>([]);
+  const [usersList, setUsersList] = useState<any[]>([]);
+  const [cardsListLength, setCardsListLength] = useState<number>(0);
+  const [isUsersList, setIsUsersList] = useState(false);
+  const [category, setCategory] = useState({ name: 'Все', path: '' });
+  const [sortType, setSortType] = useState({});
+  const [isSortPopupOpen, setSortPopupOpen] = useState(false);
+  const [languagesData, setLanguagesData] = useState<Language[]>([]);
+  const [countriesData, setCountriesData] = useState<Country[]>([]);
 
-    const handleOpenSortPopup = () => {
-        setSortPopupOpen(!isSortPopupOpen);
+  const handleOpenSortPopup = () => {
+    setSortPopupOpen(!isSortPopupOpen);
+  };
+
+  const getUsersList = async (filters: any) => {
+    try {
+      console.log('отправка запроса ---');
+      const response = await api.api.usersList({
+        ordering: `${category.path}`,
+        ...filters,
+      });
+      console.log('ответ получен -', response);
+      setIsUsersList(true);
+
+      if (response.data && response.data.results) {
+        setUsersList(response.data.results);
+        console.log(response.data.results);
+      }
+    } catch (error) {
+      console.error('Ошибка при получении данных -', error);
+      setIsUsersList(false);
     }
+  };
 
-    const getUsersList = async (filters:any) => {
-        try {
-            console.log('отправка запроса ---');
-            const response = await api.api.usersList({
-                ordering: `${category.path}`,
-                ...filters,
-        });
-            console.log('ответ получен -', response);
-            setIsUsersList(true);
+  useEffect(() => {
+    getUsersList(sortType);
+  }, [category, sortType]);
 
-            if (response.data && response.data.results) {
-                setUsersList(response.data.results);
-                console.log(response.data.results);
-            }
-        } catch (error) {
-            console.error('Ошибка при получении данных -', error);
-            setIsUsersList(false);
-        }
-    };
+  //Запрос массива языков
+  const fetchLanguagesData = async () => {
+    try {
+      console.log('отправка запроса ---');
+      const response = await api.api.languagesList();
+      console.log('ответ получен -', response);
+      const languages = response.data;
+      setLanguagesData(languages);
+    } catch (error) {
+      console.error('Ошибка при получении данных о языках:', error);
+    }
+  };
 
-    useEffect(() => {
-        getUsersList(sortType);
-    }, [category, sortType]);
+  useEffect(() => {
+    fetchLanguagesData();
+  }, []);
 
     return (
         <>

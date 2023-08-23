@@ -129,10 +129,12 @@ const CountrySelection: FC<CountrySelectionProps> = ({
         }
     };
 
-    const handleRemoveCountry = (country: Country) => {
-        const updatedCountries = selectedCountries.filter((c) => c.code !== country.code);
-        setSelectedCountries(updatedCountries);
-    };
+  const handleRemoveCountry = (country: Country) => {
+    const updatedCountries = selectedCountries.filter(
+      (c) => c.code !== country.code,
+    );
+    setSelectedCountries(updatedCountries);
+  };
 
     const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'ArrowDown') {
@@ -167,7 +169,18 @@ const CountrySelection: FC<CountrySelectionProps> = ({
         }
     };
 
-    const popularCountryCodes = ['cn', 'es', 'england', 'sa', 'bd', 'pt', 'ru', 'jp', 'pc', 'my'];
+  const popularCountryCodes = [
+    'cn',
+    'es',
+    'england',
+    'sa',
+    'bd',
+    'pt',
+    'ru',
+    'jp',
+    'pc',
+    'my',
+  ];
 
     const sortCountriesByLastLetter = () => {
         if (lastPressedLetter) {

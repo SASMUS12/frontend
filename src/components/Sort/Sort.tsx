@@ -1,4 +1,4 @@
-import React, { useState, useMemo  } from "react";
+import React, { useState, useMemo } from 'react';
 
 import styles from "../Sort/Sort.module.scss";
 import CountrySelection from "../CountrySelection/CountrySelection";
@@ -39,7 +39,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
   
 
 
-   const initialLanguageAndLevels = useMemo(() => {
+  const initialLanguageAndLevels = useMemo(() => {
     return { language: null, skillLevels: [] };
   }, []);
 
@@ -59,7 +59,6 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
     setLeftValue(18);
     setRightValue(40);
   };
-
 
   const handleFindButtonClick = () => {
     
@@ -107,21 +106,20 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
         />
       </div>
       <Button
-        type="button"
-        variant="primary"
+        type='button'
+        variant='primary'
         className={styles.findButton}
-        children={"Найти"}
+        children={'Найти'}
         onClick={handleFindButtonClick}
       />
       <Button
-        type="submit"
-        variant="transparent"
+        type='submit'
+        variant='transparent'
         className={styles.cleanButton}
-        children={"Очистить фильтр"}
+        children={'Очистить фильтр'}
         onClick={handleClearFilter}
       />
     </div>
   );
 };
-
-export default Sort; 
+export default Sort;
