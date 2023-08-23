@@ -13,14 +13,14 @@ function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footer__container}>
         <div className={styles.footer__leftColumn}>
-          <img src={logo} alt="Логотип проекта" />
+          <img src={logo} alt='Логотип проекта' />
           <div className={styles.footer__yearText}>
             <div className={styles.footer__icons}>
               <Link to={`/`}>
-                <img src={tlg} alt="Иконка Телеграм" />
+                <img src={tlg} alt='Иконка Телеграм' />
               </Link>
               <Link to={`/`}>
-                <img src={vk} alt="Иконка ВКонтакте" />
+                <img src={vk} alt='Иконка ВКонтакте' />
               </Link>
             </div>
             <p>{currentYear}, © Все права защищены</p>
@@ -28,10 +28,10 @@ function Footer() {
         </div>
         <nav className={styles.footer__rightColumn}>
           <div className={styles.footer__textColumn}>
-            <a className={styles.footer__link} href="mailto:linguachat@ro.ru"> 
+            <a className={styles.footer__link} href='mailto:linguachat@ro.ru'>
               <p className={styles.footer__text}>Связаться с нами</p>
             </a>
-            <a className={styles.footer__link} href="mailto:linguachat@ro.ru"> 
+            <a className={styles.footer__link} href='mailto:linguachat@ro.ru'>
               <p className={styles.footer__text}>Сообщить об ошибке</p>
             </a>
           </div>
@@ -40,10 +40,14 @@ function Footer() {
               <p className={styles.footer__linkText}>Правила сообщества</p>
             </Link>
             <Link to={`/policy`} className={styles.footer__linkText}>
-              <p className={styles.footer__linkText}>Политика конфиденциальности</p>
+              <p className={styles.footer__linkText}>
+                Политика конфиденциальности
+              </p>
             </Link>
             <Link to={`/agreement`} className={styles.footer__linkText}>
-              <p className={styles.footer__linkText}>Пользовательское соглашение</p>
+              <p className={styles.footer__linkText}>
+                Пользовательское соглашение
+              </p>
             </Link>
             <Link to={`/reviews`} className={styles.footer__linkText}>
               <p className={styles.footer__text}>Отзывы</p>

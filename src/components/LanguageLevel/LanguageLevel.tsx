@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import styles from "../LanguageLevel/LanguageLevel.module.scss";
-import { Language, SkillLevelEnum } from "../../utils/openapi";
+import React, { useState, useEffect } from 'react';
+import styles from '../LanguageLevel/LanguageLevel.module.scss';
+import { Language, SkillLevelEnum } from '../../utils/openapi';
 
 const skillLevelNames: Record<SkillLevelEnum, string> = {
-  [SkillLevelEnum.Newbie]: "Новичок",
-  [SkillLevelEnum.Amateur]: "Любитель",
-  [SkillLevelEnum.Profi]: "Профи",
-  [SkillLevelEnum.Expert]: "Эксперт",
-  [SkillLevelEnum.Guru]: "Гуру",
-  [SkillLevelEnum.Native]: "Носитель",
+  [SkillLevelEnum.Newbie]: 'Новичок',
+  [SkillLevelEnum.Amateur]: 'Любитель',
+  [SkillLevelEnum.Profi]: 'Профи',
+  [SkillLevelEnum.Expert]: 'Эксперт',
+  [SkillLevelEnum.Guru]: 'Гуру',
+  [SkillLevelEnum.Native]: 'Носитель',
 };
 
 interface LanguagelevelProps {
@@ -19,8 +19,10 @@ interface LanguagelevelProps {
   onSkillLevelsChange: (skillLevels: SkillLevelEnum[]) => void;
   onReset: () => void;
   onRemoveLanguage: () => void;
-  initialLanguageAndLevels: { language: Language | null; skillLevels: SkillLevelEnum[] };
-
+  initialLanguageAndLevels: {
+    language: Language | null;
+    skillLevels: SkillLevelEnum[];
+  };
 }
 
 const Languagelevel: React.FC<LanguagelevelProps> = ({
@@ -33,17 +35,22 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
   onReset,
   initialLanguageAndLevels,
 }) => {
-  console.log("languagesData:", languages);
-  console.log("selectedLanguage:", selectedLanguage);
-  console.log("selectedSkillLevels:", selectedSkillLevels);
+  console.log('languagesData:', languages);
+  console.log('selectedLanguage:', selectedLanguage);
+  console.log('selectedSkillLevels:', selectedSkillLevels);
 
-  
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
-  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null);
-  
-  const [language, setLanguage] = useState<Language | null>(initialLanguageAndLevels.language);
-  const [skillLevels, setSkillLevels] = useState<SkillLevelEnum[]>(initialLanguageAndLevels.skillLevels);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<
+    number | null
+  >(null);
+
+  const [language, setLanguage] = useState<Language | null>(
+    initialLanguageAndLevels.language,
+  );
+  const [skillLevels, setSkillLevels] = useState<SkillLevelEnum[]>(
+    initialLanguageAndLevels.skillLevels,
+  );
 
   useEffect(() => {
     setLanguage(selectedLanguage);
@@ -53,7 +60,7 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
   const filteredLanguages = languages.filter(
     (language) =>
       language.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-      language.name_local.toLowerCase().includes(inputValue.toLowerCase())
+      language.name_local.toLowerCase().includes(inputValue.toLowerCase()),
   );
 
   const handleLanguageSelect = (language: Language) => {
@@ -65,7 +72,9 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
 
   const handleSkillLevelChange = (skillLevel: SkillLevelEnum) => {
     if (selectedSkillLevels.includes(skillLevel)) {
-      onSkillLevelsChange(selectedSkillLevels.filter((level) => level !== skillLevel));
+      onSkillLevelsChange(
+        selectedSkillLevels.filter((level) => level !== skillLevel),
+      );
     } else {
       if (skillLevel === SkillLevelEnum.Native) {
         onSkillLevelsChange([SkillLevelEnum.Native]);
@@ -73,19 +82,19 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
         if (
           selectedSkillLevels.length < 3 &&
           !selectedSkillLevels.includes(SkillLevelEnum.Native)
-          ) {
-            onSkillLevelsChange([...selectedSkillLevels, skillLevel]);
-          }
+        ) {
+          onSkillLevelsChange([...selectedSkillLevels, skillLevel]);
         }
       }
-    };
-    
-    const sortedLanguages = filteredLanguages.sort((a, b) =>
-    a.name.localeCompare(b.name, 'ru', { sensitivity: 'base' })
-    );
+    }
+  };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'ArrowDown') {
+  const sortedLanguages = filteredLanguages.sort((a, b) =>
+    a.name.localeCompare(b.name, 'ru', { sensitivity: 'base' }),
+  );
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -112,54 +121,53 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
       if (selectedSuggestionIndex !== null) {
         handleLanguageSelect(sortedLanguages[selectedSuggestionIndex]);
       } else if (inputValue.trim() !== '') {
-        const matchedLanguage = sortedLanguages.find(language =>
-          language.name.toLowerCase() === inputValue.toLowerCase()
-          );
-          if (matchedLanguage) {
-            handleLanguageSelect(matchedLanguage);
-          }
+        const matchedLanguage = sortedLanguages.find(
+          (language) =>
+            language.name.toLowerCase() === inputValue.toLowerCase(),
+        );
+        if (matchedLanguage) {
+          handleLanguageSelect(matchedLanguage);
         }
-        setIsOpen(false);
-      } else if (e.key === 'Backspace' || e.key === 'Delete') {
-        if (inputValue === '' && selectedSuggestionIndex === null) {
-          onLanguageChange(null);
-        }
-        setInputValue('');
-        setSelectedSuggestionIndex(null);
-        setIsOpen(false);
       }
-    };
-    
-    const handleReset = () => {
-      onReset();
+      setIsOpen(false);
+    } else if (e.key === 'Backspace' || e.key === 'Delete') {
+      if (inputValue === '' && selectedSuggestionIndex === null) {
+        onLanguageChange(null);
+      }
       setInputValue('');
       setSelectedSuggestionIndex(null);
       setIsOpen(false);
-      setLanguage(initialLanguageAndLevels.language);
-      setSkillLevels(initialLanguageAndLevels.skillLevels);
-    };
+    }
+  };
 
-  
-    
-    return (
-      <>
+  const handleReset = () => {
+    onReset();
+    setInputValue('');
+    setSelectedSuggestionIndex(null);
+    setIsOpen(false);
+    setLanguage(initialLanguageAndLevels.language);
+    setSkillLevels(initialLanguageAndLevels.skillLevels);
+  };
+
+  return (
+    <>
       <div className={styles.language}>
-      <input
-        type="text"
-        className={styles.language__items}
-        value={selectedLanguage ? selectedLanguage.name : inputValue}
-        placeholder="Напишите или выберете"
-        onClick={() => setIsOpen(!isOpen)}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
+        <input
+          type='text'
+          className={styles.language__items}
+          value={selectedLanguage ? selectedLanguage.name : inputValue}
+          placeholder='Напишите или выберете'
+          onClick={() => setIsOpen(!isOpen)}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
         {isOpen && (
           <div className={styles.language__languageList}>
             {sortedLanguages.map((language, index) => (
               <button
                 key={language.isocode}
                 className={styles.language__languageList_option}
-                role="option"
+                role='option'
                 aria-selected={index === selectedSuggestionIndex}
                 onClick={() => {
                   onLanguageChange(language);
@@ -177,13 +185,14 @@ const Languagelevel: React.FC<LanguagelevelProps> = ({
         {Object.entries(skillLevelNames).map(([key, level]) => (
           <label key={level} className={styles.language__level_label}>
             <input
-              type="checkbox"
+              type='checkbox'
               value={level}
               checked={selectedSkillLevels.includes(key as SkillLevelEnum)}
               onChange={() => handleSkillLevelChange(key as SkillLevelEnum)}
               className={styles.language__level_input}
               disabled={
-                (key === SkillLevelEnum.Native && selectedSkillLevels.length > 0) ||
+                (key === SkillLevelEnum.Native &&
+                  selectedSkillLevels.length > 0) ||
                 (key !== SkillLevelEnum.Native &&
                   selectedSkillLevels.includes(SkillLevelEnum.Native))
               }

@@ -1,24 +1,28 @@
-import {useLocalObservable} from "mobx-react-lite";
+import { useLocalObservable } from 'mobx-react-lite';
 
 export const useModel = () => {
+  const model = useLocalObservable(() => {
+    return {
+      firstName: '',
+      birthdate: '',
+      country: '',
+      isLoading: false,
 
-    const model = useLocalObservable(() => {
+      handleValue({
+        name,
+        value,
+      }: {
+        name: 'firstName' | 'country';
+        value: string;
+      }) {
+        model[name] = value;
+      },
 
-        return {
-            firstName: "",
-            birthdate: "",
-            country: "",
-            isLoading: false,
+      handleBirthdate({ name, value }: { name: 'birthdate'; value: string }) {
+        model[name] = value;
+      },
+    };
+  });
 
-            handleValue({name, value}: { name: "firstName" | "country" ; value: string }) {
-                model[name] = value;
-            },
-
-            handleBirthdate({name, value}: { name: "birthdate"; value: string }) {
-                model[name] = value;
-            },
-        };
-    });
-
-    return model;
+  return model;
 };
