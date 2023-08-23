@@ -6,11 +6,14 @@ import QuestionArea from "../../components/UI/QuestionArea/QuestionArea";
 import CountrySelection from "../../components/CountrySelection/CountrySelection";
 import LanguageModule from "../../components/LanguageModule/LanguageModule";
 
-import {Language, SkillLevelEnum} from "../../utils/openapi";
+import {Country, Language, SkillLevelEnum} from "../../utils/openapi";
 
 import styles from './QuestionsPages.module.scss';
 
 const QuestionsPage2 = () => {
+
+    const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
+
     const initialLanguageAndLevels = useMemo(() => {
         return { language: null, skillLevels: [] };
     }, []);
@@ -18,6 +21,10 @@ const QuestionsPage2 = () => {
     const [selectedLanguagesAndLevels, setSelectedLanguagesAndLevels] = useState<
         { language: Language | null; skillLevels: SkillLevelEnum[] }[]
     >([initialLanguageAndLevels]);
+
+    const handleSelectedCountriesChange = () => {
+        setSelectedCountries(selectedCountries);
+    }
 
     return (
         <>
@@ -28,13 +35,13 @@ const QuestionsPage2 = () => {
                     <h1 className={styles.container__title}>Укажите страну и родной язык</h1>
                     <QuestionArea>
                         <h3 className={styles.container__questionArea_title}>Страна, в которой Вы сейчас живете</h3>
-                        <CountrySelection />
+                        <CountrySelection pageName="Questions" onSelectedCountriesChange={handleSelectedCountriesChange} />
                     </QuestionArea>
                     <QuestionArea>
                         <h3 className={styles.container__questionArea_title}>Ваш родной язык, язык на котором Вы
                             свободно говорите</h3>
                         <LanguageModule
-                            pageName="Sort"
+                            pageName="Questions"
                             initialLanguageAndLevels={initialLanguageAndLevels}
                             selectedLanguagesAndLevels={selectedLanguagesAndLevels}
                             setSelectedLanguagesAndLevels={setSelectedLanguagesAndLevels}

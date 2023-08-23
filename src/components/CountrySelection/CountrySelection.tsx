@@ -10,13 +10,13 @@ import styles from "./CountrySelection.module.scss";
 import classNames from 'classnames';
 
 interface CountrySelectionProps {
+    pageName: string;
     onSelectedCountriesChange: (selectedCountries: Country[]) => void;
-    // onSortCountry: (country: Country) => void;
 }
 
 const CountrySelection: FC<CountrySelectionProps> = ({
+                                                         pageName,
                                                          onSelectedCountriesChange,
-                                                         // onSortCountry
                                                      }) => {
     const [countriesData, setCountriesData] = useState<Country[]>([]);
     const [isCountryListVisible, setCountryListVisible] = useState(false);
@@ -50,8 +50,10 @@ const CountrySelection: FC<CountrySelectionProps> = ({
         fetchCountriesData();
     }, []);
 
+    const i = pageName === "Sort" ? 5 : 1;
+
     const handleSelectCountry = (country: Country) => {
-        if (selectedCountry && !selectedCountries.includes(country)) {
+        if (selectedCountries.length < i && !selectedCountries.includes(country)) {
             const updatedSelectedCountries = [...selectedCountries, country];
             setSelectedCountries(updatedSelectedCountries);
             setSelectedCountry(country);

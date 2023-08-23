@@ -25,4 +25,11 @@
   &:active &__button {
     color: var(--primory-button-push);
   }
+
+  &_center {
+    margin: 0 auto;
+
+  }
+
+
 }

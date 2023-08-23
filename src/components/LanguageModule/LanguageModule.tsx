@@ -7,6 +7,7 @@ import {Language, SkillLevelEnum} from "../../utils/openapi";
 import {api} from "../../utils/constants";
 
 import styles from "./LanguageModule.module.scss";
+import cn from "classnames";
 
 interface LanguageModuleProps {
     pageName: string;
@@ -70,7 +71,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({pageName, initialLanguageAndLe
                 />
             ))}
             {selectedLanguagesAndLevels.length < 3 && (
-                <div className={styles.languagesAdd}>
+                <div className={cn(styles.languagesAdd, pageName === "Sort" ? styles.languagesAdd_center : "")}>
                     <Button
                         variant="addLanguage"
                         size="xs"
