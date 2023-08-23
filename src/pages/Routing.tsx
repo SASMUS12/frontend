@@ -13,6 +13,8 @@ const PolicyPage = lazy(() => import('./PolicyPage/PolicyPage'));
 const RulesPage = lazy(() => import('./RulesPage/RulesPage'));
 const AgreementPage = lazy(() => import('./AgreementPage/AgreementPage'));
 const ProfilePage = lazy(() => import('./UserProfile/UserProfile'));
+const SignupQuestionsPage1 = lazy(() => import('./QuestionsPages/QuestionsPage1'));
+const SignupQuestionsPage2 = lazy(() => import('./QuestionsPages/QuestionsPage2'));
 
 export const Routing = () => {
 
@@ -23,6 +25,8 @@ export const Routing = () => {
             {/*</ProtectedRoute>*/}
             <Route path="/signin" element={<SignInPage />}/>
             <Route path="/signup" element={<SignUpPage />}/>
+            <Route path="/questions-1" element={<SignupQuestionsPage1 />} />
+            <Route path="/questions-2" element={<SignupQuestionsPage2 />} />
             <Route path="/" element={<MainPage />}/>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/faq" element={<FAQPage />} />

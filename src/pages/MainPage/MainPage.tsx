@@ -18,7 +18,7 @@ import styles from './MainPage.module.scss';
 import cn from "classnames";
 
 import {useModel} from "../../components/SignupSigninForm/model";
-import { loggedIn } from '../../models/loggedIn';
+import { loggedIn } from '../../models/LoggedIn';
 
 const MainPage = () => {
     const model = useModel();
@@ -136,10 +136,10 @@ const MainPage = () => {
                                                 gender={user.gender}
                                                 gender_is_hidden={user.gender_is_hidden}
                                                 age={user.age}
+                                                age_is_hidden={user.age_is_hidden}
                                                 about={user.about}
                                                 is_online={user.is_online}
-                                                nativeLanguages={user.native_languages}
-                                                foreignLanguages={user.foreign_languages}
+                                                languages={user.languages}
                                                 key={user.id}
                                             />
                                         );

@@ -40,8 +40,34 @@
       background-position: left 12px center;
       background-size: 20px 20px;
       padding-left: 40px;
-      margin-bottom: 9px;
       margin-top: 16px;
+      position: relative;
+
+      &_error {
+        color: var(--error, #DE3D3D);
+        font-size: 12px;
+        height: 15px;
+        margin-top: 6px;
+      }
+
+      &_showSuggestions::before {
+        display: block;
+      }
+
+      &:hover {
+        border: 2px solid var(--soft-violet, #A5A0C5);
+      }
+
+      &:focus {
+        border: 1px solid var(--dark-violet, #403A6D);
+        background-image: url("../../images/svg/search_dark.svg");
+      }
+
+      &:disabled {
+        background: var(--grey-gradient-50, #F0F2F4);
+        border: none;
+        color: var(--soft-violet, #A5A0C5);
+      }
     }
     
     &_selectedCountries {
@@ -82,8 +108,7 @@
     }
 
     &_selectCountry {
-      margin-right: 12px;
-      margin-bottom: 12px;
+      margin: 12px 12px 12px 0;
       padding: 4px 6px 4px 12px;
       height: 25px;
       border-radius: 12px;
@@ -95,19 +120,35 @@
 
     &_countryList {
       position: absolute;
-      border-radius: 8px;
+      border-radius: 12px;
       top: 100%;
       left: 0;
-      top: -3px;
-      margin: 0;
+      margin-top: 6px;
       width: 100%;
+      max-height: 434px;
+      overflow: auto;
       background-color: #fff;
       border: 1px solid #ccc;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       z-index: 1000;
 
+      &::-webkit-scrollbar {
+        width: .75em;        
+      }
+    
+      &::-webkit-scrollbar-track {
+        background-color: var(--white, #FFF);
+        margin-block: .5em;
+      }
+  
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--soft-violet, #A5A0C5);
+        border-radius: 100vw;
+        border: .25em solid var(--white, #FFF);
+      }
+
       &_option {
-        font-size: 14px;
+        font-size: 13px;
         padding: 8px 12px;
         display: flex;
         justify-content: flex-start;
@@ -207,9 +248,6 @@
 
   button {
     height: 32px;    
-    border: 1px solid var(--soft-violet, #A5A0C5);
-    border-radius: 12px;
-    background-color: rgba(240, 242, 244, 1);
     color: var(--grey-gradient-500, #323944);
     cursor: pointer;
   }

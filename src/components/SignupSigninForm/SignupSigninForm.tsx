@@ -8,7 +8,7 @@ import {Button} from '../UI/Button/Button';
 import styles from './SignupSigninForm.module.scss';
 import {useModel} from './model';
 import cn from "classnames";
-import { loggedIn } from '../../models/loggedIn';
+import { loggedIn } from '../../models/LoggedIn';
 
 const SignupSigninForm = () => {
     const model = useModel();
@@ -130,7 +130,7 @@ const SignupSigninForm = () => {
                         <span className={styles.form_checkbox_span_text}>
                             Продолжая, вы соглашаетесь с
                             <span
-                                className={styles.form_checkbox_span_text_underline} 
+                                className={styles.form_checkbox_span_text_underline}
                                 > Условиями пользования Сервисом</span>
                         </span>
                     </label>

@@ -9,10 +9,13 @@ interface GenderAndAgeIconProps {
   gender: string | undefined;
   age: string | undefined;
   gender_is_hidden?: boolean;
+  age_is_hidden?: boolean;
 }
 
-const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({ gender, age, gender_is_hidden }) => {
+const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({ gender, age, gender_is_hidden, age_is_hidden }) => {
   const isGenderVisible = gender && !gender_is_hidden;
+  const isAgeVisible = age && !age_is_hidden;
+
   const genderIcon = gender === 'Female' ? femaleGender : maleGender;
 
   return (
@@ -29,7 +32,9 @@ const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({ gender, age, gender_is_hi
           alt="Пол пользователя"
         />
       )}
+        {isAgeVisible && (
       <p className={styles.card__partnerPersonalInfo_partnerAge}>{age}</p>
+        )}
     </div>
   );
 };

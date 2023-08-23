@@ -1,0 +1,124 @@
+@import 'src/vendor/_mixins.scss';
+
+.content {
+  background-color: var(--grey-gradient-50);
+}
+
+.container {
+  max-width: 668px;
+  margin: 40px auto 80px;
+
+  &__title {
+    @include questions-title;
+  }
+
+  &__questionArea {
+    &_input {
+      width: 296px;
+      margin-bottom: 24px;
+    }
+
+    &_title {
+      color: var(--dark-violet);
+      font: var(--font-title-18-120-500);
+      margin-bottom: 16px;
+    }
+
+    &_hint {
+      color: var(--dark-violet-gradient-400);
+      font: var(--font-text-15-120-400);
+      margin-bottom: 24px;
+    }
+
+    &_selectPlaceholder {
+      color: var(--soft-violet);
+      font: var(--font-text-14-120-400);
+    }
+
+    &_exportAvatar {
+      width: 90px;
+      height: 90px;
+      background: url("../../images/questions-export-avatar.png") no-repeat center;
+      background-size: contain;
+      cursor: pointer;
+      position: relative;
+
+      &_popup {
+        position: absolute;
+        top: 90px;
+        display: none;
+        width: 200px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        background-color: var(--color-base-white);
+        padding: 8px 12px;
+        box-sizing: border-box;
+
+        & button {
+          color: var(--grey-gradient-500);
+          font: var(--font-text-13-120-400);
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+        }
+      }
+
+      &:hover &_popup {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+
+
+  }
+}
+
+.modal {
+  align-items: center;
+  text-align: center;
+
+  &__title {
+    letter-spacing: 0.48px;
+    margin: 0 0 24px;
+  }
+
+  &__text {
+    color: var(--dark-violet);
+    font: var(--font-text-16-160-400);
+    max-width: 375px;
+  }
+
+  &__hint {
+    color: var(--dark-violet);
+    font: var(--font-text-14-140-400);
+    margin-top: 32px;
+  }
+
+  &__button {
+    width: 218px;
+
+    &_primary {
+      margin-top: 32px;
+    }
+
+    &_transparent {
+      background-color: transparent;
+      border: none;
+      color: var(--accent-color-violet);
+      font: var(--font-text-16-125-500);
+      text-align: center;
+      cursor: pointer;
+      margin-top: 24px;
+    }
+  }
+
+  &__input {
+    &_file {
+      display: none;
+    }
+  }
+
+
+}

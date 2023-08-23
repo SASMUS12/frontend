@@ -3,15 +3,17 @@ import React, {FC, ReactNode, useEffect} from "react";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 import styles from "./Modal.module.scss"
+import cn from "classnames";
 
 
 interface IModalProps {
     isOpen: boolean;
     onClose: () => void;
     children?: ReactNode;
+    className?: string;
 }
 
-const Modal: FC<IModalProps> = ({isOpen, onClose, children}) => {
+const Modal: FC<IModalProps> = ({isOpen, onClose, children, className}) => {
 // Закрытие при нажатии на Esc
     const handleCloseByEsc = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
@@ -32,7 +34,7 @@ const Modal: FC<IModalProps> = ({isOpen, onClose, children}) => {
 
     return (
         <ModalOverlay isOpen={isOpen} onClose={onClose}>
-            <div className={styles.modal__container}>
+            <div className={cn(styles.modal__container, className)}>
                 <button
                     type="button"
                     className={styles.modal__closeButton}
