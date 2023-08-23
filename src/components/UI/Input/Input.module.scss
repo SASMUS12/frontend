@@ -1,14 +1,24 @@
 .inputElement {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   &__label {
-    font: var(--font-text-16-120-400);
     color: var(--dark-violet);
   }
 
+  &__label16 {
+    font: var(--font-text-16-120-400);
+    margin-bottom: 12px;
+  }
+
+  &__label18 {
+    font: var(--font-title-18-120-500);
+    margin-bottom: 16px;
+  }
+
   &__hint {
-    margin-top: 12px;
+    margin-bottom: 12px;
     font: var(--font-text-14-120-400);
     color: var(--dark-violet-gradient-400);
 
@@ -22,29 +32,62 @@
   }
 
   &__input {
-    display: inline-flex;
-    width: 100%;
+    display: inline-block;
     height: 40px;
     box-sizing: border-box;
-    align-items: center;
     background-color: var(--color-base-white);
     border: 1px solid var(--soft-violet);
     border-radius: 20px;
     padding: 8px 12px;
-    margin-top: 12px;
     font: var(--font-text-14-100-400);
     color: var(--dark-violet);
+    outline-offset: 0;
 
     &:hover {
       border: 2px solid var(--soft-violet);
+      padding: 7px 11px;
     }
 
-    :active {
+    &:active {
       border: 1px solid var(--dark-violet);
+      padding: 8px 12px;
+    }
+
+    &:disabled {
+      background: var(--grey-gradient-50);
+      border: none;
+      color: var(--soft-violet);
     }
 
     &::placeholder {
       color: var(--soft-violet);
+    }
+
+    &_dateInput::-webkit-calendar-picker-indicator {
+        color: transparent;
+        opacity: 1;
+        background: url("../../../images/svg/input-type-date-calendar.svg") no-repeat center;
+        background-size: contain;
+    }
+
+    &_dateInput::-webkit-datetime-edit-fields-wrapper {
+      color: var(--soft-violet);
+    }
+
+    &_searchInput {
+      padding-left: 40px;
+      background-image: url("../../../images/svg/search.svg");
+      background-repeat: no-repeat;
+      background-position: left 12px center;
+      background-size: 20px 20px;
+    }
+
+    &_searchInput:hover {
+      padding-left: 39px;
+    }
+
+    &_searchInput:active {
+      padding-left: 40px;
     }
   }
 }

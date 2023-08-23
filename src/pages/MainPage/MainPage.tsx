@@ -68,44 +68,6 @@ const MainPage = () => {
         getUsersList(sortType);
     }, [category, sortType]);
 
-    //Запрос массива языков
-    const fetchLanguagesData = async () => {
-        try {
-            console.log('отправка запроса ---');
-            const response = await api.api.languagesList();
-            console.log('ответ получен -', response);
-            const languages = response.data;
-            setLanguagesData(languages);
-        } catch (error) {
-            console.error("Ошибка при получении данных о языках:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchLanguagesData();
-    }, []);
-
-    //Запрос страны
-    const fetchCountriesData = async () => {
-        try {
-            console.log('отправка запроса ---');
-            const response = await api.api.countriesList();
-            console.log('ответ получен -', response);
-            const countries = response.data.map((country) => ({
-                code: country.code,
-                name: country.name,
-                flag_icon: country.flag_icon,
-            }));
-            setCountriesData(countries);
-        } catch (error) {
-            console.error("Ошибка при получении данных о странах:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchCountriesData();
-    }, []);
-
     return (
         <>
             <Header/>
@@ -152,8 +114,6 @@ const MainPage = () => {
                         value={sortType}
                         onChangeSort={setSortType}
                         isOpen={isSortPopupOpen}
-                        languagesData={languagesData}
-                        countriesData={countriesData}
                     />
                 </div>
 

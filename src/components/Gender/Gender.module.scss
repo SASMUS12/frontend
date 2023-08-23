@@ -1,0 +1,10 @@
+.genderArea {
+    display: flex;
+    gap: 12px;
+  
+    &__button {
+      &_selected {
+        background-color: var(--accent-color-salad);
+      }
+    }
+  }

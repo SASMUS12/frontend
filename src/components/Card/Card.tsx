@@ -8,14 +8,13 @@ import arrows from '../../images/svg/card-arrows-parallel.svg';
 import CountryIcon from '../UI/CountryIcon/CountryIcon';
 import UserStatusIsOnline from '../UI/UserStatusIsOnline/UserStatusIsOnline';
 import GenderAndAgeIcon from '../UI/GenderAndAgeIcon/GenderAndAgeIcon';
-import {Country, UserNativeLanguage, UserForeignLanguage} from '../../utils/openapi';
+import {Country, UserLanguage} from '../../utils/openapi';
 
 import styles from './Card.module.scss';
 import cn from "classnames";
 
 
 interface ICards {
-    className?: string;
     country?: Country | null;
     is_online: boolean;
     avatar?: string;
@@ -23,23 +22,22 @@ interface ICards {
     gender?: string;
     gender_is_hidden: boolean;
     age?: string;
+    age_is_hidden?: boolean;
     about?: string;
-    nativeLanguages?: any;
-    foreignLanguages?: any;
+    languages?: any;
 }
 
 const Card: FC<ICards> = ({
-                              className,
                               country = null,
                               avatar,
                               first_name,
                               gender,
                               gender_is_hidden,
                               age,
+                              age_is_hidden,
                               about,
                               is_online,
-                              nativeLanguages,
-                              foreignLanguages,
+                              languages,
                           }) => {
 
     const getUserAvatar = () => {
@@ -51,7 +49,7 @@ const Card: FC<ICards> = ({
     };
 
     return (
-        <article className={cn(styles.card, className)}>
+        <article className={cn(styles.card)}>
             <div className={styles.card__countryAndStatusTag}>
                 <CountryIcon country={country}/>
                 <UserStatusIsOnline is_online={is_online}/>
@@ -65,30 +63,33 @@ const Card: FC<ICards> = ({
                 <div className={styles.card__partnerInfo}>
                     <div className={styles.card__partnerPersonalInfo}>
                         <p className={styles.card__partnerPersonalInfo_firstName}>{first_name}</p>
-                        <GenderAndAgeIcon gender={gender} age={age} gender_is_hidden={gender_is_hidden}/>
+                        <GenderAndAgeIcon gender={gender} age={age} gender_is_hidden={gender_is_hidden}
+                                          age_is_hidden={age_is_hidden}/>
                         <div className={styles.card__partnerPersonalInfo_languagesTag}>
                             <div className={styles.card__partnerPersonalInfo_languages}>
                                 <ul className={styles.languages}>
-                                    {nativeLanguages &&
-                                        nativeLanguages.map((languages: UserNativeLanguage) => (
-                                            <LanguagesTag languages={languages} key={languages.isocode}/>
-                                        ))}
+                                    {languages &&
+                                        languages.map((languages: UserLanguage) => {
+                                            return (languages.skill_level === "Native" &&
+                                                <LanguagesTag languages={languages} key={languages.isocode}/>
+                                            );
+                                        })}
                                 </ul>
                             </div>
                             <img
-                                className={  styles.card__partnerPersonalInfo_arrows
-
-                                }
+                                className={styles.card__partnerPersonalInfo_arrows}
                                 src={arrows}
                                 alt="Параллельные стрелки между изученными и изучаемыми языками"
                             />
                             <div className={styles.card__partnerPersonalInfo_languages}>
-                                <ul className={styles.languages}>
-                                    {foreignLanguages &&
-                                        foreignLanguages.map((languages: UserForeignLanguage) => (
+                            <ul className={styles.languages}>
+                                {languages &&
+                                    languages.map((languages: UserLanguage) => {
+                                        return (languages.skill_level !== "Native" &&
                                             <LanguagesTag languages={languages} key={languages.isocode}/>
-                                        ))}
-                                </ul>
+                                        );
+                                    })}
+                            </ul>
                             </div>
                         </div>
                     </div>
