@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import styles from './MultiRangeSlider.module.scss';
+import React, { useEffect, useState } from "react";
+import styles from "./MultiRangeSlider.module.scss";
 
 interface MultiRangeSliderProps {
   minValue: number;
@@ -17,10 +17,10 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
   onChange,
 }) => {
   const [leftPercent, setLeftPercent] = useState<number>(
-    ((leftValue - minValue) / (maxValue - minValue)) * 100,
+    ((leftValue - minValue) / (maxValue - minValue)) * 100
   );
   const [rightPercent, setRightPercent] = useState<number>(
-    ((rightValue - minValue) / (maxValue - minValue)) * 100,
+    ((rightValue - minValue) / (maxValue - minValue)) * 100
   );
   const [showValues, setShowValues] = useState<boolean>(false);
 
@@ -51,7 +51,7 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
 
   return (
     <div
-      className={`${styles.slider_wrapper} ${showValues ? styles.active : ''}`}
+      className={`${styles.slider_wrapper} ${showValues ? styles.active : ""}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -77,7 +77,7 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
         ></div>
       </div>
       <input
-        type='range'
+        type="range"
         min={minValue}
         max={maxValue}
         value={leftValue}
@@ -85,7 +85,7 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
         className={styles.slider_input}
       />
       <input
-        type='range'
+        type="range"
         min={minValue}
         max={maxValue}
         value={rightValue}

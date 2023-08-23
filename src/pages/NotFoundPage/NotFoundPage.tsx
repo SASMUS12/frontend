@@ -10,18 +10,15 @@ const NotFoundPage = () => {
     navigate(-1);
   }
   return (
-    <section className='pageNotFound'>
-      <h3 className='pageNotFound__title text_type_digits-large'>404</h3>
-      <p className='pageNotFound__text text_type_main-medium'>
-        Увы, такой страницы нет
-      </p>
-      <Link to='/'>
-        <img src={Logo} alt='logo' className='orderDetails__image'></img>
+    <section className="pageNotFound">
+      <h3 className="pageNotFound__title text_type_digits-large">404</h3>
+      <p className="pageNotFound__text text_type_main-medium">Увы, такой страницы нет</p>
+      <Link to="/">
+        <img src={Logo} alt="logo" className="orderDetails__image"></img>
       </Link>
       <p
-        className='pageNotFound__text pageNotFound__link text_type_main-default text_color_inactive'
-        onClick={goBack}
-      >
+        className="pageNotFound__text pageNotFound__link text_type_main-default text_color_inactive"
+        onClick={goBack}>
         Назад
       </p>
     </section>
