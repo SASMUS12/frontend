@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useState} from "react";
+import {FC, useEffect, useState} from "react";
 
 import LanguageLevel from "../LanguageLevel/LanguageLevel";
 import {Button} from "../UI/Button/Button";
@@ -15,10 +15,16 @@ interface LanguageModuleProps {
     selectedLanguagesAndLevels: { language: Language | null; skillLevels: SkillLevelEnum[] }[]; // Вот этот пропс
     setSelectedLanguagesAndLevels: (languagesAndLevels: { language: Language | null; skillLevels: SkillLevelEnum[] }[]) => void;
   }
-const LanguageModule: FC<LanguageModuleProps> = ({pageName, initialLanguageAndLevels, selectedLanguagesAndLevels, setSelectedLanguagesAndLevels}) => {
+const LanguageModule: FC<LanguageModuleProps> = ({
+    pageName,
+    initialLanguageAndLevels,
+    selectedLanguagesAndLevels,
+    setSelectedLanguagesAndLevels
+}) => {
     const [languagesData, setLanguagesData] = useState<Language[]>([]);
+
     const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
-  const [selectedSkillLevels, setSelectedSkillLevels] = useState<SkillLevelEnum[]>([]);
+    const [selectedSkillLevels, setSelectedSkillLevels] = useState<SkillLevelEnum[]>([]);
 
 
     //Запрос массива языков

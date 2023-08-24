@@ -21,11 +21,8 @@ import { Country, Language, SkillLevelEnum } from '../../utils/openapi';
 // };
 
 interface SortProps {
-  value: any;
   onChangeSort: (sortType: any) => void;
   isOpen: boolean;
-  languagesData: Language[];
-  countriesData: Country[];
 }
 
 const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {

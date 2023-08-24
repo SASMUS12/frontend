@@ -4,7 +4,6 @@ import type {ChangeEvent, InputHTMLAttributes} from 'react';
 
 import styles from './Input.module.scss';
 import cn from 'classnames';
-import cn from 'classnames';
 
 export interface InputProps<T extends string>
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -14,7 +13,6 @@ export interface InputProps<T extends string>
   name: T;
   label?: string;
   labelStyles?: string;
-    labelStyles?: string;
   labelHint?: string;
   isLabelHintHidden?: boolean;
   type: string;
@@ -32,7 +30,6 @@ export const Input = <T extends string>({
   name,
   label,
   labelStyles = 'label16',
-                                            labelStyles = "label16",
   labelHint,
   isLabelHintHidden,
   type,

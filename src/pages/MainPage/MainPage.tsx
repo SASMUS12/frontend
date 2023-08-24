@@ -128,7 +128,6 @@ const MainPage = () => {
                         <MoreCards cardsList={usersList} cardsListLength={cardsListLength} setCardsListLength={setCardsListLength} />
                     </div>
                     <Sort
-                        value={sortType}
                         onChangeSort={setSortType}
                         isOpen={isSortPopupOpen}
                     />
