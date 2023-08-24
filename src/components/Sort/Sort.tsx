@@ -5,6 +5,7 @@ import CountrySelection from "../CountrySelection/CountrySelection";
 import LanguageModule from "../LanguageModule/LanguageModule";
 import Gender from "../Gender/Gender";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
+import LanguageLevelModal from "../LanguageLevelModal/LanguageLevelModal"
 
 import { Button } from "../UI/Button/Button";
 import { Country, Language, SkillLevelEnum } from '../../utils/openapi';
@@ -27,12 +28,15 @@ interface SortProps {
 
 const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
-  const [leftValue, setLeftValue] = useState<number>(18);
-  const [rightValue, setRightValue] = useState<number>(40);
-  const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [selectedLanguagesAndLevels, setSelectedLanguagesAndLevels] = useState<
     { language: Language | null; skillLevels: SkillLevelEnum[] }[]
   >([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [showDefaultLanguageModule, setShowDefaultLanguageModule] = useState(true);
+  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [leftValue, setLeftValue] = useState<number>(18);
+  const [rightValue, setRightValue] = useState<number>(40);
+
   
 
 
@@ -76,14 +80,17 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
         <h2 className={styles.subtitle}>Язык партнера</h2>
         <Button
           className={styles.languageHelp__button}
+          onClick={() => setModalOpen(true)}
         />
       </div>
+      {showDefaultLanguageModule && (
       <LanguageModule
         pageName="Sort" 
         initialLanguageAndLevels={{ language: null, skillLevels: [] }}
         selectedLanguagesAndLevels={selectedLanguagesAndLevels}
         setSelectedLanguagesAndLevels={setSelectedLanguagesAndLevels}
       />
+      )}
       <div className={styles.partner}>
         <h2 className={styles.subtitle}>О партнере</h2>
         <div className={styles.partner__gender}>
@@ -120,6 +127,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
         children={'Очистить фильтр'}
         onClick={handleClearFilter}
       />
+      <LanguageLevelModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} pageName='Sort'/>
     </div>
   );
 };
