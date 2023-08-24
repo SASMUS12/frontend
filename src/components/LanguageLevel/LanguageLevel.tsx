@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import {Language, SkillLevelEnum} from "../../utils/openapi";
 
 import styles from "./LanguageLevel.module.scss";
+import cn from "classnames";
 
 const skillLevelNames: Record<SkillLevelEnum, string> = {
     [SkillLevelEnum.Newbie]: "Новичок",
@@ -147,7 +148,10 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({
             <div className={styles.language}>
                 <input
                     type="text"
-                    className={styles.language__items}
+                    className={cn(
+                        styles.language__items,
+                        pageName === "FillOutProfile2" || pageName === "FillOutProfile3" ? styles.language__items_16 : ""
+                    )}
                     value={selectedLanguage ? selectedLanguage.name : inputValue}
                     placeholder="Напишите или выберете"
                     onClick={() => setIsOpen(!isOpen)}

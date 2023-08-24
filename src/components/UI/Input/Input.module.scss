@@ -39,7 +39,6 @@
     border: 1px solid var(--soft-violet);
     border-radius: 20px;
     padding: 8px 12px;
-    font: var(--font-text-14-100-400);
     color: var(--dark-violet);
     outline-offset: 0;
 
@@ -90,6 +89,14 @@
       padding-left: 40px;
     }
   }
+}
+
+.fontSize-14 {
+  font: var(--font-text-14-100-400);
+}
+
+.fontSize-16 {
+  font: var(--font-text-16-100-400);
 }
 
 /*.hint {*/

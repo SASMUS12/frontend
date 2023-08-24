@@ -15,7 +15,7 @@ interface Props {
     children?: ReactNode;
 }
 
-export const Button: FC<Props> = ({ className, type, variant = "primary", size = "big", fontSize = "16", disabled, onClick, children, }) => {
+export const Button: FC<Props> = ({ className, type="button", variant = "primary", size = "big", fontSize = "16", disabled, onClick, children, }) => {
     return (
         <button
             className={cn(

@@ -58,6 +58,7 @@ const FillOutProfilePage1 = () => {
                                 type="text"
                                 name="firstName"
                                 value={model.firstName}
+                                fontSize="16"
                                 label="Укажите имя"
                                 labelStyles="label18"
                                 isLabelHintHidden={true}
@@ -76,6 +77,7 @@ const FillOutProfilePage1 = () => {
                                 type="date"
                                 name="birthdate"
                                 value={model.birthdate}
+                                fontSize="16"
                                 label="Дату рождения"
                                 labelStyles="label18"
                                 isLabelHintHidden={true}

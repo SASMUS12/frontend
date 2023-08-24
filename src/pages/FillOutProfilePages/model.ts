@@ -8,15 +8,17 @@ export const useModel = () => {
             firstName: "",
             birthdate: "",
             country: "",
+            interest: "",
+            about: "",
             isLoading: false,
 
-            handleValue({name, value}: { name: "firstName" | "country" ; value: string }) {
+            handleValue({name, value}: { name: "firstName" | "country" | "interest" | "about"; value: string }) {
                 model[name] = value;
             },
 
-            handleBirthdate({name, value}: { name: "birthdate"; value: string }) {
-                model[name] = value;
-            },
+            // handleBirthdate({name, value}: { name: "birthdate"; value: string }) {
+            //     model[name] = value;
+            // },
         };
     });
 

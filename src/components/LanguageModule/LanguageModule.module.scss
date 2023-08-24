@@ -9,6 +9,7 @@
   background-position: left 0 center;
   background-size: 20px 20px;
   background-color: var(--color-base-white);
+  cursor: pointer;
 
   &:hover {
     background-image: url("../../images/svg/plus-in-circle_hover.svg");

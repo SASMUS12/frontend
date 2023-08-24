@@ -208,6 +208,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
                 type="search"
                 name="country"
                 value={searchValue}
+                fontSize={pageName === "FillOutProfile2" ? "16" : "14"}
                 isLabelHintHidden={true}
                 placeholder="Начните вводить название"
                 required

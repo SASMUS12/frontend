@@ -1,0 +1,57 @@
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid var(--soft-violet);
+  border-radius: 20px;
+  color: var(--dark-violet);
+  font: var(--font-text-16-140-400);
+  outline: none;
+  vertical-align: text-top;
+
+  &::placeholder {
+    color: var(--soft-violet);
+  }
+
+  &:hover {
+    border: 2px solid var(--soft-violet);
+    padding: 15px;
+  }
+
+  &:focus-visible {
+    border: 1px solid var(--dark-violet);
+    padding: 16px;
+  }
+}
+
+.label {
+  display: block;
+  margin-top: 24px;
+  font: var(--font-text-16-120-400);
+  margin-bottom: 12px;
+}
+
+//
+//.hint {
+//  display: block;
+//  margin-top: 6px;
+//  color: var(--color-gray-500);
+//  font: var(--font-text-sm-regular);
+//}
+//
+//.error {
+//  display: block;
+//  margin-top: 6px;
+//  color: var(--color-error-500);
+//  font: var(--font-text-sm-regular);
+//}
+//
+//.has-error {
+//  border-color: var(--color-error-300);
+//
+//  &:focus-visible {
+//    border-color: var(--color-error-300);
+//    box-shadow: var(--shadow-xs), 0 0 0 4px var(--color-error-100);
+//  }
+//}
+

@@ -13,25 +13,47 @@ export interface AgeVisibility {
   age_is_hidden: boolean;
 }
 
-/** Сериализатор для создания чата. */
+/** Сериализатор для просмотра чата. */
 export interface Chat {
-  /** @pattern ^[-a-zA-Z0-9_]+$ */
-  companion: string;
+  id: number;
+  initiator: UserShort;
+  receiver: UserShort;
+  messages: Message[];
 }
 
-/** Сериализатор для списка чатов. */
+/** Сериализатор для просмотра списка чатов. */
 export interface ChatList {
   id: number;
-  companion: string;
+  initiator: UserShort;
+  receiver: UserShort;
+  last_message: string;
+  unread: string;
 }
 
-/** Сериализатор для создания чата. */
-export interface ChatRequest {
+/** Сериализатор для создания личного чата. */
+export interface ChatStart {
+  /**
+   * Слаг
+   * Слаг
+   */
+  receiver: string | null;
+  /** @maxLength 10000 */
+  message: string;
+}
+
+/** Сериализатор для создания личного чата. */
+export interface ChatStartRequest {
+  /**
+   * Слаг
+   * Слаг
+   * @minLength 1
+   */
+  receiver: string | null;
   /**
    * @minLength 1
-   * @pattern ^[-a-zA-Z0-9_]+$
+   * @maxLength 10000
    */
-  companion: string;
+  message: string;
 }
 
 /** Сериализатор модели страны. */
@@ -99,6 +121,59 @@ export interface Language {
    * Увеличьте, чтобы поднять в выборке
    */
   sorting: number;
+}
+
+/** Сериализатор модели Message. */
+export interface Message {
+  id: number;
+  /**
+   * Слаг
+   * Слаг
+   */
+  sender: string | null;
+  /** @maxLength 10000 */
+  text: string | null;
+  /** @format uri */
+  file_to_send?: string;
+  /** @format uri */
+  photo_to_send?: string;
+  /**
+   * Ответ на другое сообщение
+   * Ответ на другое сообщение
+   */
+  responding_to?: number | null;
+  /**
+   * Сообщение отправлено
+   * Сообщение отправлено
+   */
+  sender_keep: boolean;
+  is_read: string;
+  /**
+   * Сообщение закреплено
+   * Сообщение закреплено
+   */
+  is_pinned: boolean;
+  read_by: UserShort[];
+  /** @format date-time */
+  timestamp: string;
+}
+
+/** Сериализатор модели Message. */
+export interface MessageRequest {
+  /**
+   * @minLength 1
+   * @maxLength 10000
+   */
+  text: string | null;
+  /** @format binary */
+  file_to_send?: File;
+  /** @format binary */
+  photo_to_send?: File;
+  /**
+   * Ответ на другое сообщение
+   * Ответ на другое сообщение
+   */
+  responding_to?: number | null;
 }
 
 export type NullEnum = null;
@@ -409,6 +484,28 @@ export interface UserRepr {
   role: string;
 }
 
+export interface UserShort {
+  /**
+   * Слаг
+   * Слаг
+   * @pattern ^[-a-zA-Z0-9_]+$
+   */
+  slug: string | null;
+  /** Логин */
+  username: string;
+  /**
+   * Имя
+   * Имя пользователя
+   */
+  first_name: string;
+  /**
+   * Изображение
+   * Аватар пользователя
+   * @format uri
+   */
+  avatar: string | null;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -678,10 +775,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Просмотреть свои чаты
+     * @description Просмотреть список всех своих личных чатов
      *
      * @tags chats
      * @name ChatsList
+     * @summary Просмотреть список чатов
      * @request GET:/api/v1/chats/
      * @secure
      */
@@ -708,29 +806,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Начать чат
-     *
-     * @tags chats
-     * @name ChatsCreate
-     * @request POST:/api/v1/chats/
-     * @secure
-     */
-    chatsCreate: (data: ChatRequest, params: RequestParams = {}) =>
-      this.request<Chat, any>({
-        path: `/api/v1/chats/`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Просмотреть чат
+     * @description Просмотреть чат и историю сообщений
      *
      * @tags chats
      * @name ChatsRetrieve
+     * @summary Просмотреть чат
      * @request GET:/api/v1/chats/{id}/
      * @secure
      */
@@ -744,16 +824,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Очистить сообщения чата
+     * @description Отправить сообщение в чат
      *
      * @tags chats
-     * @name ChatsClearCreate
-     * @request POST:/api/v1/chats/{id}/clear/
+     * @name ChatsSendMessageCreate
+     * @summary Отправить сообщение
+     * @request POST:/api/v1/chats/{id}/send-message/
      * @secure
      */
-    chatsClearCreate: (id: number, data: ChatRequest, params: RequestParams = {}) =>
-      this.request<Chat, any>({
-        path: `/api/v1/chats/${id}/clear/`,
+    chatsSendMessageCreate: (id: number, data: MessageRequest, params: RequestParams = {}) =>
+      this.request<Message, any>({
+        path: `/api/v1/chats/${id}/send-message/`,
         method: "POST",
         body: data,
         secure: true,
@@ -763,16 +844,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Отправить сообщение в чат
+     * @description Начать чат с пользователем, отправить первое сообщение
      *
      * @tags chats
-     * @name ChatsSendMessageCreate
-     * @request POST:/api/v1/chats/{id}/send_message/
+     * @name ChatsStartPersonalChatCreate
+     * @summary Начать чат с пользователем
+     * @request POST:/api/v1/chats/start-personal-chat/
      * @secure
      */
-    chatsSendMessageCreate: (id: number, data: ChatRequest, params: RequestParams = {}) =>
-      this.request<Chat, any>({
-        path: `/api/v1/chats/${id}/send_message/`,
+    chatsStartPersonalChatCreate: (data: ChatStartRequest, params: RequestParams = {}) =>
+      this.request<ChatStart, any>({
+        path: `/api/v1/chats/start-personal-chat/`,
         method: "POST",
         body: data,
         secure: true,

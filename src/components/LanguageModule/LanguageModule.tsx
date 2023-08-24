@@ -73,6 +73,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({pageName, initialLanguageAndLe
             {selectedLanguagesAndLevels.length < 3 && (
                 <div className={cn(styles.languagesAdd, pageName === "Sort" ? styles.languagesAdd_center : "")}>
                     <Button
+                        type="button"
                         variant="addLanguage"
                         size="xs"
                         fontSize="15"
