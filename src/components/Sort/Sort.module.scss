@@ -168,10 +168,9 @@
   .languageHelp {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
+    justify-content: space-between;    
     width: 100%;
-    padding-top: 31px;
+    padding-top: 40px;
     gap: 16px;
 
     &__button {
@@ -185,6 +184,7 @@
       cursor: pointer;
       justify-content: center;
       align-items: center;
+      margin-bottom: 16px;
     }
   }
   
@@ -197,6 +197,7 @@
     font-size: 18px;
     font-weight: 500;
     line-height: normal;
+    margin-bottom: 16px;
   }
 
   //Кнопка добавить язык
@@ -247,7 +248,7 @@
   }
 
   button {
-    color: var(--grey-gradient-500, #323944);
+    //color: var(--grey-gradient-500, #323944);
     cursor: pointer;
   }
   
@@ -261,6 +262,8 @@
   .partner {
     display: flex;
     flex-direction: column;
+    margin-top: 40px;
+
 
     &__gender {
       display: flex;

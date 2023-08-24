@@ -74,6 +74,9 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
       </div>  
       <div className={styles.languageHelp}>
         <h2 className={styles.subtitle}>Язык партнера</h2>
+        <Button
+          className={styles.languageHelp__button}
+        />
       </div>
       <LanguageModule
         pageName="Sort" 
