@@ -5,7 +5,7 @@ import styles from "./UserLanguages.module.scss";
 import add from '../../../images/userProfile/plus.svg';
 
 
-const UserLanguages = ({isEditing}) => {
+const UserLanguages = ({isEditing, languages}) => {
 
   const levelsArray = Array.from({ length: 6 });
 
@@ -18,25 +18,29 @@ const UserLanguages = ({isEditing}) => {
       <div className={styles.profile__languages}>
         <div>
           <h3 className={styles.profile__title}>Свободный</h3>
-          <div className={styles.profile__language}>
-            <p className={styles.profile__subtitle}>Русский</p>
-            <div className={styles.profile__levels}>
-              {levelsArray.map((_, index) => {
-                return <LevelLanguage key={index} />;
-              })}
+          {languages == [] && (
+            <div className={styles.profile__language}>
+              <p className={styles.profile__subtitle}>Русский</p>
+              <div className={styles.profile__levels}>
+                {levelsArray.map((_, index) => {
+                  return <LevelLanguage key={index} />;
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div>
           <h3 className={styles.profile__title}>Изучаю</h3>
-          <div className={styles.profile__language}>
-            <p className={styles.profile__subtitle}>Английский</p>
-            <div className={styles.profile__levels}>
-              {levelsArray.map((_, index) => {
-                return <LevelLanguage key={index} />;
-              })}
+          {languages == [] && (
+            <div className={styles.profile__language}>
+              <p className={styles.profile__subtitle}>Английский</p>
+              <div className={styles.profile__levels}>
+                {levelsArray.map((_, index) => {
+                  return <LevelLanguage key={index} />;
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <img className={styles.profile__help} src={help} alt="Флаг страны пользователя"/>
       </div>
@@ -44,14 +48,16 @@ const UserLanguages = ({isEditing}) => {
         <div className={styles.profile__languages}>
         <div>
           <h3 className={styles.profile__title}>Свободный</h3>
-          <div className={styles.profile__language}>
-            <p className={styles.profile__subtitle}>Русский</p>
-            <div className={styles.profile__levels}>
-              {levelsArray.map((_, index) => {
-                return <LevelLanguage key={index} />;
-              })}
+          {languages == [] && (
+            <div className={styles.profile__language}>
+              <p className={styles.profile__subtitle}>Русский</p>
+              <div className={styles.profile__levels}>
+                {levelsArray.map((_, index) => {
+                  return <LevelLanguage key={index} />;
+                })}
+              </div>
             </div>
-          </div>
+          )}
             <div className={styles.profile__level}>
               <IconButton icon={add} handleFunction={handleAddLang}/>
               <p className={styles.profile__langAdd}>добавить язык</p>
@@ -59,14 +65,16 @@ const UserLanguages = ({isEditing}) => {
         </div>
         <div>
           <h3 className={styles.profile__title}>Изучаю</h3>
-          <div className={styles.profile__language}>
-            <p className={styles.profile__subtitle}>Английский</p>
-            <div className={styles.profile__levels}>
-              {levelsArray.map((_, index) => {
-                return <LevelLanguage key={index} />;
-              })}
+          {languages == [] && (
+            <div className={styles.profile__language}>
+              <p className={styles.profile__subtitle}>Английский</p>
+              <div className={styles.profile__levels}>
+                {levelsArray.map((_, index) => {
+                  return <LevelLanguage key={index} />;
+                })}
+              </div>
             </div>
-          </div>
+          )}
           <div className={styles.profile__level}>
               <IconButton icon={add} handleFunction={handleAddLang}/>
               <p className={styles.profile__langAdd}>добавить язык</p>

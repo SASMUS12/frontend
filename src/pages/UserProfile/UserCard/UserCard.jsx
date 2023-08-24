@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import IconButton from '../Buttons/IconButton/IconButton';
 import formattedTime from '../../../utils/getTime';
 import cardPartnerAvatar from '../../../images/userProfile/card-partner-avatar.png';
@@ -7,10 +8,23 @@ import camera from '../../../images/userProfile/camera.svg';
 
 import styles from "./UserCard.module.scss";
 
-const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, setGender, setLocation }) => {
+const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, setGender, setLocation, avatar, setImageBase64 }) => {
 
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64Data = reader.result;
+        setImageBase64(base64Data); // Сохраняем закодированное изображение
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+  
   const handleChange = (setState) => (event) => {
-    setState(event.target.value);
+    setState(event.target.value); 
   }
 
   const handleClickAvatar = () => {
@@ -18,9 +32,10 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
   }
 
   const handleChangeAge = (event) => {
+    setAge(event.target.value);
     const birthDate = new Date(event.target.value);
     const calculatedAge = calculateAge(birthDate);
-    setAge(calculatedAge);
+    return calculatedAge;
   }
 
   const calculateAge = (birthdate) => {
@@ -47,10 +62,12 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
               <p className={styles.profile__sex}>{gender}, {age}</p>
               </div>
               <div>
-                <div className={styles.profile__country}>
-                <img className={styles.profile__flag} src={cardPartnerFlag} alt="Флаг страны пользователя"/>
-                  <p className={styles.profile__city}>{location}</p>
-                </div>
+                {location !== null && (
+                  <div className={styles.profile__country}>
+                  <img className={styles.profile__flag} src={cardPartnerFlag} alt="Флаг страны пользователя"/>
+                    <p className={styles.profile__city}>{location}</p>
+                  </div>
+                )}
                 <div className={styles.profile__time}>
                   <p className={styles.profile__current}>Сейчас</p>
                   <img className={styles.profile__clock} src={clock} alt='изображение часов с циферблатом' />
@@ -72,7 +89,7 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
               <IconButton icon={camera} handleFunction={handleClickAvatar} iconWidth={54} iconHeight={54} />
             </div>
             <div className={styles.profile__additionalButtons}>
-              <button class="button1">Button 1</button>
+              <input type='file' class="button1" onChange={handleFileInputChange} />Button 1
               <button class="button2">Button 2</button>
             </div>
             </div>

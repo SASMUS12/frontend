@@ -23,16 +23,34 @@ const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({
     name: '',
-    avatar: null,
-    location: '',
-    age: null,
-    native_languages: [],
-    foreign_languages: [],
+    avatar: './images/userProfile/edit.png',
+    country: '',
+    birth_date: null,
+    languages: [],
     gender: '',
-    themes: [],
+    goals: [],
+    interests: [],
     about: '',
   });
   const model = useModel();
+  const [imageBase64, setImageBase64] = useState('');
+
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0]; // Получаем выбранный файл
+    if (file) {
+      // eslint-disable-next-line no-undef
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64Data = reader.result; // Получаем Data URL (Base64)
+        setImageBase64(base64Data);
+      };
+      reader.readAsDataURL(file); // Читаем файл как Data URL
+    }
+  };
+
+
+
+  console.log(imageBase64);
 
     const fetchUserData = async () => {
       try {
@@ -71,16 +89,23 @@ const UserProfile = () => {
 
   const handleEditProfile = () => {
     setEditedData({
-      first_name: editedData.name,
-      avatar: null,
-      country: editedData.location,
+      first_name: userData.username,
+      avatar: imageBase64,
+      country: editedData.country,
       birth_date: editedData.age,
-      native_languages: [],
-      foreign_languages: [],
+      languages:[
+        {
+          isocode: "En",
+          language: "English",
+          skill_level: "Newbie"
+        }
+      ],
       gender: editedData.gender,
-      topics_for_discussion: editedData.themes,
+      goals:[],
+      interests: editedData.interests,
       about: editedData.about,
     });
+    // eslint-disable-next-line no-undef
     setIsEditing(!isEditing);
   };
 
@@ -120,7 +145,12 @@ const UserProfile = () => {
     }
   };
   // eslint-disable-next-line no-undef
-  console.log('fff', userData);
+  console.log('userData', userData);
+  // eslint-disable-next-line no-undef
+  console.log('editedData.interests', editedData.interests);
+    // eslint-disable-next-line no-undef
+    console.log('editedData', editedData);
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -135,14 +165,17 @@ const UserProfile = () => {
         <UserCard
           isEditing={isEditing}
           editedData={editedData}
-          name={editedData.username}
+          name={editedData.first_name}
           age={editedData.age}
           gender={editedData.gender}
-          location={editedData.location}
-          setName={(value) => setEditedData((prevData) => ({ ...prevData, name: value }))}
-          setAge={(value) => setEditedData((prevData) => ({ ...prevData, age: value }))}
+          location={editedData.country}
+          avatar={editedData.avatar}
+          setImageBase64={setImageBase64} 
+          handleFileInputChange={handleFileInputChange}
+          setName={(value) => setEditedData((prevData) => ( { ...prevData, first_name: value }))}
+          setAge={(value) => setEditedData((prevData) => ({ ...prevData, birth_date: value }))}
           setGender={(value) => setEditedData((prevData) => ({ ...prevData, gender: value }))}
-          setLocation={(value) => setEditedData((prevData) => ({ ...prevData, location: value }))}
+          setLocation={(value) => setEditedData((prevData) => ({ ...prevData, country: value }))}
       />  
           <div className={styles.profile__buttons}>
             <IconButton icon={settings} />
@@ -150,14 +183,11 @@ const UserProfile = () => {
           <div className={styles.profile__moreAbout}>
           <div>
             <UserLanguages isEditing={isEditing}/>
-            {/* <Topics 
+            <Topics 
               isEditing={isEditing} 
-              themes={themes} 
-              setThemes={setThemes}
-              isEditing={isEditing}
-              themes={editedData.themes} // Передаем данные из editedData
-              setThemes={(value) => setEditedData((prevData) => ({ ...prevData, themes: value }))}
-            /> */}
+              interests={userData.interests}
+              setEditedData={(value) => setEditedData((prevData) => ({ ...prevData, interests: value }))}
+            />
             <Certificates />
           </div>
           <div>
@@ -192,11 +222,13 @@ const UserProfile = () => {
           name={userData.username}
           age={userData.age}
           gender={userData.gender}
-          location={userData.location}
-          setName={(value) => setEditedData((prevData) => ({ ...prevData, name: value }))}
+          location={userData.country}
+          avatar={editedData.avatar}
+          setImageBase64={setImageBase64} 
+          setName={(value) => setEditedData((prevData) => ({ ...prevData, first_name: value }))}
           setAge={(value) => setEditedData((prevData) => ({ ...prevData, age: value }))}
           setGender={(value) => setEditedData((prevData) => ({ ...prevData, gender: value }))}
-          setLocation={(value) => setEditedData((prevData) => ({ ...prevData, location: value }))}
+          setLocation={(value) => setEditedData((prevData) => ({ ...prevData, country: value }))}
       />   
           <div className={styles.profile__buttons}>
             <IconButton icon={edit} handleFunction={handleEditProfile}/>
@@ -204,14 +236,15 @@ const UserProfile = () => {
           </div>
           <div className={styles.profile__moreAbout}>
           <div>
-            <UserLanguages isEditing={isEditing}/>
-            {/* <Topics 
+            <UserLanguages 
               isEditing={isEditing} 
-              themes={themes} 
-              setThemes={setThemes} 
-              inputValue={inputValue} 
-              setInputValue={setInputValue} 
-            /> */}
+              languages={userData.languages}
+            />
+            <Topics 
+              isEditing={isEditing} 
+              interests={userData.interests}
+              setEditedData={setEditedData}
+            />
             <Certificates isEditing={isEditing}/>
           </div>
           <div>
