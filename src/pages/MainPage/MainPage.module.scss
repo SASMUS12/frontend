@@ -38,18 +38,17 @@
         font-size: 15px;   
         font-weight: 400;
         line-height: normal;
-        color: var(--dark-violet);
+        color: var(--dark-violet, #403A6D);
 
         &:hover {
-          background: var(--primory-button-hover, #A083E0);
           color: #8373FF;
         }
-        &:focus {
+        &:active {
           color: #493ABD;
         }
-        &:active {
-          color: var(--dark-violet);
-        }
+        //&: {
+        //
+        //}
       }
   
       &_button {
@@ -60,20 +59,18 @@
         background-repeat: no-repeat;
         border: none;
         cursor: pointer;
-        color: var(--dark-violet);
+        color: var(--dark-violet, #403A6D);
         background-color: #F0F2F6;
   
-        &:hover {         
+        &:hover {
           background-image: url("../../images/svg/Filter_hover.svg");
         }
-
-        &:focus {          
+        &:active {
           background-image: url("../../images/svg/Filter_active.svg");
         }
-
-        &:active: {
-          background-image: url("../../images/svg/Filter_green.svg");
-        }
+        //&: {
+          //background-image: url("../../images/svg/Filter_green.svg");
+        //}
       }
     }
   }

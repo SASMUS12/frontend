@@ -104,14 +104,15 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
       </div>
       <Button
         type='button'
-        variant='primary'
         className={styles.findButton}
         children={'Найти'}
         onClick={handleFindButtonClick}
       />
       <Button
         type='submit'
-        variant='transparent'
+        variant='addLanguage'
+        size='xs'
+        fontSize='13'
         className={styles.cleanButton}
         children={'Очистить фильтр'}
         onClick={handleClearFilter}

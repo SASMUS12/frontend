@@ -68,23 +68,6 @@ const MainPage = () => {
     getUsersList(sortType);
   }, [category, sortType]);
 
-  //Запрос массива языков
-  const fetchLanguagesData = async () => {
-    try {
-      console.log('отправка запроса ---');
-      const response = await api.api.languagesList();
-      console.log('ответ получен -', response);
-      const languages = response.data;
-      setLanguagesData(languages);
-    } catch (error) {
-      console.error('Ошибка при получении данных о языках:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchLanguagesData();
-  }, []);
-
     return (
         <>
             <Header/>
@@ -117,8 +100,7 @@ const MainPage = () => {
                                                 age={user.age}
                                                 about={user.about}
                                                 is_online={user.is_online}
-                                                nativeLanguages={user.native_languages}
-                                                foreignLanguages={user.foreign_languages}
+                                                languages={user.languages}
                                                 key={user.id}
                                             />
                                         );
