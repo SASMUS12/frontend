@@ -1,6 +1,6 @@
 .modal {
   &__container {
-    width: 540px;
+    width: max-content;
     display: flex;
     flex-direction: column;
     position: relative;

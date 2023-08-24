@@ -46,6 +46,11 @@
     background-color: var(--primory-button-hover);
     transition: 0.3s background-color ease;
   }
+
+  &:disabled {
+    color: var(--blue-grey);
+    background: var(--grey-gradient-100);
+  }
 }
 
 .variant-transparent {
@@ -61,11 +66,11 @@
 
 .variant-gray {
   color: var(--dark-violet);
-  background-color: var(--grey-gradient-100);
-  border: 1px solid var(--grey-gradient-100);
+  background-color: #F0F2F6;
+  border: 1px solid #F0F2F6;
 
   &:active {
-    border: 1px solid var(--grey-gradient-100);
+    border: 1px solid #F0F2F6;
     background-color: var(--accent-color-salad);
     transition: 0.3s background-color ease;
   }

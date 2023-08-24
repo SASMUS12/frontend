@@ -42,7 +42,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({pageName, initialLanguageAndLe
     };
 
     return (
-        <>
+        <div>
             {selectedLanguagesAndLevels.map((item, index) => (
                 <LanguageLevel
                     pageName={pageName}
@@ -87,7 +87,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({pageName, initialLanguageAndLe
                     </Button>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

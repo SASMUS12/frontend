@@ -41,7 +41,6 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({
     console.log("selectedLanguage:", selectedLanguage);
     console.log("selectedSkillLevels:", selectedSkillLevels);
 
-
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
     const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number | null>(null);
@@ -176,7 +175,7 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({
                 )}
             </div>
             <div className={styles.language__level}>
-                {pageName === "Sort" &&
+                {pageName === "Sort" || pageName === "FillOutProfile3" &&
                     Object.entries(skillLevelNames).map(([key, level]) => (
                         <label key={level} className={styles.language__level_label}>
                             <input

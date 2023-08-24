@@ -12,21 +12,13 @@ import Sort from "../../components/Sort/Sort";
 import Footer from '../../components/Footer/Footer';
 
 import MoreCards from "../../components/MoreCards/MoreCards";
-import Modal from "../../components/Modal/Modal";
 
 import styles from './MainPage.module.scss';
 import cn from "classnames";
 
-import {useModel} from "../../components/SignupSigninForm/model";
 import { loggedIn } from '../../models/LoggedIn';
 
 const MainPage = () => {
-    const model = useModel();
-
-    const handleCloseModal = () => {
-        model.isModalOpen = false;
-    };
-
     useEffect(() => {
         console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
     }, []);
@@ -148,22 +140,14 @@ const MainPage = () => {
                         </div>
                         <MoreCards cardsList={usersList} cardsListLength={cardsListLength} setCardsListLength={setCardsListLength} />
                     </div>
-                    <Sort
-                        value={sortType}
-                        onChangeSort={setSortType}
-                        isOpen={isSortPopupOpen}
-                        languagesData={languagesData}
-                        countriesData={countriesData}
-                    />
+                    {/*<Sort*/}
+                    {/*    value={sortType}*/}
+                    {/*    onChangeSort={setSortType}*/}
+                    {/*    isOpen={isSortPopupOpen}*/}
+                    {/*    languagesData={languagesData}*/}
+                    {/*    countriesData={countriesData}*/}
+                    {/*/>*/}
                 </div>
-
-                <Modal isOpen={model.isModalOpen} onClose={handleCloseModal}>
-                    <h2 className={styles.modal_header}>Подтвердите адрес электронной почты</h2>
-                    <p className={styles.modal_text_main}>Пожалуйста, проверьте электронную почту, которую
-                        указали
-                        при регистрации, и перейдите по ссылке для подтверждения</p>
-                    <p className={styles.modal_text_additional}>Ссылка будет активна в течении 24 часов</p>
-                </Modal>
             </main>
             <Footer/>
         </>
