@@ -35,10 +35,9 @@ const MainPage = () => {
   const [cardsListLength, setCardsListLength] = useState<number>(0);
   const [isUsersList, setIsUsersList] = useState(false);
   const [category, setCategory] = useState({ name: 'Все', path: '' });
-  const [sortType, setSortType] = useState({});
+  const [filters, setFilters] = useState<any>({});
   const [isSortPopupOpen, setSortPopupOpen] = useState(false);
-  const [languagesData, setLanguagesData] = useState<Language[]>([]);
-  const [countriesData, setCountriesData] = useState<Country[]>([]);
+ 
 
   const handleOpenSortPopup = () => {
     setSortPopupOpen(!isSortPopupOpen);
@@ -47,9 +46,16 @@ const MainPage = () => {
   const getUsersList = async (filters: any) => {
     try {
       console.log('отправка запроса ---');
+      const languageFilters = filters.languages.map((languageFilter: any) => {
+        return `${languageFilter.language},${languageFilter.skill_level}`;
+    });
+    
       const response = await api.api.usersList({
         ordering: `${category.path}`,
-        ...filters,
+        age: filters.age,
+        country: filters.country,
+        gender: filters.gender,
+        languages: languageFilters.join(';'),
       });
       console.log('ответ получен -', response);
       setIsUsersList(true);
@@ -65,8 +71,8 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    getUsersList(sortType);
-  }, [category, sortType]);
+    getUsersList(filters);
+  }, [category, filters]);
 
     return (
         <>
@@ -110,7 +116,7 @@ const MainPage = () => {
                         <MoreCards cardsList={usersList} cardsListLength={cardsListLength} setCardsListLength={setCardsListLength} />
                     </div>
                     <Sort
-                        onChangeSort={setSortType}
+                        onChangeSort={setFilters}
                         isOpen={isSortPopupOpen}
                     />
                 </div>

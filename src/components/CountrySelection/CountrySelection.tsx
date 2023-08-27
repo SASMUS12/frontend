@@ -12,11 +12,13 @@ import classNames from 'classnames';
 interface CountrySelectionProps {
     pageName: string;
     onSelectedCountriesChange: (selectedCountries: Country[]) => void;
+    onClearFilter: () => void;
 }
 
 const CountrySelection: FC<CountrySelectionProps> = ({
                                                         pageName,
                                                         onSelectedCountriesChange,
+                                                        onClearFilter,
                                                      }) => {
     const [countriesData, setCountriesData] = useState<Country[]>([]);
     const [isCountryListVisible, setCountryListVisible] = useState(false);
@@ -169,28 +171,9 @@ const CountrySelection: FC<CountrySelectionProps> = ({
         }
     };
 
-  const popularCountryCodes = [
-    'cn',
-    'es',
-    'england',
-    'sa',
-    'bd',
-    'pt',
-    'ru',
-    'jp',
-    'pc',
-    'my',
-  ];
-
     const sortCountriesByLastLetter = () => {
         if (lastPressedLetter) {
-            const popularCountries = filteredCountries.filter(country => popularCountryCodes.includes(country.name));
-            const otherCountries = filteredCountries.filter(country => !popularCountryCodes.includes(country.name));
-
-            popularCountries.sort((a, b) => a.name.localeCompare(b.name));
-            otherCountries.sort((a, b) => a.name.localeCompare(b.name));
-
-            return [...popularCountries, ...otherCountries].sort((a, b) => {
+            return filteredCountries.sort((a, b) => {
                 const nameA = a.name.toLowerCase();
                 const nameB = b.name.toLowerCase();
                 if (nameA.startsWith(lastPressedLetter) && !nameB.startsWith(lastPressedLetter)) {
@@ -205,6 +188,17 @@ const CountrySelection: FC<CountrySelectionProps> = ({
             return filteredCountries;
         }
     };
+
+    const handleClearFilter = () => {
+        onClearFilter();
+        setSearchValue("");
+        setIsError(false);
+        setErrorMessage("");
+        setSelectedCountry(null);
+        setSuggestedCountries([]);
+        setSelectedSuggestionIndex(null);
+        setLastPressedLetter(null);
+      };
 
     const handleSelectCountryFromList = (countryName: string) => {
         const selectedCountry = countriesData.find(country => country.name.toLocaleLowerCase('ru') === countryName);

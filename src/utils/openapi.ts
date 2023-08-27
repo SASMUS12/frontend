@@ -16,30 +16,44 @@ export interface AgeVisibility {
 /** Сериализатор для просмотра чата. */
 export interface Chat {
   id: number;
-  /**
-   * Название
-   * @maxLength 128
-   */
-  name?: string;
+  initiator: UserShort;
+  receiver: UserShort;
   messages: Message[];
 }
 
 /** Сериализатор для просмотра списка чатов. */
 export interface ChatList {
   id: number;
-  /** Название */
-  name: string;
+  initiator: UserShort;
+  receiver: UserShort;
   last_message: string;
+  unread: string;
 }
 
-/** Сериализатор для просмотра чата. */
-export interface ChatRequest {
+/** Сериализатор для создания личного чата. */
+export interface ChatStart {
   /**
-   * Название
-   * @maxLength 128
+   * Слаг
+   * Слаг
    */
-  name?: string;
-  messages: MessageRequest[];
+  receiver: string | null;
+  /** @maxLength 10000 */
+  message: string;
+}
+
+/** Сериализатор для создания личного чата. */
+export interface ChatStartRequest {
+  /**
+   * Слаг
+   * Слаг
+   * @minLength 1
+   */
+  receiver: string | null;
+  /**
+   * @minLength 1
+   * @maxLength 10000
+   */
+  message: string;
 }
 
 /** Сериализатор модели страны. */
@@ -85,26 +99,6 @@ export interface Goal {
   icon: string;
 }
 
-/** Сериализатор для создания группового чата. */
-export interface GroupChatCreate {
-  /**
-   * Название
-   * @maxLength 128
-   */
-  name?: string;
-  members: (string | null)[];
-}
-
-/** Сериализатор для создания группового чата. */
-export interface GroupChatCreateRequest {
-  /**
-   * Название
-   * @maxLength 128
-   */
-  name?: string;
-  members: (string | null)[];
-}
-
 export interface Interest {
   /** Название */
   name: string;
@@ -133,12 +127,16 @@ export interface Language {
 export interface Message {
   id: number;
   /**
-   * Отправитель сообщения
-   * Отправитель сообщения
+   * Слаг
+   * Слаг
    */
-  sender?: number | null;
+  sender: string | null;
   /** @maxLength 10000 */
   text: string | null;
+  /** @format uri */
+  file_to_send?: string;
+  /** @format uri */
+  photo_to_send?: string;
   /**
    * Ответ на другое сообщение
    * Ответ на другое сообщение
@@ -148,28 +146,20 @@ export interface Message {
    * Сообщение отправлено
    * Сообщение отправлено
    */
-  sender_keep?: boolean;
+  sender_keep: boolean;
   is_read: string;
   /**
    * Сообщение закреплено
    * Сообщение закреплено
    */
-  is_pinned?: boolean;
+  is_pinned: boolean;
   read_by: UserShort[];
+  /** @format date-time */
+  timestamp: string;
 }
 
 /** Сериализатор модели Message. */
 export interface MessageRequest {
-  /**
-   * Отправитель сообщения
-   * Отправитель сообщения
-   */
-  sender?: number | null;
-  /**
-   * Чат
-   * Чат, к которому относится сообщение
-   */
-  chat: number;
   /**
    * @minLength 1
    * @maxLength 10000
@@ -184,16 +174,6 @@ export interface MessageRequest {
    * Ответ на другое сообщение
    */
   responding_to?: number | null;
-  /**
-   * Сообщение отправлено
-   * Сообщение отправлено
-   */
-  sender_keep?: boolean;
-  /**
-   * Сообщение закреплено
-   * Сообщение закреплено
-   */
-  is_pinned?: boolean;
 }
 
 export type NullEnum = null;
@@ -844,10 +824,11 @@ export class Api<
       }),
 
     /**
-     * @description Просмотреть свои чаты
+     * @description Просмотреть список всех своих личных чатов
      *
      * @tags chats
      * @name ChatsList
+     * @summary Просмотреть список чатов
      * @request GET:/api/v1/chats/
      * @secure
      */
@@ -874,29 +855,11 @@ export class Api<
       }),
 
     /**
-     * @description Создать групповой чат
-     *
-     * @tags chats
-     * @name ChatsCreate
-     * @request POST:/api/v1/chats/
-     * @secure
-     */
-    chatsCreate: (data: GroupChatCreateRequest, params: RequestParams = {}) =>
-      this.request<GroupChatCreate, any>({
-        path: `/api/v1/chats/`,
-        method: 'POST',
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * @description Просмотреть чат
+     * @description Просмотреть чат и историю сообщений
      *
      * @tags chats
      * @name ChatsRetrieve
+     * @summary Просмотреть чат
      * @request GET:/api/v1/chats/{id}/
      * @secure
      */
@@ -914,16 +877,40 @@ export class Api<
      *
      * @tags chats
      * @name ChatsSendMessageCreate
-     * @request POST:/api/v1/chats/{id}/send_message/
+     * @summary Отправить сообщение
+     * @request POST:/api/v1/chats/{id}/send-message/
      * @secure
      */
     chatsSendMessageCreate: (
       id: number,
-      data: ChatRequest,
+      data: MessageRequest,
       params: RequestParams = {},
     ) =>
-      this.request<Chat, any>({
-        path: `/api/v1/chats/${id}/send_message/`,
+      this.request<Message, any>({
+        path: `/api/v1/chats/${id}/send-message/`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Начать чат с пользователем, отправить первое сообщение
+     *
+     * @tags chats
+     * @name ChatsStartPersonalChatCreate
+     * @summary Начать чат с пользователем
+     * @request POST:/api/v1/chats/start-personal-chat/
+     * @secure
+     */
+    chatsStartPersonalChatCreate: (
+      data: ChatStartRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<ChatStart, any>({
+        path: `/api/v1/chats/start-personal-chat/`,
         method: 'POST',
         body: data,
         secure: true,
@@ -1224,22 +1211,6 @@ export class Api<
     usersReportUserCreate: (slug: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/v1/users/${slug}/report_user/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * @description Отправка запроса на личный чат.
-     *
-     * @tags users
-     * @name UsersStartChatCreate
-     * @request POST:/api/v1/users/{slug}/start_chat/
-     * @secure
-     */
-    usersStartChatCreate: (slug: string, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/v1/users/${slug}/start_chat/`,
         method: 'POST',
         secure: true,
         ...params,
