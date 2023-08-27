@@ -55,22 +55,23 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
     const ageRange = `${leftValue},${rightValue}`;
     const languageFilters = selectedLanguagesAndLevels
       .filter(item => item.language !== null && item.skillLevels.length > 0)
-      .map(item => {
-        const skillLevels = item.skillLevels.join(', '); // Соединяем уровни владения через запятую и пробел
-        return `${item.language!.name} ${skillLevels}`;
-      })
-      .join('; '); // Соединяем языки с разделителем ;
-  
-    const filters = {
+      .map(item => ({
+        language: item.language!.name,
+        skill_level: item.skillLevels.join(','),
+      }));
+
+    const countryCodes = selectedCountries.map(country => country.code).join(',');
+
+    const filters: Filters = {
       age: ageRange,
-      country: selectedCountries.length > 0 ? selectedCountries[0].name : "",
+      country: countryCodes,
       gender: selectedGender || null,
       languages: languageFilters,
     };
-  
+
     onChangeSort(filters);
   };
-  
+
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
       <div className={styles.popup__cantry}>
