@@ -53,24 +53,32 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
 
   const handleFindButtonClick = () => {
     const ageRange = `${leftValue},${rightValue}`;
+    
+    // Фильтруем выбранные языки и уровни навыков
     const languageFilters = selectedLanguagesAndLevels
       .filter(item => item.language !== null && item.skillLevels.length > 0)
       .map(item => ({
         language: item.language!.name,
         skill_level: item.skillLevels.join(','),
       }));
-
-    const countryCodes = selectedCountries.map(country => country.code).join(',');
-
+  
+    // Фильтруем выбранные страны и формируем строку с кодами стран
+    const countryCodes = selectedCountries
+      .filter(country => country.code !== null)
+      .map(country => country.code!.toUpperCase()) // Используем toUpperCase() для кодов в верхнем регистре
+      .join(',');
+  
+    // Фильтры для запроса
     const filters: Filters = {
       age: ageRange,
-      country: countryCodes,
+      country: countryCodes, // Строка с кодами стран в верхнем регистре, например: 'DE,AR'
       gender: selectedGender || null,
       languages: languageFilters,
     };
-
+  
     onChangeSort(filters);
   };
+  
 
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
