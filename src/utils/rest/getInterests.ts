@@ -1,38 +1,23 @@
-import { Interest, PaginatedInterestList } from '../openapi';
+import { Interest } from '../openapi';
 import { api } from '../constants';
 
-export const getInterests = async (): Promise<PaginatedInterestList> => {
+export const getInterests = async (): Promise<Interest[]> => {
   const { data: interests, error } = await api.api.interestsList();
 
   if (error) {
     throw error;
   }
 
-  const interestList: Interest[] | undefined = interests.results;
+  if (interests) {
+    const interestList = interests.results;
 
-  if (interestList) {
+    if (interestList) {
+      return interestList.map((result) => ({
+        name: result.name as string,
+        sorting: result.sorting as string,
+      }));
+    }
   }
 
-  return interestList.map((interest) => ({
-    name: interest.name as string,
-    sorting: interest.sorting as string,
-  }));
-};
-
-export const getInterests = async (): Promise<PaginatedInterestList> => {
-  const { data: interests, error } = await api.api.interestsList();
-
-  if (error) {
-    throw error;
-  }
-
-  const interestList: Interest[] | undefined = interests.results;
-
-  if (interestList) {
-  }
-
-  return interestList.map((interest) => ({
-    name: interest.name as string,
-    sorting: interest.sorting as string,
-  }));
+  return [];
 };
