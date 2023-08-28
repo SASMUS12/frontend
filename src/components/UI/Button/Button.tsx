@@ -1,4 +1,4 @@
-import {MouseEventHandler, ReactNode, FC} from "react";
+import {MouseEventHandler, ReactNode, FC} from 'react';
 
 import cn from 'classnames';
 

@@ -1,20 +1,26 @@
-import React, { FC, useEffect, useState } from "react";
-import LanguageLevel from "../LanguageLevel/LanguageLevel";
-import { Button } from "../UI/Button/Button";
-import { Language, SkillLevelEnum } from "../../utils/openapi";
-import { api } from "../../utils/constants";
-import styles from "./LanguageModule.module.scss";
-import cn from "classnames";
+import React, { FC, useEffect, useState } from 'react';
+import LanguageLevel from '../LanguageLevel/LanguageLevel';
+import { Button } from '../UI/Button/Button';
+import { Language, SkillLevelEnum } from '../../utils/openapi';
+import { api } from '../../utils/constants';
+import styles from './LanguageModule.module.scss';
+import cn from 'classnames';
 
 interface LanguageModuleProps {
   pageName: string;
-  initialLanguageAndLevels: { language: Language | null; skillLevels: SkillLevelEnum[] };
+  initialLanguageAndLevels: {
+    language: Language | null;
+    skillLevels: SkillLevelEnum[];
+  };
   selectedLanguagesAndLevels: {
     language: Language | null;
     skillLevels: SkillLevelEnum[];
   }[];
   setSelectedLanguagesAndLevels: (
-    languagesAndLevels: { language: Language | null; skillLevels: SkillLevelEnum[] }[]
+    languagesAndLevels: {
+      language: Language | null;
+      skillLevels: SkillLevelEnum[];
+    }[],
   ) => void;
 }
 
@@ -25,11 +31,15 @@ const LanguageModule: FC<LanguageModuleProps> = ({
   setSelectedLanguagesAndLevels,
 }) => {
   const [languagesData, setLanguagesData] = useState<Language[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
+    null,
+  );
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
 
   useEffect(() => {
-    const languagesInUse = selectedLanguagesAndLevels.map(item => item.language);
+    const languagesInUse = selectedLanguagesAndLevels.map(
+      (item) => item.language,
+    );
     setSelectedLanguages(languagesInUse);
   }, [selectedLanguagesAndLevels]);
 
@@ -39,7 +49,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
       const languages = response.data;
       setLanguagesData(languages);
     } catch (error) {
-      console.error("Ошибка при получении данных о языках:", error);
+      console.error('Ошибка при получении данных о языках:', error);
     }
   };
 
@@ -56,7 +66,10 @@ const LanguageModule: FC<LanguageModuleProps> = ({
     }
   };
 
-  const handleSkillLevelsChange = (skillLevels: SkillLevelEnum[], index: number) => {
+  const handleSkillLevelsChange = (
+    skillLevels: SkillLevelEnum[],
+    index: number,
+  ) => {
     if (index >= 0 && index < selectedLanguagesAndLevels.length) {
       const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
       updatedLanguagesAndLevels[index].skillLevels = skillLevels;
@@ -72,10 +85,12 @@ const LanguageModule: FC<LanguageModuleProps> = ({
   };
 
   const handleClearFilter = () => {
-    const clearedLanguagesAndLevels = selectedLanguagesAndLevels.map((item) => ({
-      language: null,
-      skillLevels: [],
-    }));
+    const clearedLanguagesAndLevels = selectedLanguagesAndLevels.map(
+      (item) => ({
+        language: null,
+        skillLevels: [],
+      }),
+    );
     setSelectedLanguagesAndLevels(clearedLanguagesAndLevels);
   };
 
@@ -106,7 +121,9 @@ const LanguageModule: FC<LanguageModuleProps> = ({
           initialLanguageAndLevels={initialLanguageAndLevels}
           selectedSkillLevels={[]}
           onLanguageChange={(language) => handleLanguageChange(language, 0)}
-          onSkillLevelsChange={(skillLevels) => handleSkillLevelsChange(skillLevels, 0)}
+          onSkillLevelsChange={(skillLevels) =>
+            handleSkillLevelsChange(skillLevels, 0)
+          }
           onReset={() => handleReset(0)}
           onRemoveLanguage={() => handleRemoveLanguage(0)}
         />
@@ -115,26 +132,35 @@ const LanguageModule: FC<LanguageModuleProps> = ({
         <LanguageLevel
           pageName={pageName}
           key={index}
-          languages={languagesData.filter(lang => !selectedLanguages.includes(lang))}
+          languages={languagesData.filter(
+            (lang) => !selectedLanguages.includes(lang),
+          )}
           selectedLanguage={item.language || selectedLanguage}
           initialLanguageAndLevels={initialLanguageAndLevels}
           selectedSkillLevels={item.skillLevels}
           onLanguageChange={(language) => handleLanguageChange(language, index)}
-          onSkillLevelsChange={(skillLevels) => handleSkillLevelsChange(skillLevels, index)}
+          onSkillLevelsChange={(skillLevels) =>
+            handleSkillLevelsChange(skillLevels, index)
+          }
           onReset={() => handleReset(index)}
           onRemoveLanguage={() => handleRemoveLanguage(index)}
         />
       ))}
       {selectedLanguagesAndLevels.length < 3 && (
-        <div className={cn(styles.languagesAdd, pageName === "Sort" ? styles.languagesAdd_center : "")}>
+        <div
+          className={cn(
+            styles.languagesAdd,
+            pageName === 'Sort' ? styles.languagesAdd_center : '',
+          )}
+        >
           <Button
-            variant="addLanguage"
-            size="xs"
-            fontSize="15"
+            variant='addLanguage'
+            size='xs'
+            fontSize='15'
             onClick={handleAddLanguage}
             className={styles.languagesAdd__button}
           >
-            {"добавить язык"}
+            {'добавить язык'}
           </Button>
         </div>
       )}

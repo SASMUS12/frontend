@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { api } from '../../utils/constants';
-import { Country } from '../../utils/openapi';
-import { Language } from '../../utils/openapi';
 
 import Card from '../../components/Card/Card';
 import Header from '../../components/Header/Header';
