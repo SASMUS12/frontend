@@ -18,10 +18,8 @@ const Categories: React.FC<CategoriesProps> = memo(
       { name: 'Сейчас онлайн', path: 'True' },
       { name: 'Новые пользователи', path: '-date_joined' },
     ];
-    const [isActive, setIsActive] = useState('Все');
 
-    const setActiveStyle = (item: any) => {
-      setIsActive(item.name);
+    const setActiveStyle = (item: { name: string; path: string }) => {
       onChangeCategory(item);
     };
 
