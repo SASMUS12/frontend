@@ -1,23 +1,23 @@
-import {action, makeObservable, observable} from "mobx";
+import { action, makeObservable, observable } from 'mobx';
 
 class LoggedIn {
-    loggedIn = false;
+  loggedIn = false;
 
-    constructor() {
-        makeObservable<LoggedIn>(this, {
-            loggedIn: observable,
-            setLoggedInTrue: action,
-            setLoggedInFalse: action,
-        })
-    }
+  constructor() {
+    makeObservable<LoggedIn>(this, {
+      loggedIn: observable,
+      setLoggedInTrue: action,
+      setLoggedInFalse: action,
+    });
+  }
 
-    setLoggedInTrue() {
-        this.loggedIn = true;
-    }
+  setLoggedInTrue() {
+    this.loggedIn = true;
+  }
 
-    setLoggedInFalse() {
-        this.loggedIn = false;
-    }
+  setLoggedInFalse() {
+    this.loggedIn = false;
+  }
 }
 
 export const loggedIn = new LoggedIn();
