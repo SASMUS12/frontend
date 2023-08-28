@@ -1,9 +1,7 @@
 import {useLocalObservable} from "mobx-react-lite";
 
 export const useModel = () => {
-
     const model = useLocalObservable(() => {
-
         return {
             firstName: "",
             birthdate: "",

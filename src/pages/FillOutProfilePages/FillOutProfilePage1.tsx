@@ -1,5 +1,6 @@
 import {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {observer} from "mobx-react-lite";
 
 import Header from "../../components/Header/Header";
 import ProgressLine from "../../components/UI/ProgressLine/ProgressLine";
@@ -9,18 +10,20 @@ import Gender from "../../components/Gender/Gender";
 import Modal from "../../components/Modal/Modal";
 import Avatars from "../../components/Avatars/Avatars";
 
+import avatarPlace from "../../images/fill-out-profile-export-avatar.png";
+
 import {useModel} from "./model";
 
 import styles from './FillOutProfilePages.module.scss';
 import cn from "classnames";
 
-
 const FillOutProfilePage1 = () => {
     const model = useModel();
     const navigate = useNavigate();
 
-    const [selectedGender, setSelectedGender] = useState<string | null>(null);
-    const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
+    const [selectedGender, setSelectedGender] = useState<string>(null);
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(avatarPlace);
+    const [previewAvatar, setPreviewAvatar] = useState<string>("");
     const [isExportAvatarModal, setExportAvatarModal] = useState<boolean>(false);
     const [isCreateAvatarModal, setCreateAvatarModal] = useState<boolean>(false);
 
@@ -37,6 +40,19 @@ const FillOutProfilePage1 = () => {
         setCreateAvatarModal(false);
     };
 
+    const handleSetPhoto = (event) => {
+        const file = event.currentTarget.files[0];
+        if (file) {
+            setSelectedAvatar(URL.createObjectURL(file));
+        }
+
+        handleModalClose();
+    };
+
+    const handleSetAvatar = () => {
+        setSelectedAvatar(previewAvatar);
+        handleModalClose();
+    }
 
     const handleFillOutPage1 = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -69,7 +85,7 @@ const FillOutProfilePage1 = () => {
                             />
                             <h3 className={styles.container__fillOutProfileArea_title}>Пол</h3>
                             <Gender selectedGender={selectedGender} setSelectedGender={setSelectedGender}
-                                    componentName="fillOutProfile" />
+                                    componentName="fillOutProfile"/>
                         </div>
                         <div className={styles.container__fillOutProfileArea}>
                             <Input
@@ -91,10 +107,22 @@ const FillOutProfilePage1 = () => {
                             <p className={styles.container__fillOutProfileArea_hint}>Пожалуйста, используйте форматы JPG
                                 и PNG</p>
                             <div className={styles.container__fillOutProfileArea_exportAvatar}>
+                                <div className={styles.container__fillOutProfileArea_exportAvatar_image}>
+                                    <img src={selectedAvatar} alt="Аватар пользователя"/>
+                                </div>
                                 <div className={styles.container__fillOutProfileArea_exportAvatar_popup}>
-                                    <button onClick={() => handleAvatarSelection('Загрузить')}>Загрузить фотографию
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAvatarSelection('Загрузить')}
+                                    >
+                                        Загрузить фотографию
                                     </button>
-                                    <button onClick={() => handleAvatarSelection('Создать')}>Создать аватар</button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAvatarSelection('Создать')}
+                                    >
+                                        Создать аватар
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +151,8 @@ const FillOutProfilePage1 = () => {
                             ? 'Loading'
                             : <label htmlFor="file">Выбрать файл</label>}
                         </Button>
-                        <input className={styles.modal__input_file} id="file" type="file"/>
+                        <input className={styles.modal__input_file} id="file" type="file" name="avatar"
+                               onChange={(event) => handleSetPhoto(event)}/>
                         <p className={styles.modal__hint}>
                             Если у вас возникли сложности с загрузкой, попробуйте выбрать фотографию меньшего размера.
                         </p>
@@ -131,17 +160,21 @@ const FillOutProfilePage1 = () => {
 
                     <Modal className={styles.modal} isOpen={isCreateAvatarModal} onClose={handleModalClose}>
                         <h1 className={cn(styles.container__title, styles.modal__title)}>Выберите свой аватар</h1>
-                        <Avatars selectedAvatar={selectedAvatar} setSelectedAvatar={setSelectedAvatar}/>
+                        <Avatars selectedAvatar={previewAvatar} setSelectedAvatar={setPreviewAvatar}/>
                         <Button
                             className={cn(styles.modal__button, styles.modal__button_primary)}
                             type="button"
                             variant="primary"
                             disabled={model.isLoading}
+                            onClick={handleSetAvatar}
                         >{model.isLoading
                             ? 'Loading'
                             : 'Сохранить'}
                         </Button>
-                        <button className={cn(styles.modal__button, styles.modal__button_transparent)}>
+                        <button className={cn(styles.modal__button, styles.modal__button_transparent)}
+                                onClick={handleModalClose}
+                                type="button"
+                        >
                             Отменить изменения
                         </button>
                     </Modal>
@@ -152,4 +185,4 @@ const FillOutProfilePage1 = () => {
     );
 }
 
-export default FillOutProfilePage1;
+export default observer(FillOutProfilePage1);

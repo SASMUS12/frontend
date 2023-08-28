@@ -8,7 +8,7 @@ import cn from 'classnames';
 export interface InputProps<T extends string>
     extends InputHTMLAttributes<HTMLInputElement> {
     className?: string;
-    onValue?: ({value, name}: { value: string; name: T }) => void;
+    onValue: ({value, name}: { value: string; name: T }) => void;
     value: string;
     name: T;
     label?: string;
@@ -45,7 +45,7 @@ export const Input = <T extends string>({
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {value, name} = event.currentTarget;
         onValue({value, name: name as T});
-        console.log(event.currentTarget.validationMessage);
+        console.log(event.currentTarget);
     };
 
     return label ? (

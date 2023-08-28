@@ -47,7 +47,7 @@ export const useModel = () => {
                     console.log('ответ получен -', response);
 
                     if (response) {
-                        navigate("/");
+                        navigate("/fill-out-1");
                         model.setModalOpen(true);
 
                         console.log(response);

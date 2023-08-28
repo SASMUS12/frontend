@@ -18,6 +18,7 @@ const Gender = ({ selectedGender, setSelectedGender, componentName }: GenderProp
     return (
         <div className={styles.genderArea}>
             <Button
+                type="button"
                 children="мужчина"
                 onClick={() => handleGenderSelection(GenderEnum.Male)}
                 className={cn(
@@ -29,6 +30,7 @@ const Gender = ({ selectedGender, setSelectedGender, componentName }: GenderProp
                 fontSize={componentName === "fillOutProfile" ? "16" : "13"}
             />
             <Button
+                type="button"
                 children="женщина"
                 onClick={() => handleGenderSelection(GenderEnum.Female)}
                 className={cn(
@@ -41,6 +43,7 @@ const Gender = ({ selectedGender, setSelectedGender, componentName }: GenderProp
             />
             {componentName === "fillOutProfile" && (
                 <Button
+                    type="button"
                     children="не указан"
                     onClick={() => handleGenderSelection('unspecified')}
                     className={cn(

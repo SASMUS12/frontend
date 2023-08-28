@@ -9,10 +9,13 @@ import {Textarea} from "../../components/UI/Textarea/Textarea";
 import {useModel} from "./model";
 
 import styles from "./FillOutProfilePages.module.scss";
+import {observer} from "mobx-react-lite";
 
 const FillOutProfilePage6 = () => {
     const model = useModel();
     const navigate = useNavigate();
+
+    console.log(model.about);
 
     const handleReturnButtonClick = () => {
         navigate("/fill-out-5");
@@ -60,4 +63,4 @@ const FillOutProfilePage6 = () => {
     );
 };
 
-export default FillOutProfilePage6;
+export default observer(FillOutProfilePage6);

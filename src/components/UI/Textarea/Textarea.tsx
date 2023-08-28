@@ -29,7 +29,7 @@ export const Textarea = <T extends string>({
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         const {value, name} = event.currentTarget;
         onValue({value, name: name as T});
-        console.log(event.currentTarget);
+        console.log(event.currentTarget.value);
     };
 
     return label ? (

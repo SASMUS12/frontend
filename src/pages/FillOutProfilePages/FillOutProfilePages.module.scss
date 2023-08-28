@@ -70,12 +70,22 @@
     }
 
     &_exportAvatar {
-      width: 90px;
-      height: 90px;
-      background: url("../../images/fill-out-profile-export-avatar.png") no-repeat center;
-      background-size: contain;
       cursor: pointer;
       position: relative;
+
+      &_image {
+        border-radius: 20px;
+        width: 90px;
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        & img {
+          object-fit: cover;
+        }
+      }
 
       &_popup {
         position: absolute;
@@ -158,19 +168,16 @@
     margin-top: 40px;
   }
 
-  &__input {
-    &_fullWidth {
-      min-width: 668px;
-      margin: 32px auto;
-    }
-  }
-
   &__textarea {
     margin-top: 32px;
   }
 }
 
 .modal {
+  align-items: center;
+  text-align: center;
+  max-width: 540px;
+
   &__title {
     letter-spacing: 0.48px;
     margin: 0 0 24px;
@@ -179,7 +186,7 @@
   &__text {
     color: var(--dark-violet);
     font: var(--font-text-16-160-400);
-    max-width: 375px;
+
   }
 
   &__hint {
@@ -214,6 +221,7 @@
 }
 
 .interests {
+  margin-top: 32px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;

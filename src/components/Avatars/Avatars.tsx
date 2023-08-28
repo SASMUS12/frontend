@@ -8,7 +8,6 @@ import cn from "classnames";
 const Avatars = ({selectedAvatar, setSelectedAvatar}) => {
     const handleSetAvatar = (event: React.MouseEvent<HTMLButtonElement>) => {
         setSelectedAvatar(event.target.src);
-        console.log(event.target.src);
     }
 
     return (
