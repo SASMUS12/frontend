@@ -39,7 +39,7 @@ export const signInWithEmail = async ({
 };
 
 export const getMe = async (): Promise<UserRepr | null> => {
-  const { data: user, error } = api.api.usersMeRetrieve({ headers });
+  const { data: user, error } = await api.api.usersMeRetrieve({ headers });
 
   if (error) {
     throw error;
@@ -77,10 +77,16 @@ export const getMe = async (): Promise<UserRepr | null> => {
 };
 
 // export const signOut = async (): Promise<void> => {
-//     const {error} = await api.api.signOut();
+//     const {data: res, error} = await api.api.signOut();
 //
 //     if (error) {
 //         throw  error;
 //     }
+
+// if (res) {
+//   localStorage.clear();
+// loggedIn.setLoggedInFalse();
+// }
+
 //
 // };
