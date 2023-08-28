@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Routing } from '../../pages/Routing';
 import { withProviders } from './providers';
 

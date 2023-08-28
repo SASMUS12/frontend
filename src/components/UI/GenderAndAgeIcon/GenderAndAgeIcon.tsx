@@ -1,13 +1,16 @@
 import React, { FC } from 'react';
-import cn from 'classnames';
+
 import femaleGender from '../../../images/svg/card-gender-female.svg';
 import maleGender from '../../../images/svg/card-gender-male.svg';
 
+import { GenderEnum, NullEnum } from '../../../utils/openapi';
+
 import styles from './GenderAndAgeIcon.module.scss';
+import cn from 'classnames';
 
 interface GenderAndAgeIconProps {
-  gender: string | undefined;
-  age: string | undefined;
+  gender: GenderEnum | NullEnum | null;
+  age: string;
   gender_is_hidden?: boolean;
   age_is_hidden?: boolean;
 }

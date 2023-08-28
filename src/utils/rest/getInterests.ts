@@ -1,23 +1,23 @@
-import {Interest} from "../openapi";
-import {api} from "../constants";
+import { Interest } from '../openapi';
+import { api } from '../constants';
 
 export const getInterests = async (): Promise<Interest[]> => {
+  const { data: interests, error } = await api.api.interestsList();
 
-    const {
-        data: {interests},
-        error
-    } = await api.api.interestsList();
+  if (error) {
+    throw error;
+  }
 
-    if (error) {
-        throw error;
+  if (interests) {
+    const interestList = interests.results;
+
+    if (interestList) {
+      return interestList.map((result) => ({
+        name: result.name as string,
+        sorting: result.sorting as string,
+      }));
     }
+  }
 
-    if (interests) {
-        return interests.map((interest) => ({
-            name: interest.name as string,
-            sorting: interest.sorting as string,
-        }));
-    }
-
-    return [];
+  return [];
 };
