@@ -1,29 +1,24 @@
-import {TokenObtainPairRequest} from "../openapi";
+import {loggedIn} from "../../models/LoggedIn";
 
-import {TokenRefresh} from "../openapi";
-import {TokenRefreshRequest} from "../openapi";
-import {UserCreateRequest} from "../openapi";
-import {UserRepr} from "../openapi";
+import {
+    TokenObtainPairRequest,
+    TokenObtainPair,
+    UserRepr,
+    Country,
+    GenderEnum,
+    Goal,
+    NullEnum,
+    UserLanguage,
+} from "../openapi";
 
 import {api, headersWithToken as headers} from "../constants";
 
-export type Email = string;
-export type Password = string;
-
-export interface Tokens {
-    access: string;
-    refresh: string;
-}
-
-export const TokenObtain = async ({
-        email, password
-    }: { email: Email; password: Password }): Promise<Tokens | null> => {
-
+export const signInWithEmail = async ({username, password}: TokenObtainPairRequest): Promise<TokenObtainPair | null> => {
     const {
         data: {token},
         error
     } = await api.api.authJwtCreateCreate({
-        username: email,
+        username: username,
         password: password
     });
 
@@ -32,6 +27,8 @@ export const TokenObtain = async ({
     }
 
     if (token) {
+        localStorage.setItem('accessToken', token.access);
+        localStorage.setItem('refreshToken', token.refresh);
         return {
             access: token.access as string,
             refresh: token.refresh as string,
@@ -41,56 +38,54 @@ export const TokenObtain = async ({
     return null;
 };
 
-export const signInWithEmail = async (): Promise<Tokens | null> => {
-const {
-    data: {user},
-    loginError
-} = api.api.usersMeRetrieve({headers});
-
-if (loginError) {
-    throw loginError;
-}
-
-    if (user) {
-        return {
-            access: token.access as string,
-            refresh: token.refresh as string,
-        };
-    }
-
-    return null;
-};
-
-
-export const signOut = async (): Promise<void> => {
-    const {error} = await client.auth.signOut();
-
-    if (error) {
-        throw  error;
-    }
-
-};
-
-export const getMe = async (): Promise<User | null> => {
+export const getMe = async (): Promise<UserRepr | null> => {
     const {
-        data: {session},
-        error,
-    } = await client.auth.getSession();
+        data: {user},
+        error
+    } = api.api.usersMeRetrieve({headers});
 
     if (error) {
         throw error;
     }
 
-    if (!session) {
+    if (!user) {
         return null;
     }
 
-    const {user} = session;
+    if (user) {
+        loggedIn.setLoggedInTrue();
+        console.log(loggedIn.loggedIn);
 
-    return {
-        id: user.id as string,
-        email: user.email as string,
-        firstName: user.user_metadata.first_name || null,
-        lastName: user.user_metadata.last_name || null,
-    };
+        return {
+            username: user.username as string,
+            first_name: user.first_name as string,
+            avatar: user.avatar as string,
+            age: user.age as string,
+            slug: user.slug as string | null,
+            country: user.country as Country,
+            languages: user.languages as UserLanguage[],
+            gender: user.gender as GenderEnum | NullEnum | null,
+            goals: user.goals as Goal[],
+            interests: user.interests as string[],
+            about: user.about as string,
+            last_activity: user.last_activity as string | null,
+            is_online: user.is_online as string,
+            gender_is_hidden: user.gender_is_hidden as boolean,
+            age_is_hidden: user.age_is_hidden as boolean,
+            role: user.role as string
+        };
+    }
+
+    return null;
 };
+
+
+// export const signOut = async (): Promise<void> => {
+//     const {error} = await api.api.signOut();
+//
+//     if (error) {
+//         throw  error;
+//     }
+//
+// };
+
