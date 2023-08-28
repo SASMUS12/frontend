@@ -1,33 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, {useEffect, useState} from 'react';
+import {observer} from "mobx-react-lite";
 
 import { api } from '../../utils/constants';
 
 import Card from '../../components/Card/Card';
 import Header from '../../components/Header/Header';
-import Categories from '../../components/Categories/Categories';
-import Sort from '../../components/Sort/Sort';
+import Categories from "../../components/Categories/Categories";
+import Sort from "../../components/Sort/Sort";
 import Footer from '../../components/Footer/Footer';
 
-import MoreCards from '../../components/MoreCards/MoreCards';
-import Modal from '../../components/Modal/Modal';
+import MoreCards from "../../components/MoreCards/MoreCards";
 
 import styles from './MainPage.module.scss';
-import cn from 'classnames';
+import cn from "classnames";
 
-import { useModel } from '../../components/SignupSigninForm/model';
 import { loggedIn } from '../../models/LoggedIn';
 
 const MainPage = () => {
-  const model = useModel();
-
-  const handleCloseModal = () => {
-    model.isModalOpen = false;
-  };
-
-  useEffect(() => {
-    console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
-  }, []);
+    useEffect(() => {
+        console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
+    }, []);
 
   const [usersList, setUsersList] = useState<any[]>([]);
   const [cardsListLength, setCardsListLength] = useState<number>(0);
@@ -37,9 +29,9 @@ const MainPage = () => {
   const [isSortPopupOpen, setSortPopupOpen] = useState(false);
  
 
-  const handleOpenSortPopup = () => {
-    setSortPopupOpen(!isSortPopupOpen);
-  };
+    const handleOpenSortPopup = () => {
+        setSortPopupOpen(!isSortPopupOpen);
+    }
 
   const getUsersList = async (filters: any) => {
     try {
@@ -58,15 +50,15 @@ const MainPage = () => {
       console.log('ответ получен -', response);
       setIsUsersList(true);
 
-      if (response.data && response.data.results) {
-        setUsersList(response.data.results);
-        console.log(response.data.results);
-      }
-    } catch (error) {
-      console.error('Ошибка при получении данных -', error);
-      setIsUsersList(false);
-    }
-  };
+            if (response.data && response.data.results) {
+                setUsersList(response.data.results);
+                console.log(response.data.results);
+            }
+        } catch (error) {
+            console.error('Ошибка при получении данных -', error);
+            setIsUsersList(false);
+        }
+    };
 
   useEffect(() => {
     getUsersList(filters);

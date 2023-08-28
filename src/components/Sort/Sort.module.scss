@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-   
+
     &_enter {
       display: flex;
       flex-direction: column;
@@ -69,7 +69,7 @@
         color: var(--soft-violet, #A5A0C5);
       }
     }
-    
+
     &_selectedCountries {
       position: relative;
       width: 296px;
@@ -85,7 +85,7 @@
       font-weight: 400;
       line-height: normal;
       display: flex;
-      align-items: center;           
+      align-items: center;
       word-wrap: break-word;
       white-space: nowrap;
     }
@@ -115,7 +115,7 @@
       background-color: var(--accent-color-salad, #C3EE11);
       display: flex;
       flex-wrap: wrap;
-      width: fit-content;      
+      width: fit-content;
     }
 
     &_countryList {
@@ -133,14 +133,14 @@
       z-index: 1000;
 
       &::-webkit-scrollbar {
-        width: .75em;        
+        width: .75em;
       }
-    
+
       &::-webkit-scrollbar-track {
         background-color: var(--white, #FFF);
         margin-block: .5em;
       }
-  
+
       &::-webkit-scrollbar-thumb {
         background-color: var(--soft-violet, #A5A0C5);
         border-radius: 100vw;
@@ -161,10 +161,10 @@
         width: 16px;
         height: 16px;
         margin-right: 8px;
-      }              
+      }
     }
   }
-  
+
   .languageHelp {
     display: flex;
     align-items: center;
@@ -187,7 +187,7 @@
       margin-bottom: 16px;
     }
   }
-  
+
   .subtitle {
     align-self: stretch;
     align-items: center;
@@ -238,8 +238,8 @@
         color: var(--hover-text-color, #6236C7);
       }
     }
-    &:hover {      
-      background-image: url("../../images/svg/plus-in-circle_hover.svg");   
+    &:hover {
+      background-image: url("../../images/svg/plus-in-circle_hover.svg");
     }
 
     &:active {
@@ -248,10 +248,11 @@
   }
 
   button {
-    //color: var(--grey-gradient-500, #323944);
+    height: 32px;
+    color: var(--grey-gradient-500, #323944);
     cursor: pointer;
   }
-  
+
   .popup__search {
     display: flex;
     justify-content: center;
@@ -288,7 +289,7 @@
         align-items: center;
         border: none;
         border: 1px solid var(--accent-color-violet, #6D47D1);
-     
+
       }
 
       .partner__gender_button.selected,
@@ -297,7 +298,7 @@
         background: #E1D6FF;
       }
 
- 
+
       .partner__gender_button:focus {
         border: 1px solid var(--accent-color-violet, #6D47D1);
         background: #C1AAFF;
@@ -319,14 +320,14 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 54px;
-   
+
     &__subtitle {
       color: var(--grey-gradient-600, #566276);
       font-size: 14px;
       font-weight: 400;
     }
-  }  
-  
+  }
+
   // Кнопка найти
 
   .findButton {
@@ -351,8 +352,8 @@
     &:disabled {
       background: var(--grey-gradient-100, #E2E5E9);
     }
-  } 
-    
+  }
+
   //Кнопка очистить фильтр
 
   .cleanButton {

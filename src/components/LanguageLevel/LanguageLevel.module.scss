@@ -1,7 +1,7 @@
 @import 'src/vendor/_mixins.scss';
 
 .language {
-  position: relative; 
+  position: relative;
 
   &__items {
     -webkit-appearance: none;
@@ -24,13 +24,17 @@
     display: flex;
     position: relative;
 
+    &_16 {
+      font-size: 16px;
+    }
+
     //Полоска прокрутки
     &::-webkit-scrollbar {
       width: .75em;
     }
-  
+
     &::-webkit-scrollbar-track {
-      background-color: var(--white, #FFF);      
+      background-color: var(--white, #FFF);
     }
 
     &::-webkit-scrollbar-thumb {
@@ -50,13 +54,13 @@
     border-color: var(--dark-violet, #403A6D);
     border: 1px solid var(--dark-violet, #403A6D);
     color: var(--dark-violet, #403A6D);
-    background: 
+    background:
       linear-gradient(to right, var(--white, #FFF) 0%, var(--white, #FFF) calc(100% - 16px), transparent calc(100% - 16px), transparent 100%),
       url('../../images/svg/Arrow/arrow-up.svg') no-repeat;
     background-size: 16px 16px, auto;
     background-position: calc(100% - 12px) 50%;
   }
-  
+
   &__items:disabled {
     border-radius: 20px;
     background: var(--grey-gradient-50, #F0F2F4);
@@ -82,9 +86,9 @@
     z-index: 1000;
 
     &::-webkit-scrollbar {
-      width: .75em;        
+      width: .75em;
     }
-   
+
     &::-webkit-scrollbar-track {
       background-color: var(--white, #FFF);
       margin-block: .5em;
@@ -108,7 +112,7 @@
       border: none;
       background-color: var(--white, #FFF);
     }
-  }  
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -122,7 +126,7 @@
   &_label {
     padding-bottom: 10px;
     font-size: 14px;
-    
+
     &:disabled {
       border: none;
       background: var(--grey-gradient-50, #F0F2F4);
@@ -131,7 +135,7 @@
 
   }
 
-  
+
   &_input {
     appearance: none;
     position: absolute;
@@ -168,7 +172,7 @@
   }
 
   .language__level_checkbox_visible {
-    display: inline-block; 
+    display: inline-block;
     vertical-align: middle;
     width: 16px;
     height: 16px;
@@ -194,5 +198,5 @@
 
   }
 
-  
+
 }

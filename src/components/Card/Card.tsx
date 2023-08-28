@@ -1,11 +1,8 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
 import LanguagesTag from '../UI/LanguagesTag/LanguagesTag';
 
-import {
-  сardRandomMaleAvatar,
-  сardRandomFemaleAvatar,
-} from './CardRandomAvatar';
+import {сardRandomMaleAvatar, сardRandomFemaleAvatar} from "./CardRandomAvatar";
 import arrows from '../../images/svg/card-arrows-parallel.svg';
 
 import CountryIcon from '../UI/CountryIcon/CountryIcon';
@@ -14,7 +11,8 @@ import GenderAndAgeIcon from '../UI/GenderAndAgeIcon/GenderAndAgeIcon';
 import {Country, UserLanguage} from '../../utils/openapi';
 
 import styles from './Card.module.scss';
-import cn from 'classnames';
+import cn from "classnames";
+
 
 interface ICards {
     country?: Country | null;

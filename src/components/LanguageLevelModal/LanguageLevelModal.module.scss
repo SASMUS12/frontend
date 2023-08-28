@@ -41,3 +41,47 @@
     }
   }
 }
+
+.modal {
+  text-align: left;
+
+  &__item {
+    width: 318px;
+    padding: 19px 0 18px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--grey-gradient-100);
+    display: flex;
+    align-items: center;
+  }
+
+  &__item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  &__languages {
+    flex: 1;
+    margin-right: 20px;
+
+    &_title {
+      color: var(--dark-violet);
+      font: var(--font-header-14-120-600);
+      margin: 0 0 8px;
+    }
+
+    &_text {
+      font: var(--font-text-14-120-400);
+      color: var(--dark-violet-gradient-400);
+    }
+  }
+
+  &__image {
+    width: 39px;
+    height: 26px;
+    margin-left: 20px;
+
+    &_hidden {
+      display: none;
+    }
+  }
+}

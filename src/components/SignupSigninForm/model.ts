@@ -1,122 +1,84 @@
-import { useLocalObservable } from 'mobx-react-lite';
-import { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {FormEvent} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useLocalObservable} from "mobx-react-lite";
 
-import { api } from '../../utils/constants';
-import { headersWithToken as headers } from '../../utils/constants';
-
-import { loggedIn } from '../../models/LoggedIn';
+import {getMe, signInWithEmail} from "../../utils/rest/auth";
+import {signUp} from "../../utils/rest/register";
 
 export const useModel = () => {
-  const navigate = useNavigate();
+    const model = useLocalObservable(() => {
+        const navigate = useNavigate();
 
-  const model = useLocalObservable(() => {
-    return {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      isLoading: false,
-      error: '',
-      message: '',
-      refresh: '',
-      access: '',
-      isModalOpen: false,
-      user: {},
+        const location = useLocation();
+        const pathName: string = location.pathname;
 
-      handleValue({
-        name,
-        value,
-      }: {
-        name: 'username' | 'email' | 'password' | 'confirmPassword';
-        value: string;
-      }) {
-        model[name] = value;
-      },
+        return {
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            isLoading: false,
+            error: "",
+            message: "",
+            refresh: "",
+            access: "",
+            isSignUp: false,
 
-      setModalOpen(newModalOpen: boolean) {
-        model.isModalOpen = newModalOpen;
-      },
+            handleValue({name, value}: { name: "username" | "email" | "password" | "confirmPassword"; value: string }) {
+                model[name] = value;
+            },
 
-      async handleRegister(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          (model.error = ''), (model.message = ''), (model.isLoading = true);
-          const response = await api.api.usersCreate({
-            email: model.email,
-            username: model.username,
-            password: model.password,
-          });
+            get toMain(): string {
+                return "/";
+            },
 
-          console.log('ответ получен -', response);
+            get toFillOut(): string {
+                return "fill-out-1";
+            },
 
-          if (response) {
-            navigate('/');
-            model.setModalOpen(true);
+            async handleRegister(event: FormEvent<HTMLFormElement>) {
+                event.preventDefault();
 
-            console.log(response);
-          }
+                model.error = "";
+                model.message = "";
+                model.isLoading = true;
 
-          model.isLoading = false;
-        } catch (error) {
-          console.error('Ошибка при получении данных -', error);
-          model.isLoading = false;
-        }
-      },
+                await signUp({
+                    email: model.email,
+                    username: model.username,
+                    password: model.password,
+                });
 
-      async handleLogin(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          (model.error = ''), (model.message = ''), (model.isLoading = true);
+                // navigate(model.toFillOut);
+                model.isLoading = false;
+            },
 
-          const response = await api.api.authJwtCreateCreate({
-            username: model.email,
-            password: model.password,
-          });
-          console.log('ответ login получен -', response);
+            async handleLogin(event: FormEvent<HTMLFormElement>) {
+                event.preventDefault();
 
-          if (response && response.data.refresh && response.data.access) {
-            model.refresh = response.data.refresh;
-            model.access = response.data.access;
-            localStorage.setItem('accessToken', response.data.access);
-            localStorage.setItem('refreshToken', response.data.refresh);
+                model.error = "";
+                model.message = "";
+                model.isLoading = true;
 
-            loggedIn.setLoggedInTrue();
+                await signInWithEmail({username: model.email, password: model.password});
 
-            console.log(loggedIn.loggedIn);
-            navigate('/');
-          }
+                model.isLoading = false;
+            },
 
-          model.isLoading = false;
-        } catch (error) {
-          console.error('Ошибка при получении данных -', error);
-          model.isLoading = false;
-        }
-      },
+            async getCurrentUser() {
+                model.error = "";
+                model.message = "";
+                model.isLoading = true;
 
-      async getCurrentUser() {
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          (model.error = ''), (model.message = ''), (model.isLoading = true);
-          const response = await api.api.usersMeRetrieve({ headers });
+                await getMe();
 
-          console.log('ответ user получен -', response);
+                // navigate(model.toMain);
+                model.isLoading = false;
+            },
 
-          if (response) {
-            model.user = response;
-            console.log(model.user);
-          }
+        };
+    });
 
-          model.isLoading = false;
-        } catch (error) {
-          console.error('Ошибка при получении данных -', error);
-          model.isLoading = false;
-        }
-      },
-    };
-  });
-
-  return model;
+    return model;
 };
+

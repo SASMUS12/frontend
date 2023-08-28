@@ -5,6 +5,7 @@ import styles from './SignupSigninPage.module.scss';
 import logo from '../../images/svg/logo.svg';
 import PicturesBlock from '../../components/PicturesBlock/PicturesBlock';
 import { Link } from 'react-router-dom';
+import {observer} from "mobx-react-lite";
 
 const SignupSigninPage = () => {
   return (
@@ -28,4 +29,4 @@ const SignupSigninPage = () => {
   );
 };
 
-export default SignupSigninPage;
+export default observer(SignupSigninPage);
