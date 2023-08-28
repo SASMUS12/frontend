@@ -17,14 +17,13 @@ const selectedItems = ({
   setSelectedItems,
 }: SelectedItemsProps) => {
   const handleRemoveItem = (item: Item) => {
-      const itemsArray: Items = [];
-      const itemsArrayForFilter: Array<typeof Items> = itemsArray
+    const itemsArray: Items = [];
+    const interests: Interest[] = itemsArray;
 
+    const updatedItems: Interest = Items.filter(
+      (c: Interest) => c.name !== item.name,
+    );
 
-      const updatedItems: Interest = Items.filter(
-        (c: Interest) => c.name !== item.name,
-      );
-    }
     setSelectedItems(updatedItems);
   };
 

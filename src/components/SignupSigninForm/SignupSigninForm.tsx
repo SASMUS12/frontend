@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Input } from '../UI/Input/Input';

@@ -21,14 +21,10 @@ interface ICards {
   first_name: string;
   avatar: string;
   age: string;
-
   country: Country;
   languages: UserLanguage[];
-
   gender: GenderEnum | NullEnum | null;
-
   about: string;
-
   is_online: boolean;
   gender_is_hidden: boolean;
   age_is_hidden: boolean;

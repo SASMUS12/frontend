@@ -3,5 +3,3 @@ export default interface IQuestion {
   text: string[];
   id: number;
 }
-
-

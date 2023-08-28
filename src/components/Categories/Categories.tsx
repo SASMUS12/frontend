@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import styles from '../Categories/Categories.module.scss';
 
 type Category = {
