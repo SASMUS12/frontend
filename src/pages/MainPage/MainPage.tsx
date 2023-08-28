@@ -19,6 +19,13 @@ import Modal from '../../components/Modal/Modal';
 import { useModel } from '../../components/SignupSigninForm/model';
 
 const MainPage = () => {
+
+  const model = useModel();
+
+  const handleCloseModal = () => {
+    model.isModalOpen = false;
+  };
+
   useEffect(() => {
     console.log(`main_loggedIn: ${loggedIn.loggedIn}`);
   }, []);

@@ -5,13 +5,6 @@
 
     &__input {
       width: 296px;
-.country {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  &__input {
-    width: 296px;
 
     &_error {
       color: var(--error, #DE3D3D);
@@ -23,8 +16,23 @@
       &_showSuggestions::before {
         display: block;
       }
-    }
 
+      &:hover {
+        border: 2px solid var(--soft-violet, #A5A0C5);
+      }
+
+      &:focus {
+        border: 1px solid var(--dark-violet, #403A6D);
+        background-image: url("../../images/svg/search_dark.svg");
+      }
+
+      &:disabled {
+        background: var(--grey-gradient-50, #F0F2F4);
+        border: none;
+        color: var(--soft-violet, #A5A0C5);
+      }
+    }
+    
     &__selectedCountries {
       position: relative;
       width: 296px;
@@ -40,7 +48,7 @@
       font-weight: 400;
       line-height: normal;
       display: flex;
-      align-items: center;
+      align-items: center;           
       word-wrap: break-word;
       white-space: nowrap;
     }
@@ -70,7 +78,7 @@
       background-color: var(--accent-color-salad, #C3EE11);
       display: flex;
       flex-wrap: wrap;
-      width: fit-content;
+      width: fit-content;      
     }
 
   &__countryList {
@@ -88,14 +96,14 @@
     z-index: 1000;
 
       &::-webkit-scrollbar {
-        width: .75em;
+        width: .75em;        
       }
-
+    
       &::-webkit-scrollbar-track {
         background-color: var(--white, #FFF);
         margin-block: .5em;
       }
-
+  
       &::-webkit-scrollbar-thumb {
         background-color: var(--soft-violet, #A5A0C5);
         border-radius: 100vw;
@@ -116,6 +124,6 @@
         width: 16px;
         height: 16px;
         margin-right: 8px;
-      }
+      }              
     }
   }

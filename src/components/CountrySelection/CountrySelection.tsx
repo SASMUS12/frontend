@@ -70,76 +70,85 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     }
   };
 
-    const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newSearchValue = e.target.value;
-        setSearchValue(newSearchValue);
-        if (newSearchValue) {
-            setCountryListVisible(true);
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSearchValue = e.target.value;
+    setSearchValue(newSearchValue);
+    if (newSearchValue) {
+      setCountryListVisible(true);
+    } else {
+      setCountryListVisible(false);
+    }
+
+    const searchValueLower = newSearchValue.toLocaleLowerCase('ru');
+    const filtered = countriesData.filter(
+      (country) =>
+        country.name.toLocaleLowerCase('ru').includes(searchValueLower) &&
+        !selectedCountries.includes(country),
+    );
+    setFilteredCountries(filtered);
+
+    const suggested = countriesData.filter((country) =>
+      country.name.toLocaleLowerCase('ru').startsWith(searchValueLower),
+    );
+    setSuggestedCountries(suggested);
+    const firstLetter =
+      searchValueLower.length > 0 ? searchValueLower.charAt(0) : null;
+    setLastPressedLetter(firstLetter);
+
+    const isInvalidSearch =
+      newSearchValue.length > 0 &&
+      filtered.length === 0 &&
+      suggested.length === 0;
+    const errorMessage = isInvalidSearch
+      ? 'Страны не существует, возможно ошибка'
+      : '';
+    setIsError(isInvalidSearch);
+    setErrorMessage(errorMessage);
+
+    setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
+
+    setSelectedSuggestionIndex(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return 0;
+        } else if (prevIndex < suggestedCountries.length - 1) {
+          return prevIndex + 1;
         } else {
-            setCountryListVisible(false);
+          return prevIndex;
         }
-
-        const searchValueLower = newSearchValue.toLocaleLowerCase('ru');
-        const filtered = countriesData.filter((country) =>
-            country.name.toLocaleLowerCase('ru').includes(searchValueLower) && !selectedCountries.includes(country)
-        );
-        setFilteredCountries(filtered);
-
-        const suggested = countriesData.filter((country) =>
-            country.name.toLocaleLowerCase('ru').startsWith(searchValueLower)
-        );
-        setSuggestedCountries(suggested);
-
-        const firstLetter = searchValueLower.length > 0 ? searchValueLower.charAt(0) : null;
-        setLastPressedLetter(firstLetter);
-
-        const isInvalidSearch = newSearchValue.length > 0 && filtered.length === 0 && suggested.length === 0;
-        const errorMessage = isInvalidSearch ? 'Страны не существует, возможно ошибка' : '';
-        setIsError(isInvalidSearch);
-        setErrorMessage(errorMessage);
-
-        setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
-
-        setSelectedSuggestionIndex(null);
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            setSelectedSuggestionIndex((prevIndex) => {
-                if (prevIndex === null) {
-                    return 0;
-                } else if (prevIndex < suggestedCountries.length - 1) {
-                    return prevIndex + 1;
-                } else {
-                    return prevIndex;
-                }
-            });
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            setSelectedSuggestionIndex((prevIndex) => {
-                if (prevIndex === null) {
-                    return suggestedCountries.length - 1;
-                } else if (prevIndex > 0) {
-                    return prevIndex - 1;
-                } else {
-                    return prevIndex;
-                }
-            });
-        } else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (selectedSuggestionIndex !== null) {
-                handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
-            } else if (selectedCountry) {
-                handleSelectCountry(selectedCountry);
-            }
+      });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) => {
+        if (prevIndex === null) {
+          return suggestedCountries.length - 1;
+        } else if (prevIndex > 0) {
+          return prevIndex - 1;
+        } else {
+          return prevIndex;
         }
-    };
+      });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedSuggestionIndex !== null) {
+        handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
+      } else if (selectedCountry) {
+        handleSelectCountry(selectedCountry);
+      }
+    }
+  };
 
-    const handleRemoveCountry = (country: Country) => {
-        const updatedCountries = selectedCountries.filter((c) => c.code !== country.code);
-        setSelectedCountries(updatedCountries);
-    };
+  const handleRemoveCountry = (country: Country) => {
+    const updatedCountries = selectedCountries.filter(
+      (c) => c.code !== country.code,
+    );
+    setSelectedCountries(updatedCountries);
+  };
 
   const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'ArrowDown') {
@@ -209,12 +218,14 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     setLastPressedLetter(null);
   };
 
-    const handleSelectCountryFromList = (countryName: string) => {
-        const selectedCountry = countriesData.find(country => country.name.toLocaleLowerCase('ru') === countryName);
-        if (selectedCountry) {
-            handleSelectCountry(selectedCountry);
-        }
-    };
+  const handleSelectCountryFromList = (countryName: string) => {
+    const selectedCountry = countriesData.find(
+      (country) => country.name.toLocaleLowerCase('ru') === countryName,
+    );
+    if (selectedCountry) {
+      handleSelectCountry(selectedCountry);
+    }
+  };
 
   return (
     <div className={styles.country}>
