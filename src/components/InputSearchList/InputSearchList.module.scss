@@ -1,0 +1,135 @@
+.items {
+  position: relative;
+
+  &_296 {
+    width: 296px;
+  }
+
+  &_668 {
+    width: 668px;
+  }
+
+  &__itemsList {
+    position: absolute;
+    border-radius: 12px;
+    top: 0;
+    left: 0;
+    margin-top: 6px;
+    width: 100%;
+    max-height: 434px;
+    overflow: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    cursor: pointer;
+
+    &::-webkit-scrollbar {
+      width: .75em;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--white, #FFF);
+      margin-block: .5em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--soft-violet, #A5A0C5);
+      border-radius: 100vw;
+      border: .25em solid var(--white, #FFF);
+    }
+
+    &_option {
+      font-size: 13px;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: nowrap;
+      flex-direction: row;
+    }
+
+    &_flagImage {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+
+      &_hidden {
+        display: none;
+      }
+    }
+  }
+
+  &__selectedItems {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+
+    &_gap12 {
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    &_gap16 {
+      gap: 16px;
+      height: 88px;
+      overflow: hidden;
+      margin-top: 32px;
+    }
+
+  }
+
+  &__selectItem {
+    padding: 4px 30px 4px 12px;
+    background-size: 16px 16px;
+    cursor: pointer;
+    text-align: left;
+
+    &_country {
+      border-radius: 12px;
+      border: none;
+      height: 25px;
+      background: url("../../images/svg/16px.svg") var(--accent-color-salad) no-repeat right 6px center;
+      color: var(--grey-gradient-500);
+      font: var(--font-text-14-100-400);
+    }
+
+    &_interest {
+      border-radius: 20px;
+      border: 1px solid var(--accent-color-violet);
+      height: 36px;
+      background: url("../../images/close-icon-16px.png") transparent no-repeat right 6px center;
+      color: var(--dark-violet);
+      font: var(--font-text-16-100-400);
+    }
+  }
+}
+
+.country {
+  &__input {
+    width: 296px;
+
+    &_error {
+      color: var(--error, #DE3D3D);
+      font-size: 12px;
+      height: 15px;
+      margin-top: 6px;
+    }
+
+    &_showSuggestions::before {
+      display: block;
+    }
+  }
+}
+
+.interests {
+  &__input {
+    min-width: 668px;
+    margin: 32px auto 0;
+
+    &_showSuggestions::before {
+      display: block;
+    }
+  }
+}
