@@ -19,6 +19,7 @@ export interface Chat {
   initiator: UserShort;
   receiver: UserShort;
   messages: Message[];
+  blocked_users: string[];
 }
 
 /** Сериализатор для просмотра списка чатов. */
@@ -28,6 +29,11 @@ export interface ChatList {
   receiver: UserShort;
   last_message: string;
   unread: string;
+}
+
+/** Сериализатор для просмотра чата. */
+export interface ChatRequest {
+  blocked_users: string[];
 }
 
 /** Сериализатор для создания личного чата. */
@@ -97,6 +103,27 @@ export interface Goal {
    * @format uri
    */
   icon: string;
+}
+
+/** Сериализатор для создания группового чата. */
+export interface GroupChatCreate {
+  /**
+   * Название
+   * @maxLength 128
+   */
+  name?: string;
+  initiator: UserShort;
+  members: (string | null)[];
+}
+
+/** Сериализатор для создания группового чата. */
+export interface GroupChatCreateRequest {
+  /**
+   * Название
+   * @maxLength 128
+   */
+  name?: string;
+  members: (string | null)[];
 }
 
 export interface Interest {
@@ -283,6 +310,57 @@ export interface PatchedUserProfileRequest {
   birth_date?: string | null;
 }
 
+/**
+ * * `pornography` - Порнография
+ * * `spam` - Рассылка спама
+ * * `fraud` - Мошенничество
+ * * `offensive_behavior` - Оскорбительное поведение
+ * * `copyright_violation` - Нарушение авторских прав
+ */
+export enum ReasonEnum {
+  Pornography = 'pornography',
+  Spam = 'spam',
+  Fraud = 'fraud',
+  OffensiveBehavior = 'offensive_behavior',
+  CopyrightViolation = 'copyright_violation',
+}
+
+/** Сериализатор жалоб */
+export interface Report {
+  /**
+   * Причина жалобы
+   * Выберите причину данной жалобы.
+   *
+   * * `pornography` - Порнография
+   * * `spam` - Рассылка спама
+   * * `fraud` - Мошенничество
+   * * `offensive_behavior` - Оскорбительное поведение
+   * * `copyright_violation` - Нарушение авторских прав
+   */
+  reason: ReasonEnum;
+  description?: string;
+  /** Закрыть пользователю доступ к моей странице */
+  close_user_access: boolean;
+}
+
+/** Сериализатор жалоб */
+export interface ReportRequest {
+  /**
+   * Причина жалобы
+   * Выберите причину данной жалобы.
+   *
+   * * `pornography` - Порнография
+   * * `spam` - Рассылка спама
+   * * `fraud` - Мошенничество
+   * * `offensive_behavior` - Оскорбительное поведение
+   * * `copyright_violation` - Нарушение авторских прав
+   */
+  reason: ReasonEnum;
+  description?: string;
+  /** Закрыть пользователю доступ к моей странице */
+  close_user_access: boolean;
+}
+
 export interface SetPassword {
   new_password: string;
   current_password: string;
@@ -448,6 +526,7 @@ export interface UserProfile {
   /** Поле для скрытия/отображения возраста пользователя */
   age_is_hidden: boolean;
   role: string;
+  is_blocked: boolean;
   /**
    * Дата рождения
    * Дата рождения пользователя
@@ -503,6 +582,7 @@ export interface UserRepr {
   /** Поле для скрытия/отображения возраста пользователя */
   age_is_hidden: boolean;
   role: string;
+  is_blocked: boolean;
 }
 
 export interface UserShort {
@@ -894,6 +974,29 @@ export class Api<
       }),
 
     /**
+     * @description Блокировка пользователя в чате
+     *
+     * @tags chats
+     * @name ChatsBlockUserCreate
+     * @request POST:/api/v1/chats/{id}/block_user/
+     * @secure
+     */
+    chatsBlockUserCreate: (
+      id: number,
+      data: ChatRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<Chat, any>({
+        path: `/api/v1/chats/${id}/block_user/`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
      * @description Отправить сообщение в чат
      *
      * @tags chats
@@ -909,6 +1012,51 @@ export class Api<
     ) =>
       this.request<Message, any>({
         path: `/api/v1/chats/${id}/send-message/`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Разблокировка пользователя в чате
+     *
+     * @tags chats
+     * @name ChatsUnblockUserCreate
+     * @request POST:/api/v1/chats/{id}/unblock_user/
+     * @secure
+     */
+    chatsUnblockUserCreate: (
+      id: number,
+      data: ChatRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<Chat, any>({
+        path: `/api/v1/chats/${id}/unblock_user/`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Создание группового чата.
+     *
+     * @tags chats
+     * @name ChatsStartGroupChatCreate
+     * @request POST:/api/v1/chats/start-group-chat/
+     * @secure
+     */
+    chatsStartGroupChatCreate: (
+      data: GroupChatCreateRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<GroupChatCreate, any>({
+        path: `/api/v1/chats/start-group-chat/`,
         method: 'POST',
         body: data,
         secure: true,
@@ -1213,10 +1361,11 @@ export class Api<
      * @secure
      */
     usersReportUserRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<Report, any>({
         path: `/api/v1/users/${slug}/report_user/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1229,11 +1378,18 @@ export class Api<
      * @request POST:/api/v1/users/{slug}/report_user/
      * @secure
      */
-    usersReportUserCreate: (slug: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+    usersReportUserCreate: (
+      slug: string,
+      data: ReportRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<Report, any>({
         path: `/api/v1/users/${slug}/report_user/`,
         method: 'POST',
+        body: data,
         secure: true,
+        type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
 

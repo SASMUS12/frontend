@@ -9,7 +9,7 @@ interface Props {
   type?: 'button' | 'submit';
   variant?: 'primary' | 'transparent' | 'gray';
   size?: 'small' | 'big';
-  fontSize?: '13' | '16';
+  fontSize?: '13' | '15' | '16';
 
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;

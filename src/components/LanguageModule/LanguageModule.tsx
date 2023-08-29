@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import LanguageLevel from '../LanguageLevel/LanguageLevel';
 import { Button } from '../UI/Button/Button';
@@ -161,7 +161,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
         >
           <Button
             variant='addLanguage'
-            size='xs'
+            size='small'
             fontSize='15'
             onClick={handleAddLanguage}
             className={styles.languagesAdd__button}

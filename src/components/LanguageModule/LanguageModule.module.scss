@@ -1,35 +1,32 @@
 .languagesAdd {
-    display: flex;
-    height: 20px;
-    width: 135px;
-    justify-content: flex-end;
-    align-items: flex-start;
-    background-image: url("../../images/svg/plus-in-circle.svg");
-    background-repeat: no-repeat;
-    background-position: left 0 center;
-    background-size: 20px 20px;
-    background-color: var(--color-base-white);
-  
-    &:hover {
-      background-image: url("../../images/svg/plus-in-circle_hover.svg");
-    }
-  
-    &:hover &__button {
-      color: var(--primory-button-hover);
-    }
-  
-    &:active {
-      background-image: url("../../images/svg/plus-in-circle_active.svg");
-    }
-  
-    &:active &__button {
-      color: var(--primory-button-push);
-    }
-  
-    &_center {
-      margin: 0 auto;
-  
-    }
-  
-  
+  display: flex;
+  height: 20px;
+  width: 135px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  background-image: url('../../images/svg/plus-in-circle.svg');
+  background-repeat: no-repeat;
+  background-position: left 0 center;
+  background-size: 20px 20px;
+  background-color: var(--color-base-white);
+
+  &:hover {
+    background-image: url('../../images/svg/plus-in-circle_hover.svg');
   }
+
+  &:hover &__button {
+    color: var(--primory-button-hover);
+  }
+
+  &:active {
+    background-image: url('../../images/svg/plus-in-circle_active.svg');
+  }
+
+  &:active &__button {
+    color: var(--primory-button-push);
+  }
+
+  &_center {
+    margin: 0 auto;
+  }
+}
