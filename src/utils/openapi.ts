@@ -15,23 +15,45 @@ export interface AgeVisibility {
 
 /** Сериализатор для просмотра чата. */
 export interface Chat {
-  /** @pattern ^[-a-zA-Z0-9_]+$ */
-  companion: string;
+  id: number;
+  initiator: UserShort;
+  receiver: UserShort;
+  messages: Message[];
 }
 
 /** Сериализатор для просмотра списка чатов. */
 export interface ChatList {
   id: number;
-  companion: string;
+  initiator: UserShort;
+  receiver: UserShort;
+  last_message: string;
+  unread: string;
 }
 
-/** Сериализатор для создания чата. */
-export interface ChatRequest {
+/** Сериализатор для создания личного чата. */
+export interface ChatStart {
+  /**
+   * Слаг
+   * Слаг
+   */
+  receiver: string | null;
+  /** @maxLength 10000 */
+  message: string;
+}
+
+/** Сериализатор для создания личного чата. */
+export interface ChatStartRequest {
+  /**
+   * Слаг
+   * Слаг
+   * @minLength 1
+   */
+  receiver: string | null;
   /**
    * @minLength 1
-   * @pattern ^[-a-zA-Z0-9_]+$
+   * @maxLength 10000
    */
-  companion: string;
+  message: string;
 }
 
 /** Сериализатор модели страны. */
@@ -67,6 +89,22 @@ export interface GenderVisibility {
   gender_is_hidden: boolean;
 }
 
+export interface Goal {
+  /** Название */
+  name: string;
+  /**
+   * Иконка
+   * @format uri
+   */
+  icon: string;
+}
+
+export interface Interest {
+  /** Название */
+  name: string;
+  sorting: string;
+}
+
 /** Сериализатор модели языка. */
 export interface Language {
   /** Название языка */
@@ -83,6 +121,59 @@ export interface Language {
    * Увеличьте, чтобы поднять в выборке
    */
   sorting: number;
+}
+
+/** Сериализатор модели Message. */
+export interface Message {
+  id: number;
+  /**
+   * Слаг
+   * Слаг
+   */
+  sender: string | null;
+  /** @maxLength 10000 */
+  text: string | null;
+  /** @format uri */
+  file_to_send?: string;
+  /** @format uri */
+  photo_to_send?: string;
+  /**
+   * Ответ на другое сообщение
+   * Ответ на другое сообщение
+   */
+  responding_to?: number | null;
+  /**
+   * Сообщение отправлено
+   * Сообщение отправлено
+   */
+  sender_keep: boolean;
+  is_read: string;
+  /**
+   * Сообщение закреплено
+   * Сообщение закреплено
+   */
+  is_pinned: boolean;
+  read_by: UserShort[];
+  /** @format date-time */
+  timestamp: string;
+}
+
+/** Сериализатор модели Message. */
+export interface MessageRequest {
+  /**
+   * @minLength 1
+   * @maxLength 10000
+   */
+  text: string | null;
+  /** @format binary */
+  file_to_send?: File;
+  /** @format binary */
+  photo_to_send?: File;
+  /**
+   * Ответ на другое сообщение
+   * Ответ на другое сообщение
+   */
+  responding_to?: number | null;
 }
 
 export type NullEnum = null;
@@ -213,11 +304,12 @@ export interface SetPasswordRequest {
  * * `Native` - Носитель
  */
 export enum SkillLevelEnum {
-  Newbie = "Newbie",
-  Amateur = "Amateur",
-  Profi = "Profi",
-  Expert = "Expert",
-  Guru = "Guru",
+  Newbie = 'Newbie',
+  Amateur = 'Amateur',
+  Profi = 'Profi',
+  Expert = 'Expert',
+  Guru = 'Guru',
+  Native = 'Native',
 }
 
 export interface TokenObtainPair {
@@ -763,26 +855,7 @@ export class Api<
       }),
 
     /**
-     * @description Начать чат
-     *
-     * @tags chats
-     * @name ChatsCreate
-     * @request POST:/api/v1/chats/
-     * @secure
-     */
-    chatsCreate: (data: ChatRequest, params: RequestParams = {}) =>
-      this.request<Chat, any>({
-        path: `/api/v1/chats/`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Просмотреть чат
+     * @description Просмотреть чат и историю сообщений
      *
      * @tags chats
      * @name ChatsRetrieve
@@ -795,26 +868,31 @@ export class Api<
         path: `/api/v1/chats/${id}/`,
         method: 'GET',
         secure: true,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
     /**
-     * @description Очистить сообщения чата
+     * @description Отправить сообщение в чат
      *
      * @tags chats
-     * @name ChatsClearCreate
-     * @request POST:/api/v1/chats/{id}/clear/
+     * @name ChatsSendMessageCreate
+     * @summary Отправить сообщение
+     * @request POST:/api/v1/chats/{id}/send-message/
      * @secure
      */
-    chatsClearCreate: (id: number, data: ChatRequest, params: RequestParams = {}) =>
-      this.request<Chat, any>({
-        path: `/api/v1/chats/${id}/clear/`,
-        method: "POST",
+    chatsSendMessageCreate: (
+      id: number,
+      data: MessageRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<Message, any>({
+        path: `/api/v1/chats/${id}/send-message/`,
+        method: 'POST',
         body: data,
         secure: true,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -827,10 +905,13 @@ export class Api<
      * @request POST:/api/v1/chats/start-personal-chat/
      * @secure
      */
-    chatsSendMessageCreate: (id: number, data: ChatRequest, params: RequestParams = {}) =>
-      this.request<Chat, any>({
-        path: `/api/v1/chats/${id}/send_message/`,
-        method: "POST",
+    chatsStartPersonalChatCreate: (
+      data: ChatStartRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<ChatStart, any>({
+        path: `/api/v1/chats/start-personal-chat/`,
+        method: 'POST',
         body: data,
         secure: true,
         type: ContentType.Json,
@@ -938,62 +1019,6 @@ export class Api<
       }),
 
     /**
-     * @description Просмотреть список целей
-     *
-     * @tags goals
-     * @name GoalsList
-     * @summary Список целей
-     * @request GET:/api/v1/goals/
-     * @secure
-     */
-    goalsList: (
-      query?: {
-        /** Number of results to return per page. */
-        limit?: number;
-        /** A page number within the paginated result set. */
-        page?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<PaginatedGoalList, any>({
-        path: `/api/v1/goals/`,
-        method: "GET",
-        query: query,
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * @description Просмотреть список всех интересов пользователей
-     *
-     * @tags interests
-     * @name InterestsList
-     * @summary Список интересов
-     * @request GET:/api/v1/interests/
-     * @secure
-     */
-    interestsList: (
-      query?: {
-        /** Number of results to return per page. */
-        limit?: number;
-        /** A page number within the paginated result set. */
-        page?: number;
-        /** A search term. */
-        search?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<PaginatedInterestList, any>({
-        path: `/api/v1/interests/`,
-        method: "GET",
-        query: query,
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
      * @description Просмотреть все языки с возможностью поиска по их кодам и названиям
      *
      * @tags languages
@@ -1084,7 +1109,13 @@ export class Api<
          * * `Guru` - Гуру
          * * `Native` - Носитель
          */
-        skill_level?: "Amateur" | "Expert" | "Guru" | "Newbie" | "Profi";
+        skill_level?:
+          | 'Amateur'
+          | 'Expert'
+          | 'Guru'
+          | 'Native'
+          | 'Newbie'
+          | 'Profi';
       },
       params: RequestParams = {},
     ) =>
@@ -1180,22 +1211,6 @@ export class Api<
     usersReportUserCreate: (slug: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/v1/users/${slug}/report_user/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * @description Отправка запроса на личный чат.
-     *
-     * @tags users
-     * @name UsersStartChatCreate
-     * @request POST:/api/v1/users/{slug}/start_chat/
-     * @secure
-     */
-    usersStartChatCreate: (slug: string, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/v1/users/${slug}/start_chat/`,
         method: 'POST',
         secure: true,
         ...params,
