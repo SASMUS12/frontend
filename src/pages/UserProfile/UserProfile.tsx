@@ -216,7 +216,7 @@ const UserProfile: React.FC = () => {
               isEditing={isEditing}
               about={editedData.about}
               setAboutMe={(value: string) => setEditedData((prevData) => ({ ...prevData, about: value }))}
-              setLearningLanguage={(value: string) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))} learningLanguage={''}            />
+              />
           </div>
           </div>
           <div className={styles.profile__buttonsDown}>
@@ -238,7 +238,7 @@ const UserProfile: React.FC = () => {
         <div className={styles.profile__card}>
         <UserCard
           isEditing={isEditing}
-          name={userData?.first_name || userData?.username}
+          name={userData?.first_name || userData?.username || ''}
           age={userData?.age || ''}
           gender={userData?.gender || ''}
           location={userData?.country || ''}
@@ -271,7 +271,6 @@ const UserProfile: React.FC = () => {
               isEditing={isEditing}
               about={userData?.about || ''}
               setAboutMe={(value: string) => setEditedData((prevData) => ({ ...prevData, about: value }))}
-              setLearningLanguage={(value: string) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))}
             />
           </div>
           </div>

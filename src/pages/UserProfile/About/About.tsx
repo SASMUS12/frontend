@@ -5,14 +5,12 @@ interface AboutProps {
   isEditing: boolean;
   about: string;
   setAboutMe: (value: string) => void; 
-  setLearningLanguage: (value: string) => void;
 }
 
 const About: FC<AboutProps> = ({
   isEditing,
   about,
   setAboutMe,
-  setLearningLanguage,
 }) => {
   
   return(
@@ -43,7 +41,6 @@ const About: FC<AboutProps> = ({
         <h3 className={styles.about__title}>Я изучаю язык, чтобы</h3>
         <input
           type="text"
-          onChange={(event) => setLearningLanguage(event.target.value)} 
           className={styles.about__input}
           placeholder='Расскажи о своей цели'
         />
