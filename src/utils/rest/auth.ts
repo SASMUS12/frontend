@@ -2,7 +2,6 @@ import { loggedIn } from '../../models/LoggedIn';
 
 import {
   TokenObtainPairRequest,
-  TokenRefreshRequest,
   TokenObtainPair,
   TokenRefresh,
   UserRepr,
@@ -30,7 +29,7 @@ export const signInWithEmail = async ({
 
   if (token) {
     localStorage.setItem('accessToken', token.access);
-    // localStorage.setItem('refreshToken', token.refresh);
+    localStorage.setItem('refreshToken', token.refresh);
     return {
       access: token.access as string,
       refresh: token.refresh as string,

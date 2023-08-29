@@ -1,12 +1,33 @@
-import { api } from '@/shared/api';
-import { store } from '@/entities';
+import {
+  Country,
+  GenderEnum,
+  Goal,
+  NullEnum,
+  UserLanguage,
+} from '../../utils/openapi';
+import { api } from '../../utils/constants';
+import { store } from '../../models/store';
 
 export const updateProfile = async ({
-  firstName,
-  lastName,
+  first_name,
+  avatar,
+  country,
+  birth_date,
+  languages,
+  gender,
+  goals,
+  interests,
+  about,
 }: {
-  firstName: string;
-  lastName: string;
+  first_name?: string;
+  avatar?: string | null;
+  country?: Country;
+  birth_date?: string | null;
+  languages?: UserLanguage[];
+  gender?: GenderEnum | NullEnum | null;
+  goals?: Goal[];
+  interests?: string[];
+  about?: string;
 }) => {
   try {
     if (!store.session.user) {
@@ -15,16 +36,29 @@ export const updateProfile = async ({
 
     const user = store.session.user;
 
-    await api.profiles.updateProfile({
-      userId: user.id,
-      firstName,
-      lastName,
+    await api.api.usersMePartialUpdate({
+      first_name,
+      avatar: avatar as File | null,
+      country: country as string | null | undefined,
+      birth_date,
+      languages,
+      gender,
+      goals: goals as string[] | undefined,
+      interests,
+      about,
     });
 
-    store.session.update({
+    store.session.updateUser({
       ...user,
-      firstName,
-      lastName,
+      first_name,
+      avatar,
+      country,
+      birth_date,
+      languages,
+      gender,
+      goals,
+      interests,
+      about,
     });
   } catch (error) {
     console.log('features.updateProfile', error);

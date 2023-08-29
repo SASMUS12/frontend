@@ -2,23 +2,14 @@
   display: flex;
   flex-direction: column;
 
-  &_input {
+  &__input {
     width: 336px;
     margin-bottom: 24px;
   }
 
-  &_textTag {
-    width: 336px;
+  &__links {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 12px;
-    cursor: pointer;
-  }
-
-  &_links {
-    display: flex;
-    margin: 60px 0 32px 0;
+    margin: 0 0 32px 0;
     padding: 0;
 
     a {
@@ -41,7 +32,7 @@
     }
 
     &_activeLinkItem {
-      border-bottom: 1px solid #C3EE11;
+      border-bottom: 2px solid #C3EE11;
     }
 
     &_linkItem {
@@ -49,9 +40,16 @@
     }
   }
 
-  &_checkbox {
+  &__textTag {
+    width: 336px;
     display: flex;
-    color: var(--dark-violet);
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  &__checkbox {
+    display: flex;
 
     &_input {
       appearance: none;
@@ -96,41 +94,54 @@
       margin-right: 12px;
       position: relative;
     }
-
-    &_span_text {
-      max-width: 306px;
-      font-size: 14px;
-      line-height: 17px;
-      font-weight: 400;
-      color: #8995A9;
-
-      &_underline {
-        text-decoration: underline;
-        &:hover {
-          cursor: pointer;
-          opacity: 0.6;
-          transition: 0.4s;
-        }
-      }
-    }
   }
 
-  &_forgotLink {
+  &__forgotLink {
     font: var(--font-text-14-120-400);
     color: var(--dark-violet-gradient-400);
     font-style: italic;
     text-decoration: none;
   }
 
-  &_button {
-    margin-top: 32px;
+  &__button {
+    width: 336px;
 
-    &_signUp {
-      width: 148px;
+    &_submit {
+      margin-top: 32px;
     }
 
-    &_signIn {
+    &_yandex {
+      background: url("../../images/svg/yandex-logo.svg") transparent no-repeat left 76px center;
+      background-size: 32px 32px;
+      padding-left: 118px;
+      text-align: left;
+    }
+  }
+
+  &__text {
+    &_violet14 {
+      color: var(--dark-violet);
+      font: var(--font-text-14-120-400);
+    }
+
+    &_or {
+      margin: 16px auto;
+    }
+
+    &_grey12 {
       width: 336px;
+      font: var(--font-text-12-120-400);
+      color: var(--grey-gradient-400);
+
+      &_underline {
+        text-decoration: underline;
+
+        &:hover {
+          cursor: pointer;
+          opacity: 0.6;
+          transition: 0.4s;
+        }
+      }
     }
   }
 }

@@ -51,10 +51,31 @@ export const useModel = () => {
         };
 
         if (model.username === '') {
-          model.error.username = 'Пожалуйста, заполните поле username';
+          model.error.username = 'Пожалуйста, введите логин';
         }
 
-        if (model.error.username !== '' || model.error.email !== '') {
+        if (model.email === '') {
+          model.error.email = 'Пожалуйста, введите эл. почту';
+        }
+
+        if (model.password === '') {
+          model.error.password = 'Пожалуйста, введите пароль';
+        }
+
+        if (model.confirmPassword === '') {
+          model.error.confirmPassword = 'Пожалуйста, подтвердите пароль';
+        }
+
+        if (model.password !== model.confirmPassword) {
+          model.error.confirmPassword = 'Введенные пароли не совпадают';
+        }
+
+        if (
+          model.error.username !== '' ||
+          model.error.email !== '' ||
+          model.error.password !== '' ||
+          model.error.confirmPassword !== ''
+        ) {
           return;
         }
 
@@ -66,47 +87,66 @@ export const useModel = () => {
             username: model.username,
             password: model.password,
           });
+          navigate(model.toFillOut);
+          model.isLoading = false;
         } catch (error: any) {
           model.message = error.message;
+          model.isLoading = false;
         }
-
-        navigate(model.toFillOut);
-        model.isLoading = false;
       },
 
       async handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        model.error = '';
+        model.error = {
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        };
+
+        if (model.email === '') {
+          model.error.email = 'Пожалуйста, введите логин или эл. почту';
+        }
+
+        if (model.password === '') {
+          model.error.password = 'Пожалуйста, введите пароль';
+        }
+
+        if (model.error.email !== '' || model.error.password !== '') {
+          return;
+        }
+
         model.message = '';
         model.isLoading = true;
 
-        const token = await signInWithEmail({
-          username: model.email,
-          password: model.password,
-        });
+        try {
+          const token = await signInWithEmail({
+            username: model.email,
+            password: model.password,
+          });
 
-        if (token) {
-          session.setAccessToken(token.access);
-          session.setRefreshToken(token.refresh);
+          if (token) {
+            session.setAccessToken(token.access);
+            session.setRefreshToken(token.refresh);
+          }
+          model.isLoading = false;
+        } catch (error: any) {
+          model.message = error.message;
+          model.isLoading = false;
         }
-
-        model.isLoading = false;
       },
 
       async getCurrentUser() {
-        model.error = '';
-        model.message = '';
-        model.isLoading = true;
+        try {
+          const user = await getMe();
 
-        const user = await getMe();
-
-        if (user) {
-          session.update(user);
+          if (user) {
+            session.updateUser(user);
+          }
+        } catch (error: any) {
+          model.message = error.message;
         }
-
-        navigate(model.toMain);
-        model.isLoading = false;
       },
     };
   });

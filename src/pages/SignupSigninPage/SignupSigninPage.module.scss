@@ -9,7 +9,7 @@
     width: 470px;
     display: flex;
     flex-direction: column;
-    padding: 24px 133px 0 24px;
+    padding: 24px 133px 50px 24px;
     background-color: var(--grey-color-50);
 
     &_logoLink {
@@ -21,6 +21,17 @@
       height: 32px;
     }
   }
+
+  &__formArea {
+    width: 408px;
+    height: 100%;
+    margin-top: 36px;
+    background-color: var(--color-base-white);
+    box-shadow: var(--card-shadow);
+    border-radius: 20px;
+    padding: 36px;
+  }
+
   &__picturesContainer {
     width: 947px;
   }

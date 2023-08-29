@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { User } from './User';
+import { User, UserInterface } from './User';
 
 import { UserRepr } from '../../utils/openapi';
 
@@ -15,7 +15,7 @@ class Session {
       _refreshToken: observable,
       user: computed,
       isAuthenticated: computed,
-      update: action,
+      updateUser: action,
       setAccessToken: action,
       setRefreshToken: action,
       signOut: action,
@@ -30,7 +30,7 @@ class Session {
     return this._user !== null;
   }
 
-  update(data: UserRepr) {
+  updateUser(data: UserInterface) {
     this._user = new User(data);
   }
 

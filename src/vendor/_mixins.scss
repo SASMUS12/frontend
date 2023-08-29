@@ -35,8 +35,7 @@
 }
 
 @mixin contentArea {
-  background-color: #FFF;
+  background-color: var(--color-base-white);
   border-radius: 20px;
   padding: 20px;
 }
-
