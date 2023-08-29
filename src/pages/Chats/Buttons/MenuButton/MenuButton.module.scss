@@ -1,0 +1,12 @@
+.button {
+  border: none;
+  padding: 0;
+  background-color: var(--color-base-white);
+  font: var(--font-text-18-100-400);
+
+  &_active {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-color: var(--accent-color-salad);
+  }
+}
