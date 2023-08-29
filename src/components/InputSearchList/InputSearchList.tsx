@@ -1,24 +1,28 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { Input } from '../UI/Input/Input';
+import SelectedItems from '../UI/selectedItems/selectedItems';
+
+import { Interest } from '../../utils/openapi';
 
 import styles from './InputSearchList.module.scss';
 import classNames from 'classnames';
 import cn from 'classnames';
-import { Interest } from '../../utils/openapi';
 
 interface IPageName {
   pageName: string;
-  data: ;
+  dataName: string;
+  dataList: (data: string) => void;
+  onSelectedItemsChange: (item: string) => void;
 }
 
-const InputSearchList = ({
+const InputSearchList: FC<IPageName> = ({
   pageName,
-  data,
+  dataName,
   dataList,
   onSelectedItemsChange,
-}) => {
+}: IPageName) => {
   const [isSearchListVisible, setSearchListVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [filteredItems, setFilteredItems] = useState<Interest[]>([]);
@@ -34,7 +38,7 @@ const InputSearchList = ({
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedItems, setSelectedItems] = useState<Interest[]>([]);
 
-  const i = data === 'countries' ? (pageName === 'Sort' ? 5 : 1) : 100;
+  const i = dataName === 'countries' ? (pageName === 'Sort' ? 5 : 1) : 100;
 
   console.log(isSearchListVisible);
   console.log(searchValue);
@@ -78,7 +82,7 @@ const InputSearchList = ({
       searchValue.length > 0 && filtered.length === 0 && suggested.length === 0;
 
     const errorMessage = isInvalidSearch
-      ? data === 'countries'
+      ? dataName === 'countries'
         ? 'Страны не существует, возможно ошибка'
         : ''
       : '';
@@ -114,9 +118,9 @@ const InputSearchList = ({
       });
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (data === 'countries' && selectedSuggestionIndex !== null) {
+      if (dataName === 'countries' && selectedSuggestionIndex !== null) {
         handleSelectItem(suggestedItems[selectedSuggestionIndex]);
-      } else if (data === 'interests') {
+      } else if (dataName === 'interests') {
         handleSelectItem({ name: e.target.value });
         console.log(e.target.value);
       } else if (selectedItem) {
@@ -150,9 +154,9 @@ const InputSearchList = ({
       });
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (data === 'countries' && selectedSuggestionIndex !== null) {
+      if (dataName === 'countries' && selectedSuggestionIndex !== null) {
         handleSelectItem(suggestedItems[selectedSuggestionIndex]);
-      } else if (data === 'interests') {
+      } else if (dataName === 'interests') {
         handleSelectItem({ name: e.target.value });
         console.log(e.target.value);
       } else if (selectedItem) {
@@ -207,11 +211,9 @@ const InputSearchList = ({
     }
   };
 
-
-
   return (
     <>
-      {data === 'interests' && (
+      {dataName === 'interests' && (
         <Input
           className={styles.interests__input}
           type='search'
@@ -225,7 +227,7 @@ const InputSearchList = ({
           autoComplete='off'
         />
       )}
-      {data === 'countries' && (
+      {dataName === 'countries' && (
         <>
           <Input
             className={`${styles.country__input} ${
@@ -249,7 +251,7 @@ const InputSearchList = ({
       <div
         className={cn(
           styles.items,
-          data === 'countries' ? styles.items_296 : styles.items_668,
+          dataName === 'countries' ? styles.items_296 : styles.items_668,
         )}
       >
         {isSearchListVisible && (
@@ -276,7 +278,7 @@ const InputSearchList = ({
                     src={item.flag_icon}
                     alt={`${item.name} Flag`}
                     className={
-                      data === 'countries'
+                      dataName === 'countries'
                         ? styles.items__itemsList_flagImage
                         : styles.items__itemsList_flagImage_hidden
                     }
@@ -290,27 +292,16 @@ const InputSearchList = ({
         <div
           className={cn(
             styles.items__selectedItems,
-            data === 'countries'
+            dataName === 'countries'
               ? styles.items__selectedItems_gap12
               : styles.items__selectedItems_gap16,
           )}
         >
-          {selectedItems &&
-            selectedItems.map((item, index) => (
-              <button
-                key={index}
-                type='button'
-                className={cn(
-                  styles.items__selectItem,
-                  data === 'countries'
-                    ? styles.items__selectItem_country
-                    : styles.items__selectItem_interest,
-                )}
-                onClick={() => handleRemoveItem(item)}
-              >
-                {item.name}
-              </button>
-            ))}
+          <SelectedItems
+            dataName={dataName}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+          />
         </div>
       </div>
     </>

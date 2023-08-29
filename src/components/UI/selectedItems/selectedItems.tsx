@@ -1,29 +1,25 @@
-import styles from '../../InputSearchList/InputSearchList.module.scss';
 import { Country, Interest } from '../../../utils/openapi';
+
+import styles from '../../InputSearchList/InputSearchList.module.scss';
 import cn from 'classnames';
 
 type Items = Interest[] | Country[];
 type Item = Interest | Country;
 
 interface SelectedItemsProps {
-  data: string;
+  dataName: string;
   selectedItems: Items;
-  setSelectedItems: (selectedItems: Items) => void;
+  setSelectedItems: (selectedItems: () => Items) => void;
 }
 
 const selectedItems = ({
-  data,
+  dataName,
   selectedItems,
   setSelectedItems,
 }: SelectedItemsProps) => {
   const handleRemoveItem = (item: Item) => {
-    const itemsArray: Items = [];
-    const interests: Interest[] = itemsArray;
-
-    const updatedItems: Interest = Items.filter(
-      (c: Interest) => c.name !== item.name,
-    );
-
+    const updatedItems = (): Items =>
+      selectedItems.filter((c: Item) => c.name !== item.name);
     setSelectedItems(updatedItems);
   };
 
@@ -36,7 +32,7 @@ const selectedItems = ({
             type='button'
             className={cn(
               styles.items__selectItem,
-              data === 'countries'
+              dataName === 'countries'
                 ? styles.items__selectItem_country
                 : styles.items__selectItem_interest,
             )}
