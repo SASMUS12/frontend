@@ -185,4 +185,3 @@ const MainPage = () => {
 };
 
 export default observer(MainPage);
- 
