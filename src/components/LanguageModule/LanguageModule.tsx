@@ -1,10 +1,14 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
+
 import LanguageLevel from '../LanguageLevel/LanguageLevel';
 import { Button } from '../UI/Button/Button';
+
 import { Language, SkillLevelEnum } from '../../utils/openapi';
 import { api } from '../../utils/constants';
+
 import styles from './LanguageModule.module.scss';
 import cn from 'classnames';
+import { action } from 'mobx';
 
 interface LanguageModuleProps {
   pageName: string;
@@ -16,12 +20,11 @@ interface LanguageModuleProps {
     language: Language | null;
     skillLevels: SkillLevelEnum[];
   }[];
-  setSelectedLanguagesAndLevels: (
-    languagesAndLevels: {
-      language: Language | null;
-      skillLevels: SkillLevelEnum[];
-    }[],
-  ) => void;
+  // eslint-disable-next-line no-empty-pattern
+  setSelectedLanguagesAndLevels: ({}: {
+    language: Language | null;
+    skillLevels: SkillLevelEnum[];
+  }[]) => void;
 }
 
 const LanguageModule: FC<LanguageModuleProps> = ({
@@ -43,9 +46,12 @@ const LanguageModule: FC<LanguageModuleProps> = ({
     setSelectedLanguages(languagesInUse);
   }, [selectedLanguagesAndLevels]);
 
+  //Запрос массива языков
   const fetchLanguagesData = async () => {
     try {
+      console.log('отправка запроса ---');
       const response = await api.api.languagesList();
+      console.log('ответ получен -', response);
       const languages = response.data;
       setLanguagesData(languages);
     } catch (error) {

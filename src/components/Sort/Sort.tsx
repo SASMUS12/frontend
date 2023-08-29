@@ -6,7 +6,10 @@ import Gender from '../Gender/Gender';
 import MultiRangeSlider from '../MultiRangeSlider/MultiRangeSlider';
 import LanguageLevelModal from '../LanguageLevelModal/LanguageLevelModal';
 import { Button } from '../UI/Button/Button';
+
 import { Country, Language, SkillLevelEnum } from '../../utils/openapi';
+
+import styles from '../Sort/Sort.module.scss';
 
 interface Filters {
   country: string;
@@ -72,7 +75,6 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
     };
     onChangeSort(filters);
   };
-
   return (
     <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
       <div className={styles.popup__cantry}>

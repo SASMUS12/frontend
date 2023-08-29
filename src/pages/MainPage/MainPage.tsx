@@ -121,7 +121,7 @@ const MainPage = () => {
               setCardsListLength={setCardsListLength}
             />
           </div>
-          <Sort onChangeSort={setFilters} isOpen={isSortPopupOpen} />
+          {/*<Sort onChangeSort={setFilters} isOpen={isSortPopupOpen} />*/}
         </div>
         <Modal isOpen={model.isModalOpen} onClose={handleCloseModal}>
           <h2 className={styles.modal_header}>
