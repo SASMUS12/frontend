@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -10,9 +10,8 @@ import Gender from '../../components/Gender/Gender';
 import Modal from '../../components/Modal/Modal';
 import Avatars from '../../components/Avatars/Avatars';
 
-import { GenderEnum } from '../../utils/openapi';
-
 import avatarPlace from '../../images/fill-out-profile-export-avatar.png';
+import faceInACircle from '../../images/face-in-a-circle.png';
 
 import { useModel } from './model';
 
@@ -23,40 +22,9 @@ const FillOutProfilePage1 = () => {
   const model = useModel();
   const navigate = useNavigate();
 
-  const [selectedGender, setSelectedGender] = useState<GenderEnum | null>(null);
-  const [selectedAvatar, setSelectedAvatar] = useState<string>(avatarPlace);
-  const [previewAvatar, setPreviewAvatar] = useState<string>('');
-  const [isExportAvatarModal, setExportAvatarModal] = useState<boolean>(false);
-  const [isCreateAvatarModal, setCreateAvatarModal] = useState<boolean>(false);
-
-  const handleAvatarSelection = (creationWay: string) => {
-    if (creationWay === 'Загрузить') {
-      setExportAvatarModal(true);
-    } else {
-      setCreateAvatarModal(true);
-    }
-  };
-
-  const handleModalClose = () => {
-    setExportAvatarModal(false);
-    setCreateAvatarModal(false);
-  };
-
-  const handleSetPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.currentTarget.files) {
-      const file = event.currentTarget.files[0];
-      if (file) {
-        setSelectedAvatar(URL.createObjectURL(file));
-      }
-    }
-
-    handleModalClose();
-  };
-
-  const handleSetAvatar = () => {
-    setSelectedAvatar(previewAvatar);
-    handleModalClose();
-  };
+  useEffect(() => {
+    console.log(model.avatar);
+  }, []);
 
   const handleFillOutPage1 = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -88,7 +56,7 @@ const FillOutProfilePage1 = () => {
                 labelStyles='label18'
                 isLabelHintHidden={true}
                 placeholder='Имя'
-                error={model.error.firstName}
+                error={model.errorFillOut1.firstName}
                 required
                 maxLength={12}
                 onValue={model.handleValue}
@@ -98,7 +66,7 @@ const FillOutProfilePage1 = () => {
               </h3>
               <Gender
                 selectedGender={model.gender}
-                setSelectedGender={setSelectedGender}
+                setSelectedGender={model.handleGenderValue}
                 componentName='fillOutProfile'
               />
             </div>
@@ -113,7 +81,7 @@ const FillOutProfilePage1 = () => {
                 labelStyles='label18'
                 isLabelHintHidden={true}
                 required
-                error={model.error.birthdate}
+                error={model.errorFillOut1.birthdate}
                 onValue={model.handleValue}
               />
             </div>
@@ -132,7 +100,10 @@ const FillOutProfilePage1 = () => {
                     styles.container__fillOutProfileArea_exportAvatar_image
                   }
                 >
-                  <img src={selectedAvatar} alt='Аватар пользователя' />
+                  <img
+                    src={model.avatar !== '' ? model.avatar : avatarPlace}
+                    alt='Аватар пользователя'
+                  />
                 </div>
                 <div
                   className={
@@ -141,13 +112,13 @@ const FillOutProfilePage1 = () => {
                 >
                   <button
                     type='button'
-                    onClick={() => handleAvatarSelection('Загрузить')}
+                    onClick={() => model.handleAvatarSelection('Загрузить')}
                   >
                     Загрузить фотографию
                   </button>
                   <button
                     type='button'
-                    onClick={() => handleAvatarSelection('Создать')}
+                    onClick={() => model.handleAvatarSelection('Создать')}
                   >
                     Создать аватар
                   </button>
@@ -166,16 +137,21 @@ const FillOutProfilePage1 = () => {
 
           <Modal
             className={styles.modal}
-            isOpen={isExportAvatarModal}
-            onClose={handleModalClose}
+            isOpen={model.isExportAvatarModal}
+            onClose={model.handleModalClose}
           >
+            <img
+              className={styles.modal__image}
+              src={faceInACircle}
+              alt='Женское лицо в круге'
+            />
             <h1 className={cn(styles.container__title, styles.modal__title)}>
               Загрузка фотографии
             </h1>
             <p className={styles.modal__text}>
               Партнёрам будет приятнее вести диалог, если&nbsp;Вы&nbsp;загрузите
               свою настоящую фотографию. Пожалуйста, используйте форматы JPG и
-              PNG.
+              PNG. Размер&nbsp;файла не должен превышать 10 Мб.
             </p>
             <Button
               className={cn(styles.modal__button, styles.modal__button_primary)}
@@ -194,32 +170,28 @@ const FillOutProfilePage1 = () => {
               id='file'
               type='file'
               name='avatar'
-              onChange={(event) => handleSetPhoto(event)}
+              onChange={(event) => model.handleSetAvatarPhoto(event)}
             />
-            <p className={styles.modal__hint}>
-              Если у вас возникли сложности с загрузкой, попробуйте выбрать
-              фотографию меньшего размера.
-            </p>
           </Modal>
 
           <Modal
             className={styles.modal}
-            isOpen={isCreateAvatarModal}
-            onClose={handleModalClose}
+            isOpen={model.isCreateAvatarModal}
+            onClose={model.handleModalClose}
           >
             <h1 className={cn(styles.container__title, styles.modal__title)}>
               Выберите свой аватар
             </h1>
             <Avatars
-              selectedAvatar={previewAvatar}
-              setSelectedAvatar={setPreviewAvatar}
+              selectedAvatar={model.previewAvatar}
+              setSelectedAvatar={model.handleSetAvatarValue}
             />
             <Button
               className={cn(styles.modal__button, styles.modal__button_primary)}
               type='button'
               variant='primary'
               disabled={model.isLoading}
-              onClick={handleSetAvatar}
+              onClick={model.handleSetAvatar}
             >
               {model.isLoading ? 'Loading' : 'Сохранить'}
             </Button>
@@ -228,7 +200,7 @@ const FillOutProfilePage1 = () => {
                 styles.modal__button,
                 styles.modal__button_transparent,
               )}
-              onClick={handleModalClose}
+              onClick={model.handleModalClose}
               type='button'
             >
               Отменить изменения

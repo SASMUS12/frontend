@@ -189,12 +189,6 @@
 
   }
 
-  &__hint {
-    color: var(--dark-violet);
-    font: var(--font-text-14-140-400);
-    margin-top: 32px;
-  }
-
   &__button {
     width: 218px;
 
@@ -217,6 +211,13 @@
     &_file {
       display: none;
     }
+  }
+
+  &__image {
+    margin-bottom: 24px;
+    width: 168px;
+    height: 140px;
+    object-fit: cover;
   }
 }
 
