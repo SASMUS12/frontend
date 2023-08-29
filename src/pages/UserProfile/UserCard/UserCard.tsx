@@ -1,44 +1,48 @@
-import { useState } from 'react';
+import React, { FC, ChangeEvent } from 'react';
 import IconButton from '../Buttons/IconButton/IconButton';
 import formattedTime from '../../../utils/getTime';
 import cardPartnerAvatar from '../../../images/userProfile/card-partner-avatar.png';
 import cardPartnerFlag from '../../../images/userProfile/russia.svg';
 import clock from '../../../images/userProfile/clock.png';
 import camera from '../../../images/userProfile/camera.svg';
-
 import styles from "./UserCard.module.scss";
 
-const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, setGender, setLocation, avatar, setImageBase64 }) => {
+interface UserCardProps {
+  isEditing: boolean;
+  name: string;
+  age: string;
+  gender: string;
+  location: string | { code: string };
+  setName: (value: string) => void;
+  setAge: (value: string) => void;
+  setGender: (value: string) => void;
+  setLocation: (value: string) => void;
+  avatar: string;
+  handleFileInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64Data = reader.result;
-        setImageBase64(base64Data); // Сохраняем закодированное изображение
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  
-  
-  const handleChange = (setState) => (event) => {
-    setState(event.target.value); 
-  }
+const UserCard: FC<UserCardProps> = ({ isEditing, name, age, gender, location, setName, setAge, setGender, setLocation, avatar, handleFileInputChange }) => {
+
+  const handleChangeString = (
+    setState: React.Dispatch<React.SetStateAction<string>>,
+    value: string
+    ) => {
+      setState(value);
+    };
 
   const handleClickAvatar = () => {
     // Action
   }
 
-  const handleChangeAge = (event) => {
-    setAge(event.target.value);
+  const handleChangeAge = (event: ChangeEvent<HTMLInputElement>) => {
+    const birthDay = event.target.value;
+    setAge(birthDay);
     const birthDate = new Date(event.target.value);
     const calculatedAge = calculateAge(birthDate);
     return calculatedAge;
   }
 
-  const calculateAge = (birthdate) => {
+  const calculateAge = (birthdate: Date)  => {
     const today = new Date();
     let age = today.getFullYear() - birthdate.getFullYear();
     const monthDifference = today.getMonth() - birthdate.getMonth();
@@ -48,26 +52,33 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
     return age;
   };
 
-  return(
+  return (
     <>
     {!isEditing ? (
       <div className={styles.profile__main}>
         <div className={styles.profile__accent}></div>
         <div className={styles.profile__generalInfo}>
           <div className={styles.profile__partnerAbout}>
-            <img className={styles.profile__partnerAvatar} src={cardPartnerAvatar} alt="Аватар пользователя"/>
+            <img className={styles.profile__partnerAvatar} 
+              src={avatar ? avatar : cardPartnerAvatar}
+              alt="Аватар пользователя"
+            />
             <div className={styles.profile__partnerInfo}>
               <div>
               <p className={styles.profile__name}>{name}</p>
               <p className={styles.profile__sex}>{gender}, {age}</p>
               </div>
               <div>
-                {location !== null && (
                   <div className={styles.profile__country}>
+                {location && typeof location === "object" ? (
+                  <>
                   <img className={styles.profile__flag} src={cardPartnerFlag} alt="Флаг страны пользователя"/>
-                    <p className={styles.profile__city}>{location}</p>
-                  </div>
+                    <p className={styles.profile__city}>{location.code}</p>
+                  </>
+                ):(
+                  <p className={styles.profile__city}>{location}</p>
                 )}
+                </div>
                 <div className={styles.profile__time}>
                   <p className={styles.profile__current}>Сейчас</p>
                   <img className={styles.profile__clock} src={clock} alt='изображение часов с циферблатом' />
@@ -84,13 +95,16 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
         <div className={styles.profile__generalInfo}>
           <div className={styles.profile__partnerAbout}>
             <div className={styles.profile__onlyAvatar}>
-            <img className={styles.profile__partnerAvatar} src={cardPartnerAvatar} alt="Аватар пользователя"/>
+            <img className={styles.profile__partnerAvatar} 
+              src={avatar ? avatar : cardPartnerAvatar}
+              alt="Аватар пользователя"
+            />            
             <div className={styles.profile__partnerAvatarButton}>
               <IconButton icon={camera} handleFunction={handleClickAvatar} iconWidth={54} iconHeight={54} />
             </div>
             <div className={styles.profile__additionalButtons}>
-              <input type='file' class="button1" onChange={handleFileInputChange} />Button 1
-              <button class="button2">Button 2</button>
+              <input type='file' className="button1" onChange={handleFileInputChange} />Button 1
+              <button className="button2">Button 2</button>
             </div>
             </div>
             <div className={styles.profile__partnerInfo}>
@@ -104,7 +118,7 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
                       name='partnerName' 
                       className={styles.profile__input}
                       value={name}
-                      onChange={handleChange(setName)}
+                      onChange={(event) => handleChangeString(setName as React.Dispatch<React.SetStateAction<string>>, event.target.value)}
                       />
                   </div>
                   <div className={styles.profile__flexColumn}>
@@ -154,8 +168,8 @@ const UserCard = ({ isEditing, name, age, gender, location, setName, setAge, set
                       id='partnerLocation' 
                       name='partnerLocation' 
                       className={styles.profile__input}
-                      value={location}
-                      onChange={handleChange(setLocation)}
+                      value={typeof location === 'object' ? location.code : location}
+                      onChange={(event) => handleChangeString(setLocation as React.Dispatch<React.SetStateAction<string>>, event.target.value)}
                       />
                   </div>                
                 </div>

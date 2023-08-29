@@ -1,11 +1,19 @@
+import React, { FC } from 'react';
 import styles from "./About.module.scss";
 
+interface AboutProps {
+  isEditing: boolean;
+  about: string;
+  setAboutMe: (value: string) => void; 
+  setLearningLanguage: (value: string) => void;
+}
 
-const About = ({isEditing, aboutMe, setAboutMe, learningLanguage, setLearningLanguage}) => {
-
-  const handleChange = (setState) => (event) => {
-    setState(event.target.value);
-  }
+const About: FC<AboutProps> = ({
+  isEditing,
+  about,
+  setAboutMe,
+  setLearningLanguage,
+}) => {
   
   return(
     <>
@@ -13,11 +21,10 @@ const About = ({isEditing, aboutMe, setAboutMe, learningLanguage, setLearningLan
       <div className={styles.about}>
         <section className={styles.about__section}>
           <h3 className={styles.about__title}>Обо мне</h3>
-          <p className={styles.about__subtitle}>{aboutMe}</p>
+          <p className={styles.about__subtitle}>{about}</p>
         </section>
         <section>
           <h3 className={styles.about__title}>Я изучаю язык, чтобы</h3>
-          <p className={styles.about__subtitle}>{learningLanguage}</p>
         </section>
       </div>
     ):(
@@ -25,8 +32,8 @@ const About = ({isEditing, aboutMe, setAboutMe, learningLanguage, setLearningLan
         <section className={styles.about__section}>
         <h3 className={styles.about__title}>Обо мне</h3>
         <textarea
-          value={aboutMe}
-          onChange={handleChange(setAboutMe)}
+          value={about}
+          onChange={(event) => setAboutMe(event.target.value)} 
           className={styles.about__input}
           rows={3}
           placeholder='Напиши несколько предложений о себе, чтобы тебя нашли партнеры со схожими интересами или стилем жизни'
@@ -36,8 +43,7 @@ const About = ({isEditing, aboutMe, setAboutMe, learningLanguage, setLearningLan
         <h3 className={styles.about__title}>Я изучаю язык, чтобы</h3>
         <input
           type="text"
-          value={learningLanguage}
-          onChange={handleChange(setLearningLanguage)}
+          onChange={(event) => setLearningLanguage(event.target.value)} 
           className={styles.about__input}
           placeholder='Расскажи о своей цели'
         />

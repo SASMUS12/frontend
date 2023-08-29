@@ -1,20 +1,25 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import IconButton from "../Buttons/IconButton/IconButton";
 import search from '../../../images/userProfile/search.svg';
 import control from '../../../images/userProfile/control.svg';
 import styles from "./Topics.module.scss";
 
-const Topics = ({ isEditing, interests, setEditedData}) => {
+interface TopicsProps {
+  isEditing: boolean;
+  interests: string[];
+  setEditedData: (value: string[]) => void;
+}
+
+const Topics: React.FC<TopicsProps> = ({ isEditing, interests, setEditedData}) => {
   
-  const [editedInterests, setEditedInterests] = useState([interests]);
+  const [editedInterests, setEditedInterests] = useState<string[]>([...interests]);
   const [inputValue, setInputValue] = useState('');
 
-  const handleSetThemes = (event) => {
-    console.log('event.target.value', event.target.value);
+  const handleSetThemes = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
-  const handleAddTheme = (event) => {
+  const handleAddTheme = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const newTheme = inputValue.trim();
       if (newTheme !== '') {
@@ -25,7 +30,7 @@ const Topics = ({ isEditing, interests, setEditedData}) => {
     }
   };
 
-  const handleRemoveTheme = (index) => {
+  const handleRemoveTheme = (index: number) => {
     const updatedInterests = editedInterests.filter((_, i) => i !== index);
     setEditedInterests(updatedInterests);
   };

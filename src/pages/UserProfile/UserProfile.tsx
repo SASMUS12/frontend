@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { observer } from "mobx-react-lite";
+// import { observer } from "mobx-react-lite";
 import { useModel } from "../../components/SignupSigninForm/model";
 import { api } from '../../utils/constants';
 import Header from '../../components/Header/Header';
@@ -13,44 +13,74 @@ import Reviews from './Reviews/Reviews';
 import Certificates from './Certificates/Certificates';
 import settings from '../../images/userProfile/settings.png';
 import edit from '../../images/userProfile/edit.png';
-import array from '../../utils/constants';
 import styles from "./UserProfile.module.scss";
 
+interface UserData {
+  first_name: string;
+  age: string;
+  gender: string;
+  country: {
+    code: string;
+  };
+  avatar: null | string;
+  interests: string[];
+  languages: Language[];
+  about: string;
+  username: string;
+}
 
-const UserProfile = () => {
-  const [userData, setUserData] = useState(null);
+interface Language {
+  isocode: string;
+  skill_level: string;
+}
+
+interface EditedData {
+  first_name: string;
+  username: string;
+  avatar: null | File;
+  country: string;
+  birth_date: string;
+  languages: Language[];
+  gender: string;
+  goals: any[];
+  interests: string[];
+  about: string;
+}
+
+
+const UserProfile: React.FC = () => {
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedData, setEditedData] = useState({
-    name: '',
-    avatar: './images/userProfile/edit.png',
+  const [editedData, setEditedData] = useState<EditedData>({
+    first_name: '',
+    avatar: null,
     country: '',
-    birth_date: null,
+    birth_date: '',
     languages: [],
     gender: '',
     goals: [],
     interests: [],
     about: '',
+    username: '',
   });
   const model = useModel();
-  const [imageBase64, setImageBase64] = useState('');
+  const [imageBase64, setImageBase64] = useState(null);
 
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0]; // Получаем выбранный файл
+  const handleFileInputChange =  (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       // eslint-disable-next-line no-undef
       const reader = new FileReader();
       reader.onload = () => {
-        const base64Data = reader.result; // Получаем Data URL (Base64)
+        const base64Data = reader.result as null ;
+        if (base64Data) {
         setImageBase64(base64Data);
-      };
-      reader.readAsDataURL(file); // Читаем файл как Data URL
+        setEditedData((prevData) => ({ ...prevData, avatar: base64Data }));
+      }};
+      reader.readAsDataURL(file);
     }
   };
-
-
-
-  console.log(imageBase64);
 
     const fetchUserData = async () => {
       try {
@@ -88,25 +118,26 @@ const UserProfile = () => {
   }, []);
 
   const handleEditProfile = () => {
-    setEditedData({
-      first_name: userData.username,
-      avatar: imageBase64,
-      country: editedData.country,
-      birth_date: editedData.age,
-      languages:[
-        {
-          isocode: "En",
-          language: "English",
-          skill_level: "Newbie"
-        }
-      ],
-      gender: editedData.gender,
-      goals:[],
-      interests: editedData.interests,
-      about: editedData.about,
-    });
-    // eslint-disable-next-line no-undef
-    setIsEditing(!isEditing);
+    if (userData) {
+      setEditedData({
+        ...userData,
+        first_name: editedData.username,
+        avatar: userData.avatar,
+        country: editedData.country,
+        birth_date: userData.age,
+        languages:[
+          {
+            isocode: "En",
+            skill_level: "Newbie"
+          }
+        ],
+        gender: editedData.gender,
+        goals:[],
+        interests: editedData.interests,
+        about: editedData.about,
+      });
+      setIsEditing(!isEditing);
+    }
   };
 
   
@@ -132,29 +163,21 @@ const UserProfile = () => {
       });
       // eslint-disable-next-line no-undef
       console.log('Успешно обновленные данные:', response.data);
-
-      setUserData(response.data);
+      if (response.data !== null){
+        setUserData(response.data);
+      }
       setIsEditing(false);
-      // eslint-disable-next-line no-undef
-      console.log('updatedUserData', updatedUserData);
-      // eslint-disable-next-line no-undef
-      console.log('userData', userData);
     } catch (error) {
       // eslint-disable-next-line no-undef
       console.error('Ошибка при сохранении данных:', error);
     }
   };
-  // eslint-disable-next-line no-undef
-  console.log('userData', userData);
-  // eslint-disable-next-line no-undef
-  console.log('editedData.interests', editedData.interests);
-    // eslint-disable-next-line no-undef
-    console.log('editedData', editedData);
-
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  console.log('editedData', editedData)
 
   return(
     <>
@@ -164,40 +187,36 @@ const UserProfile = () => {
         <div className={styles.profile__card}>
         <UserCard
           isEditing={isEditing}
-          editedData={editedData}
-          name={editedData.first_name}
-          age={editedData.age}
-          gender={editedData.gender}
+          name={editedData.username}
+          age={editedData.birth_date}
+          gender={editedData.gender || ''}
           location={editedData.country}
-          avatar={editedData.avatar}
-          setImageBase64={setImageBase64} 
+          avatar={userData?.avatar || ''}
           handleFileInputChange={handleFileInputChange}
-          setName={(value) => setEditedData((prevData) => ( { ...prevData, first_name: value }))}
+          setName={(value) => setEditedData((prevData) => ( { ...prevData, username: value }))}
           setAge={(value) => setEditedData((prevData) => ({ ...prevData, birth_date: value }))}
           setGender={(value) => setEditedData((prevData) => ({ ...prevData, gender: value }))}
           setLocation={(value) => setEditedData((prevData) => ({ ...prevData, country: value }))}
       />  
           <div className={styles.profile__buttons}>
-            <IconButton icon={settings} />
+            <IconButton icon={settings} handleFunction={handleEditProfile} iconWidth={30} iconHeight={30}/>
           </div>
           <div className={styles.profile__moreAbout}>
           <div>
-            <UserLanguages isEditing={isEditing}/>
+            <UserLanguages isEditing={isEditing} userLanguages={[]}/>
             <Topics 
               isEditing={isEditing} 
-              interests={userData.interests}
-              setEditedData={(value) => setEditedData((prevData) => ({ ...prevData, interests: value }))}
+              interests={userData?.interests || []}
+              setEditedData={(value: string[]) => setEditedData((prevData) => ({ ...prevData, interests: value }))}
             />
             <Certificates />
           </div>
           <div>
             <About 
               isEditing={isEditing}
-              aboutMe={editedData.about}
-              learningLanguage={editedData.learningLanguage}
-              setAboutMe={(value) => setEditedData((prevData) => ({ ...prevData, about: value }))}
-              setLearningLanguage={(value) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))}
-            />
+              about={editedData.about}
+              setAboutMe={(value: string) => setEditedData((prevData) => ({ ...prevData, about: value }))}
+              setLearningLanguage={(value: string) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))} learningLanguage={''}            />
           </div>
           </div>
           <div className={styles.profile__buttonsDown}>
@@ -219,41 +238,40 @@ const UserProfile = () => {
         <div className={styles.profile__card}>
         <UserCard
           isEditing={isEditing}
-          name={userData.username}
-          age={userData.age}
-          gender={userData.gender}
-          location={userData.country}
-          avatar={editedData.avatar}
-          setImageBase64={setImageBase64} 
+          name={userData?.first_name || userData?.username}
+          age={userData?.age || ''}
+          gender={userData?.gender || ''}
+          location={userData?.country || ''}
+          avatar={userData?.avatar || ''}
+          handleFileInputChange={handleFileInputChange}
           setName={(value) => setEditedData((prevData) => ({ ...prevData, first_name: value }))}
           setAge={(value) => setEditedData((prevData) => ({ ...prevData, age: value }))}
           setGender={(value) => setEditedData((prevData) => ({ ...prevData, gender: value }))}
           setLocation={(value) => setEditedData((prevData) => ({ ...prevData, country: value }))}
       />   
           <div className={styles.profile__buttons}>
-            <IconButton icon={edit} handleFunction={handleEditProfile}/>
-            <IconButton icon={settings} />
+            <IconButton icon={edit} handleFunction={handleEditProfile} iconWidth={20} iconHeight={20}/>
+            <IconButton icon={settings} handleFunction={handleEditProfile} iconWidth={30} iconHeight={30}/>
           </div>
           <div className={styles.profile__moreAbout}>
           <div>
             <UserLanguages 
               isEditing={isEditing} 
-              languages={userData.languages}
+              userLanguages={userData?.languages}
             />
             <Topics 
               isEditing={isEditing} 
-              interests={userData.interests}
-              setEditedData={setEditedData}
+              interests={userData?.interests || []}
+              setEditedData={(value: string[]) => setEditedData((prevData) => ({ ...prevData, interests: value }))}
             />
-            <Certificates isEditing={isEditing}/>
+            <Certificates />
           </div>
           <div>
             <About 
               isEditing={isEditing}
-              aboutMe={userData.about}
-              learningLanguage={userData.learningLanguage}
-              setAboutMe={(value) => setEditedData((prevData) => ({ ...prevData, about: value }))}
-              setLearningLanguage={(value) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))}
+              about={userData?.about || ''}
+              setAboutMe={(value: string) => setEditedData((prevData) => ({ ...prevData, about: value }))}
+              setLearningLanguage={(value: string) => setEditedData((prevData) => ({ ...prevData, learningLanguage: value }))}
             />
           </div>
           </div>
