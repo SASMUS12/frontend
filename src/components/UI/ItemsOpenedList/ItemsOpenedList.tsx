@@ -3,36 +3,34 @@ import { Country, Interest } from '../../../utils/openapi';
 import styles from '../../InputSearchList/InputSearchList.module.scss';
 import cn from 'classnames';
 
-type Items = Interest[] | Country[];
-type Item = Interest | Country;
-
-interface SelectedItemsProps {
-  dataName: string;
-  selectedItems: Items;
-  setSelectedItems: (selectedItems: () => Items) => void;
+interface InterestsOpenedListProps {
+  itemsName: string;
+  selectedItems: (Country | Interest)[];
+  setSelectedItems: (selectedItems: (Country | Interest)[]) => void;
 }
 
-const selectedItems = ({
-  dataName,
+const itemsOpenedList = ({
+  itemsName,
   selectedItems,
   setSelectedItems,
-}: SelectedItemsProps) => {
-  const handleRemoveItem = (item: Item) => {
-    const updatedItems = (): Items =>
-      selectedItems.filter((c: Item) => c.name !== item.name);
+}: InterestsOpenedListProps) => {
+  const handleRemoveItem = (item: Country | Interest) => {
+    const updatedItems = selectedItems.filter(
+      (c: Country | Interest) => c.name !== item.name,
+    );
     setSelectedItems(updatedItems);
   };
 
   return (
     <>
       {selectedItems &&
-        selectedItems.map((item: Item, index: number) => (
+        selectedItems.map((item: Country | Interest, index: number) => (
           <button
             key={index}
             type='button'
             className={cn(
               styles.items__selectItem,
-              dataName === 'countries'
+              itemsName === 'countries'
                 ? styles.items__selectItem_country
                 : styles.items__selectItem_interest,
             )}
@@ -45,4 +43,4 @@ const selectedItems = ({
   );
 };
 
-export default selectedItems;
+export default itemsOpenedList;

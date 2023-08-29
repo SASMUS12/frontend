@@ -3,6 +3,7 @@ import { loggedIn } from '../../models/LoggedIn';
 import {
   TokenObtainPairRequest,
   TokenObtainPair,
+  TokenRefresh,
   UserRepr,
   Country,
   GenderEnum,
@@ -32,6 +33,27 @@ export const signInWithEmail = async ({
     return {
       access: token.access as string,
       refresh: token.refresh as string,
+    };
+  }
+
+  return null;
+};
+
+export const getAcceessToken = async (
+  refresh: string,
+): Promise<TokenRefresh | null> => {
+  const { data: token, error } = await api.api.authJwtRefreshCreate({
+    refresh: refresh,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  if (token) {
+    localStorage.setItem('accessToken', token.access);
+    return {
+      access: token.access as string,
     };
   }
 

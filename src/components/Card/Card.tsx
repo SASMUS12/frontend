@@ -15,7 +15,6 @@ import {
 } from '../../utils/openapi';
 
 import styles from './Card.module.scss';
-import cn from 'classnames';
 
 interface ICards {
   first_name: string;
@@ -43,7 +42,7 @@ const Card: FC<ICards> = ({
   age_is_hidden,
 }: ICards) => {
   return (
-    <article className={cn(styles.card)}>
+    <article className={styles.card}>
       <div className={styles.card__countryAndStatusTag}>
         <CountryIcon country={country} />
         <UserStatusIsOnline is_online={is_online} />

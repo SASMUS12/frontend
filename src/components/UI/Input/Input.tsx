@@ -15,7 +15,7 @@ export interface InputProps<T extends string>
   isLabelHintHidden?: boolean;
   type: string;
   fontSize?: '14' | '16';
-  placeholder: string;
+  placeholder?: string;
   hint?: string;
   required?: boolean;
   hasError?: boolean;

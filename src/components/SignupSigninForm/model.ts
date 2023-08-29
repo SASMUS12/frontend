@@ -4,6 +4,7 @@ import { useLocalObservable } from 'mobx-react-lite';
 
 import { getMe, signInWithEmail } from '../../utils/rest/auth';
 import { signUp } from '../../utils/rest/register';
+import { session } from '../../models/session/Session';
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const useModel = () => {
       password: '',
       confirmPassword: '',
       isLoading: false,
-      error: '',
+      error: { username: '', email: '', password: '', confirmPassword: '' },
       message: '',
       refresh: '',
       access: '',
@@ -42,44 +43,110 @@ export const useModel = () => {
       async handleRegister(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        model.error = '';
+        model.error = {
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        };
+
+        if (model.username === '') {
+          model.error.username = 'Пожалуйста, введите логин';
+        }
+
+        if (model.email === '') {
+          model.error.email = 'Пожалуйста, введите эл. почту';
+        }
+
+        if (model.password === '') {
+          model.error.password = 'Пожалуйста, введите пароль';
+        }
+
+        if (model.confirmPassword === '') {
+          model.error.confirmPassword = 'Пожалуйста, подтвердите пароль';
+        }
+
+        if (model.password !== model.confirmPassword) {
+          model.error.confirmPassword = 'Введенные пароли не совпадают';
+        }
+
+        if (
+          model.error.username !== '' ||
+          model.error.email !== '' ||
+          model.error.password !== '' ||
+          model.error.confirmPassword !== ''
+        ) {
+          return;
+        }
+
         model.message = '';
         model.isLoading = true;
-
-        await signUp({
-          email: model.email,
-          username: model.username,
-          password: model.password,
-        });
-
-        navigate(model.toFillOut);
-        model.isLoading = false;
+        try {
+          await signUp({
+            email: model.email,
+            username: model.username,
+            password: model.password,
+          });
+          navigate(model.toFillOut);
+          model.isLoading = false;
+        } catch (error: any) {
+          model.message = error.message;
+          model.isLoading = false;
+        }
       },
 
       async handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        model.error = '';
+        model.error = {
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        };
+
+        if (model.email === '') {
+          model.error.email = 'Пожалуйста, введите логин или эл. почту';
+        }
+
+        if (model.password === '') {
+          model.error.password = 'Пожалуйста, введите пароль';
+        }
+
+        if (model.error.email !== '' || model.error.password !== '') {
+          return;
+        }
+
         model.message = '';
         model.isLoading = true;
 
-        await signInWithEmail({
-          username: model.email,
-          password: model.password,
-        });
+        try {
+          const token = await signInWithEmail({
+            username: model.email,
+            password: model.password,
+          });
 
-        model.isLoading = false;
+          if (token) {
+            session.setAccessToken(token.access);
+            session.setRefreshToken(token.refresh);
+          }
+          model.isLoading = false;
+        } catch (error: any) {
+          model.message = error.message;
+          model.isLoading = false;
+        }
       },
 
       async getCurrentUser() {
-        model.error = '';
-        model.message = '';
-        model.isLoading = true;
+        try {
+          const user = await getMe();
 
-        await getMe();
-
-        navigate(model.toMain);
-        model.isLoading = false;
+          if (user) {
+            session.updateUser(user);
+          }
+        } catch (error: any) {
+          model.message = error.message;
+        }
       },
     };
   });

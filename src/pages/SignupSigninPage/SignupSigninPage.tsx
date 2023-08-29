@@ -20,7 +20,9 @@ const SignupSigninPage = () => {
               alt='Логотип проекта'
             />
           </Link>
-          <SignupSigninForm />
+          <div className={styles.content__formArea}>
+            <SignupSigninForm />
+          </div>
         </div>
         <div className={styles.content__picturesContainer}>
           <PicturesBlock />
