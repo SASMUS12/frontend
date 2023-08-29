@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { Input } from '../UI/Input/Input';
-import SelectedItems from '../UI/selectedItems/selectedItems';
+import ItemsOpenedList from '../UI/ItemsOpenedList/ItemsOpenedList';
 
-import { Interest } from '../../utils/openapi';
+import { Country, Interest } from '../../utils/openapi';
 
 import styles from './InputSearchList.module.scss';
 import classNames from 'classnames';
@@ -12,15 +12,15 @@ import cn from 'classnames';
 
 interface IPageName {
   pageName: string;
-  dataName: string;
-  dataList: (data: string) => void;
-  onSelectedItemsChange: (item: string) => void;
+  itemsName: string;
+  itemsList: (Country | Interest)[];
+  onSelectedItemsChange: (item: (Country | Interest)[]) => void;
 }
 
 const InputSearchList: FC<IPageName> = ({
   pageName,
-  dataName,
-  dataList,
+  itemsName,
+  itemsList,
   onSelectedItemsChange,
 }: IPageName) => {
   const [isSearchListVisible, setSearchListVisible] = useState(false);
@@ -36,9 +36,11 @@ const InputSearchList: FC<IPageName> = ({
   >(null);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedItems, setSelectedItems] = useState<Interest[]>([]);
+  const [selectedItems, setSelectedItems] = useState<(Country | Interest)[]>(
+    [],
+  );
 
-  const i = dataName === 'countries' ? (pageName === 'Sort' ? 5 : 1) : 100;
+  const i = itemsName === 'countries' ? (pageName === 'Sort' ? 5 : 1) : 100;
 
   console.log(isSearchListVisible);
   console.log(searchValue);
@@ -46,8 +48,8 @@ const InputSearchList: FC<IPageName> = ({
   console.log(selectedItems);
 
   useEffect(() => {
-    setSelectedItems(dataList);
-  }, [dataList]);
+    setSelectedItems(itemsList);
+  }, [itemsList]);
 
   const handleInputValue = (event) => {
     const newSearchValue = event.value;
@@ -62,14 +64,14 @@ const InputSearchList: FC<IPageName> = ({
 
     const searchValueLower = newSearchValue.toLocaleLowerCase('ru');
 
-    const filtered = dataList.filter(
+    const filtered = itemsList.filter(
       (item) =>
         item.name.toLocaleLowerCase('ru').includes(searchValueLower) &&
         !selectedItems.includes(item),
     );
     setFilteredItems(filtered);
 
-    const suggested = dataList.filter((item) =>
+    const suggested = itemsList.filter((item) =>
       item.name.toLocaleLowerCase('ru').startsWith(searchValueLower),
     );
     setSuggestedItems(suggested);
@@ -82,7 +84,7 @@ const InputSearchList: FC<IPageName> = ({
       searchValue.length > 0 && filtered.length === 0 && suggested.length === 0;
 
     const errorMessage = isInvalidSearch
-      ? dataName === 'countries'
+      ? itemsName === 'countries'
         ? 'Страны не существует, возможно ошибка'
         : ''
       : '';
@@ -118,9 +120,9 @@ const InputSearchList: FC<IPageName> = ({
       });
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (dataName === 'countries' && selectedSuggestionIndex !== null) {
+      if (itemsName === 'countries' && selectedSuggestionIndex !== null) {
         handleSelectItem(suggestedItems[selectedSuggestionIndex]);
-      } else if (dataName === 'interests') {
+      } else if (itemsName === 'interests') {
         handleSelectItem({ name: e.target.value });
         console.log(e.target.value);
       } else if (selectedItem) {
@@ -154,9 +156,9 @@ const InputSearchList: FC<IPageName> = ({
       });
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (dataName === 'countries' && selectedSuggestionIndex !== null) {
+      if (itemsName === 'countries' && selectedSuggestionIndex !== null) {
         handleSelectItem(suggestedItems[selectedSuggestionIndex]);
-      } else if (dataName === 'interests') {
+      } else if (itemsName === 'interests') {
         handleSelectItem({ name: e.target.value });
         console.log(e.target.value);
       } else if (selectedItem) {
@@ -203,7 +205,7 @@ const InputSearchList: FC<IPageName> = ({
   };
 
   const handleSelectItemFromList = (itemName: string) => {
-    const selectedItem = dataList.find(
+    const selectedItem = itemsList.find(
       (item) => item.name.toLocaleLowerCase('ru') === itemName,
     );
     if (selectedItem) {
@@ -213,7 +215,7 @@ const InputSearchList: FC<IPageName> = ({
 
   return (
     <>
-      {dataName === 'interests' && (
+      {itemsName === 'interests' && (
         <Input
           className={styles.interests__input}
           type='search'
@@ -227,7 +229,7 @@ const InputSearchList: FC<IPageName> = ({
           autoComplete='off'
         />
       )}
-      {dataName === 'countries' && (
+      {itemsName === 'countries' && (
         <>
           <Input
             className={`${styles.country__input} ${
@@ -251,7 +253,7 @@ const InputSearchList: FC<IPageName> = ({
       <div
         className={cn(
           styles.items,
-          dataName === 'countries' ? styles.items_296 : styles.items_668,
+          itemsName === 'countries' ? styles.items_296 : styles.items_668,
         )}
       >
         {isSearchListVisible && (
@@ -278,7 +280,7 @@ const InputSearchList: FC<IPageName> = ({
                     src={item.flag_icon}
                     alt={`${item.name} Flag`}
                     className={
-                      dataName === 'countries'
+                      itemsName === 'countries'
                         ? styles.items__itemsList_flagImage
                         : styles.items__itemsList_flagImage_hidden
                     }
@@ -292,13 +294,13 @@ const InputSearchList: FC<IPageName> = ({
         <div
           className={cn(
             styles.items__selectedItems,
-            dataName === 'countries'
+            itemsName === 'countries'
               ? styles.items__selectedItems_gap12
               : styles.items__selectedItems_gap16,
           )}
         >
-          <SelectedItems
-            dataName={dataName}
+          <ItemsOpenedList
+            itemsName={itemsName}
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
           />

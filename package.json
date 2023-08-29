@@ -46,7 +46,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "*",
     "@types/compose-function": "^0.0.30",
-    "@types/mini-css-extract-plugin": "^2.5.1",
     "css-loader": "^6.8.1",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",

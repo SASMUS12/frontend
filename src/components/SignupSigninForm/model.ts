@@ -4,6 +4,7 @@ import { useLocalObservable } from 'mobx-react-lite';
 
 import { getMe, signInWithEmail } from '../../utils/rest/auth';
 import { signUp } from '../../utils/rest/register';
+import { session } from '../../models/session/Session';
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const useModel = () => {
       password: '',
       confirmPassword: '',
       isLoading: false,
-      error: '',
+      error: { username: '', email: '', password: '', confirmPassword: '' },
       message: '',
       refresh: '',
       access: '',
@@ -42,15 +43,32 @@ export const useModel = () => {
       async handleRegister(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        model.error = '';
+        model.error = {
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        };
+
+        if (model.username === '') {
+          model.error.username = 'Пожалуйста, заполните поле username';
+        }
+
+        if (model.error.username !== '' || model.error.email !== '') {
+          return;
+        }
+
         model.message = '';
         model.isLoading = true;
-
-        await signUp({
-          email: model.email,
-          username: model.username,
-          password: model.password,
-        });
+        try {
+          await signUp({
+            email: model.email,
+            username: model.username,
+            password: model.password,
+          });
+        } catch (error: any) {
+          model.message = error.message;
+        }
 
         navigate(model.toFillOut);
         model.isLoading = false;
@@ -63,10 +81,15 @@ export const useModel = () => {
         model.message = '';
         model.isLoading = true;
 
-        await signInWithEmail({
+        const token = await signInWithEmail({
           username: model.email,
           password: model.password,
         });
+
+        if (token) {
+          session.setAccessToken(token.access);
+          session.setRefreshToken(token.refresh);
+        }
 
         model.isLoading = false;
       },
@@ -76,7 +99,11 @@ export const useModel = () => {
         model.message = '';
         model.isLoading = true;
 
-        await getMe();
+        const user = await getMe();
+
+        if (user) {
+          session.update(user);
+        }
 
         navigate(model.toMain);
         model.isLoading = false;
