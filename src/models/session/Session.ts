@@ -1,8 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { User, UserInterface } from './User';
 
-import { UserRepr } from '../../utils/openapi';
-
 class Session {
   private _user: User | null = null;
   private _accessToken: string | null = null;
