@@ -56,7 +56,6 @@ const MainPage = () => {
       });
       console.log('ответ получен -', response);
       setIsUsersList(true);
-
       if (response.data && response.data.results) {
         setUsersList(response.data.results);
         console.log(response.data.results);
@@ -121,7 +120,7 @@ const MainPage = () => {
               setCardsListLength={setCardsListLength}
             />
           </div>
-          {/*<Sort onChangeSort={setFilters} isOpen={isSortPopupOpen} />*/}
+          <Sort onChangeSort={setFilters} isOpen={isSortPopupOpen} />
         </div>
         <Modal isOpen={model.isModalOpen} onClose={handleCloseModal}>
           <h2 className={styles.modal_header}>

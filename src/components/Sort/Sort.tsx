@@ -9,8 +9,6 @@ import { Button } from '../UI/Button/Button';
 
 import { Country, Language, SkillLevelEnum } from '../../utils/openapi';
 
-import styles from '../Sort/Sort.module.scss';
-
 interface Filters {
   country: string;
   languages: {
