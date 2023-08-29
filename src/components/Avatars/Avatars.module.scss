@@ -1,0 +1,21 @@
+.avatarsItems {
+  margin: 0 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 12px;
+
+  &_avatarItem {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+
+    &_selected {
+      border-color: var(--accent-color-salad);
+    }
+  }
+}

@@ -15,7 +15,9 @@ const UserStatusIsOnline: FC<IUserStatusIsOnline> = ({ is_online }) => {
       <img
         className={styles.card__isOnline}
         src={indicatorIcon}
-        alt={`Индикатор статуса пользователя (${is_online ? 'в сети' : 'не в сети'})`}
+        alt={`Индикатор статуса пользователя (${
+          is_online ? 'в сети' : 'не в сети'
+        })`}
       />
       <p className={styles.card__text}>{is_online ? 'в сети' : 'не в сети'}</p>
     </div>

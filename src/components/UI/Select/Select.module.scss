@@ -1,0 +1,108 @@
+.selectElement {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &__label {
+    color: var(--dark-violet);
+  }
+
+  &__label16 {
+    font: var(--font-text-16-120-400);
+  }
+
+  &__label18 {
+    font: var(--font-title-18-120-500);
+    margin-bottom: 4px;
+  }
+
+  &__hint {
+    margin-top: 12px;
+    font: var(--font-text-14-120-400);
+    color: var(--dark-violet-gradient-400);
+
+    &_true {
+      display: none;
+    }
+
+    &_false {
+      display: inline-block;
+    }
+  }
+
+  &__select {
+    display: inline-block;
+    height: 40px;
+    box-sizing: border-box;
+    background: url("../../../images/svg/select-arrow.svg") no-repeat var(--color-base-white);
+    background-position: right 12px bottom 10px;
+    border: 1px solid var(--soft-violet);
+    border-radius: 20px;
+    padding: 8px 12px;
+    margin-top: 12px;
+    font: var(--font-text-14-120-400);
+    color: var(--dark-violet);
+
+    appearance: none; /* remove arrow        */
+    -webkit-appearance: none; /* remove arrow Chrome */
+    -moz-appearance: none; /* remove arrow FF     */
+
+    &::-ms-expand {
+      display: none; /* remove arrow IE     */
+    }
+
+    &:hover {
+      border: 2px solid var(--soft-violet);
+      background-position: right 11px bottom 9px;
+      padding: 7px 11px;
+    }
+
+    &:active {
+      border: 1px solid var(--dark-violet);
+      padding: 8px 12px;
+    }
+  }
+
+  &__placeholder {
+    position: absolute;
+    left: 12px;
+    font: var(--font-text-14-100-400);
+    color: var(--soft-violet);
+    opacity: 0.5;
+
+    &_withLabel {
+      top: 51px;
+    }
+
+    &_withoutLabel {
+      top: 26px;
+    }
+  }
+
+  &__select:valid+&__placeholder {
+    display: none;
+  }
+}
+
+/*.hint {*/
+/*  display: block;*/
+/*  margin-top: 6px;*/
+/*  color: var(--color-gray-500);*/
+/*  font: var(--font-text-sm-regular);*/
+/*}*/
+
+/*.error {*/
+/*  display: block;*/
+/*  margin-top: 6px;*/
+/*  color: var(--color-error-500);*/
+/*  font: var(--font-text-sm-regular);*/
+/*}*/
+
+/*.has-error {*/
+/*  border-color: var(--color-error-300);*/
+/*}*/
+
+/*.has-error:focus-visible {*/
+/*  border-color: var(--color-error-300);*/
+/*  box-shadow: var(--shadow-xs), 0 0 0 4px var(--color-error-100);*/
+/*}*/

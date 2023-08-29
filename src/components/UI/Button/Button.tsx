@@ -1,26 +1,45 @@
-import {MouseEventHandler, ReactNode, FC} from "react";
+import { MouseEventHandler, ReactNode, FC } from 'react';
 
 import cn from 'classnames';
 
 import styles from './Button.module.scss';
 
 interface Props {
-    className?: string;
-    type?: "button" | "submit";
-    variant?: "primary" | "transparent";
-    disabled?: boolean;
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-    children?: ReactNode;
+  className?: string;
+  type?: 'button' | 'submit';
+  variant?: 'primary' | 'transparent' | 'gray';
+  size?: 'small' | 'big';
+  fontSize?: '13' | '16';
+
+  disabled?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  children?: ReactNode;
 }
 
-export const Button: FC<Props> = ({ className, type, variant = "primary", disabled, onClick, children, }) => {
-    return (
-        <button
-            className={cn(styles.button, styles[`variant-${variant}`], className)}
-            type={type}
-            disabled={disabled}
-            onClick={onClick}>
-            {children}
-        </button>
-    );
+export const Button: FC<Props> = ({
+  className,
+  type,
+  variant = 'primary',
+  size = 'big',
+  fontSize = '16',
+  disabled,
+  onClick,
+  children,
+}) => {
+  return (
+    <button
+      className={cn(
+        className,
+        styles.button,
+        styles[`variant-${variant}`],
+        styles[`size-${size}`],
+        styles[`fontSize-${fontSize}`],
+      )}
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 };
