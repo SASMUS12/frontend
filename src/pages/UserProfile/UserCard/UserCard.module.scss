@@ -31,12 +31,33 @@
 	padding: 16px 0;
 }
 
+.profile__onlyAvatar {
+	position: relative;
+	width: 100%;
+}
+
 .profile__partnerAvatar {
 	width: 180px;
 	height: 100%;
 	border-radius: 20px;
 	margin: 24px 24px 24px;
 	background-repeat: no-repeat;
+}
+
+.profile__partnerAvatarButton {
+	position: absolute;
+	left: 35%;
+	top: 35%;
+	z-index: 100;
+}
+
+.profile__additionalButtons {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	left: 25px;
+	bottom: -25px;
+	width: 200px;
 }
 
 .profile__partnerInfo {

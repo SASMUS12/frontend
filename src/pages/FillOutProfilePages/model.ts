@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useLocalObservable } from 'mobx-react-lite';
 
 import { getMe } from '../../utils/rest/auth';
+import { updateProfile } from '../../utils/rest/updateProfile';
 import { session } from '../../models/session/Session';
 
-import { GenderEnum } from '../../utils/openapi';
+import { GenderEnum, UserProfile } from '../../utils/openapi';
+import { api } from '../../utils/constants';
+import { store } from '../../models/store';
+import { User } from '../../models/session/User';
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -16,6 +20,7 @@ export const useModel = () => {
       birthdate: '',
       gender: 'Male' as GenderEnum | null,
       avatar: '',
+      avatarFile: null as File | null,
       previewAvatar: '',
       country: '',
       interest: '',
@@ -76,29 +81,16 @@ export const useModel = () => {
               value: URL.createObjectURL(file),
             });
 
+            const reader = new FileReader();
+            reader.onload = () => {
+              const base64Data = reader.result as null;
+              if (base64Data) {
+                model.avatarFile = base64Data;
+              }
+            };
+            reader.readAsDataURL(file);
 
-
-            // const handleFileInputChange = (
-            //   event: React.ChangeEvent<HTMLInputElement>,
-            // ) => {
-            //   const file = event.target.files?.[0];
-            //   if (file) {
-            //     // eslint-disable-next-line no-undef
-            //     const reader = new FileReader();
-            //     reader.onload = () => {
-            //       const base64Data = reader.result as null;
-            //       if (base64Data) {
-            //         setImageBase64(base64Data);
-            //         setEditedData((prevData) => ({ ...prevData, avatar: base64Data }));
-            //       }
-            //     };
-            //     reader.readAsDataURL(file);
-            //   }
-            //   // eslint-disable-next-line no-undef
-            //   console.log('imageBase64', imageBase64);
-            // };
-
-
+            console.log('imageBase64', model.avatarFile);
 
             model.handleModalClose();
             console.log(model.avatar);
@@ -150,15 +142,31 @@ export const useModel = () => {
         model.message = '';
         model.isLoading = true;
         try {
-          session.updateUser({
+          const user = store.session.user;
+
+          const getUpdateUser = await api.api.usersMePartialUpdate({
             first_name: model.firstName,
-            avatar: ,
-          birth_date: model.birthdate,
+            avatar: model.avatarFile,
+            birth_date: model.birthdate,
             gender: model.gender,
           });
+
+          if (getUpdateUser) {
+            store.session.updateUser({
+              ...user,
+              first_name: model.firstName,
+              avatar: model.avatar,
+              birth_date: model.birthdate,
+              gender: model.gender,
+            });
+          }
+
+          updateProfile({});
           navigate('/fill-out-2');
+          model.isLoading = false;
         } catch (error: any) {
-          model.message = error.message;
+          console.log('fill-out-1 error:', error);
+          model.isLoading = false;
         }
       },
     };

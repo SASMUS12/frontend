@@ -1,5 +1,4 @@
-import { FormEvent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import Header from '../../components/Header/Header';
@@ -20,17 +19,10 @@ import cn from 'classnames';
 
 const FillOutProfilePage1 = () => {
   const model = useModel();
-  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(model.avatar);
   }, []);
-
-  const handleFillOutPage1 = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    navigate('/fill-out-2');
-    console.log('FillOutPage1');
-  };
 
   return (
     <>
@@ -41,7 +33,11 @@ const FillOutProfilePage1 = () => {
           <h1 className={styles.container__title}>
             Давайте заполним ваш профиль и начнем общаться
           </h1>
-          <form id='form' className={styles.form} onSubmit={handleFillOutPage1}>
+          <form
+            id='form'
+            className={styles.form}
+            onSubmit={model.handleFillOut1Submit}
+          >
             <div className={styles.container__fillOutProfileArea}>
               <Input
                 className={cn(

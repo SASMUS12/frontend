@@ -7,8 +7,15 @@ import PicturesBlock from '../../components/PicturesBlock/PicturesBlock';
 import logo from '../../images/svg/logo.svg';
 
 import styles from './SignupSigninPage.module.scss';
+import { useEffect } from 'react';
+
+import { session } from '../../models/session/Session';
 
 const SignupSigninPage = () => {
+  useEffect(() => {
+    session.signOut();
+  }, []);
+
   return (
     <>
       <section className={styles.content}>
