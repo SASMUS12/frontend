@@ -7,7 +7,7 @@
       width: 296px;
 
     &_error {
-      color: var(--error, #DE3D3D);
+      color: var(--error);
       font-size: 12px;
       height: 15px;
       margin-top: 6px;
@@ -18,21 +18,21 @@
       }
 
       &:hover {
-        border: 2px solid var(--soft-violet, #A5A0C5);
+        border: 2px solid var(--soft-violet);
       }
 
       &:focus {
-        border: 1px solid var(--dark-violet, #403A6D);
+        border: 1px solid var(--dark-violet);
         background-image: url("../../images/svg/search_dark.svg");
       }
 
       &:disabled {
-        background: var(--grey-gradient-50, #F0F2F4);
+        background: var(--grey-gradient-50);
         border: none;
-        color: var(--soft-violet, #A5A0C5);
+        color: var(--soft-violet);
       }
     }
-    
+
     &__selectedCountries {
       position: relative;
       width: 296px;
@@ -48,7 +48,7 @@
       font-weight: 400;
       line-height: normal;
       display: flex;
-      align-items: center;           
+      align-items: center;
       word-wrap: break-word;
       white-space: nowrap;
     }
@@ -58,7 +58,7 @@
     width: 16px;
     height: 16px;
     background-image: url("../../images/svg/16px.svg");
-    background-color: var(--accent-color-salad, #C3EE11);
+    background-color: var(--accent-color-salad);
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
@@ -75,10 +75,10 @@
       padding: 4px 6px 4px 12px;
       height: 25px;
       border-radius: 12px;
-      background-color: var(--accent-color-salad, #C3EE11);
+      background-color: var(--accent-color-salad);
       display: flex;
       flex-wrap: wrap;
-      width: fit-content;      
+      width: fit-content;
     }
 
   &__countryList {
@@ -96,18 +96,18 @@
     z-index: 1000;
 
       &::-webkit-scrollbar {
-        width: .75em;        
+        width: .75em;
       }
-    
+
       &::-webkit-scrollbar-track {
-        background-color: var(--white, #FFF);
+        background-color: var(--white);
         margin-block: .5em;
       }
-  
+
       &::-webkit-scrollbar-thumb {
-        background-color: var(--soft-violet, #A5A0C5);
+        background-color: var(--soft-violet);
         border-radius: 100vw;
-        border: .25em solid var(--white, #FFF);
+        border: .25em solid var(--white);
       }
 
     &_option {
@@ -124,6 +124,6 @@
         width: 16px;
         height: 16px;
         margin-right: 8px;
-      }              
+      }
     }
   }

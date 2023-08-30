@@ -115,7 +115,6 @@
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 .language__level {
   width: 336px;
   display: flex;
@@ -134,7 +133,6 @@
     }
 
   }
-
 
   &_input {
     appearance: none;
@@ -159,7 +157,7 @@
     }
 
     &:checked + .language__level_checkbox_visible::before {
-      background-image: url(../../images/svg/Arrow/CheckBoxBlur.svg);
+      background-image: url('../../images/svg/Arrow/CheckBoxBlur.svg');
       z-index: 5;
       position: absolute;
       top: -1.5px;
@@ -167,7 +165,7 @@
     }
 
     &:checked + .language__level_checkbox_visible::before:active:disabled {
-      background-image: url(../../images/svg/Arrow/CheckBoxGreen.svg);
+      background-image: url('../../images/svg/Arrow/CheckBoxGreen.svg');
     }
   }
 

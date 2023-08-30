@@ -9,6 +9,7 @@
     transition: background-color 0.1s ease-in-out;
     background-color: #E2E5E9;
   }
+  
   &__active {
     padding: 8px 16px 25px 16px;
     border-radius: 16px;
@@ -19,6 +20,7 @@
     transition: background-color 0.1s ease-in-out;
     background-color: rgba(195, 238, 17, 1);
   }
+
   ul {
     display: flex;
     list-style: none;
@@ -35,7 +37,7 @@
       color: #566276;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
-      
+
       &:hover {
         background: var(--white, #FFF);
         color: #323944;

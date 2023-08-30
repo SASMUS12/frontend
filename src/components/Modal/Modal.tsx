@@ -22,9 +22,7 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children, className }) => {
 
   useEffect(() => {
     if (isOpen) {
-      // Список действий внутри одного хука
       document.addEventListener('keydown', handleCloseByEsc);
-      // Возвращаем функцию, которая удаляет эффекты
       return () => {
         document.removeEventListener('keydown', handleCloseByEsc);
       };
