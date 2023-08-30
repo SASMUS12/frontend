@@ -1,27 +1,43 @@
+import React, { useState } from 'react';
+import IconButton from '../Buttons/IconButton/IconButton';
 import search from '../../../images/userProfile/search.svg';
 import control from '../../../images/userProfile/control.svg';
 import styles from './Topics.module.scss';
-import IconButton from '../Buttons/IconButton/IconButton';
 
-const Topics = ({
+interface TopicsProps {
+  isEditing: boolean;
+  interests: string[];
+  setEditedData: (value: string[]) => void;
+}
+
+const Topics: React.FC<TopicsProps> = ({
   isEditing,
-  themes,
-  setThemes,
-  inputValue,
-  setInputValue,
+  interests,
+  setEditedData,
 }) => {
-  const handleSetThemes = (event) => {
+  const [editedInterests, setEditedInterests] = useState<string[]>([
+    ...interests,
+  ]);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleSetThemes = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
-  const handleAddTheme = (event) => {
+  const handleAddTheme = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const newTheme = inputValue.trim();
       if (newTheme !== '') {
-        setThemes([...themes, newTheme]);
+        setEditedInterests((prevInterests) => [...prevInterests, newTheme]);
+        setEditedData([...interests, newTheme]);
         setInputValue('');
       }
     }
+  };
+
+  const handleRemoveTheme = (index: number) => {
+    const updatedInterests = editedInterests.filter((_, i) => i !== index);
+    setEditedInterests(updatedInterests);
   };
 
   return (
@@ -30,7 +46,7 @@ const Topics = ({
         <div className={styles.topics}>
           <h3 className={styles.title}>Темы для общения</h3>
           <div className={styles.lystThemes}>
-            {themes.map((item, index) => (
+            {interests.map((item, index) => (
               <span key={index} className={styles.themes}>
                 {item}
               </span>
@@ -58,11 +74,16 @@ const Topics = ({
             />
           </div>
           <div className={styles.lystThemes}>
-            {themes.map((item, index) => (
+            {editedInterests.map((item, index) => (
               <span key={index} className={styles.themes}>
                 {item}
                 <span className={styles.themes__icon}>
-                  <IconButton icon={control} />
+                  <IconButton
+                    icon={control}
+                    handleFunction={() => handleRemoveTheme(index)}
+                    iconWidth={16}
+                    iconHeight={16}
+                  />
                 </span>
               </span>
             ))}

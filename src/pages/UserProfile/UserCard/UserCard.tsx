@@ -1,11 +1,34 @@
+import React, { FC, ChangeEvent } from 'react';
+import { GenderEnum } from '../../../utils/openapi';
+import IconButton from '../Buttons/IconButton/IconButton';
 import formattedTime from '../../../utils/getTime';
 import cardPartnerAvatar from '../../../images/userProfile/card-partner-avatar.png';
 import cardPartnerFlag from '../../../images/userProfile/russia.svg';
 import clock from '../../../images/userProfile/clock.png';
-
+import camera from '../../../images/userProfile/camera.svg';
 import styles from './UserCard.module.scss';
 
-const UserCard = ({
+export interface Country {
+  code: string | null;
+  name: string;
+  flag_icon: string;
+}
+
+interface UserCardProps {
+  isEditing: boolean;
+  name: string;
+  age: string;
+  gender: GenderEnum | null;
+  location: Country | string | null;
+  setName: (value: string) => void;
+  setAge: (value: string) => void;
+  setGender: (value: GenderEnum | null) => void;
+  setLocation: (value: string) => void;
+  avatar: string | null;
+  handleFileInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const UserCard: FC<UserCardProps> = ({
   isEditing,
   name,
   age,
@@ -15,22 +38,29 @@ const UserCard = ({
   setAge,
   setGender,
   setLocation,
+  avatar,
+  handleFileInputChange,
 }) => {
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const handleChangeString = (
+    setState: React.Dispatch<React.SetStateAction<string>>,
+    value: string,
+  ) => {
+    setState(value);
   };
 
-  const handleChangeAge = (event) => {
+  const handleClickAvatar = () => {
+    // Action
+  };
+
+  const handleChangeAge = (event: ChangeEvent<HTMLInputElement>) => {
+    const birthDay = event.target.value;
+    setAge(birthDay);
     const birthDate = new Date(event.target.value);
     const calculatedAge = calculateAge(birthDate);
-    setAge(calculatedAge);
+    return calculatedAge;
   };
 
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const calculateAge = (birthdate) => {
+  const calculateAge = (birthdate: Date) => {
     const today = new Date();
     let age = today.getFullYear() - birthdate.getFullYear();
     const monthDifference = today.getMonth() - birthdate.getMonth();
@@ -52,7 +82,7 @@ const UserCard = ({
             <div className={styles.profile__partnerAbout}>
               <img
                 className={styles.profile__partnerAvatar}
-                src={cardPartnerAvatar}
+                src={avatar ? avatar : cardPartnerAvatar}
                 alt='Аватар пользователя'
               />
               <div className={styles.profile__partnerInfo}>
@@ -64,12 +94,18 @@ const UserCard = ({
                 </div>
                 <div>
                   <div className={styles.profile__country}>
-                    <img
-                      className={styles.profile__flag}
-                      src={cardPartnerFlag}
-                      alt='Флаг страны пользователя'
-                    />
-                    <p className={styles.profile__city}>{location}</p>
+                    {location && typeof location === 'object' ? (
+                      <>
+                        <img
+                          className={styles.profile__flag}
+                          src={cardPartnerFlag}
+                          alt='Флаг страны пользователя'
+                        />
+                        <p className={styles.profile__city}>{location.code}</p>
+                      </>
+                    ) : (
+                      <p className={styles.profile__city}>{location}</p>
+                    )}
                   </div>
                   <div className={styles.profile__time}>
                     <p className={styles.profile__current}>Сейчас</p>
@@ -92,11 +128,29 @@ const UserCard = ({
           <div className={styles.profile__accent}></div>
           <div className={styles.profile__generalInfo}>
             <div className={styles.profile__partnerAbout}>
-              <img
-                className={styles.profile__partnerAvatar}
-                src={cardPartnerAvatar}
-                alt='Аватар пользователя'
-              />
+              <div className={styles.profile__onlyAvatar}>
+                <img
+                  className={styles.profile__partnerAvatar}
+                  src={avatar ? avatar : cardPartnerAvatar}
+                  alt='Аватар пользователя'
+                />
+                <div className={styles.profile__partnerAvatarButton}>
+                  <IconButton
+                    icon={camera}
+                    handleFunction={handleClickAvatar}
+                    iconWidth={54}
+                    iconHeight={54}
+                  />
+                </div>
+                <div className={styles.profile__additionalButtons}>
+                  <input
+                    type='file'
+                    className='button1'
+                    onChange={handleFileInputChange}
+                  />
+                  Button 1<button className='button2'>Button 2</button>
+                </div>
+              </div>
               <div className={styles.profile__partnerInfo}>
                 <form className={styles.profile__form}>
                   <div>
@@ -108,7 +162,14 @@ const UserCard = ({
                         name='partnerName'
                         className={styles.profile__input}
                         value={name}
-                        onChange={handleNameChange}
+                        onChange={(event) =>
+                          handleChangeString(
+                            setName as React.Dispatch<
+                              React.SetStateAction<string>
+                            >,
+                            event.target.value,
+                          )
+                        }
                       />
                     </div>
                     <div className={styles.profile__flexColumn}>
@@ -137,11 +198,11 @@ const UserCard = ({
                           name='partnerGender'
                           id='male'
                           className={
-                            gender === 'мужчина'
+                            gender === 'Male'
                               ? styles.selected
                               : styles.profile__gender
                           }
-                          onClick={() => setGender('мужчина')}
+                          onClick={() => setGender(GenderEnum.Male)}
                         />
                         <input
                           type='button'
@@ -149,11 +210,11 @@ const UserCard = ({
                           name='partnerGender'
                           id='female'
                           className={
-                            gender === 'женщина'
+                            gender === 'Female'
                               ? styles.selected
                               : styles.profile__gender
                           }
-                          onClick={() => setGender('женщина')}
+                          onClick={() => setGender(GenderEnum.Female)}
                         />
                         <input
                           type='button'
@@ -161,11 +222,11 @@ const UserCard = ({
                           name='partnerGender'
                           id='unspecified'
                           className={
-                            gender === 'не указан'
+                            gender === null
                               ? styles.selected
                               : styles.profile__gender
                           }
-                          onClick={() => setGender('не указан')}
+                          onClick={() => setGender(null)}
                         />
                       </div>
                     </div>
@@ -181,8 +242,14 @@ const UserCard = ({
                         id='partnerLocation'
                         name='partnerLocation'
                         className={styles.profile__input}
-                        value={location}
-                        onChange={handleLocationChange}
+                        onChange={(event) =>
+                          handleChangeString(
+                            setLocation as React.Dispatch<
+                              React.SetStateAction<string>
+                            >,
+                            event.target.value,
+                          )
+                        }
                       />
                     </div>
                   </div>
