@@ -10,7 +10,7 @@ import { getCountries } from '../../utils/rest/getCountries';
 interface CountriesAndInterestsSelectionProps {
   pageName: string;
   itemsName: string;
-  onSelectedItemsChange: (Country | Interest)[];
+  onSelectedItemsChange: (item: (Country | Interest)[]) => void;
 }
 
 const CountriesAndInterestsSelection = ({

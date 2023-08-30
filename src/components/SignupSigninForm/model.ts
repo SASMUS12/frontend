@@ -87,7 +87,7 @@ export const useModel = () => {
             username: model.username,
             password: model.password,
           });
-          navigate(model.toFillOut);
+          navigate('fill-out-1');
           model.isLoading = false;
         } catch (error: any) {
           model.message = error.message;

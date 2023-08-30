@@ -44,6 +44,7 @@ class Session {
     this._user = null;
     this._accessToken = null;
     this._refreshToken = null;
+    localStorage.clear();
   }
 }
 

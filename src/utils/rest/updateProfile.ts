@@ -1,11 +1,5 @@
-import {
-  Country,
-  GenderEnum,
-  Goal,
-  NullEnum,
-  UserLanguage,
-} from '../../utils/openapi';
-import { api } from '../../utils/constants';
+import { Country, GenderEnum, Goal, NullEnum, UserLanguage } from '../openapi';
+import { api } from '../constants';
 import { store } from '../../models/store';
 
 export const updateProfile = async ({
