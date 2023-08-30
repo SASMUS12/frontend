@@ -1,8 +1,8 @@
-import LevelLanguage from '../LevelLanguage/LevelLanguage';
-import help from '../../../images/userProfile/help.png';
-import IconButton from '../Buttons/IconButton/IconButton';
-import styles from './UserLanguages.module.scss';
-import add from '../../../images/userProfile/plus.svg';
+import LevelLanguage from "../LevelLanguage/LevelLanguage";
+import help from "../../../images/userProfile/help.png";
+import IconButton from "../Buttons/IconButton/IconButton";
+import styles from "./UserLanguages.module.scss";
+import add from "../../../images/userProfile/plus.svg";
 
 interface UserLanguagesProps {
   isEditing: boolean;
@@ -57,7 +57,7 @@ const UserLanguages: React.FC<UserLanguagesProps> = ({
           <img
             className={styles.profile__help}
             src={help}
-            alt='Флаг страны пользователя'
+            alt="Флаг страны пользователя"
           />
         </div>
       ) : (
@@ -109,7 +109,7 @@ const UserLanguages: React.FC<UserLanguagesProps> = ({
           <img
             className={styles.profile__help}
             src={help}
-            alt='Флаг страны пользователя'
+            alt="Флаг страны пользователя"
           />
         </div>
       )}

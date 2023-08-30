@@ -1,6 +1,6 @@
-import { Country, GenderEnum, Goal, NullEnum, UserLanguage } from '../openapi';
-import { api } from '../constants';
-import { store } from '../../models/store';
+import { GenderEnum, NullEnum, UserLanguage } from "../openapi";
+import { api, headersWithToken as headers } from "../constants";
+import { store } from "../../models/store";
 
 export const updateProfile = async ({
   first_name,
@@ -15,11 +15,11 @@ export const updateProfile = async ({
 }: {
   first_name?: string;
   avatar?: string | null;
-  country?: Country;
+  country?: string | null;
   birth_date?: string | null;
   languages?: UserLanguage[];
   gender?: GenderEnum | NullEnum | null;
-  goals?: Goal[];
+  goals?: string[];
   interests?: string[];
   about?: string;
 }) => {
@@ -30,17 +30,20 @@ export const updateProfile = async ({
 
     const user = store.session.user;
 
-    await api.api.usersMePartialUpdate({
-      first_name,
-      avatar: avatar as File | null,
-      country: country as string | null | undefined,
-      birth_date,
-      languages,
-      gender,
-      goals: goals as string[] | undefined,
-      interests,
-      about,
-    });
+    await api.api.usersMePartialUpdate(
+      {
+        first_name,
+        avatar: avatar as File | null,
+        country: country as string | null | undefined,
+        birth_date,
+        languages,
+        gender,
+        goals: goals as string[] | undefined,
+        interests,
+        about,
+      },
+      { headers }
+    );
 
     store.session.updateUser({
       ...user,
@@ -55,6 +58,6 @@ export const updateProfile = async ({
       about,
     });
   } catch (error) {
-    console.log('features.updateProfile', error);
+    console.log("features.updateProfile", error);
   }
 };

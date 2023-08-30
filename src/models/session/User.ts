@@ -1,67 +1,106 @@
-import { makeObservable, observable } from 'mobx';
+import { makeObservable, observable } from "mobx";
 
-import {
-  Country,
-  GenderEnum,
-  Goal,
-  NullEnum,
-  UserLanguage,
-} from '../../utils/openapi';
+import { GenderEnum, NullEnum, UserLanguage } from "../../utils/openapi";
 
 export interface UserInterface {
+  username: string;
   first_name?: string;
   avatar?: string | null;
-  country?: Country | null;
-  birth_date?: string | null;
+  age: string;
+  slug: string | null;
+  country?: string | null;
   languages?: UserLanguage[];
   gender?: GenderEnum | NullEnum | null;
-  goals?: Goal[];
+  goals?: string[];
   interests?: string[];
   about?: string;
+  last_activity: string | null;
+  is_online: boolean;
+  gender_is_hidden: boolean;
+  age_is_hidden: boolean;
+  role: string;
+  is_blocked: boolean;
+  birth_date?: string | null;
 }
 
 export class User {
+  username: string;
   first_name?: string;
   avatar?: string | null;
-  country?: Country | null;
-  birth_date?: string | null;
+  age: string;
+  slug: string | null;
+  country?: string | null;
   languages?: UserLanguage[];
   gender?: GenderEnum | NullEnum | null;
-  goals?: Goal[];
+  goals?: string[];
   interests?: string[];
   about?: string;
+  last_activity: string | null;
+  is_online: boolean;
+  gender_is_hidden: boolean;
+  age_is_hidden: boolean;
+  role: string;
+  is_blocked: boolean;
+  birth_date?: string | null;
 
   constructor({
+    username,
     first_name,
     avatar,
+    age,
+    slug,
     country,
-    birth_date,
     languages,
     gender,
     goals,
     interests,
     about,
+    last_activity,
+    is_online,
+    gender_is_hidden,
+    age_is_hidden,
+    role,
+    is_blocked,
+    birth_date,
   }: UserInterface) {
     makeObservable(this, {
+      username: observable,
       first_name: observable,
       avatar: observable,
+      age: observable,
+      slug: observable,
       country: observable,
-      birth_date: observable,
       languages: observable,
       gender: observable,
       goals: observable,
       interests: observable,
       about: observable,
+      last_activity: observable,
+      is_online: observable,
+      gender_is_hidden: observable,
+      age_is_hidden: observable,
+      role: observable,
+      is_blocked: observable,
+      birth_date: observable,
     });
 
+    this.username = username;
     this.first_name = first_name;
     this.avatar = avatar;
+    this.age = age;
+    this.slug = slug;
     this.country = country;
-    this.birth_date = birth_date;
     this.languages = languages;
     this.gender = gender;
     this.goals = goals;
     this.interests = interests;
     this.about = about;
+    this.last_activity = last_activity;
+    this.is_online = is_online;
+    this.gender_is_hidden = gender_is_hidden;
+    this.age_is_hidden = age_is_hidden;
+    this.role = role;
+    this.is_blocked = is_blocked;
+    this.birth_date = birth_date;
   }
 }

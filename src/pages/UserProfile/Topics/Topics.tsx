@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import IconButton from '../Buttons/IconButton/IconButton';
-import search from '../../../images/userProfile/search.svg';
-import control from '../../../images/userProfile/control.svg';
-import styles from './Topics.module.scss';
+import React, { useState } from "react";
+import IconButton from "../Buttons/IconButton/IconButton";
+import search from "../../../images/userProfile/search.svg";
+import control from "../../../images/userProfile/control.svg";
+import styles from "./Topics.module.scss";
 
 interface TopicsProps {
   isEditing: boolean;
@@ -18,19 +18,19 @@ const Topics: React.FC<TopicsProps> = ({
   const [editedInterests, setEditedInterests] = useState<string[]>([
     ...interests,
   ]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const handleSetThemes = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleAddTheme = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       const newTheme = inputValue.trim();
-      if (newTheme !== '') {
+      if (newTheme !== "") {
         setEditedInterests((prevInterests) => [...prevInterests, newTheme]);
         setEditedData([...interests, newTheme]);
-        setInputValue('');
+        setInputValue("");
       }
     }
   };
@@ -59,14 +59,14 @@ const Topics: React.FC<TopicsProps> = ({
           <div className={styles.ded}>
             <img
               src={search}
-              alt='Поиск'
+              alt="Поиск"
               className={styles.topics__searchIcon}
             />
             <input
-              type='text'
-              id='partnerThemes'
-              name='partnerThemes'
-              placeholder='Начните вводить тему'
+              type="text"
+              id="partnerThemes"
+              name="partnerThemes"
+              placeholder="Начните вводить тему"
               className={styles.topics__input}
               value={inputValue}
               onChange={handleSetThemes}

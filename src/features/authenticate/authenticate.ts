@@ -1,5 +1,5 @@
-import { store } from '../../models/store';
-import { getAcceessToken, getMe } from '../../utils/rest/auth';
+import { store } from "../../models/store";
+import { getAcceessToken, getMe } from "../../utils/rest/auth";
 
 export const authenticate = async (): Promise<void> => {
   try {
@@ -9,11 +9,11 @@ export const authenticate = async (): Promise<void> => {
       store.session.updateUser(user);
     }
   } catch (error) {
-    console.log('features.authenticate updateUser', error);
+    console.log("features.authenticate updateUser", error);
   }
 
   try {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem("refreshToken");
     if (refreshToken) {
       const accessToken = await getAcceessToken(refreshToken);
       if (accessToken) {
@@ -21,6 +21,6 @@ export const authenticate = async (): Promise<void> => {
       }
     }
   } catch (error) {
-    console.log('features.authenticate getAccessToken', error);
+    console.log("features.authenticate getAccessToken", error);
   }
 };

@@ -1,18 +1,16 @@
-import { loggedIn } from '../../models/LoggedIn';
+import { loggedIn } from "../../models/LoggedIn";
 
 import {
   TokenObtainPairRequest,
   TokenObtainPair,
   TokenRefresh,
-  UserRepr,
-  Country,
+  UserProfile,
   GenderEnum,
-  Goal,
   NullEnum,
   UserLanguage,
-} from '../openapi';
+} from "../openapi";
 
-import { api, headersWithToken as headers } from '../constants';
+import { api, headersWithToken as headers } from "../constants";
 
 export const signInWithEmail = async ({
   username,
@@ -28,8 +26,8 @@ export const signInWithEmail = async ({
   }
 
   if (token) {
-    localStorage.setItem('accessToken', token.access);
-    localStorage.setItem('refreshToken', token.refresh);
+    localStorage.setItem("accessToken", token.access);
+    localStorage.setItem("refreshToken", token.refresh);
     return {
       access: token.access as string,
       refresh: token.refresh as string,
@@ -40,7 +38,7 @@ export const signInWithEmail = async ({
 };
 
 export const getAcceessToken = async (
-  refresh: string,
+  refresh: string
 ): Promise<TokenRefresh | null> => {
   const { data: token, error } = await api.api.authJwtRefreshCreate({
     refresh: refresh,
@@ -51,7 +49,7 @@ export const getAcceessToken = async (
   }
 
   if (token) {
-    localStorage.setItem('accessToken', token.access);
+    localStorage.setItem("accessToken", token.access);
     return {
       access: token.access as string,
     };
@@ -60,7 +58,7 @@ export const getAcceessToken = async (
   return null;
 };
 
-export const getMe = async (): Promise<UserRepr | null> => {
+export const getMe = async (): Promise<UserProfile | null> => {
   const { data: user, error } = await api.api.usersMeRetrieve({ headers });
 
   if (error) {
@@ -81,17 +79,19 @@ export const getMe = async (): Promise<UserRepr | null> => {
       avatar: user.avatar as string,
       age: user.age as string,
       slug: user.slug as string | null,
-      country: user.country as Country,
+      country: user.country as string | null,
       languages: user.languages as UserLanguage[],
       gender: user.gender as GenderEnum | NullEnum | null,
-      goals: user.goals as Goal[],
+      goals: user.goals as string[],
       interests: user.interests as string[],
       about: user.about as string,
       last_activity: user.last_activity as string | null,
-      is_online: user.is_online as string,
+      is_online: user.is_online as boolean,
       gender_is_hidden: user.gender_is_hidden as boolean,
       age_is_hidden: user.age_is_hidden as boolean,
       role: user.role as string,
+      is_blocked: user.is_blocked as boolean,
+      birth_date: user.birth_date as string | null,
     };
   }
 

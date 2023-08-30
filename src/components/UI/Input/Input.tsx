@@ -1,7 +1,7 @@
-import type { ChangeEvent, InputHTMLAttributes } from 'react';
+import type { ChangeEvent, InputHTMLAttributes } from "react";
 
-import styles from './Input.module.scss';
-import cn from 'classnames';
+import styles from "./Input.module.scss";
+import cn from "classnames";
 
 export interface InputProps<T extends string>
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -14,7 +14,7 @@ export interface InputProps<T extends string>
   labelHint?: string;
   isLabelHintHidden?: boolean;
   type: string;
-  fontSize?: '14' | '16';
+  fontSize?: "14" | "16";
   placeholder?: string;
   hint?: string;
   required?: boolean;
@@ -28,11 +28,11 @@ export const Input = <T extends string>({
   value,
   name,
   label,
-  labelStyles = 'label16',
+  labelStyles = "label16",
   labelHint,
   isLabelHintHidden,
   type,
-  fontSize = '14',
+  fontSize = "14",
   placeholder,
   hint,
   required,
@@ -51,7 +51,7 @@ export const Input = <T extends string>({
       <span
         className={cn(
           styles.inputElement__label,
-          styles[`inputElement__${labelStyles}`],
+          styles[`inputElement__${labelStyles}`]
         )}
       >
         {label}
@@ -59,7 +59,7 @@ export const Input = <T extends string>({
       <span
         className={cn(
           styles.inputElement__hint,
-          styles[`inputElement__hint_${isLabelHintHidden}`],
+          styles[`inputElement__hint_${isLabelHintHidden}`]
         )}
       >
         {labelHint}
@@ -69,11 +69,11 @@ export const Input = <T extends string>({
           styles.inputElement__input,
           {
             [styles.inputElement__input_hasError]: hasError,
-            [styles.inputElement__input_searchInput]: type === 'search',
-            [styles.inputElement__input_dateInput]: type === 'date',
+            [styles.inputElement__input_searchInput]: type === "search",
+            [styles.inputElement__input_dateInput]: type === "date",
           },
           styles[`fontSize-${fontSize}`],
-          className,
+          className
         )}
         name={name}
         value={value}
@@ -96,11 +96,11 @@ export const Input = <T extends string>({
           styles.inputElement__input,
           {
             [styles.inputElement__input_hasError]: hasError,
-            [styles.inputElement__input_searchInput]: type === 'search',
-            [styles.inputElement__input_dateInput]: type === 'date',
+            [styles.inputElement__input_searchInput]: type === "search",
+            [styles.inputElement__input_dateInput]: type === "date",
           },
           styles[`fontSize-${fontSize}`],
-          className,
+          className
         )}
         name={name}
         value={value}

@@ -1,4 +1,4 @@
-import styles from './Reviews.module.scss';
+import styles from "./Reviews.module.scss";
 
 const Reviews = () => {
   return (

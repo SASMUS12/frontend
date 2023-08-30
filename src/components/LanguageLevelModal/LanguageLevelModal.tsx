@@ -1,9 +1,9 @@
-import React from 'react';
-import Modal from '../Modal/Modal';
+import React from "react";
+import Modal from "../Modal/Modal";
 
-import { Levels } from './Levels';
+import { Levels } from "./Levels";
 
-import styles from './LanguageLevelModal.module.scss';
+import styles from "./LanguageLevelModal.module.scss";
 
 interface LanguageLevelModalProps {
   isModalOpen: boolean;
@@ -36,7 +36,7 @@ const LanguageLevelModal: React.FC<LanguageLevelModalProps> = ({
             src={level.level}
             alt={level.name}
             className={
-              pageName === 'Sort'
+              pageName === "Sort"
                 ? styles.modal__image
                 : styles.modal__image_hidden
             }

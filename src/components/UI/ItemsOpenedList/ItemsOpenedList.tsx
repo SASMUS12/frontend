@@ -1,7 +1,7 @@
-import { Country, Interest } from '../../../utils/openapi';
+import { Country, Interest } from "../../../utils/openapi";
 
-import styles from '../../InputSearchList/InputSearchList.module.scss';
-import cn from 'classnames';
+import styles from "../../InputSearchList/InputSearchList.module.scss";
+import cn from "classnames";
 
 interface InterestsOpenedListProps {
   itemsName: string;
@@ -16,7 +16,7 @@ const itemsOpenedList = ({
 }: InterestsOpenedListProps) => {
   const handleRemoveItem = (item: Country | Interest) => {
     const updatedItems = selectedItems.filter(
-      (c: Country | Interest) => c.name !== item.name,
+      (c: Country | Interest) => c.name !== item.name
     );
     setSelectedItems(updatedItems);
   };
@@ -27,12 +27,12 @@ const itemsOpenedList = ({
         selectedItems.map((item: Country | Interest, index: number) => (
           <button
             key={index}
-            type='button'
+            type="button"
             className={cn(
               styles.items__selectItem,
-              itemsName === 'countries'
+              itemsName === "countries"
                 ? styles.items__selectItem_country
-                : styles.items__selectItem_interest,
+                : styles.items__selectItem_interest
             )}
             onClick={() => handleRemoveItem(item)}
           >

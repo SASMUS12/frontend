@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
-import { Input } from '../UI/Input/Input';
-import { Button } from '../UI/Button/Button';
-import { loggedIn } from '../../models/LoggedIn';
+import { Input } from "../UI/Input/Input";
+import { Button } from "../UI/Button/Button";
+import { loggedIn } from "../../models/LoggedIn";
 
-import { useModel } from './model';
+import { useModel } from "./model";
 
-import styles from './SignupSigninForm.module.scss';
-import cn from 'classnames';
+import styles from "./SignupSigninForm.module.scss";
+import cn from "classnames";
 
 const SignupSigninForm = () => {
   const model = useModel();
@@ -20,7 +20,7 @@ const SignupSigninForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const checkIsSignUp = () => {
-    pathName === '/signup' ? setIsSignUp(true) : setIsSignUp(false);
+    pathName === "/signup" ? setIsSignUp(true) : setIsSignUp(false);
   };
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const SignupSigninForm = () => {
   }, [loggedIn.loggedIn]);
 
   useEffect(() => {
-    console.log('loginForm');
+    console.log("loginForm");
     console.log(loggedIn.loggedIn);
   }, [loggedIn.loggedIn]);
 
@@ -66,12 +66,12 @@ const SignupSigninForm = () => {
       {isSignUp && (
         <Input
           className={styles.form__input}
-          type='text'
-          name='username'
+          type="text"
+          name="username"
           value={model.username}
-          label='Придумайте логин'
+          label="Придумайте логин"
           isLabelHintHidden={true}
-          placeholder='Логин'
+          placeholder="Логин"
           required
           error={model.error.username}
           maxLength={12}
@@ -81,13 +81,13 @@ const SignupSigninForm = () => {
       )}
       <Input
         className={styles.form__input}
-        type='email'
-        name='email'
+        type="email"
+        name="email"
         value={model.email}
-        label={isSignUp ? 'Введите эл.почту' : 'Введите логин или эл.почту'}
-        labelHint={isSignUp ? 'И получите письмо с подтверждением' : ''}
+        label={isSignUp ? "Введите эл.почту" : "Введите логин или эл.почту"}
+        labelHint={isSignUp ? "И получите письмо с подтверждением" : ""}
         isLabelHintHidden={!isSignUp}
-        placeholder='Эл. почта'
+        placeholder="Эл. почта"
         required
         error={model.error.email}
         onValue={model.handleValue}
@@ -96,13 +96,13 @@ const SignupSigninForm = () => {
       />
       <Input
         className={styles.form__input}
-        type='password'
-        name='password'
+        type="password"
+        name="password"
         value={model.password}
-        label={isSignUp ? 'Придумайте пароль' : 'Введите пароль'}
-        labelHint={isSignUp ? 'Не менее 5 символов, латинскими буквами' : ''}
+        label={isSignUp ? "Придумайте пароль" : "Введите пароль"}
+        labelHint={isSignUp ? "Не менее 5 символов, латинскими буквами" : ""}
         isLabelHintHidden={!isSignUp}
-        placeholder='Пароль'
+        placeholder="Пароль"
         required
         error={model.error.password}
         onValue={model.handleValue}
@@ -112,12 +112,12 @@ const SignupSigninForm = () => {
       {isSignUp && (
         <Input
           className={styles.form__input}
-          type='password'
-          name='confirmPassword'
+          type="password"
+          name="confirmPassword"
           value={model.confirmPassword}
-          label='Подтвердите пароль'
+          label="Подтвердите пароль"
           isLabelHintHidden={true}
-          placeholder='Пароль'
+          placeholder="Пароль"
           required
           error={model.error.confirmPassword}
           onValue={model.handleValue}
@@ -141,9 +141,9 @@ const SignupSigninForm = () => {
             <input
               className={cn(
                 styles.form__checkbox_input,
-                styles.form__checkbox_input_signIn,
+                styles.form__checkbox_input_signIn
               )}
-              type='checkbox'
+              type="checkbox"
             />
             <span className={styles.form__checkbox_visible}></span>
             Запомнить меня
@@ -152,7 +152,7 @@ const SignupSigninForm = () => {
         {!isSignUp && (
           <a
             className={styles.form__forgotLink}
-            href='src/components/UI/SignInForm#'
+            href="src/components/UI/SignInForm#"
           >
             Не помню пароль
           </a>
@@ -160,22 +160,22 @@ const SignupSigninForm = () => {
       </div>
       <Button
         className={cn(styles.form__button, styles.form__button_submit)}
-        type='submit'
-        variant='primary'
+        type="submit"
+        variant="primary"
         disabled={model.isLoading}
       >
-        {model.isLoading ? 'Loading' : isSignUp ? 'Продолжить' : 'Войти'}
+        {model.isLoading ? "Loading" : isSignUp ? "Продолжить" : "Войти"}
       </Button>
       <p className={cn(styles.form__text_or, styles.form__text_violet14)}>
         или
       </p>
       <Button
         className={cn(styles.form__button, styles.form__button_yandex)}
-        type='submit'
-        variant='transparent'
+        type="submit"
+        variant="transparent"
         disabled={model.isLoading}
       >
-        {model.isLoading ? 'Loading' : 'Войти с Яндекс ID'}
+        {model.isLoading ? "Loading" : "Войти с Яндекс ID"}
       </Button>
     </form>
   );

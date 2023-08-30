@@ -1,10 +1,10 @@
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-import QuestionBlock from '../../components/QuestionBlock/QuestionBlock';
-import { FAQArray } from '../../utils/constants';
-import IQuestion from '../../types/types';
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import QuestionBlock from "../../components/QuestionBlock/QuestionBlock";
+import { FAQArray } from "../../utils/constants";
+import IQuestion from "../../types/types";
 
-import styles from './FAQPage.module.scss';
+import styles from "./FAQPage.module.scss";
 
 interface IProps {
   item: IQuestion;

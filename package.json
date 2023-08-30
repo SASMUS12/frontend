@@ -2,6 +2,7 @@
   "name": "conversation-exchange-frontend",
   "homepage": "https://conversation-exchange.github.io/frontend",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@types/react-dom": "^18.2.7",

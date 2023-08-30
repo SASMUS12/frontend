@@ -1,5 +1,5 @@
-import { Country } from '../openapi';
-import { api } from '../constants';
+import { Country } from "../openapi";
+import { api } from "../constants";
 
 export const getCountries = async (): Promise<Country[]> => {
   const { data: countries, error } = await api.api.countriesList();
