@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import { useModel } from '../../components/SignupSigninForm/model';
 import { api } from '../../utils/constants';
 import {
-  UserLanguageRequest,
+  UserLanguage,
   SkillLevelEnum,
   GenderEnum,
   NullEnum,
+  Country,
+  Goal,
 } from '../../utils/openapi';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -23,16 +25,21 @@ import styles from './UserProfile.module.scss';
 
 interface UserData {
   first_name: string;
-  gender: GenderEnum | null;
-  country?: {
-    code?: string | null | undefined;
-  };
+  gender: GenderEnum | NullEnum | null;
+  country: Country | null;
   avatar?: string | null;
   interests: string[];
-  languages: UserLanguageRequest[];
+  languages: UserLanguage[];
   about: string;
   age: string;
   username: string;
+  slug: string | null;
+  goals: Goal[];
+  last_activity: string | null;
+  is_online: boolean;
+  gender_is_hidden: boolean;
+  age_is_hidden: boolean;
+  role: string;
 }
 
 interface Language {
@@ -43,14 +50,15 @@ interface Language {
 interface EditedData {
   first_name: string;
   username: string;
-  avatar: null;
-  country?: string | null;
+  avatar?: string | null;
+  country: string | null;
   birth_date: string;
   languages: Language[];
   gender?: GenderEnum | NullEnum | null;
   goals: string[];
   interests: string[];
   about: string;
+  age: string;
 }
 
 const UserProfile: React.FC = () => {
@@ -59,7 +67,7 @@ const UserProfile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState<EditedData>({
     first_name: '',
-    avatar: null,
+    avatar: '',
     country: '',
     birth_date: '',
     languages: [],
@@ -68,6 +76,7 @@ const UserProfile: React.FC = () => {
     interests: [],
     about: '',
     username: '',
+    age: '',
   });
   const model = useModel();
   const [imageBase64, setImageBase64] = useState(null);
@@ -132,7 +141,7 @@ const UserProfile: React.FC = () => {
       setEditedData({
         ...userData,
         first_name: editedData.username,
-        avatar: userData.avatar,
+        avatar: editedData.avatar || userData.avatar,
         country: editedData.country,
         birth_date: userData.age,
         languages: [
@@ -145,6 +154,8 @@ const UserProfile: React.FC = () => {
         goals: [],
         interests: editedData.interests,
         about: editedData.about,
+        age: userData.age,
+        username: editedData.username,
       });
       setIsEditing(!isEditing);
     }
@@ -201,7 +212,11 @@ const UserProfile: React.FC = () => {
               gender={
                 userData?.gender || GenderEnum.Male || GenderEnum.Female || null
               }
-              location={editedData.country || '' || null || undefined}
+              location={
+                typeof editedData.country === 'string'
+                  ? editedData.country
+                  : userData?.country?.code || ''
+              }
               avatar={userData?.avatar || ''}
               handleFileInputChange={handleFileInputChange}
               setName={(value) =>
@@ -279,7 +294,7 @@ const UserProfile: React.FC = () => {
               gender={
                 userData?.gender || GenderEnum.Male || GenderEnum.Female || null
               }
-              location={userData?.country?.code || '' || null || undefined}
+              location={userData?.country?.code || '' || null}
               avatar={userData?.avatar || ''}
               handleFileInputChange={handleFileInputChange}
               setName={(value) =>

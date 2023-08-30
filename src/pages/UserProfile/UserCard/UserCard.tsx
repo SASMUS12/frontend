@@ -1,5 +1,5 @@
 import React, { FC, ChangeEvent } from 'react';
-import { GenderEnum, Country } from '../../../utils/openapi';
+import { GenderEnum } from '../../../utils/openapi';
 import IconButton from '../Buttons/IconButton/IconButton';
 import formattedTime from '../../../utils/getTime';
 import cardPartnerAvatar from '../../../images/userProfile/card-partner-avatar.png';
@@ -8,12 +8,18 @@ import clock from '../../../images/userProfile/clock.png';
 import camera from '../../../images/userProfile/camera.svg';
 import styles from './UserCard.module.scss';
 
+export interface Country {
+  code: string | null;
+  name: string;
+  flag_icon: string;
+}
+
 interface UserCardProps {
   isEditing: boolean;
   name: string;
   age: string;
   gender: GenderEnum | null;
-  location: string | null | undefined | Country;
+  location: Country | string | null;
   setName: (value: string) => void;
   setAge: (value: string) => void;
   setGender: (value: GenderEnum | null) => void;
@@ -236,11 +242,6 @@ const UserCard: FC<UserCardProps> = ({
                         id='partnerLocation'
                         name='partnerLocation'
                         className={styles.profile__input}
-                        value={
-                          typeof location === 'object'
-                            ? location?.code
-                            : location
-                        }
                         onChange={(event) =>
                           handleChangeString(
                             setLocation as React.Dispatch<
