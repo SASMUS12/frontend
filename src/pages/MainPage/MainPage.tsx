@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 
 import { api } from '../../utils/constants';
 
-import Card from '../../components/Card/Card';
-import Header from '../../components/Header/Header';
-import Categories from '../../components/Categories/Categories';
-import Sort from '../../components/Sort/Sort';
-import Footer from '../../components/Footer/Footer';
+import Card from "../../components/Card/Card";
+import Header from "../../components/Header/Header";
+import Categories from "../../components/Categories/Categories";
+import Sort from "../../components/Sort/Sort";
+import Footer from "../../components/Footer/Footer";
 
-import MoreCards from '../../components/MoreCards/MoreCards';
+import MoreCards from "../../components/MoreCards/MoreCards";
 
-import styles from './MainPage.module.scss';
-import cn from 'classnames';
+import styles from "./MainPage.module.scss";
+import cn from "classnames";
 
 import { loggedIn } from '../../models/LoggedIn';
 import Modal from '../../components/Modal/Modal';
@@ -53,14 +53,14 @@ const MainPage = () => {
         gender: filters.gender,
         languages: languageFilters.join(';'),
       });
-      console.log('ответ получен -', response);
+      console.log("ответ получен -", response);
       setIsUsersList(true);
       if (response.data && response.data.results) {
         setUsersList(response.data.results);
         console.log(response.data.results);
       }
     } catch (error) {
-      console.error('Ошибка при получении данных -', error);
+      console.error("Ошибка при получении данных -", error);
       setIsUsersList(false);
     }
   };
@@ -90,7 +90,7 @@ const MainPage = () => {
               className={cn(
                 styles.content__cardListAndSortPopup_cardListArea_cardList,
                 isSortPopupOpen &&
-                  styles.content__cardListAndSortPopup_cardListArea_cardList_narrow,
+                  styles.content__cardListAndSortPopup_cardListArea_cardList_narrow
               )}
             >
               {isUsersList &&

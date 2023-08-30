@@ -1,14 +1,14 @@
-import { FC, useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import { FC, useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 
-import { Input } from '../UI/Input/Input';
-import ItemsOpenedList from '../UI/ItemsOpenedList/ItemsOpenedList';
+import { Input } from "../UI/Input/Input";
+import ItemsOpenedList from "../UI/ItemsOpenedList/ItemsOpenedList";
 
-import { Country, Interest } from '../../utils/openapi';
+import { Country, Interest } from "../../utils/openapi";
 
-import styles from './InputSearchList.module.scss';
-import classNames from 'classnames';
-import cn from 'classnames';
+import styles from "./InputSearchList.module.scss";
+import classNames from "classnames";
+import cn from "classnames";
 
 interface IPageName {
   pageName: string;
@@ -24,23 +24,29 @@ const InputSearchList: FC<IPageName> = ({
   onSelectedItemsChange,
 }: IPageName) => {
   const [isSearchListVisible, setSearchListVisible] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
-  const [filteredItems, setFilteredItems] = useState<Interest[]>([]);
-  const [selectedItem, setSelectedItem] = useState<Interest | null>(null);
-  const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(
-    null,
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredItems, setFilteredItems] = useState<(Country | Interest)[]>(
+    []
   );
-  const [suggestedItems, setSuggestedItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState<Country | Interest | null>(
+    null
+  );
+  const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(
+    null
+  );
+  const [suggestedItems, setSuggestedItems] = useState<(Country | Interest)[]>(
+    []
+  );
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<
     number | null
   >(null);
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedItems, setSelectedItems] = useState<(Country | Interest)[]>(
-    [],
+    []
   );
 
-  const i = itemsName === 'countries' ? (pageName === 'Sort' ? 5 : 1) : 100;
+  const i = itemsName === "countries" ? (pageName === "Sort" ? 5 : 1) : 100;
 
   console.log(isSearchListVisible);
   console.log(searchValue);
@@ -51,7 +57,7 @@ const InputSearchList: FC<IPageName> = ({
     setSelectedItems(itemsList);
   }, [itemsList]);
 
-  const handleInputValue = (event) => {
+  const handleInputValue = (event: any) => {
     const newSearchValue = event.value;
     console.log(newSearchValue);
     setSearchValue(newSearchValue);
@@ -62,17 +68,17 @@ const InputSearchList: FC<IPageName> = ({
       setSearchListVisible(false);
     }
 
-    const searchValueLower = newSearchValue.toLocaleLowerCase('ru');
+    const searchValueLower = newSearchValue.toLocaleLowerCase("ru");
 
     const filtered = itemsList.filter(
       (item) =>
-        item.name.toLocaleLowerCase('ru').includes(searchValueLower) &&
-        !selectedItems.includes(item),
+        item.name.toLocaleLowerCase("ru").includes(searchValueLower) &&
+        !selectedItems.includes(item)
     );
     setFilteredItems(filtered);
 
     const suggested = itemsList.filter((item) =>
-      item.name.toLocaleLowerCase('ru').startsWith(searchValueLower),
+      item.name.toLocaleLowerCase("ru").startsWith(searchValueLower)
     );
     setSuggestedItems(suggested);
 
@@ -84,10 +90,10 @@ const InputSearchList: FC<IPageName> = ({
       searchValue.length > 0 && filtered.length === 0 && suggested.length === 0;
 
     const errorMessage = isInvalidSearch
-      ? itemsName === 'countries'
-        ? 'Страны не существует, возможно ошибка'
-        : ''
-      : '';
+      ? itemsName === "countries"
+        ? "Страны не существует, возможно ошибка"
+        : ""
+      : "";
 
     setIsError(isInvalidSearch);
     setErrorMessage(errorMessage);
@@ -96,7 +102,7 @@ const InputSearchList: FC<IPageName> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'ArrowDown') {
+    if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -107,7 +113,7 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -118,13 +124,14 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === 'Enter') {
+    } else if (e.key === "Enter") {
       e.preventDefault();
-      if (itemsName === 'countries' && selectedSuggestionIndex !== null) {
+      if (itemsName === "countries" && selectedSuggestionIndex !== null) {
         handleSelectItem(suggestedItems[selectedSuggestionIndex]);
-      } else if (itemsName === 'interests') {
-        handleSelectItem({ name: e.target.value });
-        console.log(e.target.value);
+      } else if (itemsName === "interests") {
+        const inputElement = e.target as HTMLInputElement;
+        handleSelectItem({ name: inputElement.value, sorting: "" });
+        console.log(inputElement.value);
       } else if (selectedItem) {
         handleSelectItem(selectedItem);
       }
@@ -132,7 +139,7 @@ const InputSearchList: FC<IPageName> = ({
   };
 
   const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'ArrowDown') {
+    if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -143,7 +150,7 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -154,13 +161,14 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === 'Enter') {
+    } else if (e.key === "Enter") {
       e.preventDefault();
-      if (itemsName === 'countries' && selectedSuggestionIndex !== null) {
+      if (itemsName === "countries" && selectedSuggestionIndex !== null) {
         handleSelectItem(suggestedItems[selectedSuggestionIndex]);
-      } else if (itemsName === 'interests') {
-        handleSelectItem({ name: e.target.value });
-        console.log(e.target.value);
+      } else if (itemsName === "interests") {
+        const inputElement = e.target as HTMLInputElement;
+        handleSelectItem({ name: inputElement.value, sorting: "" });
+        console.log(inputElement.value);
       } else if (selectedItem) {
         handleSelectItem(selectedItem);
       }
@@ -191,13 +199,13 @@ const InputSearchList: FC<IPageName> = ({
     }
   };
 
-  const handleSelectItem = (item) => {
+  const handleSelectItem = (item: Country | Interest) => {
     if (selectedItems.length < i && !selectedItems.includes(item)) {
       const updatedSelectedItems = [...selectedItems, item];
       setSelectedItems(updatedSelectedItems);
       setSelectedItem(item);
       setSearchListVisible(false);
-      setSearchValue('');
+      setSearchValue("");
       // onSortCountry(country);
 
       onSelectedItemsChange(updatedSelectedItems);
@@ -206,7 +214,7 @@ const InputSearchList: FC<IPageName> = ({
 
   const handleSelectItemFromList = (itemName: string) => {
     const selectedItem = itemsList.find(
-      (item) => item.name.toLocaleLowerCase('ru') === itemName,
+      (item) => item.name.toLocaleLowerCase("ru") === itemName
     );
     if (selectedItem) {
       handleSelectItem(selectedItem);
@@ -215,35 +223,35 @@ const InputSearchList: FC<IPageName> = ({
 
   return (
     <>
-      {itemsName === 'interests' && (
+      {itemsName === "interests" && (
         <Input
           className={styles.interests__input}
-          type='search'
-          name='interest'
+          type="search"
+          name="interest"
           value={searchValue}
-          fontSize='16'
-          placeholder='Путешествия'
+          fontSize="16"
+          placeholder="Путешествия"
           isLabelHintHidden={true}
           onValue={(event) => handleInputValue(event)}
           onKeyDown={handleKeyDown}
-          autoComplete='off'
+          autoComplete="off"
         />
       )}
-      {itemsName === 'countries' && (
+      {itemsName === "countries" && (
         <>
           <Input
             className={`${styles.country__input} ${
-              isSearchListVisible ? styles.country__input_showSuggestions : ''
+              isSearchListVisible ? styles.country__input_showSuggestions : ""
             }`}
-            type='search'
-            name='country'
+            type="search"
+            name="country"
             value={searchValue}
-            fontSize={pageName === 'FillOutProfile2' ? '16' : '14'}
+            fontSize={pageName === "FillOutProfile2" ? "16" : "14"}
             isLabelHintHidden={true}
-            placeholder='Начните вводить название'
+            placeholder="Начните вводить название"
             onValue={(event) => handleInputValue(event)}
             onKeyDown={handleKeyDown}
-            autoComplete='off'
+            autoComplete="off"
           />
           {isError && (
             <span className={styles.country__input_error}>{errorMessage}</span>
@@ -253,7 +261,7 @@ const InputSearchList: FC<IPageName> = ({
       <div
         className={cn(
           styles.items,
-          itemsName === 'countries' ? styles.items_296 : styles.items_668,
+          itemsName === "countries" ? styles.items_296 : styles.items_668
         )}
       >
         {isSearchListVisible && (
@@ -269,34 +277,38 @@ const InputSearchList: FC<IPageName> = ({
                 <div
                   key={index}
                   onClick={() =>
-                    handleSelectItemFromList(item.name.toLocaleLowerCase('ru'))
+                    handleSelectItemFromList(item.name.toLocaleLowerCase("ru"))
                   }
                   className={classNames(styles.items__itemsList_option, {
-                    [styles.selected]: selectedItem?.code === item.code,
-                    [styles.suggested]: suggestedItems.includes(item),
+                    [styles.selected]:
+                      (selectedItem as Country)?.code ===
+                      (item as Country).code,
+                    [styles.suggested]: suggestedItems.includes(
+                      item as Country
+                    ),
                   })}
                 >
                   <img
-                    src={item.flag_icon}
+                    src={(item as Country).flag_icon}
                     alt={`${item.name} Flag`}
                     className={
-                      itemsName === 'countries'
+                      itemsName === "countries"
                         ? styles.items__itemsList_flagImage
                         : styles.items__itemsList_flagImage_hidden
                     }
                   />
                   {item.name}
                 </div>
-              ) : null,
+              ) : null
             )}
           </div>
         )}
         <div
           className={cn(
             styles.items__selectedItems,
-            itemsName === 'countries'
+            itemsName === "countries"
               ? styles.items__selectedItems_gap12
-              : styles.items__selectedItems_gap16,
+              : styles.items__selectedItems_gap16
           )}
         >
           <ItemsOpenedList

@@ -1,8 +1,8 @@
 import { MouseEventHandler, ReactNode, FC } from 'react';
 
-import cn from 'classnames';
+import cn from "classnames";
 
-import styles from './Button.module.scss';
+import styles from "./Button.module.scss";
 
 interface Props {
   className?: string;

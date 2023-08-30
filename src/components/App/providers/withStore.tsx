@@ -1,10 +1,10 @@
-import { ReactNode, createContext, useContext } from 'react';
-import { configure } from 'mobx';
+import { ReactNode, createContext, useContext } from "react";
+import { configure } from "mobx";
 
-import { store } from '../../../models/store';
+import { store } from "../../../models/store";
 
 configure({
-  enforceActions: 'always',
+  enforceActions: "always",
   computedRequiresReaction: true,
   reactionRequiresObservable: true,
   observableRequiresReaction: true,

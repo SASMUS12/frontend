@@ -56,6 +56,9 @@ const CountrySelection: FC<CountrySelectionProps> = ({
   useEffect(() => {
     fetchCountriesData();
   }, []);
+  useEffect(() => {
+    fetchCountriesData();
+  }, []);
 
   const i = pageName === 'Sort' ? 5 : 1;
 
@@ -65,7 +68,8 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       setSelectedCountries(updatedSelectedCountries);
       setSelectedCountry(country);
       setCountryListVisible(false);
-      setSearchValue('');
+      setSearchValue("");
+      // onSortCountry(country);
       onSelectedCountriesChange(updatedSelectedCountries);
     }
   };
@@ -106,7 +110,10 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     setErrorMessage(errorMessage);
 
     setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
+    setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
 
+    setSelectedSuggestionIndex(null);
+  };
     setSelectedSuggestionIndex(null);
   };
 

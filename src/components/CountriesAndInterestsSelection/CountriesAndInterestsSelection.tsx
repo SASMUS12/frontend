@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 
-import InputSearchList from '../InputSearchList/InputSearchList';
+import InputSearchList from "../InputSearchList/InputSearchList";
 
-import { Country, Interest } from '../../utils/openapi';
-import { getInterests } from '../../utils/rest/getInterests';
-import { getCountries } from '../../utils/rest/getCountries';
+import { Country, Interest } from "../../utils/openapi";
+import { getInterests } from "../../utils/rest/getInterests";
+import { getCountries } from "../../utils/rest/getCountries";
 
 interface CountriesAndInterestsSelectionProps {
   pageName: string;
@@ -22,25 +22,25 @@ const CountriesAndInterestsSelection = ({
   const [countriesList, setCountriesList] = useState<Country[]>([]);
 
   useEffect(() => {
-    if (itemsName === 'countries') {
+    if (itemsName === "countries") {
       getInterests()
         .then((updatedList) => {
           setInterestsList(updatedList);
         })
         .catch((error) => {
-          console.error('Error updating interests list:', error);
+          console.error("Error updating interests list:", error);
         });
     }
   }, []);
 
   useEffect(() => {
-    if (itemsName === 'interests') {
+    if (itemsName === "interests") {
       getCountries()
         .then((updatedList) => {
           setCountriesList(updatedList);
         })
         .catch((error) => {
-          console.error('Error updating countries list:', error);
+          console.error("Error updating countries list:", error);
         });
     }
   }, []);
@@ -50,7 +50,7 @@ const CountriesAndInterestsSelection = ({
   return (
     <InputSearchList
       pageName={pageName}
-      itemsName='interests'
+      itemsName="interests"
       itemsList={allItemsList}
       onSelectedItemsChange={onSelectedItemsChange}
     />

@@ -1,14 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 
-import LanguageLevel from '../LanguageLevel/LanguageLevel';
-import { Button } from '../UI/Button/Button';
+import LanguageLevel from "../LanguageLevel/LanguageLevel";
+import { Button } from "../UI/Button/Button";
 
-import { Language, SkillLevelEnum } from '../../utils/openapi';
-import { api } from '../../utils/constants';
+import { Language, SkillLevelEnum } from "../../utils/openapi";
+import { api } from "../../utils/constants";
 
-import styles from './LanguageModule.module.scss';
-import cn from 'classnames';
-import { action } from 'mobx';
+import styles from "./LanguageModule.module.scss";
+import cn from "classnames";
 
 interface LanguageModuleProps {
   pageName: string;
@@ -49,13 +48,13 @@ const LanguageModule: FC<LanguageModuleProps> = ({
   //Запрос массива языков
   const fetchLanguagesData = async () => {
     try {
-      console.log('отправка запроса ---');
+      console.log("отправка запроса ---");
       const response = await api.api.languagesList();
-      console.log('ответ получен -', response);
+      console.log("ответ получен -", response);
       const languages = response.data;
       setLanguagesData(languages);
     } catch (error) {
-      console.error('Ошибка при получении данных о языках:', error);
+      console.error("Ошибка при получении данных о языках:", error);
     }
   };
 
@@ -156,17 +155,25 @@ const LanguageModule: FC<LanguageModuleProps> = ({
         <div
           className={cn(
             styles.languagesAdd,
-            pageName === 'Sort' ? styles.languagesAdd_center : '',
+            pageName === "Sort" ? styles.languagesAdd_center : ""
           )}
         >
           <Button
-            variant='addLanguage'
-            size='small'
-            fontSize='15'
-            onClick={handleAddLanguage}
+            type="button"
+            variant="addLanguage"
+            size="xs"
+            fontSize="15"
+            onClick={() => {
+              const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+              updatedLanguagesAndLevels.push({
+                language: null,
+                skillLevels: [],
+              });
+              setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+            }}
             className={styles.languagesAdd__button}
           >
-            {'добавить язык'}
+            {"добавить язык"}
           </Button>
         </div>
       )}

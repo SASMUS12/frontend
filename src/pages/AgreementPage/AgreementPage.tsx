@@ -1,7 +1,7 @@
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
-import styles from './AgreementPage.module.scss';
+import styles from "./AgreementPage.module.scss";
 
 const AgreementPage = () => {
   return (
@@ -12,8 +12,8 @@ const AgreementPage = () => {
         <div className={styles.content__textBlock}>
           <p>
             Настоящее Пользовательское Соглашение (Далее Соглашение) регулирует
-            отношения между владельцем{' '}
-            <span> https://lingvogo.acceleratorpracticum.ru/</span> (далее{' '}
+            отношения между владельцем{" "}
+            <span> https://lingvogo.acceleratorpracticum.ru/</span> (далее{" "}
             <span>https://lingvogo.acceleratorpracticum.ru/ </span>или
             Администрация) с одной стороны и пользователем сайта с другой.
           </p>
@@ -23,7 +23,7 @@ const AgreementPage = () => {
           </p>
           <p>
             Используя сайт, Вы соглашаетесь с условиями данного соглашения. Если
-            Вы не согласны с условиями данного соглашения, не используйте сайт{' '}
+            Вы не согласны с условиями данного соглашения, не используйте сайт{" "}
             <span>https://lingvogo.acceleratorpracticum.ru/</span>!
           </p>
           <h3>Предмет соглашения</h3>
