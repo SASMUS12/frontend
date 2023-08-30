@@ -2,14 +2,13 @@ import React, { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalObservable } from "mobx-react-lite";
 
-import { getMe } from "../../utils/rest/auth";
-import { updateProfile } from "../../utils/rest/updateProfile";
-import { session } from "../../models/session/Session";
+import { getMe } from "../../../utils/rest/auth";
+import { updateProfile } from "../../../utils/rest/updateProfile";
+import { session } from "../../../models/session/Session";
 
-import { GenderEnum, UserProfile } from "../../utils/openapi";
-import { api, headersWithToken as headers } from "../../utils/constants";
-import { store } from "../../models/store";
-import { User } from "../../models/session/User";
+import { GenderEnum } from "../../../utils/openapi";
+import { api, headersWithToken as headers } from "../../../utils/constants";
+import { store } from "../../../models/store";
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -25,9 +24,6 @@ export const useModel = () => {
       avatar: "",
       avatarFile: null as File | null,
       previewAvatar: "",
-      country: "",
-      interest: "",
-      about: "",
       errorFillOut1: { firstName: "", birthdate: "", avatar: "" },
       message: "",
       isLoading: false,
@@ -67,13 +63,7 @@ export const useModel = () => {
         name,
         value,
       }: {
-        name:
-          | "firstName"
-          | "birthdate"
-          | "avatar"
-          | "country"
-          | "interest"
-          | "about";
+        name: "firstName" | "birthdate" | "avatar";
         value: string;
       }) {
         model[name] = value;
@@ -181,7 +171,6 @@ export const useModel = () => {
             });
           }
 
-          updateProfile({});
           navigate("/fill-out-2");
           model.isLoading = false;
         } catch (error: any) {

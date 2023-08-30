@@ -6,7 +6,7 @@ import ProgressLine from "../../components/UI/ProgressLine/ProgressLine";
 import { Button } from "../../components/UI/Button/Button";
 import { Textarea } from "../../components/UI/Textarea/Textarea";
 
-import { useModel } from "./model";
+import { useModel } from "./FillOutProfilePage1/model";
 
 import styles from "./FillOutProfilePages.module.scss";
 import { observer } from "mobx-react-lite";

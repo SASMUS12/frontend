@@ -65,7 +65,7 @@ const UserProfile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState<EditedData>({
     first_name: "",
-    avatar: "",
+    avatar: null,
     country: "",
     birth_date: "",
     languages: [],
@@ -177,7 +177,6 @@ const UserProfile: React.FC = () => {
       }
       setIsEditing(false);
     } catch (error) {
-      // eslint-disable-next-line no-undef
       console.error("Ошибка при сохранении данных:", error);
     }
   };
@@ -204,7 +203,7 @@ const UserProfile: React.FC = () => {
               location={
                 typeof editedData.country === "string"
                   ? editedData.country
-                  : userData?.country?.code || ""
+                  : userData?.country || ""
               }
               avatar={userData?.avatar || ""}
               handleFileInputChange={handleFileInputChange}
@@ -283,7 +282,7 @@ const UserProfile: React.FC = () => {
               gender={
                 userData?.gender || GenderEnum.Male || GenderEnum.Female || null
               }
-              location={userData?.country?.code || "" || null}
+              location={userData?.country || "" || null}
               avatar={userData?.avatar || ""}
               handleFileInputChange={handleFileInputChange}
               setName={(value) =>

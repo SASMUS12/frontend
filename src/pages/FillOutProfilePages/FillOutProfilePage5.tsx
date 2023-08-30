@@ -8,7 +8,7 @@ import { Input } from "../../components/UI/Input/Input";
 import { Button } from "../../components/UI/Button/Button";
 import InterestsSelection from "../../components/CountriesAndInterestsSelection/CountriesAndInterestsSelection";
 
-import { useModel } from "./model";
+import { useModel } from "./FillOutProfilePage1/model";
 
 import styles from "./FillOutProfilePages.module.scss";
 import { Interest } from "../../utils/openapi";

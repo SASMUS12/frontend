@@ -1,20 +1,20 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 
-import Header from "../../components/Header/Header";
-import ProgressLine from "../../components/UI/ProgressLine/ProgressLine";
-import { Input } from "../../components/UI/Input/Input";
-import { Button } from "../../components/UI/Button/Button";
-import Gender from "../../components/Gender/Gender";
-import Modal from "../../components/Modal/Modal";
-import Avatars from "../../components/Avatars/Avatars";
+import Header from "../../../components/Header/Header";
+import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
+import { Input } from "../../../components/UI/Input/Input";
+import { Button } from "../../../components/UI/Button/Button";
+import Gender from "../../../components/Gender/Gender";
+import Modal from "../../../components/Modal/Modal";
+import Avatars from "../../../components/Avatars/Avatars";
 
-import avatarPlace from "../../images/fill-out-profile-export-avatar.png";
-import faceInACircle from "../../images/face-in-a-circle.png";
+import avatarPlace from "../../../images/fill-out-profile-export-avatar.png";
+import faceInACircle from "../../../images/face-in-a-circle.png";
 
 import { useModel } from "./model";
 
-import styles from "./FillOutProfilePages.module.scss";
+import styles from "../FillOutProfilePages.module.scss";
 import cn from "classnames";
 
 const FillOutProfilePage1 = () => {

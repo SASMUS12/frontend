@@ -14,10 +14,10 @@ const RulesPage = lazy(() => import("./RulesPage/RulesPage"));
 const AgreementPage = lazy(() => import("./AgreementPage/AgreementPage"));
 const ProfilePage = lazy(() => import("./UserProfile/UserProfile"));
 const FillOutProfilePage1 = lazy(
-  () => import("./FillOutProfilePages/FillOutProfilePage1")
+  () => import("./FillOutProfilePages/FillOutProfilePage1/FillOutProfilePage1")
 );
 const FillOutProfilePage2 = lazy(
-  () => import("./FillOutProfilePages/FillOutProfilePage2")
+  () => import("./FillOutProfilePages/FillOutProfilePage2/FillOutProfilePage2")
 );
 const FillOutProfilePage3 = lazy(
   () => import("./FillOutProfilePages/FillOutProfilePage3")

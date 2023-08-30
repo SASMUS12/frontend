@@ -69,8 +69,8 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     }
   };
 
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSearchValue = e.target.value;
+  const handleSearchInputChange = (e: any) => {
+    const newSearchValue = e.value;
     setSearchValue(newSearchValue);
     if (newSearchValue) {
       setCountryListVisible(true);
@@ -251,7 +251,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
         fontSize={pageName === "FillOutProfile2" ? "16" : "14"}
         isLabelHintHidden={true}
         placeholder="Начните вводить название"
-        onChange={handleSearchInputChange}
+        onValue={(event) => handleSearchInputChange(event)}
         onKeyDown={handleKeyDown}
       />
       {isError && (

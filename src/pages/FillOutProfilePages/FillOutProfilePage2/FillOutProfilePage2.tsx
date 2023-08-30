@@ -2,18 +2,25 @@ import React, { FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
-import Header from "../../components/Header/Header";
-import ProgressLine from "../../components/UI/ProgressLine/ProgressLine";
-import LanguageModule from "../../components/LanguageModule/LanguageModule";
-import { Button } from "../../components/UI/Button/Button";
-import CountrySelection from "../../components/CountrySelection/CountrySelection";
+import Header from "../../../components/Header/Header";
+import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
+import LanguageModule from "../../../components/LanguageModule/LanguageModule";
+import { Button } from "../../../components/UI/Button/Button";
+import CountrySelection from "../../../components/CountrySelection/CountrySelection";
 
-import { Country, Language, SkillLevelEnum } from "../../utils/openapi";
+import { Country, Language, SkillLevelEnum } from "../../../utils/openapi";
 
-import styles from "./FillOutProfilePages.module.scss";
+import { useModel } from "./model";
+
+import styles from "../FillOutProfilePages.module.scss";
 
 const FillOutProfilePage2 = () => {
   const navigate = useNavigate();
+  const model = useModel();
+
+  useEffect(() => {
+    model.handleCurrentUser();
+  }, []);
 
   const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
@@ -45,7 +52,7 @@ const FillOutProfilePage2 = () => {
   const handleFillOutPage2 = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     navigate("/fill-out-3");
-    console.log("FillOutPage2");
+    console.log("FillOutProfilePage2");
   };
 
   return (
@@ -70,7 +77,7 @@ const FillOutProfilePage2 = () => {
               </h3>
               <CountrySelection
                 pageName="FillOutProfile2"
-                onSelectedCountriesChange={setSelectedCountries}
+                onSelectedCountriesChange={model.handleCountriesValue}
               />
             </div>
             <div className={styles.container__fillOutProfileArea}>
