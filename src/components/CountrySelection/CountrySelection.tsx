@@ -56,9 +56,6 @@ const CountrySelection: FC<CountrySelectionProps> = ({
   useEffect(() => {
     fetchCountriesData();
   }, []);
-  useEffect(() => {
-    fetchCountriesData();
-  }, []);
 
   const i = pageName === 'Sort' ? 5 : 1;
 
@@ -68,8 +65,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       setSelectedCountries(updatedSelectedCountries);
       setSelectedCountry(country);
       setCountryListVisible(false);
-      setSearchValue("");
-      // onSortCountry(country);
+      setSearchValue('');
       onSelectedCountriesChange(updatedSelectedCountries);
     }
   };
@@ -110,10 +106,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     setErrorMessage(errorMessage);
 
     setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
-    setCountryListVisible(filtered.length > 0 && newSearchValue.length > 0);
 
-    setSelectedSuggestionIndex(null);
-  };
     setSelectedSuggestionIndex(null);
   };
 
@@ -243,10 +236,10 @@ const CountrySelection: FC<CountrySelectionProps> = ({
         type='search'
         name='country'
         value={searchValue}
+        fontSize={pageName === 'FillOutProfile2' ? '16' : '14'}
         isLabelHintHidden={true}
         placeholder='Начните вводить название'
-        required
-        onChange={handleSearchInputChange}
+        onValue={(event) => handleSearchInputChange(event)}
         onKeyDown={handleKeyDown}
       />
       {isError && (
