@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import GoBackButton from '../../components/UI/GoBackButton/GoBackButton';
 import AllChats from './AllChats/AllChats';
-import ActiveChat from './ActiveChat/ActiveChat';
+import ChatWindow from './ChatWindow/ChatWindow';
 import styles from './Chats.module.scss';
 
 const Chats = () => {
@@ -23,7 +23,7 @@ const Chats = () => {
           positionClassName={styles.chats__backbtn}
         />
         <AllChats />
-        <ActiveChat isActive={false} />
+        <ChatWindow isActive={true} />
       </section>
       <Footer />
     </>

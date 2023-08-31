@@ -1,0 +1,30 @@
+.partnerPreview {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+
+  &__avatar {
+    background-color: grey;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--dark-violet-gradient-100);
+    border-radius: 8px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  &__name {
+    color: var(--grey-color-50);
+    font: var(--font-title-18-120-500);
+  }
+
+  &__status {
+    color: var(--dark-violet-gradient-100);
+    font: var(--font-text-14-100-400);
+  }
+}

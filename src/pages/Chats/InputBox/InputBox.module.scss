@@ -1,0 +1,64 @@
+.inputBox {
+  border-radius: 0 0 20px 20px;
+  border-top: 1px solid var(--grey-gradient-100);
+  padding: 20px;
+
+  &__fieldset {
+    padding: 0;
+    border: none;
+    border-radius: 0 0 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__input {
+    width: 638px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    text-align: left;
+    vertical-align: middle;
+    font: var(--font-text-16-120-400);
+    color: var(--dark-violet);
+
+    &::placeholder {
+      font: var(--font-text-16-120-400);
+      color: var(--soft-violet);
+    }
+  }
+
+  &__inputExtras {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__emojiBtn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    padding: 0;
+    background-image: url(../../../images/svg/emoji_button.svg);
+    background-color: var(--color-base-white);
+  }
+
+  &__attachBtn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    padding: 0;
+    background-image: url(../../../images/svg/attachment_button.svg);
+    background-color: var(--color-base-white);
+  }
+
+  &__voiceBtn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 100px;
+    padding: 0;
+    background-image: url(../../../images/svg/mic_button.svg);
+    background-color: var(--accent-color-violet);
+  }
+}
