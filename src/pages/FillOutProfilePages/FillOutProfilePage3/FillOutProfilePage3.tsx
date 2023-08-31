@@ -1,16 +1,16 @@
 import React, { FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Header from "../../components/Header/Header";
-import ProgressLine from "../../components/UI/ProgressLine/ProgressLine";
-import LanguageModule from "../../components/LanguageModule/LanguageModule";
-import { Button } from "../../components/UI/Button/Button";
+import Header from "../../../components/Header/Header";
+import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
+import LanguageModule from "../../../components/LanguageModule/LanguageModule";
+import { Button } from "../../../components/UI/Button/Button";
 
-import { Language, SkillLevelEnum } from "../../utils/openapi";
+import { Language, SkillLevelEnum } from "../../../utils/openapi";
 
-import styles from "./FillOutProfilePages.module.scss";
+import styles from "../FillOutProfilePages.module.scss";
 import cn from "classnames";
-import LanguageLevelModal from "../../components/LanguageLevelModal/LanguageLevelModal";
+import LanguageLevelModal from "../../../components/LanguageLevelModal/LanguageLevelModal";
 
 const FillOutProfilePage1 = () => {
   const navigate = useNavigate();

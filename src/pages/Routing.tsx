@@ -20,16 +20,16 @@ const FillOutProfilePage2 = lazy(
   () => import("./FillOutProfilePages/FillOutProfilePage2/FillOutProfilePage2")
 );
 const FillOutProfilePage3 = lazy(
-  () => import("./FillOutProfilePages/FillOutProfilePage3")
+  () => import("./FillOutProfilePages/FillOutProfilePage3/FillOutProfilePage3")
 );
 const FillOutProfilePage4 = lazy(
-  () => import("./FillOutProfilePages/FillOutProfilePage4")
+  () => import("./FillOutProfilePages/FillOutProfilePage4/FillOutProfilePage4")
 );
 const FillOutProfilePage5 = lazy(
-  () => import("./FillOutProfilePages/FillOutProfilePage5")
+  () => import("./FillOutProfilePages/FillOutProfilePage5/FillOutProfilePage5")
 );
 const FillOutProfilePage6 = lazy(
-  () => import("./FillOutProfilePages/FillOutProfilePage6")
+  () => import("./FillOutProfilePages/FillOutProfilePage6/FillOutProfilePage6")
 );
 
 export const Routing = () => {

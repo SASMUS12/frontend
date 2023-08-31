@@ -8,7 +8,7 @@ if (hours > 12) {
 }
 
 if (minutes < 10) {
-  minutes = "0" + minutes;
+  minutes = 0 + minutes;
 }
 
 const formattedTime = `${hours}:${minutes} ${amOrPm}`;

@@ -31,7 +31,7 @@ const CountriesAndInterestsSelection = ({
           console.error("Error updating interests list:", error);
         });
     }
-  }, []);
+  }, [itemsName]);
 
   useEffect(() => {
     if (itemsName === "interests") {
@@ -43,7 +43,7 @@ const CountriesAndInterestsSelection = ({
           console.error("Error updating countries list:", error);
         });
     }
-  }, []);
+  }, [itemsName]);
 
   const allItemsList = [...interestsList, ...countriesList];
 

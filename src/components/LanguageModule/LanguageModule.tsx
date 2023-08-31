@@ -33,6 +33,8 @@ const LanguageModule: FC<LanguageModuleProps> = ({
 }) => {
   const [languagesData, setLanguagesData] = useState<Language[]>([]);
 
+  console.log("selectedLanguageAndLevels:", selectedLanguagesAndLevels);
+
   //Запрос массива языков
   const fetchLanguagesData = async () => {
     try {

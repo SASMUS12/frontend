@@ -8,12 +8,12 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Header from "../../components/Header/Header";
-import ProgressLine from "../../components/UI/ProgressLine/ProgressLine";
-import { Button } from "../../components/UI/Button/Button";
+import Header from "../../../components/Header/Header";
+import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
+import { Button } from "../../../components/UI/Button/Button";
 import { Goals } from "./Goals";
 
-import styles from "./FillOutProfilePages.module.scss";
+import styles from "../FillOutProfilePages.module.scss";
 
 const FillOutProfilePage4 = () => {
   const navigate = useNavigate();
