@@ -280,11 +280,11 @@ export interface PatchedUserProfileRequest {
   /** @format binary */
   avatar?: File | null;
   /**
-   * Код
-   * Код страны
+   * Название
+   * Наименование
    * @minLength 1
    */
-  country?: string | null;
+  country?: string;
   languages?: UserLanguageRequest[];
   /**
    * Пол
@@ -493,10 +493,10 @@ export interface UserProfile {
    */
   slug: string | null;
   /**
-   * Код
-   * Код страны
+   * Название
+   * Наименование
    */
-  country?: string | null;
+  country?: string;
   languages?: UserLanguage[];
   /**
    * Пол
@@ -1243,10 +1243,10 @@ export class Api<
       query?: {
         age?: string;
         /**
-         * Код
-         * Код страны
+         * Название
+         * Наименование
          */
-        country?: string | null;
+        country?: string;
         /**
          * Пол
          * Пол пользователя
