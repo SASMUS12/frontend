@@ -1,38 +1,38 @@
-import graduationCap from "../../../images/goals/graduation-cap.png";
-import business from "../../../images/goals/business.png";
-import geography from "../../../images/goals/geography.png";
-import product from "../../../images/goals/product.png";
-import handshakeLogo from "../../../images/goals/handshake-logo.png";
-import brain from "../../../images/goals/brain.png";
+import education from "../../../images/goals/education.svg";
+import work from "../../../images/goals/work.svg";
+import travel from "../../../images/goals/travel.svg";
+import box from "../../../images/goals/box.svg";
+import community from "../../../images/goals/community.svg";
+import brain from "../../../images/goals/brain.svg";
 
 export const Goals = [
   {
-    image: graduationCap,
+    image: education,
     name: "Академическая шапочка",
     description: "Образование",
     active: false,
   },
   {
-    image: business,
+    image: work,
     name: "Портфель бизнесмена",
     description: "Карьера и бизнес",
     active: false,
   },
   {
-    image: geography,
+    image: travel,
     name: "Модель планеты",
     description: "Путешествие",
     active: false,
   },
   {
-    image: product,
-    name: "Иконка чемодана",
+    image: box,
+    name: "Коробка для переезда",
     description: "Переезд",
     active: false,
   },
   {
-    image: handshakeLogo,
-    name: "Иконка рукопожатия",
+    image: community,
+    name: "Иконка сообщества: два человека",
     description: "Сообщество",
     active: false,
   },

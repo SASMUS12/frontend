@@ -14,14 +14,16 @@ interface IPageName {
   pageName: string;
   itemsName: string;
   itemsList: (Country | Interest)[];
-  onSelectedItemsChange: (item: (Country | Interest)[]) => void;
+  selectedItems: (Country | Interest)[];
+  setSelectedItems: (item: (Country | Interest)[]) => void;
 }
 
 const InputSearchList: FC<IPageName> = ({
   pageName,
   itemsName,
   itemsList,
-  onSelectedItemsChange,
+  selectedItems,
+  setSelectedItems,
 }: IPageName) => {
   const [isSearchListVisible, setSearchListVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -42,9 +44,6 @@ const InputSearchList: FC<IPageName> = ({
   >(null);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [selectedItems, setSelectedItems] = useState<(Country | Interest)[]>(
-    []
-  );
 
   const i = itemsName === "countries" ? (pageName === "Sort" ? 5 : 1) : 100;
 
@@ -207,8 +206,6 @@ const InputSearchList: FC<IPageName> = ({
       setSearchListVisible(false);
       setSearchValue("");
       // onSortCountry(country);
-
-      onSelectedItemsChange(updatedSelectedItems);
     }
   };
 

@@ -7,6 +7,7 @@
     "@types/react-dom": "^18.2.7",
     "classnames": "^2.3.2",
     "compose-function": "^3.0.3",
+    "fs": "^0.0.1-security",
     "mobx-react": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -44,9 +45,13 @@
       "last 1 safari version"
     ]
   },
+  "browser": {
+    "fs": false
+  },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "*",
     "@types/compose-function": "^0.0.30",
+    "@types/node": "^20.5.7",
     "css-loader": "^6.8.1",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",

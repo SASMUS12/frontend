@@ -1,15 +1,15 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 
-import CountrySelection from '../CountrySelection/CountrySelection';
-import LanguageModule from '../LanguageModule/LanguageModule';
-import Gender from '../Gender/Gender';
-import MultiRangeSlider from '../MultiRangeSlider/MultiRangeSlider';
-import LanguageLevelModal from '../LanguageLevelModal/LanguageLevelModal';
-import { Button } from '../UI/Button/Button';
+import CountrySelection from "../CountrySelection/CountrySelection";
+import LanguageModule from "../LanguageModule/LanguageModule";
+import Gender from "../Gender/Gender";
+import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
+import LanguageLevelModal from "../LanguageLevelModal/LanguageLevelModal";
+import { Button } from "../UI/Button/Button";
 
-import { Country, Language, SkillLevelEnum } from '../../utils/openapi';
+import { Country, Language, SkillLevelEnum } from "../../utils/openapi";
 
-import styles from '../Sort/Sort.module.scss';
+import styles from "../Sort/Sort.module.scss";
 
 interface Filters {
   country: string;
@@ -29,11 +29,11 @@ interface SortProps {
 const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [selectedLanguagesAndLevels, setSelectedLanguagesAndLevels] = useState<
-      { language: Language | null; skillLevels: SkillLevelEnum[] }[]
+    { language: Language | null; skillLevels: SkillLevelEnum[] }[]
   >([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [showDefaultLanguageModule, setShowDefaultLanguageModule] =
-      useState(true);
+    useState(true);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [leftValue, setLeftValue] = useState<number>(18);
   const [rightValue, setRightValue] = useState<number>(40);
@@ -56,17 +56,17 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
   };
 
   const handleFindButtonClick = () => {
-    const ageRange = ${leftValue},${rightValue};
+    const ageRange = "${leftValue}","${rightValue}";
     const languageFilters = selectedLanguagesAndLevels
-        .filter((item) => item.language !== null && item.skillLevels.length > 0)
-        .map((item) => ({
-          language: item.language!.name,
-          skill_level: item.skillLevels.join(','),
-        }));
+      .filter((item) => item.language !== null && item.skillLevels.length > 0)
+      .map((item) => ({
+        language: item.language!.name,
+        skill_level: item.skillLevels.join(","),
+      }));
     const countryCodes = selectedCountries
-        .filter((country) => country.code !== null)
-        .map((country) => country.code!.toUpperCase())
-        .join(',');
+      .filter((country) => country.code !== null)
+      .map((country) => country.code!.toUpperCase())
+      .join(",");
     const filters: Filters = {
       age: ageRange,
       country: countryCodes,
@@ -76,72 +76,72 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
     onChangeSort(filters);
   };
   return (
-      <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
-        <div className={styles.popup__cantry}>
-          <h2 className={styles.subtitle}>Страна партнера</h2>
-          <CountrySelection
-              pageName='Sort'
-              onSelectedCountriesChange={setSelectedCountries}
-              onClearFilter={handleClearFilter}
-          />
-        </div>
-        <div className={styles.languageHelp}>
-          <h2 className={styles.subtitle}>Язык партнера</h2>
-          <Button
-              className={styles.languageHelp__button}
-              onClick={() => setModalOpen(true)}
-          />
-        </div>
-        {showDefaultLanguageModule && (
-            <LanguageModule
-                pageName='Sort'
-                initialLanguageAndLevels={{ language: null, skillLevels: [] }}
-                selectedLanguagesAndLevels={selectedLanguagesAndLevels}
-                setSelectedLanguagesAndLevels={setSelectedLanguagesAndLevels}
-            />
-        )}
-        <div className={styles.partner}>
-          <h2 className={styles.subtitle}>О партнере</h2>
-          <div className={styles.partner__gender}>
-            <h3 className={styles.partner__gender_subtitle}>Пол</h3>
-            <Gender
-                selectedGender={selectedGender}
-                setSelectedGender={setSelectedGender}
-                componentName='Sort'
-            />
-          </div>
-        </div>
-        <div className={styles.age}>
-          <h3 className={styles.age__subtitle}>Возраст</h3>
-          <MultiRangeSlider
-              minValue={18}
-              maxValue={90}
-              leftValue={leftValue}
-              rightValue={rightValue}
-              onChange={handleSliderChange}
-          />
-        </div>
-        <Button
-            type='button'
-            className={styles.findButton}
-            children={'Найти'}
-            onClick={handleFindButtonClick}
-        />
-        <Button
-            type='submit'
-            variant='addLanguage'
-            size='xs'
-            fontSize='13'
-            className={styles.cleanButton}
-            children={'Очистить фильтр'}
-            onClick={handleClearFilter}
-        />
-        <LanguageLevelModal
-            isModalOpen={isModalOpen}
-            setModalOpen={setModalOpen}
-            pageName='Sort'
+    <div className={isOpen ? styles.popup__sort : styles.popup__sort_hidden}>
+      <div className={styles.popup__cantry}>
+        <h2 className={styles.subtitle}>Страна партнера</h2>
+        <CountrySelection
+          pageName="Sort"
+          onSelectedCountriesChange={setSelectedCountries}
+          onClearFilter={handleClearFilter}
         />
       </div>
+      <div className={styles.languageHelp}>
+        <h2 className={styles.subtitle}>Язык партнера</h2>
+        <Button
+          className={styles.languageHelp__button}
+          onClick={() => setModalOpen(true)}
+        />
+      </div>
+      {showDefaultLanguageModule && (
+        <LanguageModule
+          pageName="Sort"
+          initialLanguageAndLevels={{ language: null, skillLevels: [] }}
+          selectedLanguagesAndLevels={selectedLanguagesAndLevels}
+          setSelectedLanguagesAndLevels={setSelectedLanguagesAndLevels}
+        />
+      )}
+      <div className={styles.partner}>
+        <h2 className={styles.subtitle}>О партнере</h2>
+        <div className={styles.partner__gender}>
+          <h3 className={styles.partner__gender_subtitle}>Пол</h3>
+          <Gender
+            selectedGender={selectedGender}
+            setSelectedGender={setSelectedGender}
+            componentName="Sort"
+          />
+        </div>
+      </div>
+      <div className={styles.age}>
+        <h3 className={styles.age__subtitle}>Возраст</h3>
+        <MultiRangeSlider
+          minValue={18}
+          maxValue={90}
+          leftValue={leftValue}
+          rightValue={rightValue}
+          onChange={handleSliderChange}
+        />
+      </div>
+      <Button
+        type="button"
+        className={styles.findButton}
+        children={"Найти"}
+        onClick={handleFindButtonClick}
+      />
+      <Button
+        type="submit"
+        variant="addLanguage"
+        size="xs"
+        fontSize="13"
+        className={styles.cleanButton}
+        children={"Очистить фильтр"}
+        onClick={handleClearFilter}
+      />
+      <LanguageLevelModal
+        isModalOpen={isModalOpen}
+        setModalOpen={setModalOpen}
+        pageName="Sort"
+      />
+    </div>
   );
 };
 

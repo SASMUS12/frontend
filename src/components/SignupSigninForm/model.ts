@@ -5,6 +5,7 @@ import { useLocalObservable } from "mobx-react-lite";
 import { getMe, signInWithEmail } from "../../utils/rest/auth";
 import { signUp } from "../../utils/rest/register";
 import { session } from "../../models/session/Session";
+import { api, headersWithToken as headers } from "../../utils/constants";
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -78,6 +79,8 @@ export const useModel = () => {
         model.message = "";
         model.isLoading = true;
         try {
+          session.signOut();
+
           await signUp({
             email: model.email,
             username: model.username,
@@ -129,12 +132,16 @@ export const useModel = () => {
         model.isLoading = true;
 
         try {
+          session.signOut();
+
           const token = await signInWithEmail({
             username: model.email,
             password: model.password,
           });
 
           if (token) {
+            localStorage.setItem("accessToken", token.access);
+            localStorage.setItem("refreshToken", token.refresh);
             session.setAccessToken(token.access);
             session.setRefreshToken(token.refresh);
           }

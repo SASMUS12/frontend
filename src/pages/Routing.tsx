@@ -31,7 +31,7 @@ const FillOutProfilePage5 = lazy(
 const FillOutProfilePage6 = lazy(
   () => import("./FillOutProfilePages/FillOutProfilePage6/FillOutProfilePage6")
 );
-
+const ChatsPage = lazy(() => import("./Chats/Chats"));
 export const Routing = () => {
   return (
     <Routes>
@@ -43,6 +43,7 @@ export const Routing = () => {
       <Route path="/fill-out-5" element={<FillOutProfilePage5 />} />
       <Route path="/fill-out-6" element={<FillOutProfilePage6 />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/chats" element={<ChatsPage />} />
       {/*</Route>*/}
       <Route path="/signin" element={<SignInPage />} />
       <Route path="/signup" element={<SignUpPage />} />

@@ -1,61 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
-import { useNavigate, Link } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { useNavigate, Link } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
-import styles from './Header.module.scss';
-import { Button } from '../UI/Button/Button';
-import { useModel } from '../SignupSigninForm/model';
-import logo from '../../images/svg/logo.svg';
-import bell from '../../images/svg/header-bell.svg';
-import bubble from '../../images/20px.png';
-import k from '../../images/headerK.png';
-import cn from 'classnames';
-import { loggedIn } from '../../models/LoggedIn';
+import styles from "./Header.module.scss";
+import { Button } from "../UI/Button/Button";
+import { useModel } from "../SignupSigninForm/model";
+import logo from "../../images/svg/logo.svg";
+import bell from "../../images/svg/header-bell.svg";
+import bubble from "../../images/20px.png";
+import k from "../../images/headerK.png";
+import cn from "classnames";
+import { loggedIn } from "../../models/LoggedIn";
+import { session } from "../../models/session/Session";
+import { getMe } from "../../utils/rest/auth";
 
 const Header = observer(() => {
   const model = useModel();
   const navigate = useNavigate();
   const location = useLocation();
+
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isAaa, setAaa] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      return await getMe();
+    };
+  }, [loggedIn.loggedIn]);
 
   const checkIsSignUp = () => {
     setMenuOpen(!isMenuOpen);
   };
 
   const checkLogout = () => {
+    // session.signOut();
     localStorage.clear();
-    setMenuOpen(!isMenuOpen);
+
     loggedIn.setLoggedInFalse();
-    model.error = '';
-    model.message = '';
-    model.username = '';
-    model.email = '';
-    model.password = '';
-    model.confirmPassword = '';
+    model.error = "";
+    model.message = "";
+    model.username = "";
+    model.email = "";
+    model.password = "";
+    model.confirmPassword = "";
     model.isModalOpen = false;
     model.user = {};
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== "/") {
+      navigate("/signup");
     }
   };
 
+  useEffect(() => {}, [loggedIn.loggedIn]);
+
   useEffect(() => {
-    model.getCurrentUser();
+    session.user;
   }, [loggedIn.loggedIn]);
 
   useEffect(() => {
-    setAaa(loggedIn.loggedIn);
-  }, [loggedIn.loggedIn]);
-
-  useEffect(() => {
-    console.log('header next try');
-    console.log(isAaa);
-  }, [isAaa]);
-
-  useEffect(() => {
-    console.log('header');
+    console.log("header");
     console.log(loggedIn.loggedIn);
   }, [loggedIn.loggedIn]);
 
@@ -63,53 +65,53 @@ const Header = observer(() => {
     <header className={styles.header}>
       <div className={styles.header__container}>
         <Link to={`/`} className={styles.header__link}>
-          <img src={logo} alt='Логотип проекта' />
+          <img src={logo} alt="Логотип проекта" />
         </Link>
-        {location.pathname !== '/signup' &&
-          location.pathname !== '/signin' &&
+        {location.pathname !== "/signup" &&
+          location.pathname !== "/signin" &&
           !loggedIn.loggedIn && (
             <div className={styles.header__buttonContainer}>
               <Button
                 className={styles.button}
-                type='submit'
-                variant='primary'
+                type="submit"
+                variant="primary"
                 disabled={model.isLoading}
-                onClick={() => navigate('/signin')}
+                onClick={() => navigate("/signin")}
               >
-                {model.isLoading ? 'Loading' : 'Войти'}
+                {model.isLoading ? "Loading" : "Войти"}
               </Button>
               <Button
                 className={styles.button}
-                type='submit'
-                variant='transparent'
+                type="submit"
+                variant="transparent"
                 disabled={model.isLoading}
-                onClick={() => navigate('/signup')}
+                onClick={() => navigate("/signup")}
               >
-                {model.isLoading ? 'Loading' : 'Зарегистрироваться'}
+                {model.isLoading ? "Loading" : "Зарегистрироваться"}
               </Button>
             </div>
           )}
-        {location.pathname !== '/signup' &&
-          location.pathname !== '/signin' &&
+        {location.pathname !== "/signup" &&
+          location.pathname !== "/signin" &&
           loggedIn.loggedIn && (
             <div className={styles.header__iconsContainer}>
               <Link to={`/chats`} className={styles.header__link}>
                 <img
                   src={bubble}
-                  alt='Иконка чатов'
+                  alt="Иконка чатов"
                   className={styles.header__img}
                 />
               </Link>
               <Link to={`/messages`} className={styles.header__link}>
                 <img
                   src={bell}
-                  alt='Иконка уведомлений'
+                  alt="Иконка уведомлений"
                   className={styles.header__img}
                 />
               </Link>
               <img
                 src={k}
-                alt='Переход в профиль пользователя'
+                alt="Переход в профиль пользователя"
                 className={styles.header__img}
                 onClick={checkIsSignUp}
               />

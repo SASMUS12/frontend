@@ -10,13 +10,19 @@ import { getCountries } from "../../utils/rest/getCountries";
 interface CountriesAndInterestsSelectionProps {
   pageName: string;
   itemsName: string;
-  onSelectedItemsChange: (item: (Country | Interest)[]) => void;
+  selectedInterests?: Interest[];
+  setSelectedInterests?: (item: Interest[]) => void;
+  selectedCountries?: Country[];
+  setSelectedCountries?: (item: Country[]) => void;
 }
 
-const CountriesAndInterestsSelection = ({
+const InterestsSelection = ({
   pageName,
   itemsName,
-  onSelectedItemsChange,
+  selectedInterests,
+  setSelectedInterests,
+  selectedCountries,
+  setSelectedCountries,
 }: CountriesAndInterestsSelectionProps) => {
   const [interestsList, setInterestsList] = useState<Interest[]>([]);
   const [countriesList, setCountriesList] = useState<Country[]>([]);
@@ -52,9 +58,12 @@ const CountriesAndInterestsSelection = ({
       pageName={pageName}
       itemsName="interests"
       itemsList={allItemsList}
-      onSelectedItemsChange={onSelectedItemsChange}
+      selectedInterests={selectedInterests}
+      setSelectedItems={
+        itemsName === "countries" ? setSelectedCountries : setSelectedInterests
+      }
     />
   );
 };
 
-export default observer(CountriesAndInterestsSelection);
+export default observer(InterestsSelection);

@@ -10,6 +10,8 @@ import { GenderEnum } from "../../../utils/openapi";
 import { api, headersWithToken as headers } from "../../../utils/constants";
 import { store } from "../../../models/store";
 
+import fs from "fs";
+
 export const useModel = () => {
   const navigate = useNavigate();
   const user = store.session.user;
@@ -24,7 +26,7 @@ export const useModel = () => {
       avatar: "",
       avatarFile: null as File | null,
       previewAvatar: "",
-      errorFillOut1: { firstName: "", birthdate: "", avatar: "" },
+      error: { firstName: "", birthdate: "", avatar: "" },
       message: "",
       isLoading: false,
       isExportAvatarModal: false,
@@ -85,19 +87,40 @@ export const useModel = () => {
         if (event.currentTarget.files) {
           const file = event.currentTarget.files[0];
           if (file) {
+            const fileSrc = URL.createObjectURL(file);
+
             model.handleValue({
               name: "avatar",
-              value: URL.createObjectURL(file),
+              value: fileSrc,
             });
 
-            const reader = new FileReader();
-            reader.onload = () => {
-              const base64Data = reader.result as null;
-              if (base64Data) {
-                model.avatarFile = base64Data;
-              }
-            };
-            reader.readAsDataURL(file);
+            const imageBuffer = fs.readFileSync(fileSrc);
+            const base64Image = imageBuffer.toString("base64");
+
+            console.log(base64Image);
+
+            // const reader = new FileReader();
+            // reader.onload = () => {
+            //   const base64Data = reader.result;
+            //   if (base64Data) {
+            //     model.avatarFile = base64Data;
+            //   }
+            //   console.log("imageBase64", reader.result);
+            //   reader.readAsDataURL(file);
+
+            // if (base64Data && typeof base64Data === "string") {
+            //   // Создаем объект типа File, преобразовывая строку Base64 в Blob
+            //   const blob = new Blob([base64Data], {
+            //     type: "image/png" || "image/jpg" || "image/jpeg",
+            //   });
+            //   const file = new File(
+            //     [blob],
+            //     "filename.png" || "filename.jpg" || "filename.jpeg"
+            //   );
+            //
+            //   model.avatarFile = blob;
+            // }
+            // };
 
             console.log("imageBase64", model.avatarFile);
 
@@ -116,34 +139,34 @@ export const useModel = () => {
         model.handleModalClose();
       },
 
-      async handleFillOut1Submit(event: FormEvent<HTMLFormElement>) {
+      async handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        model.errorFillOut1 = {
+        model.error = {
           firstName: "",
           birthdate: "",
           avatar: "",
         };
 
         if (model.firstName === "") {
-          model.errorFillOut1.firstName = "Пожалуйста, введите Ваше имя";
+          model.error.firstName = "Пожалуйста, введите Ваше имя";
         }
 
         if (model.birthdate === "") {
-          model.errorFillOut1.birthdate = "Пожалуйста, введите дату рождения";
+          model.error.birthdate = "Пожалуйста, введите дату рождения";
         }
 
         if (
           model.avatar === "" ||
           model.avatar === "../../images/fill-out-profile-export-avatar.png"
         ) {
-          model.errorFillOut1.avatar = "Пожалуйста, выберете аватар";
+          model.error.avatar = "Пожалуйста, выберете аватар";
         }
 
         if (
-          model.errorFillOut1.firstName !== "" ||
-          model.errorFillOut1.birthdate !== "" ||
-          model.errorFillOut1.avatar !== ""
+          model.error.firstName !== "" ||
+          model.error.birthdate !== "" ||
+          model.error.avatar !== ""
         ) {
           return;
         }
