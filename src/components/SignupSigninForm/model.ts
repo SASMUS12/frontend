@@ -1,14 +1,16 @@
-import { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useLocalObservable } from "mobx-react-lite";
 
 import { getMe, signInWithEmail } from "../../utils/rest/auth";
 import { signUp } from "../../utils/rest/register";
 import { session } from "../../models/session/Session";
-import { api, headersWithToken as headers } from "../../utils/constants";
 
 export const useModel = () => {
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const pathName: string = location.pathname;
 
   const model = useLocalObservable(() => {
     return {
@@ -22,6 +24,12 @@ export const useModel = () => {
       refresh: "",
       access: "",
       isSignUp: false,
+
+      checkIsSignUp() {
+        pathName === "/signup"
+          ? (model.isSignUp = true)
+          : (model.isSignUp = false);
+      },
 
       handleValue({
         name,

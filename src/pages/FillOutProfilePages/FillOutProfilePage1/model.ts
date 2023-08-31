@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useLocalObservable } from "mobx-react-lite";
 
 import { getMe } from "../../../utils/rest/auth";
-import { updateProfile } from "../../../utils/rest/updateProfile";
 import { session } from "../../../models/session/Session";
 
 import { GenderEnum } from "../../../utils/openapi";
 import { api, headersWithToken as headers } from "../../../utils/constants";
 import { store } from "../../../models/store";
 
-import fs from "fs";
+import base64js from "base64-js";
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -24,6 +23,7 @@ export const useModel = () => {
       calculatedBirthday: "",
       gender: "Male" as GenderEnum | null,
       avatar: "",
+      avatarBase64: "",
       avatarFile: null as File | null,
       previewAvatar: "",
       error: { firstName: "", birthdate: "", avatar: "" },
@@ -94,35 +94,15 @@ export const useModel = () => {
               value: fileSrc,
             });
 
-            const imageBuffer = fs.readFileSync(fileSrc);
-            const base64Image = imageBuffer.toString("base64");
-
-            console.log(base64Image);
-
-            // const reader = new FileReader();
-            // reader.onload = () => {
-            //   const base64Data = reader.result;
-            //   if (base64Data) {
-            //     model.avatarFile = base64Data;
-            //   }
-            //   console.log("imageBase64", reader.result);
-            //   reader.readAsDataURL(file);
-
-            // if (base64Data && typeof base64Data === "string") {
-            //   // Создаем объект типа File, преобразовывая строку Base64 в Blob
-            //   const blob = new Blob([base64Data], {
-            //     type: "image/png" || "image/jpg" || "image/jpeg",
-            //   });
-            //   const file = new File(
-            //     [blob],
-            //     "filename.png" || "filename.jpg" || "filename.jpeg"
-            //   );
-            //
-            //   model.avatarFile = blob;
-            // }
-            // };
-
-            console.log("imageBase64", model.avatarFile);
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              if (event.target) {
+                const base64Image = event.target.result;
+                console.log(base64Image);
+                model.avatarFile = base64Image;
+              }
+            };
+            reader.readAsDataURL(file);
 
             model.handleModalClose();
             console.log(model.avatar);
@@ -136,6 +116,53 @@ export const useModel = () => {
 
       handleSetAvatar() {
         model.avatar = model.previewAvatar;
+
+        const string = model.avatar as string;
+
+        // const reader = new FileReader();
+        // reader.onload = function (event) {
+        //   if (event.target) {
+        //     const base64Image = event.target.result;
+        //     console.log(base64Image);
+        //     model.avatarFile = base64Image;
+        //   }
+        // };
+        // reader.readAsDataURL(file);
+
+        function Base64Encode(inputString: string, encoding = "utf-8") {
+          const encoder = new TextEncoder();
+          const bytes = encoder.encode(inputString);
+          console.log(base64js.fromByteArray(bytes));
+          model.avatarBase64 = base64js.fromByteArray(bytes);
+        }
+
+        Base64Encode(string);
+
+        const base64toBlob = (
+          base64: string,
+          onsuccess: (blob: Blob | null) => void
+        ) => {
+          const img = new Image();
+
+          img.onload = function onload() {
+            const canvas = document.createElement("canvas");
+
+            canvas.height = img.height;
+            canvas.width = img.width;
+
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+            canvas.toBlob(onsuccess);
+            console.log(canvas.toBlob(onsuccess));
+          };
+          img.src = base64;
+        };
+
+        base64toBlob(model.avatarBase64, model.avatarFile);
+        console.log(model.avatarFile);
+
         model.handleModalClose();
       },
 

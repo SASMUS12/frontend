@@ -11,6 +11,7 @@ import {
 } from "../openapi";
 
 import { api, headersWithToken as headers } from "../constants";
+import { session } from "../../models/session/Session";
 
 export const signInWithEmail = async ({
   username,
@@ -70,9 +71,6 @@ export const getMe = async (): Promise<UserProfile | null> => {
   }
 
   if (user) {
-    loggedIn.setLoggedInTrue();
-    console.log(loggedIn.loggedIn);
-
     return {
       username: user.username as string,
       first_name: user.first_name as string,
@@ -106,8 +104,7 @@ export const getMe = async (): Promise<UserProfile | null> => {
 //     }
 
 // if (res) {
-//   localStorage.clear();
-// loggedIn.setLoggedInFalse();
+// session.signOut();
 // }
 
 //

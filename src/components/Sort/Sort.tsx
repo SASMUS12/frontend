@@ -56,7 +56,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
   };
 
   const handleFindButtonClick = () => {
-    const ageRange = "${leftValue}","${rightValue}";
+    const ageRange = `${leftValue},${rightValue}`;
     const languageFilters = selectedLanguagesAndLevels
       .filter((item) => item.language !== null && item.skillLevels.length > 0)
       .map((item) => ({
@@ -81,7 +81,8 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
         <h2 className={styles.subtitle}>Страна партнера</h2>
         <CountrySelection
           pageName="Sort"
-          onSelectedCountriesChange={setSelectedCountries}
+          selectedCountries={selectedCountries}
+          setSelectedCountries={setSelectedCountries}
           onClearFilter={handleClearFilter}
         />
       </div>

@@ -1,0 +1,37 @@
+.chat {
+  width: 806px;
+  height: 733px;
+  background-color: var(--color-base-white);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__greeting {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &__welcometext {
+    font: var(--font-text-18-140-400);
+    max-width: 300px;
+  }
+
+  &__searchbtn {
+    border: none;
+    padding: 0;
+    margin-left: 6px;
+    background-color: var(--color-base-white);
+    color: var(--accent-color-violet);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  &__idleimg {
+    background-image: url(../../../images/chat_idle_background.png);
+    background-size: contain;
+    width: 336px;
+    height: 336px;
+  }
+}

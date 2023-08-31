@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { Input } from "../UI/Input/Input";
@@ -17,14 +17,8 @@ const SignupSigninForm = () => {
   const location = useLocation();
   const pathName: string = location.pathname;
 
-  const [isSignUp, setIsSignUp] = useState(false);
-
-  const checkIsSignUp = () => {
-    pathName === "/signup" ? setIsSignUp(true) : setIsSignUp(false);
-  };
-
   useEffect(() => {
-    checkIsSignUp();
+    model.checkIsSignUp();
   }, [pathName]);
 
   useEffect(() => {
@@ -39,13 +33,13 @@ const SignupSigninForm = () => {
   return (
     <form
       className={styles.form}
-      onSubmit={isSignUp ? model.handleRegister : model.handleLogin}
+      onSubmit={model.isSignUp ? model.handleRegister : model.handleLogin}
     >
       <ul className={styles.form__links}>
         <Link
           to={`/signin`}
           className={
-            !isSignUp
+            !model.isSignUp
               ? styles.form__links_activeLinkItem
               : styles.form__links_linkItem
           }
@@ -55,7 +49,7 @@ const SignupSigninForm = () => {
         <Link
           to={`/signup`}
           className={
-            isSignUp
+            model.isSignUp
               ? styles.form__links_activeLinkItem
               : styles.form__links_linkItem
           }
@@ -63,7 +57,7 @@ const SignupSigninForm = () => {
           Регистрация
         </Link>
       </ul>
-      {isSignUp && (
+      {model.isSignUp && (
         <Input
           className={styles.form__input}
           type="text"
@@ -84,9 +78,11 @@ const SignupSigninForm = () => {
         type="email"
         name="email"
         value={model.email}
-        label={isSignUp ? "Введите эл.почту" : "Введите логин или эл.почту"}
-        labelHint={isSignUp ? "И получите письмо с подтверждением" : ""}
-        isLabelHintHidden={!isSignUp}
+        label={
+          model.isSignUp ? "Введите эл.почту" : "Введите логин или эл.почту"
+        }
+        labelHint={model.isSignUp ? "И получите письмо с подтверждением" : ""}
+        isLabelHintHidden={!model.isSignUp}
         placeholder="Эл. почта"
         required
         error={model.error.email}
@@ -99,9 +95,11 @@ const SignupSigninForm = () => {
         type="password"
         name="password"
         value={model.password}
-        label={isSignUp ? "Придумайте пароль" : "Введите пароль"}
-        labelHint={isSignUp ? "Не менее 5 символов, латинскими буквами" : ""}
-        isLabelHintHidden={!isSignUp}
+        label={model.isSignUp ? "Придумайте пароль" : "Введите пароль"}
+        labelHint={
+          model.isSignUp ? "Не менее 5 символов, латинскими буквами" : ""
+        }
+        isLabelHintHidden={!model.isSignUp}
         placeholder="Пароль"
         required
         error={model.error.password}
@@ -109,7 +107,7 @@ const SignupSigninForm = () => {
         maxLength={12}
         minLength={5}
       />
-      {isSignUp && (
+      {model.isSignUp && (
         <Input
           className={styles.form__input}
           type="password"
@@ -125,7 +123,7 @@ const SignupSigninForm = () => {
           minLength={5}
         />
       )}
-      {isSignUp && (
+      {model.isSignUp && (
         <p className={styles.form__text_grey12}>
           Нажимая на кнопку «Продолжить», вы соглашаетесь с&nbsp;
           <span className={styles.form__text_grey12_underline}>
@@ -134,7 +132,7 @@ const SignupSigninForm = () => {
         </p>
       )}
       <div className={styles.form__textTag}>
-        {!isSignUp && (
+        {!model.isSignUp && (
           <label
             className={cn(styles.form__checkbox, styles.form__text_violet14)}
           >
@@ -149,7 +147,7 @@ const SignupSigninForm = () => {
             Запомнить меня
           </label>
         )}
-        {!isSignUp && (
+        {!model.isSignUp && (
           <a
             className={styles.form__forgotLink}
             href="src/components/UI/SignInForm#"
@@ -164,7 +162,7 @@ const SignupSigninForm = () => {
         variant="primary"
         disabled={model.isLoading}
       >
-        {model.isLoading ? "Loading" : isSignUp ? "Продолжить" : "Войти"}
+        {model.isLoading ? "Loading" : model.isSignUp ? "Продолжить" : "Войти"}
       </Button>
       <p className={cn(styles.form__text_or, styles.form__text_violet14)}>
         или
