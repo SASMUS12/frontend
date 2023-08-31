@@ -32,12 +32,8 @@ export const useModel = () => {
         model[name] = value;
       },
 
-      get toMain(): string {
+      to() {
         return "/";
-      },
-
-      get toFillOut(): string {
-        return "fill-out-1";
       },
 
       async handleRegister(event: FormEvent<HTMLFormElement>) {
@@ -99,7 +95,7 @@ export const useModel = () => {
           }
           model.isLoading = false;
 
-          navigate("fill-out-1");
+          navigate("/fill-out-1");
           model.isLoading = false;
         } catch (error: any) {
           model.message = error.message;
@@ -142,6 +138,7 @@ export const useModel = () => {
             session.setAccessToken(token.access);
             session.setRefreshToken(token.refresh);
           }
+          navigate(model.to());
           model.isLoading = false;
         } catch (error: any) {
           model.message = error.message;

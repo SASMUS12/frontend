@@ -1,9 +1,9 @@
-import graduationCap from "../../images/goals/graduation-cap.png";
-import business from "../../images/goals/business.png";
-import geography from "../../images/goals/geography.png";
-import product from "../../images/goals/product.png";
-import handshakeLogo from "../../images/goals/handshake-logo.png";
-import brain from "../../images/goals/brain.png";
+import graduationCap from "../../../images/goals/graduation-cap.png";
+import business from "../../../images/goals/business.png";
+import geography from "../../../images/goals/geography.png";
+import product from "../../../images/goals/product.png";
+import handshakeLogo from "../../../images/goals/handshake-logo.png";
+import brain from "../../../images/goals/brain.png";
 
 export const Goals = [
   {

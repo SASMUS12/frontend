@@ -1,11 +1,16 @@
-import React, { FormEvent } from "react";
+import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalObservable } from "mobx-react-lite";
 
 import { getMe } from "../../../utils/rest/auth";
 import { session } from "../../../models/session/Session";
 
-import { Country, GenderEnum } from "../../../utils/openapi";
+import {
+  Country,
+  Language,
+  SkillLevelEnum,
+  UserLanguageRequest,
+} from "../../../utils/openapi";
 import { api, headersWithToken as headers } from "../../../utils/constants";
 import { store } from "../../../models/store";
 
@@ -17,17 +22,19 @@ export const useModel = () => {
   const model = useLocalObservable(() => {
     return {
       countries: [] as Country[],
-      birthdate: "",
-      calculatedBirthday: "",
-      gender: "Male" as GenderEnum | null,
-      avatar: "",
-      avatarFile: null as File | null,
-      previewAvatar: "",
-      errorFillOut1: { firstName: "", birthdate: "", avatar: "" },
+      languagesAndLevels: [
+        {
+          language: {} as Language | null,
+          skillLevels: [] as SkillLevelEnum[],
+        },
+      ],
+      languages: [
+        { isocode: "", language: "", skill_level: {} as SkillLevelEnum },
+      ],
+      error: { countries: "", languages: "" },
       message: "",
+      isSubmitButtonDisabled: false,
       isLoading: false,
-      isExportAvatarModal: false,
-      isCreateAvatarModal: false,
 
       async handleCurrentUser() {
         try {
@@ -35,128 +42,82 @@ export const useModel = () => {
 
           if (user) {
             session.updateUser(user);
-            model.firstName = user.first_name ?? "";
-            model.gender = user.gender ?? null;
-            model.birthdate = user.birth_date ?? "";
-            model.avatar = user.avatar ?? "";
+            model.countries[0].name = user.country ?? "";
+            model.languages = user.languages ?? [];
           }
         } catch (error: any) {
           model.message = error.message;
         }
       },
 
-      handleModalClose() {
-        model.isExportAvatarModal = false;
-        model.isCreateAvatarModal = false;
-      },
-
       handleCountriesValue(countries: Country[]) {
         if (countries) {
           model.countries = countries;
+          console.log(model.countries);
         } else {
           model.countries = [];
         }
         console.log(model.countries);
       },
 
-      handleValue({
-        name,
-        value,
-      }: {
-        name: "firstName" | "birthdate" | "avatar";
-        value: string;
-      }) {
-        model[name] = value;
-        console.log(model.firstName);
-        console.log(model.birthdate);
-        console.log(model.avatar);
-      },
-
-      handleGenderValue(gender: GenderEnum | null) {
-        if (gender !== null) {
-          model.gender = gender;
-        } else {
-          model.gender = null;
+      handleLanguagesValue(
+        languages: {
+          language: Language | null;
+          skillLevels: SkillLevelEnum[];
+        }[]
+      ) {
+        if (languages) {
+          model.languagesAndLevels = languages;
         }
-        console.log(model.gender);
+        console.log(model.languages);
       },
 
-      handleSetAvatarPhoto(event: React.ChangeEvent<HTMLInputElement>) {
-        if (event.currentTarget.files) {
-          const file = event.currentTarget.files[0];
-          if (file) {
-            model.handleValue({
-              name: "avatar",
-              value: URL.createObjectURL(file),
-            });
+      handleReturnButtonClick() {
+        navigate("/fill-out-1");
+      },
 
-            const reader = new FileReader();
-            reader.onload = () => {
-              const base64Data = reader.result as null;
-              if (base64Data) {
-                model.avatarFile = base64Data;
-              }
-            };
-            reader.readAsDataURL(file);
-
-            console.log("imageBase64", model.avatarFile);
-
-            model.handleModalClose();
-            console.log(model.avatar);
-          }
+      handleSubmitButtonDisabled() {
+        for (let i = 0; i < model.languagesAndLevels.length; i++) {
+          model.languagesAndLevels[i].language === null
+            ? (model.isSubmitButtonDisabled = true)
+            : (model.isSubmitButtonDisabled = false);
         }
       },
 
-      handleSetAvatarValue(selectedAvatar: string) {
-        model.previewAvatar = selectedAvatar;
-      },
-
-      handleSetAvatar() {
-        model.avatar = model.previewAvatar;
-        model.handleModalClose();
-      },
-
-      async handleFillOut1Submit(event: FormEvent<HTMLFormElement>) {
+      async handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        model.errorFillOut1 = {
-          firstName: "",
-          birthdate: "",
-          avatar: "",
+        model.error = {
+          countries: "",
+          languages: "",
         };
 
-        if (model.firstName === "") {
-          model.errorFillOut1.firstName = "Пожалуйста, введите Ваше имя";
+        if (model.countries === null) {
+          model.error.languages = "Пожалуйста, выберите язык";
         }
 
-        if (model.birthdate === "") {
-          model.errorFillOut1.birthdate = "Пожалуйста, введите дату рождения";
+        if (model.languagesAndLevels === null) {
+          model.error.languages = "Пожалуйста, выберите язык";
         }
 
-        if (
-          model.avatar === "" ||
-          model.avatar === "../../images/fill-out-profile-export-avatar.png"
-        ) {
-          model.errorFillOut1.avatar = "Пожалуйста, выберете аватар";
-        }
-
-        if (
-          model.errorFillOut1.firstName !== "" ||
-          model.errorFillOut1.birthdate !== "" ||
-          model.errorFillOut1.avatar !== ""
-        ) {
+        if (model.error.countries !== "" || model.error.languages !== "") {
           return;
         }
+
+        console.log(model.languagesAndLevels[0]);
 
         model.message = "";
         model.isLoading = true;
         try {
           const getUpdateUser = await api.api.usersMePartialUpdate(
             {
-              first_name: model.firstName,
-              avatar: model.avatarFile,
-              birth_date: model.birthdate,
-              gender: model.gender,
+              country: model.countries[0].code,
+              languages: [
+                {
+                  isocode: model.languagesAndLevels[0].language?.isocode || "",
+                  skill_level: {} as SkillLevelEnum,
+                },
+              ],
             },
             { headers }
           );
@@ -164,17 +125,22 @@ export const useModel = () => {
           if (getUpdateUser && user) {
             store.session.updateUser({
               ...user,
-              first_name: model.firstName,
-              avatar: model.avatar,
-              birth_date: model.birthdate,
-              gender: model.gender,
+              country: model.countries[0].name,
+              languages: [
+                {
+                  language: model.languagesAndLevels[0].language?.name || "",
+                  isocode: model.languagesAndLevels[0].language?.isocode || "",
+                  skill_level: {} as SkillLevelEnum,
+                },
+              ],
             });
           }
 
-          navigate("/fill-out-2");
+          navigate("/fill-out-3");
           model.isLoading = false;
         } catch (error: any) {
-          console.log("fill-out-1 error:", error);
+          console.log(model.languagesAndLevels[0]);
+          console.log("fill-out-2 error:", error);
           model.isLoading = false;
         }
       },

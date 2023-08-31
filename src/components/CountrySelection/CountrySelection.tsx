@@ -11,21 +11,20 @@ import classNames from 'classnames';
 
 interface CountrySelectionProps {
   pageName: string;
-  onSelectedCountriesChange: (selectedCountries: Country[]) => void;
-  onClearFilter: () => void;
+  selectedCountries: Country[];
+  setSelectedCountries: (selectedCountries: Country[]) => void;
 }
 
 const CountrySelection: FC<CountrySelectionProps> = ({
   pageName,
-  onSelectedCountriesChange,
-  onClearFilter,
+  selectedCountries,
+  setSelectedCountries,
 }) => {
   const [countriesData, setCountriesData] = useState<Country[]>([]);
   const [isCountryListVisible, setCountryListVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const [filteredCountries, setFilteredCountries] =
     useState<Country[]>(countriesData);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
@@ -65,8 +64,12 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       setSelectedCountries(updatedSelectedCountries);
       setSelectedCountry(country);
       setCountryListVisible(false);
-      setSearchValue('');
-      onSelectedCountriesChange(updatedSelectedCountries);
+
+      pageName === "FillOutProfile2"
+        ? setSearchValue(country.name)
+        : setSearchValue("");
+
+      // onSortCountry(country);
     }
   };
 

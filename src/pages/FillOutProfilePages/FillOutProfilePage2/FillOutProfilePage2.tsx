@@ -1,5 +1,4 @@
-import React, { FormEvent, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useMemo } from "react";
 import { observer } from "mobx-react-lite";
 
 import Header from "../../../components/Header/Header";
@@ -8,52 +7,25 @@ import LanguageModule from "../../../components/LanguageModule/LanguageModule";
 import { Button } from "../../../components/UI/Button/Button";
 import CountrySelection from "../../../components/CountrySelection/CountrySelection";
 
-import { Country, Language, SkillLevelEnum } from "../../../utils/openapi";
-
 import { useModel } from "./model";
 
 import styles from "../FillOutProfilePages.module.scss";
+import { Language, SkillLevelEnum } from "../../../utils/openapi";
 
 const FillOutProfilePage2 = () => {
-  const navigate = useNavigate();
   const model = useModel();
+
+  const initialLanguageAndLevels = useMemo(() => {
+    return { language: null, skillLevels: [] as SkillLevelEnum[] };
+  }, []);
 
   useEffect(() => {
     model.handleCurrentUser();
   }, []);
 
-  const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
-  const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
-
-  const initialLanguageAndLevels = useMemo(() => {
-    return { language: null, skillLevels: [] };
-  }, []);
-
-  const [selectedLanguagesAndLevels, setSelectedLanguagesAndLevels] = useState<
-    { language: Language | null; skillLevels: SkillLevelEnum[] }[]
-  >([initialLanguageAndLevels]);
-
-  const handleReturnButtonClick = () => {
-    navigate("/fill-out-1");
-  };
-
-  const handleSubmitButtonDisabled = () => {
-    for (let i = 0; i < selectedLanguagesAndLevels.length; i++) {
-      selectedLanguagesAndLevels[i].language === null
-        ? setSubmitButtonDisabled(true)
-        : setSubmitButtonDisabled(false);
-    }
-  };
-
   useEffect(() => {
-    handleSubmitButtonDisabled();
-  }, [selectedLanguagesAndLevels]);
-
-  const handleFillOutPage2 = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    navigate("/fill-out-3");
-    console.log("FillOutProfilePage2");
-  };
+    model.handleSubmitButtonDisabled();
+  }, [model.languages]);
 
   return (
     <>
@@ -61,7 +33,7 @@ const FillOutProfilePage2 = () => {
       <main className={styles.content}>
         <button
           className={styles.content__returnButton}
-          onClick={handleReturnButtonClick}
+          onClick={model.handleReturnButtonClick}
         >
           Назад
         </button>
@@ -70,14 +42,15 @@ const FillOutProfilePage2 = () => {
           <h1 className={styles.container__title}>
             Укажите страну и родной язык
           </h1>
-          <form className={styles.form} onSubmit={handleFillOutPage2}>
+          <form className={styles.form} onSubmit={model.handleSubmit}>
             <div className={styles.container__fillOutProfileArea}>
               <h3 className={styles.container__fillOutProfileArea_title}>
                 Страна, в которой Вы сейчас живете
               </h3>
               <CountrySelection
                 pageName="FillOutProfile2"
-                onSelectedCountriesChange={model.handleCountriesValue}
+                selectedCountries={model.countries}
+                setSelectedCountries={model.handleCountriesValue}
               />
             </div>
             <div className={styles.container__fillOutProfileArea}>
@@ -87,15 +60,15 @@ const FillOutProfilePage2 = () => {
               <LanguageModule
                 pageName="FillOutProfile2"
                 initialLanguageAndLevels={initialLanguageAndLevels}
-                selectedLanguagesAndLevels={selectedLanguagesAndLevels}
-                setSelectedLanguagesAndLevels={setSelectedLanguagesAndLevels}
+                selectedLanguagesAndLevels={model.languagesAndLevels}
+                setSelectedLanguagesAndLevels={model.handleLanguagesValue}
               />
             </div>
             <Button
               className={styles.form__button}
               type="submit"
               variant="primary"
-              disabled={isSubmitButtonDisabled}
+              disabled={model.isSubmitButtonDisabled}
             >
               Продолжить
             </Button>
