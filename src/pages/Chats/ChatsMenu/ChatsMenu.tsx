@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SearchButton from "../../../components/UI/SearchButton/SearchButton";
+// import SearchButton from "../../../components/UI/SearchButton/SearchButton";
 import MenuButton from "../Buttons/MenuButton/MenuButton";
 import styles from "./ChatsMenu.module.scss";
 
@@ -28,7 +28,7 @@ const ChatsMenu = () => {
           title="Группы"
         />
       </div>
-      <SearchButton onClick={handleSearchClick} />
+      {/*<SearchButton onClick={handleSearchClick} />*/}
     </div>
   );
 };

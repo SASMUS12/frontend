@@ -1,6 +1,5 @@
 {
   "name": "conversation-exchange-frontend",
-  "homepage": "https://conversation-exchange.github.io/frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

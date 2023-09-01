@@ -117,16 +117,6 @@ export const useModel = () => {
                   isocode: model.languagesAndLevels[0].language?.isocode || "",
                   skill_level: model.languagesAndLevels[0].skillLevels[0],
                 },
-                {
-                  language: model.languagesAndLevels[1].language?.name || "",
-                  isocode: model.languagesAndLevels[1].language?.isocode || "",
-                  skill_level: model.languagesAndLevels[1].skillLevels[0],
-                },
-                {
-                  language: model.languagesAndLevels[2].language?.name || "",
-                  isocode: model.languagesAndLevels[2].language?.isocode || "",
-                  skill_level: model.languagesAndLevels[2].skillLevels[0],
-                },
               ],
             });
           }
