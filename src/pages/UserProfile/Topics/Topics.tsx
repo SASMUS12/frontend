@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useModel } from "./model";
+import { observer } from "mobx-react-lite";
 import IconButton from "../Buttons/IconButton/IconButton";
+import InterestsSelection from "../../../components/InterestsSelection/InterestsSelection";
 import search from "../../../images/userProfile/search.svg";
 import control from "../../../images/userProfile/control.svg";
 import styles from "./Topics.module.scss";
@@ -19,6 +22,7 @@ const Topics: React.FC<TopicsProps> = ({
     ...interests,
   ]);
   const [inputValue, setInputValue] = useState("");
+  const model = useModel();
 
   const handleSetThemes = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -56,6 +60,10 @@ const Topics: React.FC<TopicsProps> = ({
       ) : (
         <div className={styles.topics}>
           <h3 className={styles.title}>Выберите темы для общения</h3>
+          <InterestsSelection
+              selectedInterests={model.selectedInterests}
+              setSelectedInterests={model.setSelectedInterests}
+            />
           <div className={styles.ded}>
             <img
               src={search}
@@ -94,4 +102,4 @@ const Topics: React.FC<TopicsProps> = ({
   );
 };
 
-export default Topics;
+export default observer(Topics);

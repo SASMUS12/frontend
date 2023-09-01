@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { api } from "../../utils/constants";
+import { useModel } from "./model";
 import {
   UserLanguage,
   SkillLevelEnum,
@@ -49,7 +51,7 @@ interface EditedData {
   first_name: string;
   username: string;
   avatar?: File | null;
-  country: string | null;
+  country: string | undefined;
   birth_date: string;
   languages: Language[];
   gender?: GenderEnum | NullEnum | null;
@@ -66,7 +68,7 @@ const UserProfile: React.FC = () => {
   const [editedData, setEditedData] = useState<EditedData>({
     first_name: "",
     avatar: null,
-    country: "",
+    country: "ru",
     birth_date: "",
     languages: [],
     gender: null,
@@ -77,6 +79,9 @@ const UserProfile: React.FC = () => {
     age: "",
   });
   const [imageBase64, setImageBase64] = useState(null);
+  const model = useModel();
+
+  console.log("model", model.username);
 
   const handleFileInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -121,6 +126,10 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    model.handleCurrentUser();
+  }, [model]);
 
   const handleEditProfile = () => {
     if (userData) {
@@ -184,8 +193,6 @@ const UserProfile: React.FC = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  console.log("editedData", editedData);
 
   return (
     <>
@@ -352,4 +359,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default UserProfile;
+export default observer(UserProfile);

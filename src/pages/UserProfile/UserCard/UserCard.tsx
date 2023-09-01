@@ -1,12 +1,24 @@
-import React, { FC, ChangeEvent } from "react";
+import React, { FC, ChangeEvent, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { GenderEnum } from "../../../utils/openapi";
-import IconButton from "../Buttons/IconButton/IconButton";
+import { useModel } from "./model";
+import { Input } from "../../../components/UI/Input/Input";
+import { Button } from "../../../components/UI/Button/Button";
+import CountrySelection from "../../../components/CountrySelection/CountrySelection";
+import Gender from "../../../components/Gender/Gender";
+import Modal from "../../../components/Modal/Modal";
+import Avatars from "../../../components/Avatars/Avatars";
+
 import formattedTime from "../../../utils/getTime";
+
 import cardPartnerAvatar from "../../../images/userProfile/card-partner-avatar.png";
 import cardPartnerFlag from "../../../images/userProfile/russia.svg";
 import clock from "../../../images/userProfile/clock.png";
-import camera from "../../../images/userProfile/camera.svg";
+import faceInACircle from "../../../images/face-in-a-circle.png";
+import avatarPlace from "../../../images/fill-out-profile-export-avatar.png";
+
 import styles from "./UserCard.module.scss";
+import cn from "classnames";
 
 export interface Country {
   code: string | null;
@@ -41,6 +53,12 @@ const UserCard: FC<UserCardProps> = ({
   avatar,
   handleFileInputChange,
 }) => {
+  const model = useModel();
+
+  useEffect(() => {
+    model.handleCurrentUser();
+  }, []);
+
   const handleChangeString = (
     setState: React.Dispatch<React.SetStateAction<string>>,
     value: string
@@ -87,9 +105,9 @@ const UserCard: FC<UserCardProps> = ({
               />
               <div className={styles.profile__partnerInfo}>
                 <div>
-                  <p className={styles.profile__name}>{name}</p>
+                  <p className={styles.profile__name}>{model.username}</p>
                   <p className={styles.profile__sex}>
-                    {gender}, {age}
+                    {model.gender} {model.age}
                   </p>
                 </div>
                 <div>
@@ -129,47 +147,85 @@ const UserCard: FC<UserCardProps> = ({
           <div className={styles.profile__generalInfo}>
             <div className={styles.profile__partnerAbout}>
               <div className={styles.profile__onlyAvatar}>
-                <img
+                <div className={styles.container__fillOutProfileArea}>
+                  <div
+                    className={
+                      styles.container__fillOutProfileArea_exportAvatar
+                    }
+                  >
+                    <div
+                      className={
+                        styles.container__fillOutProfileArea_exportAvatar_image
+                      }
+                    >
+                      <img
+                        src={model.avatar !== "" ? model.avatar : avatarPlace}
+                        alt="Аватар пользователя"
+                      />
+                    </div>
+                    <div
+                      className={
+                        styles.container__fillOutProfileArea_exportAvatar_popup
+                      }
+                    >
+                      <button
+                        type="button"
+                        onClick={() => model.handleAvatarSelection("Загрузить")}
+                      >
+                        Загрузить фотографию
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => model.handleAvatarSelection("Создать")}
+                      >
+                        Создать аватар
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {/* <img
                   className={styles.profile__partnerAvatar}
                   src={avatar ? avatar : cardPartnerAvatar}
                   alt="Аватар пользователя"
-                />
-                <div className={styles.profile__partnerAvatarButton}>
+                /> */}
+                {/* <div className={styles.profile__partnerAvatarButton}>
                   <IconButton
                     icon={camera}
                     handleFunction={handleClickAvatar}
                     iconWidth={54}
                     iconHeight={54}
                   />
-                </div>
-                <div className={styles.profile__additionalButtons}>
+                </div> */}
+                {/* <div className={styles.profile__additionalButtons}>
                   <input
                     type="file"
                     className="button1"
                     onChange={handleFileInputChange}
                   />
                   Button 1<button className="button2">Button 2</button>
-                </div>
+                </div> */}
               </div>
               <div className={styles.profile__partnerInfo}>
                 <form className={styles.profile__form}>
                   <div>
                     <div className={styles.profile__flexColumn}>
                       <label htmlFor="partnerName">Имя</label>
-                      <input
+                      <Input
+                        className={cn(
+                          styles.container__fillOutProfileArea_input,
+                          styles.container__fillOutProfileArea_input_name
+                        )}
                         type="text"
-                        id="partnerName"
-                        name="partnerName"
-                        className={styles.profile__input}
-                        value={name}
-                        onChange={(event) =>
-                          handleChangeString(
-                            setName as React.Dispatch<
-                              React.SetStateAction<string>
-                            >,
-                            event.target.value
-                          )
-                        }
+                        name="firstName"
+                        value={model.username}
+                        fontSize="16"
+                        labelStyles="label18"
+                        isLabelHintHidden={true}
+                        placeholder="Имя"
+                        error={model.error.firstName}
+                        required
+                        maxLength={12}
+                        onValue={model.handleValue}
                       />
                     </div>
                     <div className={styles.profile__flexColumn}>
@@ -179,56 +235,28 @@ const UserCard: FC<UserCardProps> = ({
                       >
                         Дата рождения
                       </label>
-                      <input
+                      <Input
+                        className={styles.container__fillOutProfileArea_input}
                         type="date"
-                        id="partnerBirthday"
-                        name="partnerBirthday"
-                        className={styles.profile__input}
-                        onChange={handleChangeAge}
+                        name="birthdate"
+                        value={model.birthdate}
+                        fontSize="16"
+                        labelStyles="label18"
+                        isLabelHintHidden={true}
+                        required
+                        error={model.error.birthdate}
+                        onValue={model.handleValue}
                       />
                     </div>
                   </div>
                   <div>
                     <div className={styles.profile__flexColumn}>
                       <label htmlFor="partnerGender">Пол</label>
-                      <div>
-                        <input
-                          type="button"
-                          value="мужчина"
-                          name="partnerGender"
-                          id="male"
-                          className={
-                            gender === "Male"
-                              ? styles.selected
-                              : styles.profile__gender
-                          }
-                          onClick={() => setGender(GenderEnum.Male)}
-                        />
-                        <input
-                          type="button"
-                          value="женщина"
-                          name="partnerGender"
-                          id="female"
-                          className={
-                            gender === "Female"
-                              ? styles.selected
-                              : styles.profile__gender
-                          }
-                          onClick={() => setGender(GenderEnum.Female)}
-                        />
-                        <input
-                          type="button"
-                          value="не указан"
-                          name="partnerGender"
-                          id="unspecified"
-                          className={
-                            gender === null
-                              ? styles.selected
-                              : styles.profile__gender
-                          }
-                          onClick={() => setGender(null)}
-                        />
-                      </div>
+                      <Gender
+                        selectedGender={model.gender}
+                        setSelectedGender={model.handleGenderValue}
+                        componentName="fillOutProfile"
+                      />
                     </div>
                     <div className={styles.profile__flexColumn}>
                       <label
@@ -237,23 +265,97 @@ const UserCard: FC<UserCardProps> = ({
                       >
                         Местоположение
                       </label>
-                      <input
-                        type="text"
-                        id="partnerLocation"
-                        name="partnerLocation"
-                        className={styles.profile__input}
-                        onChange={(event) =>
-                          handleChangeString(
-                            setLocation as React.Dispatch<
-                              React.SetStateAction<string>
-                            >,
-                            event.target.value
-                          )
-                        }
+                      <CountrySelection
+                        pageName="FillOutProfile2"
+                        selectedCountries={model.countries}
+                        setSelectedCountries={model.handleCountriesValue}
                       />
                     </div>
                   </div>
                 </form>
+
+                <Modal
+                  className={styles.modal}
+                  isOpen={model.isExportAvatarModal}
+                  onClose={model.handleModalClose}
+                >
+                  <img
+                    className={styles.modal__image}
+                    src={faceInACircle}
+                    alt="Женское лицо в круге"
+                  />
+                  <h1
+                    className={cn(styles.container__title, styles.modal__title)}
+                  >
+                    Загрузка фотографии
+                  </h1>
+                  <p className={styles.modal__text}>
+                    Партнёрам будет приятнее вести диалог,
+                    если&nbsp;Вы&nbsp;загрузите свою настоящую фотографию.
+                    Пожалуйста, используйте форматы JPG и PNG. Размер&nbsp;файла
+                    не должен превышать 10 Мб.
+                  </p>
+                  <Button
+                    className={cn(
+                      styles.modal__button,
+                      styles.modal__button_primary
+                    )}
+                    type="button"
+                    variant="primary"
+                    disabled={model.isLoading}
+                  >
+                    {model.isLoading ? (
+                      "Loading"
+                    ) : (
+                      <label htmlFor="file">Выбрать файл</label>
+                    )}
+                  </Button>
+                  <input
+                    className={styles.modal__input_file}
+                    id="file"
+                    type="file"
+                    name="avatar"
+                    onChange={(event) => model.handleSetAvatarPhoto(event)}
+                  />
+                </Modal>
+
+                <Modal
+                  className={styles.modal}
+                  isOpen={model.isCreateAvatarModal}
+                  onClose={model.handleModalClose}
+                >
+                  <h1
+                    className={cn(styles.container__title, styles.modal__title)}
+                  >
+                    Выберите свой аватар
+                  </h1>
+                  <Avatars
+                    selectedAvatar={model.previewAvatar}
+                    setSelectedAvatar={model.handleSetAvatarValue}
+                  />
+                  <Button
+                    className={cn(
+                      styles.modal__button,
+                      styles.modal__button_primary
+                    )}
+                    type="button"
+                    variant="primary"
+                    disabled={model.isLoading}
+                    onClick={model.handleSetAvatar}
+                  >
+                    {model.isLoading ? "Loading" : "Сохранить"}
+                  </Button>
+                  <button
+                    className={cn(
+                      styles.modal__button,
+                      styles.modal__button_transparent
+                    )}
+                    onClick={model.handleModalClose}
+                    type="button"
+                  >
+                    Отменить изменения
+                  </button>
+                </Modal>
               </div>
             </div>
           </div>
@@ -263,4 +365,4 @@ const UserCard: FC<UserCardProps> = ({
   );
 };
 
-export default UserCard;
+export default observer(UserCard);
