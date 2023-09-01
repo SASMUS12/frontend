@@ -74,6 +74,17 @@ const InputSearchList: FC<IPageName> = ({
       searchValueLower.length > 0 ? searchValueLower.charAt(0) : null;
     setLastPressedLetter(firstLetter);
 
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (!selectedInterests.includes(newSearchValue)) {
+        handleSelectItem({ name: newSearchValue, sorting: "" });
+        console.log(newSearchValue);
+      }
+      if (selectedItem) {
+        handleSelectItem(selectedItem);
+      }
+    }
+
     const isInvalidSearch =
       searchValue.length > 0 && filtered.length === 0 && suggested.length === 0;
 

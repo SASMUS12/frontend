@@ -25,6 +25,7 @@ interface LanguageModuleProps {
     skillLevels: SkillLevelEnum[];
   }[]) => void;
 }
+
 const LanguageModule: FC<LanguageModuleProps> = ({
   pageName,
   initialLanguageAndLevels,
@@ -32,6 +33,19 @@ const LanguageModule: FC<LanguageModuleProps> = ({
   setSelectedLanguagesAndLevels,
 }) => {
   const [languagesData, setLanguagesData] = useState<Language[]>([]);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
+    null
+  );
+  const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
+
+  useEffect(() => {
+    const languagesInUse = selectedLanguagesAndLevels.map(
+      (item) => item.language
+    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setSelectedLanguages(languagesInUse);
+  }, [selectedLanguagesAndLevels]);
 
   console.log("selectedLanguageAndLevels:", selectedLanguagesAndLevels);
 
@@ -52,40 +66,92 @@ const LanguageModule: FC<LanguageModuleProps> = ({
     fetchLanguagesData();
   }, []);
 
+  const handleLanguageChange = (language: Language | null, index: number) => {
+    if (index >= 0 && index < selectedLanguagesAndLevels.length) {
+      const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+      updatedLanguagesAndLevels[index].language = language;
+      updatedLanguagesAndLevels[index].skillLevels = [];
+      setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+    }
+  };
+
+  const handleSkillLevelsChange = (
+    skillLevels: SkillLevelEnum[],
+    index: number
+  ) => {
+    if (index >= 0 && index < selectedLanguagesAndLevels.length) {
+      const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+      updatedLanguagesAndLevels[index].skillLevels = skillLevels;
+      setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+    }
+  };
+
+  const handleReset = (index: number) => {
+    const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+    updatedLanguagesAndLevels[index].language = null;
+    updatedLanguagesAndLevels[index].skillLevels = [];
+    setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+  };
+
+  const handleClearFilter = () => {
+    const clearedLanguagesAndLevels = selectedLanguagesAndLevels.map(
+      (item) => ({
+        language: null,
+        skillLevels: [],
+      })
+    );
+    setSelectedLanguagesAndLevels(clearedLanguagesAndLevels);
+  };
+
+  const handleAddLanguage = () => {
+    if (selectedLanguagesAndLevels.length < 3) {
+      const updatedLanguagesAndLevels = [
+        ...selectedLanguagesAndLevels,
+        { language: null, skillLevels: [] },
+      ];
+      setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
+      handleSkillLevelsChange([], updatedLanguagesAndLevels.length - 1);
+    }
+  };
+
   const handleRemoveLanguage = (index: number) => {
-    setSelectedLanguagesAndLevels((prevLanguages) => {
-      const updatedLanguages = [...prevLanguages];
-      updatedLanguages.splice(index, 1);
-      return updatedLanguages;
-    });
+    const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
+    updatedLanguagesAndLevels.splice(index, 1);
+    setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
   };
 
   return (
     <div>
+      {selectedLanguagesAndLevels.length === 0 && (
+        <LanguageLevel
+          pageName={pageName}
+          languages={languagesData}
+          selectedLanguage={null}
+          initialLanguageAndLevels={initialLanguageAndLevels}
+          selectedSkillLevels={[]}
+          onLanguageChange={(language) => handleLanguageChange(language, 0)}
+          onSkillLevelsChange={(skillLevels) =>
+            handleSkillLevelsChange(skillLevels, 0)
+          }
+          onReset={() => handleReset(0)}
+          onRemoveLanguage={() => handleRemoveLanguage(0)}
+        />
+      )}
       {selectedLanguagesAndLevels.map((item, index) => (
         <LanguageLevel
           pageName={pageName}
           key={index}
-          languages={languagesData}
-          selectedLanguage={item.language}
+          languages={languagesData.filter(
+            (lang) => !selectedLanguages.includes(lang)
+          )}
+          selectedLanguage={item.language || selectedLanguage}
           initialLanguageAndLevels={initialLanguageAndLevels}
           selectedSkillLevels={item.skillLevels}
-          onLanguageChange={(language) => {
-            const updatedLanguagesAndLevels = [...[selectedLanguagesAndLevels]];
-            updatedLanguagesAndLevels[index].language = language;
-            setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
-          }}
-          onSkillLevelsChange={(skillLevels) => {
-            const updatedLanguagesAndLevels = [...[selectedLanguagesAndLevels]];
-            updatedLanguagesAndLevels[index].skillLevels = skillLevels;
-            setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
-          }}
-          onReset={() => {
-            const updatedLanguagesAndLevels = [...[selectedLanguagesAndLevels]];
-            updatedLanguagesAndLevels[index].language = null;
-            updatedLanguagesAndLevels[index].skillLevels = [];
-            setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
-          }}
+          onLanguageChange={(language) => handleLanguageChange(language, index)}
+          onSkillLevelsChange={(skillLevels) =>
+            handleSkillLevelsChange(skillLevels, index)
+          }
+          onReset={() => handleReset(index)}
           onRemoveLanguage={() => handleRemoveLanguage(index)}
         />
       ))}

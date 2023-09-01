@@ -13,12 +13,14 @@ interface CountrySelectionProps {
   pageName: string;
   selectedCountries: Country[];
   setSelectedCountries: (selectedCountries: Country[]) => void;
+  onClearFilter?: () => void;
 }
 
 const CountrySelection: FC<CountrySelectionProps> = ({
   pageName,
   selectedCountries,
   setSelectedCountries,
+  onClearFilter,
 }) => {
   const [countriesData, setCountriesData] = useState<Country[]>([]);
   const [isCountryListVisible, setCountryListVisible] = useState(false);

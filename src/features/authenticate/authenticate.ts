@@ -15,6 +15,7 @@ export const authenticate = async (): Promise<void> => {
   try {
     const refreshToken = localStorage.getItem("refreshToken");
     if (refreshToken) {
+      store.session.setRefreshToken(refreshToken);
       const accessToken = await getAcceessToken(refreshToken);
       if (accessToken) {
         store.session.setAccessToken(accessToken.access);

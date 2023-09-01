@@ -1,5 +1,3 @@
-import { loggedIn } from "../../models/LoggedIn";
-
 import {
   TokenObtainPairRequest,
   TokenObtainPair,
@@ -11,7 +9,6 @@ import {
 } from "../openapi";
 
 import { api, headersWithToken as headers } from "../constants";
-import { session } from "../../models/session/Session";
 
 export const signInWithEmail = async ({
   username,
@@ -77,7 +74,7 @@ export const getMe = async (): Promise<UserProfile | null> => {
       avatar: user.avatar as string,
       age: user.age as string,
       slug: user.slug as string | null,
-      country: user.country as string | null,
+      country: user.country as string | undefined,
       languages: user.languages as UserLanguage[],
       gender: user.gender as GenderEnum | NullEnum | null,
       goals: user.goals as string[],

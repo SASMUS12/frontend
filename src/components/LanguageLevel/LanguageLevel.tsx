@@ -191,29 +191,33 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({
         )}
       </div>
       <div className={styles.language__level}>
-        {pageName === "Sort" ||
-          (pageName === "FillOutProfile3" &&
-            Object.entries(skillLevelNames).map(([key, level]) => (
-              <label key={level} className={styles.language__level_label}>
-                <input
-                  type="checkbox"
-                  value={level}
-                  checked={selectedSkillLevels.includes(key as SkillLevelEnum)}
-                  onChange={() => handleSkillLevelChange(key as SkillLevelEnum)}
-                  className={styles.language__level_input}
-                  disabled={
-                    (key === SkillLevelEnum.Native &&
-                      selectedSkillLevels.length > 0) ||
-                    (key !== SkillLevelEnum.Native &&
-                      selectedSkillLevels.includes(SkillLevelEnum.Native))
-                  }
-                />
-                <span
-                  className={styles.language__level_checkbox_visible}
-                ></span>
-                {level}
-              </label>
-            )))}
+        {(pageName === "Sort" || pageName === "FillOutProfile3") &&
+          Object.entries(skillLevelNames).map(([key, level]) => (
+            <label key={level} className={styles.language__level_label}>
+              <input
+                type="checkbox"
+                value={level}
+                checked={selectedSkillLevels.includes(key as SkillLevelEnum)}
+                onChange={() => handleSkillLevelChange(key as SkillLevelEnum)}
+                className={
+                  pageName === "FillOutProfile3" &&
+                  key === SkillLevelEnum.Native
+                    ? styles.language__level_input_hidden
+                    : styles.language__level_input
+                }
+                disabled={
+                  pageName === "Sort"
+                    ? (key === SkillLevelEnum.Native &&
+                        selectedSkillLevels.length > 0) ||
+                      (key !== SkillLevelEnum.Native &&
+                        selectedSkillLevels.includes(SkillLevelEnum.Native))
+                    : selectedSkillLevels.includes(key as SkillLevelEnum)
+                }
+              />
+              <span className={styles.language__level_checkbox_visible}></span>
+              {level}
+            </label>
+          ))}
       </div>
     </>
   );

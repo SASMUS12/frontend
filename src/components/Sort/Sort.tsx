@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-
+import styles from "../Sort/Sort.module.scss";
 import CountrySelection from "../CountrySelection/CountrySelection";
 import LanguageModule from "../LanguageModule/LanguageModule";
 import Gender from "../Gender/Gender";
@@ -8,8 +8,6 @@ import LanguageLevelModal from "../LanguageLevelModal/LanguageLevelModal";
 import { Button } from "../UI/Button/Button";
 
 import { Country, Language, SkillLevelEnum } from "../../utils/openapi";
-
-import styles from "../Sort/Sort.module.scss";
 
 interface Filters {
   country: string;

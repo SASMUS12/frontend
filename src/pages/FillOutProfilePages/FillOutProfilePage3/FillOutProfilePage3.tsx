@@ -1,22 +1,21 @@
-import React, { FormEvent, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { observer } from "mobx-react-lite";
 
 import Header from "../../../components/Header/Header";
 import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
 import LanguageModule from "../../../components/LanguageModule/LanguageModule";
 import { Button } from "../../../components/UI/Button/Button";
+import LanguageLevelModal from "../../../components/LanguageLevelModal/LanguageLevelModal";
 
 import { Language, SkillLevelEnum } from "../../../utils/openapi";
 
+import { useModel } from "./model";
+
 import styles from "../FillOutProfilePages.module.scss";
 import cn from "classnames";
-import LanguageLevelModal from "../../../components/LanguageLevelModal/LanguageLevelModal";
 
-const FillOutProfilePage1 = () => {
-  const navigate = useNavigate();
-
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+const FillOutProfilePage3 = () => {
+  const model = useModel();
 
   const initialLanguageAndLevels = useMemo(() => {
     return { language: null, skillLevels: [] };
@@ -26,32 +25,9 @@ const FillOutProfilePage1 = () => {
     { language: Language | null; skillLevels: SkillLevelEnum[] }[]
   >([initialLanguageAndLevels]);
 
-  const handleSubmitButtonDisabled = () => {
-    for (let i = 0; i < selectedLanguagesAndLevels.length; i++) {
-      selectedLanguagesAndLevels[i].language === null ||
-      selectedLanguagesAndLevels[i].skillLevels.toString() === [].toString()
-        ? setSubmitButtonDisabled(true)
-        : setSubmitButtonDisabled(false);
-    }
-  };
-
   useEffect(() => {
-    handleSubmitButtonDisabled();
-  }, [selectedLanguagesAndLevels]);
-
-  const handleReturnButtonClick = () => {
-    navigate("/fill-out-2");
-  };
-
-  const handleHelpButtonClick = () => {
-    setModalOpen(true);
-  };
-
-  const handleFillOutPage3 = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    navigate("/fill-out-4");
-    console.log("FillOutPage3");
-  };
+    model.handleSubmitButtonDisabled();
+  }, [model.languagesAndLevels]);
 
   return (
     <>
@@ -59,14 +35,14 @@ const FillOutProfilePage1 = () => {
       <main className={styles.content}>
         <button
           className={styles.content__returnButton}
-          onClick={handleReturnButtonClick}
+          onClick={model.handleReturnButtonClick}
         >
           Назад
         </button>
         <div className={styles.container}>
           <ProgressLine pageNumber={3} />
           <h1 className={styles.container__title}>Выберите изучаемые языки</h1>
-          <form className={styles.form} onSubmit={handleFillOutPage3}>
+          <form className={styles.form} onSubmit={model.handleSubmit}>
             <div
               className={cn(
                 styles.container__fillOutProfileArea,
@@ -81,7 +57,7 @@ const FillOutProfilePage1 = () => {
               />
               <button
                 className={styles.container__fillOutProfileArea_button}
-                onClick={handleHelpButtonClick}
+                onClick={model.handleHelpButtonClick}
                 type="button"
               >
                 Уровни языка
@@ -91,7 +67,7 @@ const FillOutProfilePage1 = () => {
               className={styles.form__button}
               type="submit"
               variant="primary"
-              disabled={isSubmitButtonDisabled}
+              disabled={model.isSubmitButtonDisabled}
             >
               Продолжить
             </Button>
@@ -99,8 +75,8 @@ const FillOutProfilePage1 = () => {
         </div>
 
         <LanguageLevelModal
-          isModalOpen={isModalOpen}
-          setModalOpen={setModalOpen}
+          isModalOpen={model.isHelpModalOpen}
+          setModalOpen={model.handleModalClose}
           pageName="FillOutProfile3"
         />
       </main>
@@ -108,4 +84,4 @@ const FillOutProfilePage1 = () => {
   );
 };
 
-export default FillOutProfilePage1;
+export default observer(FillOutProfilePage3);

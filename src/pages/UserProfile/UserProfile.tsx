@@ -48,8 +48,8 @@ interface Language {
 interface EditedData {
   first_name: string;
   username: string;
-  avatar?: File | null;
-  country: string | null;
+  avatar?: string | null | undefined;
+  country: string | undefined;
   birth_date: string;
   languages: Language[];
   gender?: GenderEnum | NullEnum | null;

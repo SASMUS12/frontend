@@ -9,8 +9,6 @@ import { GenderEnum } from "../../../utils/openapi";
 import { api, headersWithToken as headers } from "../../../utils/constants";
 import { store } from "../../../models/store";
 
-import base64js from "base64-js";
-
 export const useModel = () => {
   const navigate = useNavigate();
   const user = store.session.user;
@@ -24,13 +22,15 @@ export const useModel = () => {
       gender: "Male" as GenderEnum | null,
       avatar: "",
       avatarBase64: "",
-      avatarFile: null as File | null,
+      avatarFile: "" as string | ArrayBuffer | null,
       previewAvatar: "",
       error: { firstName: "", birthdate: "", avatar: "" },
       message: "",
       isLoading: false,
       isExportAvatarModal: false,
       isCreateAvatarModal: false,
+      isErrorModalOpen: false,
+      errorMessage: "",
 
       async handleCurrentUser() {
         try {
@@ -51,6 +51,7 @@ export const useModel = () => {
       handleModalClose() {
         model.isExportAvatarModal = false;
         model.isCreateAvatarModal = false;
+        model.isErrorModalOpen = false;
       },
 
       handleAvatarSelection(creationWay: string) {
@@ -116,53 +117,6 @@ export const useModel = () => {
 
       handleSetAvatar() {
         model.avatar = model.previewAvatar;
-
-        const string = model.avatar as string;
-
-        // const reader = new FileReader();
-        // reader.onload = function (event) {
-        //   if (event.target) {
-        //     const base64Image = event.target.result;
-        //     console.log(base64Image);
-        //     model.avatarFile = base64Image;
-        //   }
-        // };
-        // reader.readAsDataURL(file);
-
-        function Base64Encode(inputString: string, encoding = "utf-8") {
-          const encoder = new TextEncoder();
-          const bytes = encoder.encode(inputString);
-          console.log(base64js.fromByteArray(bytes));
-          model.avatarBase64 = base64js.fromByteArray(bytes);
-        }
-
-        Base64Encode(string);
-
-        const base64toBlob = (
-          base64: string,
-          onsuccess: (blob: Blob | null) => void
-        ) => {
-          const img = new Image();
-
-          img.onload = function onload() {
-            const canvas = document.createElement("canvas");
-
-            canvas.height = img.height;
-            canvas.width = img.width;
-
-            const ctx = canvas.getContext("2d");
-            if (ctx) {
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            }
-            canvas.toBlob(onsuccess);
-            console.log(canvas.toBlob(onsuccess));
-          };
-          img.src = base64;
-        };
-
-        base64toBlob(model.avatarBase64, model.avatarFile);
-        console.log(model.avatarFile);
-
         model.handleModalClose();
       },
 
@@ -204,7 +158,7 @@ export const useModel = () => {
           const getUpdateUser = await api.api.usersMePartialUpdate(
             {
               first_name: model.firstName,
-              avatar: model.avatarFile,
+              avatar: model.avatarFile as string,
               birth_date: model.birthdate,
               gender: model.gender,
             },
@@ -225,6 +179,13 @@ export const useModel = () => {
           model.isLoading = false;
         } catch (error: any) {
           console.log("fill-out-1 error:", error);
+          const secondError = Object.values(error)[1];
+          const ErrorString = Object.values(
+            secondError as { [s: string]: unknown }
+          ).join("\n");
+          console.log(ErrorString);
+          model.errorMessage = ErrorString;
+          model.isErrorModalOpen = true;
           model.isLoading = false;
         }
       },

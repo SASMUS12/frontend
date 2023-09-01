@@ -33,8 +33,8 @@ export const updateProfile = async ({
     await api.api.usersMePartialUpdate(
       {
         first_name,
-        avatar: avatar as File | null,
-        country: country as string | null | undefined,
+        avatar: avatar as string | null | undefined,
+        country: country as string | undefined,
         birth_date,
         languages,
         gender,

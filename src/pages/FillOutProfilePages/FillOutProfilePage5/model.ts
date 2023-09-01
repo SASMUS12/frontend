@@ -2,9 +2,6 @@ import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalObservable } from "mobx-react-lite";
 
-import { getMe } from "../../../utils/rest/auth";
-import { session } from "../../../models/session/Session";
-
 import { Interest } from "../../../utils/openapi";
 import { api, headersWithToken as headers } from "../../../utils/constants";
 import { store } from "../../../models/store";
@@ -12,7 +9,6 @@ import { store } from "../../../models/store";
 export const useModel = () => {
   const navigate = useNavigate();
   const user = store.session.user;
-  console.log(user);
 
   const model = useLocalObservable(() => {
     return {
@@ -21,19 +17,6 @@ export const useModel = () => {
       message: "",
       isSubmitButtonDisabled: false,
       isLoading: false,
-
-      async handleCurrentUser() {
-        try {
-          const user = await getMe();
-
-          if (user) {
-            session.updateUser(user);
-            model.selectedInterests = user.interests ?? "";
-          }
-        } catch (error: any) {
-          model.message = error.message;
-        }
-      },
 
       setSelectedInterests(selectedInterests: Interest[]) {
         if (selectedInterests) {
@@ -74,12 +57,20 @@ export const useModel = () => {
 
         console.log(model.selectedInterests);
 
+        const finalInterests = model.selectedInterests.map((item) => ({
+          name: item.name,
+        }));
+
+        const finalInterestsArray = finalInterests.map((item) => item.name);
+
+        console.log(finalInterestsArray);
+
         model.message = "";
         model.isLoading = true;
         try {
           const getUpdateUser = await api.api.usersMePartialUpdate(
             {
-              interests: model.selectedInterests,
+              interests: finalInterestsArray,
             },
             { headers }
           );
@@ -87,11 +78,11 @@ export const useModel = () => {
           if (getUpdateUser && user) {
             store.session.updateUser({
               ...user,
-              interests: model.selectedInterests,
+              interests: finalInterestsArray,
             });
           }
 
-          navigate("/fill-out-3");
+          navigate("/fill-out-6");
           model.isLoading = false;
         } catch (error: any) {
           console.log(model.selectedInterests);

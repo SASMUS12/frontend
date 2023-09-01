@@ -16,6 +16,7 @@ import { useModel } from "./model";
 
 import styles from "../FillOutProfilePages.module.scss";
 import cn from "classnames";
+import ErrorModal from "../../../components/ErrorModal/ErrorModal";
 
 const FillOutProfilePage1 = () => {
   const model = useModel();
@@ -198,6 +199,12 @@ const FillOutProfilePage1 = () => {
               Отменить изменения
             </button>
           </Modal>
+
+          <ErrorModal
+            isOpen={model.isErrorModalOpen}
+            onClose={model.handleModalClose}
+            errorMessage={model.errorMessage}
+          />
         </div>
       </main>
     </>
