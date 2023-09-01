@@ -1,0 +1,15 @@
+.message {
+  height: fit-content;
+  display: flex;
+  margin-top: 8px;
+  margin-right: auto;
+  padding: 8px 12px;
+  background-color: var(--soft-violet-background-msg);
+  border-radius: 0 10px 10px 10px;
+
+  &__text {
+    margin: 0;
+    color: var(--dark-violet);
+    font: var(--font-text-15-120-400);
+  }
+}

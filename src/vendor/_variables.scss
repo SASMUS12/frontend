@@ -1,6 +1,7 @@
 :root {
   /* Typography */
   --font-sans: 'Inter', sans-serif;
+  --font-sourcesans: 'SourceSans', sans-serif;
 
   /* Color scheme */
 
@@ -25,6 +26,7 @@
   --dark-violet-gradient-100: #d9d8e2;
   --dark-violet-gradient-200: #b3b0c5;
   --dark-violet-gradient-400: #66618a;
+  --soft-violet-background-msg: #E8DEFF;
   --soft-violet: #a5a0c5;
   --primory-button-hover: #a083e0;
   --primory-button-push: #6236C7;
@@ -46,6 +48,7 @@
   --font-text-14-120-400: 400 14px/1.2 var(--font-sans);
   --font-text-14-140-400: 400 14px/1.4 var(--font-sans);
   --font-text-15-120-400: 400 15px/1.2 var(--font-sans);
+  --font-text-15-140-400: 400 15px/1.4 var(--font-sans);
   --font-text-16-100-400: 400 16px/1 var(--font-sans);
   --font-text-16-120-400: 400 16px/1.2 var(--font-sans);
   --font-text-16-140-400: 400 16px/1.4 var(--font-sans);
@@ -58,4 +61,5 @@
   --font-header-14-120-600: 600 14px/1.2 var(--font-sans);
   --font-header-18-120-600: 600 18px/1.2 var(--font-sans);
   --font-header-24-120-600: 600 24px/1.2 var(--font-sans);
+  --font-time-14-90-400: 400 14px/0.9 var(--font-sourcesans);
 }

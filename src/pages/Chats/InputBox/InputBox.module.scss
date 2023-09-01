@@ -16,12 +16,17 @@
   &__input {
     width: 638px;
     height: 20px;
+    resize: none;
     padding: 0;
     border: none;
     text-align: left;
     vertical-align: middle;
     font: var(--font-text-16-120-400);
     color: var(--dark-violet);
+
+    &:focus {
+      outline: none;
+    }
 
     &::placeholder {
       font: var(--font-text-16-120-400);
@@ -41,6 +46,10 @@
     padding: 0;
     background-image: url(../../../images/svg/emoji_button.svg);
     background-color: var(--color-base-white);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__attachBtn {
@@ -50,6 +59,10 @@
     padding: 0;
     background-image: url(../../../images/svg/attachment_button.svg);
     background-color: var(--color-base-white);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__voiceBtn {
@@ -60,5 +73,9 @@
     padding: 0;
     background-image: url(../../../images/svg/mic_button.svg);
     background-color: var(--accent-color-violet);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

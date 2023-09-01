@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import IdleChat from '../../IdleChat/IdleChat';
+import IdleChat from '../IdleChat/IdleChat';
 import ActiveChat from '../ActiveChat/ActiveChat';
 
 interface ChatWindowProps {

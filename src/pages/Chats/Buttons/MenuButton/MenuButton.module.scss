@@ -9,4 +9,8 @@
     text-underline-offset: 6px;
     text-decoration-color: var(--accent-color-salad);
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
