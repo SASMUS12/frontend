@@ -101,6 +101,8 @@ export const useModel = () => {
           });
 
           if (token) {
+            localStorage.setItem("accessToken", token.access);
+            localStorage.setItem("refreshToken", token.refresh);
             session.setAccessToken(token.access);
             session.setRefreshToken(token.refresh);
           }

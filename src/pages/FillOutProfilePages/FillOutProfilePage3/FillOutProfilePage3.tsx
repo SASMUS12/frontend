@@ -21,10 +21,6 @@ const FillOutProfilePage3 = () => {
     return { language: null, skillLevels: [] };
   }, []);
 
-  const [selectedLanguagesAndLevels, setSelectedLanguagesAndLevels] = useState<
-    { language: Language | null; skillLevels: SkillLevelEnum[] }[]
-  >([initialLanguageAndLevels]);
-
   useEffect(() => {
     model.handleSubmitButtonDisabled();
   }, [model.languagesAndLevels]);
@@ -52,8 +48,8 @@ const FillOutProfilePage3 = () => {
               <LanguageModule
                 pageName="FillOutProfile3"
                 initialLanguageAndLevels={initialLanguageAndLevels}
-                selectedLanguagesAndLevels={selectedLanguagesAndLevels}
-                setSelectedLanguagesAndLevels={setSelectedLanguagesAndLevels}
+                selectedLanguagesAndLevels={model.languagesAndLevels}
+                setSelectedLanguagesAndLevels={model.handleLanguagesValue}
               />
               <button
                 className={styles.container__fillOutProfileArea_button}

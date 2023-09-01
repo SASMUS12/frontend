@@ -112,7 +112,7 @@ const MainPage = () => {
               setCardsListLength={setCardsListLength}
             />
           </div>
-          {/*<Sort onChangeSort={setFilters} isOpen={isSortPopupOpen} />*/}
+          <Sort onChangeSort={setFilters} isOpen={isSortPopupOpen} />
         </div>
       </main>
       <Footer />

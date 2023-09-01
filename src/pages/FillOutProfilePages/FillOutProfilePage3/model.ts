@@ -94,6 +94,7 @@ export const useModel = () => {
 
         model.message = "";
         model.isLoading = true;
+        console.log(model.languagesAndLevels[0].language?.isocode);
 
         try {
           const getUpdateUser = await api.api.usersMePartialUpdate(
