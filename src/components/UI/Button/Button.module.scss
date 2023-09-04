@@ -78,18 +78,3 @@
     color: var(--primory-button-push);
   }
 }
-
-
-.variant-addLanguage {
-  background-color: var(--color-base-white);
-  color: var(--accent-color-violet);
-  border: none;
-
-  &:hover {
-    color: var(--primory-button-hover);
-  }
-
-  &:active {
-    color: var(--primory-button-push);
-  }
-}

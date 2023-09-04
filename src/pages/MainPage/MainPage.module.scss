@@ -24,7 +24,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 0;
-  
+
     &_filter {
       max-width: 100%;
       display: flex;
@@ -33,9 +33,9 @@
       border-radius: 12px;
       justify-content: center;
       align-items: center;
-  
+
       &_title {
-        font-size: 15px;   
+        font-size: 15px;
         font-weight: 400;
         line-height: normal;
         color: var(--dark-violet, #403A6D);
@@ -50,54 +50,55 @@
         //
         //}
       }
-  
+
       &_button {
         width: 26px;
         height: 26px;
         background-size: 26px 26px;
-        background-image: url("../../images/svg/Filter.svg");
+        background-image: url('../../images/svg/Filter.svg');
         background-repeat: no-repeat;
         border: none;
         cursor: pointer;
         color: var(--dark-violet, #403A6D);
         background-color: #F0F2F6;
-  
+
         &:hover {
-          background-image: url("../../images/svg/Filter_hover.svg");
+          background-image: url('../../images/svg/Filter_hover.svg');
         }
         &:active {
-          background-image: url("../../images/svg/Filter_active.svg");
+          background-image: url('../../images/svg/Filter_active.svg');
         }
-        //&: {
-          //background-image: url("../../images/svg/Filter_green.svg");
-        //}
       }
     }
   }
-  
+
+  .button-with-image {
+    background-image: url('../../images/svg/Filter_green.svg');
+  }
+
   &__categories {
     display: flex;
   }
-  
+
   &__cardListAndSortPopup {
     display: flex;
-    
+
     &_cardListArea {
       display: flex;
       flex-direction: column;
-      
+
       &_cardList {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
         margin: 0 auto;
-        
+
         &_narrow {
           grid-template-columns: repeat(3, 1fr);
           margin: 0 16px 0 0;
         }
       }
-      
+
       &_continuingButton {
         margin: 40px auto 0;
       }

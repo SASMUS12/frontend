@@ -1,13 +1,13 @@
 import { MouseEventHandler, ReactNode, FC } from 'react';
 
-import cn from "classnames";
+import cn from 'classnames';
 
-import styles from "./Button.module.scss";
+import styles from './Button.module.scss';
 
 interface Props {
   className?: string;
   type?: 'button' | 'submit';
-  variant?: 'primary' | 'transparent' | 'gray';
+  variant?: 'primary' | 'transparent' | 'gray' | 'addLanguage';
   size?: 'small' | 'big';
   fontSize?: '13' | '15' | '16';
 

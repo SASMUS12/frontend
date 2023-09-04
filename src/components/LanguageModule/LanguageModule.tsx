@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 
-import LanguageLevel from "../LanguageLevel/LanguageLevel";
-import { Button } from "../UI/Button/Button";
+import LanguageLevel from '../LanguageLevel/LanguageLevel';
+import { Button } from '../UI/Button/Button';
 
-import { Language, SkillLevelEnum } from "../../utils/openapi";
-import { api } from "../../utils/constants";
+import { Language, SkillLevelEnum } from '../../utils/openapi';
+import { api } from '../../utils/constants';
 
-import styles from "./LanguageModule.module.scss";
-import cn from "classnames";
+import styles from './LanguageModule.module.scss';
+import cn from 'classnames';
 
 interface LanguageModuleProps {
   pageName: string;
@@ -19,11 +19,12 @@ interface LanguageModuleProps {
     language: Language | null;
     skillLevels: SkillLevelEnum[];
   }[];
-  // eslint-disable-next-line no-empty-pattern
-  setSelectedLanguagesAndLevels: ({}: {
-    language: Language | null;
-    skillLevels: SkillLevelEnum[];
-  }[]) => void;
+  setSelectedLanguagesAndLevels: (
+    updatedLanguagesAndLevels: {
+      language: Language | null;
+      skillLevels: SkillLevelEnum[];
+    }[],
+  ) => void;
 }
 
 const LanguageModule: FC<LanguageModuleProps> = ({
@@ -45,18 +46,18 @@ const LanguageModule: FC<LanguageModuleProps> = ({
     setSelectedLanguages(languagesInUse);
   }, [selectedLanguagesAndLevels]);
 
-  console.log("selectedLanguageAndLevels:", selectedLanguagesAndLevels);
+  console.log('selectedLanguageAndLevels:', selectedLanguagesAndLevels);
 
   //Запрос массива языков
   const fetchLanguagesData = async () => {
     try {
-      console.log("отправка запроса ---");
+      console.log('отправка запроса ---');
       const response = await api.api.languagesList();
-      console.log("ответ получен -", response);
+      console.log('ответ получен -', response);
       const languages = response.data;
       setLanguagesData(languages);
     } catch (error) {
-      console.error("Ошибка при получении данных о языках:", error);
+      console.error('Ошибка при получении данных о языках:', error);
     }
   };
 
@@ -157,14 +158,14 @@ const LanguageModule: FC<LanguageModuleProps> = ({
         <div
           className={cn(
             styles.languagesAdd,
-            pageName === "Sort" ? styles.languagesAdd_center : ""
+            pageName === 'Sort' ? styles.languagesAdd_center : '',
           )}
         >
           <Button
-            type="button"
-            variant="addLanguage"
-            size="xs"
-            fontSize="15"
+            type='button'
+            variant='addLanguage'
+            size='small'
+            fontSize='15'
             onClick={() => {
               const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
               updatedLanguagesAndLevels.push({
@@ -173,9 +174,9 @@ const LanguageModule: FC<LanguageModuleProps> = ({
               });
               setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
             }}
-            className={styles.languagesAdd__button}
+            className={styles.languagesAdd}
           >
-            {"добавить язык"}
+            {'добавить язык'}
           </Button>
         </div>
       )}

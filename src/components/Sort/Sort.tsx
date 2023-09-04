@@ -127,8 +127,8 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
       />
       <Button
         type='submit'
-        variant='addLanguage'
-        size='xs'
+        variant='transparent'
+        size='small'
         fontSize='13'
         className={styles.cleanButton}
         children={'Очистить фильтр'}

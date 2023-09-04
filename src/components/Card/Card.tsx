@@ -1,20 +1,20 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import CountryIcon from "../UI/CountryIcon/CountryIcon";
-import UserStatusIsOnline from "../UI/UserStatusIsOnline/UserStatusIsOnline";
-import GenderAndAgeIcon from "../UI/GenderAndAgeIcon/GenderAndAgeIcon";
-import LanguagesTag from "../UI/LanguagesTag/LanguagesTag";
+import CountryIcon from '../UI/CountryIcon/CountryIcon';
+import UserStatusIsOnline from '../UI/UserStatusIsOnline/UserStatusIsOnline';
+import GenderAndAgeIcon from '../UI/GenderAndAgeIcon/GenderAndAgeIcon';
+import LanguagesTag from '../UI/LanguagesTag/LanguagesTag';
 
-import arrows from "../../images/svg/card-arrows-parallel.svg";
+import arrows from '../../images/svg/card-arrows-parallel.svg';
 
 import {
   UserLanguage,
   Country,
   GenderEnum,
   NullEnum,
-} from "../../utils/openapi";
+} from '../../utils/openapi';
 
-import styles from "./Card.module.scss";
+import styles from './Card.module.scss';
 
 interface ICards {
   first_name: string;
@@ -26,7 +26,7 @@ interface ICards {
   about: string;
   is_online: boolean;
   gender_is_hidden: boolean;
-  age_is_hidden: boolean;
+  age_is_hidden?: boolean;
 }
 
 const Card: FC<ICards> = ({
@@ -51,7 +51,7 @@ const Card: FC<ICards> = ({
         <img
           className={styles.card__partnerAvatar}
           src={avatar}
-          alt="Аватар пользователя"
+          alt='Аватар пользователя'
         />
         <div className={styles.card__partnerInfo}>
           <div className={styles.card__partnerPersonalInfo}>
@@ -70,7 +70,7 @@ const Card: FC<ICards> = ({
                   {languages &&
                     languages.map((languages: UserLanguage) => {
                       return (
-                        languages.skill_level === "Native" && (
+                        languages.skill_level === 'Native' && (
                           <LanguagesTag
                             languages={languages}
                             key={languages.isocode}
@@ -83,14 +83,14 @@ const Card: FC<ICards> = ({
               <img
                 className={styles.card__partnerPersonalInfo_arrows}
                 src={arrows}
-                alt="Параллельные стрелки между изученными и изучаемыми языками"
+                alt='Параллельные стрелки между изученными и изучаемыми языками'
               />
               <div className={styles.card__partnerPersonalInfo_languages}>
                 <ul className={styles.languages}>
                   {languages &&
                     languages.map((languages: UserLanguage) => {
                       return (
-                        languages.skill_level !== "Native" && (
+                        languages.skill_level !== 'Native' && (
                           <LanguagesTag
                             languages={languages}
                             key={languages.isocode}

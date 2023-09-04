@@ -1,15 +1,15 @@
-import { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import Header from "../../../components/Header/Header";
-import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
-import { Button } from "../../../components/UI/Button/Button";
-import { Textarea } from "../../../components/UI/Textarea/Textarea";
+import Header from '../../../components/Header/Header';
+import ProgressLine from '../../../components/UI/ProgressLine/ProgressLine';
+import { Button } from '../../../components/UI/Button/Button';
+import { Textarea } from '../../../components/UI/Textarea/Textarea';
 
-import { useModel } from "../FillOutProfilePage1/model";
+import { useModel } from '../FillOutProfilePage1/model';
 
-import styles from "../FillOutProfilePages.module.scss";
-import { observer } from "mobx-react-lite";
+import styles from '../FillOutProfilePages.module.scss';
+import { observer } from 'mobx-react-lite';
 
 const FillOutProfilePage6 = () => {
   const model = useModel();
@@ -18,13 +18,13 @@ const FillOutProfilePage6 = () => {
   console.log(model.about);
 
   const handleReturnButtonClick = () => {
-    navigate("/fill-out-5");
+    navigate('/fill-out-5');
   };
 
   const handleFillOutPage6 = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate("/");
-    console.log("FillOutPage6");
+    navigate('/');
+    console.log('FillOutPage6');
   };
 
   return (
@@ -43,9 +43,9 @@ const FillOutProfilePage6 = () => {
           <form className={styles.form} onSubmit={handleFillOutPage6}>
             <Textarea
               className={styles.form__textarea}
-              name="about"
+              name='about'
               value={model.about}
-              placeholder="Напишите несколько предложений о себе, чтобы вас могли найти партнеры со схожими интересами или стилем жизни"
+              placeholder='Напишите несколько предложений о себе, чтобы вас могли найти партнеры со схожими интересами или стилем жизни'
               required
               onValue={model.handleValue}
             >
@@ -53,8 +53,8 @@ const FillOutProfilePage6 = () => {
             </Textarea>
             <Button
               className={styles.form__button}
-              type="submit"
-              variant="primary"
+              type='submit'
+              variant='primary'
               disabled={false}
             >
               Готово

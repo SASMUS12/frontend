@@ -11,20 +11,21 @@ import classNames from 'classnames';
 
 interface CountrySelectionProps {
   pageName: string;
-  selectedCountries: Country[];
-  setSelectedCountries: (selectedCountries: Country[]) => void;
+  onSelectedCountriesChange: (selectedCountries: Country[]) => void;
+  onClearFilter: () => void;
 }
 
 const CountrySelection: FC<CountrySelectionProps> = ({
   pageName,
-  selectedCountries,
-  setSelectedCountries,
+  onSelectedCountriesChange,
+  onClearFilter,
 }) => {
   const [countriesData, setCountriesData] = useState<Country[]>([]);
   const [isCountryListVisible, setCountryListVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [filteredCountries, setFilteredCountries] =
     useState<Country[]>(countriesData);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
@@ -64,12 +65,8 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       setSelectedCountries(updatedSelectedCountries);
       setSelectedCountry(country);
       setCountryListVisible(false);
-
-      pageName === "FillOutProfile2"
-        ? setSearchValue(country.name)
-        : setSearchValue("");
-
-      // onSortCountry(country);
+      setSearchValue('');
+      onSelectedCountriesChange(updatedSelectedCountries);
     }
   };
 
@@ -239,10 +236,10 @@ const CountrySelection: FC<CountrySelectionProps> = ({
         type='search'
         name='country'
         value={searchValue}
-        fontSize={pageName === 'FillOutProfile2' ? '16' : '14'}
         isLabelHintHidden={true}
         placeholder='Начните вводить название'
-        onValue={(event) => handleSearchInputChange(event)}
+        required
+        onChange={handleSearchInputChange}
         onKeyDown={handleKeyDown}
       />
       {isError && (

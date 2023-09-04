@@ -58,7 +58,7 @@ export const Select = <T extends string>({
           {
             [styles.selectElement__select_hasError]: hasError,
           },
-          className
+          className,
         )}
         name={name}
         required={required}

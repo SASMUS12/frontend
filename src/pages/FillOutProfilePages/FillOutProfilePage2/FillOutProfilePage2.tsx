@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo } from "react";
-import { observer } from "mobx-react-lite";
+import React, { useEffect, useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
 
-import Header from "../../../components/Header/Header";
-import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
-import LanguageModule from "../../../components/LanguageModule/LanguageModule";
-import { Button } from "../../../components/UI/Button/Button";
-import CountrySelection from "../../../components/CountrySelection/CountrySelection";
+import Header from '../../../components/Header/Header';
+import ProgressLine from '../../../components/UI/ProgressLine/ProgressLine';
+import LanguageModule from '../../../components/LanguageModule/LanguageModule';
+import { Button } from '../../../components/UI/Button/Button';
+import CountrySelection from '../../../components/CountrySelection/CountrySelection';
 
-import { useModel } from "./model";
+import { useModel } from './model';
 
-import styles from "../FillOutProfilePages.module.scss";
-import { Language, SkillLevelEnum } from "../../../utils/openapi";
+import styles from '../FillOutProfilePages.module.scss';
+import { Language, SkillLevelEnum } from '../../../utils/openapi';
 
 const FillOutProfilePage2 = () => {
   const model = useModel();
@@ -48,7 +48,7 @@ const FillOutProfilePage2 = () => {
                 Страна, в которой Вы сейчас живете
               </h3>
               <CountrySelection
-                pageName="FillOutProfile2"
+                pageName='FillOutProfile2'
                 selectedCountries={model.countries}
                 setSelectedCountries={model.handleCountriesValue}
               />
@@ -58,7 +58,7 @@ const FillOutProfilePage2 = () => {
                 Ваш родной язык, язык на котором Вы свободно говорите
               </h3>
               <LanguageModule
-                pageName="FillOutProfile2"
+                pageName='FillOutProfile2'
                 initialLanguageAndLevels={initialLanguageAndLevels}
                 selectedLanguagesAndLevels={model.languagesAndLevels}
                 setSelectedLanguagesAndLevels={model.handleLanguagesValue}
@@ -66,8 +66,8 @@ const FillOutProfilePage2 = () => {
             </div>
             <Button
               className={styles.form__button}
-              type="submit"
-              variant="primary"
+              type='submit'
+              variant='primary'
               disabled={model.isSubmitButtonDisabled}
             >
               Продолжить
