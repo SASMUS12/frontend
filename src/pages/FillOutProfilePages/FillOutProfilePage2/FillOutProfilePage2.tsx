@@ -9,9 +9,9 @@ import CountrySelection from '../../../components/CountrySelection/CountrySelect
 
 import { useModel } from './model';
 
-import styles from "../FillOutProfilePages.module.scss";
-import { SkillLevelEnum } from "../../../utils/openapi";
-import ErrorModal from "../../../components/ErrorModal/ErrorModal";
+import styles from '../FillOutProfilePages.module.scss';
+import { SkillLevelEnum } from '../../../utils/openapi';
+import ErrorModal from '../../../components/ErrorModal/ErrorModal';
 
 const FillOutProfilePage2 = () => {
   const model = useModel();

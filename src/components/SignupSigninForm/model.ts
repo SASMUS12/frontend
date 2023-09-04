@@ -1,6 +1,6 @@
-import { FormEvent, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useLocalObservable } from "mobx-react-lite";
+import { FormEvent, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocalObservable } from 'mobx-react-lite';
 
 import { getMe, signInWithEmail } from '../../utils/rest/auth';
 import { signUp } from '../../utils/rest/register';
@@ -26,7 +26,7 @@ export const useModel = () => {
       isSignUp: false,
 
       checkIsSignUp() {
-        pathName === "/signup"
+        pathName === '/signup'
           ? (model.isSignUp = true)
           : (model.isSignUp = false);
       },
@@ -101,8 +101,8 @@ export const useModel = () => {
           });
 
           if (token) {
-            localStorage.setItem("accessToken", token.access);
-            localStorage.setItem("refreshToken", token.refresh);
+            localStorage.setItem('accessToken', token.access);
+            localStorage.setItem('refreshToken', token.refresh);
             session.setAccessToken(token.access);
             session.setRefreshToken(token.refresh);
           }
@@ -150,8 +150,8 @@ export const useModel = () => {
           });
 
           if (token) {
-            localStorage.setItem("accessToken", token.access);
-            localStorage.setItem("refreshToken", token.refresh);
+            localStorage.setItem('accessToken', token.access);
+            localStorage.setItem('refreshToken', token.refresh);
             session.setAccessToken(token.access);
             session.setRefreshToken(token.refresh);
           }

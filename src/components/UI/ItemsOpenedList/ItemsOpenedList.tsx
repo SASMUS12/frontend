@@ -1,7 +1,7 @@
-import { Interest } from "../../../utils/openapi";
+import { Interest } from '../../../utils/openapi';
 
-import styles from "../../InputSearchList/InputSearchList.module.scss";
-import cn from "classnames";
+import styles from '../../InputSearchList/InputSearchList.module.scss';
+import cn from 'classnames';
 
 interface InterestsOpenedListProps {
   selectedItems: Interest[];
@@ -14,7 +14,7 @@ const itemsOpenedList = ({
 }: InterestsOpenedListProps) => {
   const handleRemoveItem = (item: Interest) => {
     const updatedItems = selectedItems.filter(
-      (c: Interest) => c.name !== item.name
+      (c: Interest) => c.name !== item.name,
     );
     setSelectedItems(updatedItems);
   };
@@ -25,10 +25,10 @@ const itemsOpenedList = ({
         selectedItems.map((item: Interest, index: number) => (
           <button
             key={index}
-            type="button"
+            type='button'
             className={cn(
               styles.items__selectItem,
-              styles.items__selectItem_interest
+              styles.items__selectItem_interest,
             )}
             onClick={() => handleRemoveItem(item)}
           >

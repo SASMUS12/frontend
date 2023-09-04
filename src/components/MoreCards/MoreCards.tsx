@@ -1,8 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect } from 'react';
 
-import { Button } from "../UI/Button/Button";
+import { Button } from '../UI/Button/Button';
 
-import styles from "./MoreCards.module.scss";
+import styles from './MoreCards.module.scss';
 
 interface IMoreCards {
   cardsList: any[];
@@ -49,9 +49,9 @@ const MoreCards: FC<IMoreCards> = ({
   return (
     <Button
       className={styles.moreCardsButton}
-      type="button"
+      type='button'
       onClick={handleClick}
-      variant="transparent"
+      variant='transparent'
     >
       Продолжить искать
     </Button>

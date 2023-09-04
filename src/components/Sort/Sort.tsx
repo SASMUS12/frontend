@@ -79,7 +79,8 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
         <h2 className={styles.subtitle}>Страна партнера</h2>
         <CountrySelection
           pageName='Sort'
-          onSelectedCountriesChange={setSelectedCountries}
+          selectedCountries={selectedCountries}
+          setSelectedCountries={setSelectedCountries}
           onClearFilter={handleClearFilter}
         />
       </div>
@@ -127,8 +128,8 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
       />
       <Button
         type='submit'
-        variant='transparent'
-        size='small'
+        variant='addLanguage'
+        size='xs'
         fontSize='13'
         className={styles.cleanButton}
         children={'Очистить фильтр'}

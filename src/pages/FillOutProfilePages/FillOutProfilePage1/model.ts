@@ -1,13 +1,13 @@
-import React, { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocalObservable } from "mobx-react-lite";
+import React, { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocalObservable } from 'mobx-react-lite';
 
-import { getMe } from "../../../utils/rest/auth";
-import { session } from "../../../models/session/Session";
+import { getMe } from '../../../utils/rest/auth';
+import { session } from '../../../models/session/Session';
 
-import { GenderEnum } from "../../../utils/openapi";
-import { api, headersWithToken as headers } from "../../../utils/constants";
-import { store } from "../../../models/store";
+import { GenderEnum } from '../../../utils/openapi';
+import { api, headersWithToken as headers } from '../../../utils/constants';
+import { store } from '../../../models/store';
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -16,21 +16,21 @@ export const useModel = () => {
 
   const model = useLocalObservable(() => {
     return {
-      firstName: "",
-      birthdate: "",
-      calculatedBirthday: "",
-      gender: "Male" as GenderEnum | null,
-      avatar: "",
-      avatarBase64: "",
-      avatarFile: "" as string | ArrayBuffer | null,
-      previewAvatar: "",
-      error: { firstName: "", birthdate: "", avatar: "" },
-      message: "",
+      firstName: '',
+      birthdate: '',
+      calculatedBirthday: '',
+      gender: 'Male' as GenderEnum | null,
+      avatar: '',
+      avatarBase64: '',
+      avatarFile: '' as string | ArrayBuffer | null,
+      previewAvatar: '',
+      error: { firstName: '', birthdate: '', avatar: '' },
+      message: '',
       isLoading: false,
       isExportAvatarModal: false,
       isCreateAvatarModal: false,
       isErrorModalOpen: false,
-      errorMessage: "",
+      errorMessage: '',
 
       async handleCurrentUser() {
         try {
@@ -38,10 +38,10 @@ export const useModel = () => {
 
           if (user) {
             session.updateUser(user);
-            model.firstName = user.first_name ?? "";
+            model.firstName = user.first_name ?? '';
             model.gender = user.gender ?? null;
-            model.birthdate = user.birth_date ?? "";
-            model.avatar = user.avatar ?? "";
+            model.birthdate = user.birth_date ?? '';
+            model.avatar = user.avatar ?? '';
           }
         } catch (error: any) {
           model.message = error.message;
@@ -55,7 +55,7 @@ export const useModel = () => {
       },
 
       handleAvatarSelection(creationWay: string) {
-        if (creationWay === "Загрузить") {
+        if (creationWay === 'Загрузить') {
           model.isExportAvatarModal = true;
         } else {
           model.isCreateAvatarModal = true;
@@ -66,7 +66,7 @@ export const useModel = () => {
         name,
         value,
       }: {
-        name: "firstName" | "birthdate" | "avatar";
+        name: 'firstName' | 'birthdate' | 'avatar';
         value: string;
       }) {
         model[name] = value;
@@ -91,7 +91,7 @@ export const useModel = () => {
             const fileSrc = URL.createObjectURL(file);
 
             model.handleValue({
-              name: "avatar",
+              name: 'avatar',
               value: fileSrc,
             });
 
@@ -120,39 +120,51 @@ export const useModel = () => {
         model.handleModalClose();
       },
 
+      async getCurrentUser() {
+        try {
+          const user = await getMe();
+
+          if (user) {
+            session.updateUser(user);
+          }
+        } catch (error: any) {
+          model.message = error.message;
+        }
+      },
+
       async handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         model.error = {
-          firstName: "",
-          birthdate: "",
-          avatar: "",
+          firstName: '',
+          birthdate: '',
+          avatar: '',
         };
 
-        if (model.firstName === "") {
-          model.error.firstName = "Пожалуйста, введите Ваше имя";
+        if (model.firstName === '') {
+          model.error.firstName = 'Пожалуйста, введите Ваше имя';
         }
 
-        if (model.birthdate === "") {
-          model.error.birthdate = "Пожалуйста, введите дату рождения";
+        if (model.birthdate === '') {
+          model.error.birthdate = 'Пожалуйста, введите дату рождения';
         }
 
         if (
-          model.avatar === "" ||
-          model.avatar === "../../images/fill-out-profile-export-avatar.png"
+          model.avatar === '' ||
+          model.avatar === '../../images/fill-out-profile-export-avatar.png'
         ) {
-          model.error.avatar = "Пожалуйста, выберете аватар";
+          model.error.avatar = 'Пожалуйста, выберете аватар';
         }
 
         if (
-          model.error.firstName !== "" ||
-          model.error.birthdate !== "" ||
-          model.error.avatar !== ""
+          model.error.firstName !== '' ||
+          model.error.birthdate !== '' ||
+          model.error.avatar !== ''
         ) {
           return;
         }
 
-        model.message = "";
+        model.message = '';
         model.isLoading = true;
         try {
           const getUpdateUser = await api.api.usersMePartialUpdate(
@@ -162,7 +174,7 @@ export const useModel = () => {
               birth_date: model.birthdate,
               gender: model.gender,
             },
-            { headers }
+            { headers },
           );
 
           if (getUpdateUser && user) {
@@ -175,14 +187,14 @@ export const useModel = () => {
             });
           }
 
-          navigate("/fill-out-2");
+          navigate('/fill-out-2');
           model.isLoading = false;
         } catch (error: any) {
-          console.log("fill-out-1 error:", error);
+          console.log('fill-out-1 error:', error);
           const secondError = Object.values(error)[1];
           const ErrorString = Object.values(
-            secondError as { [s: string]: unknown }
-          ).join("\n");
+            secondError as { [s: string]: unknown },
+          ).join('\n');
           console.log(ErrorString);
           model.errorMessage = ErrorString;
           model.isErrorModalOpen = true;

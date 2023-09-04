@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState } from 'react';
 // import SearchButton from "../../../components/UI/SearchButton/SearchButton";
-import MenuButton from "../Buttons/MenuButton/MenuButton";
-import styles from "./ChatsMenu.module.scss";
+import MenuButton from '../Buttons/MenuButton/MenuButton';
+import styles from './ChatsMenu.module.scss';
 
 const ChatsMenu = () => {
-  const [activeFilter, setActiveFilter] = useState("Chats");
+  const [activeFilter, setActiveFilter] = useState('Chats');
 
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter);
@@ -18,14 +18,14 @@ const ChatsMenu = () => {
     <div className={styles.menu}>
       <div className={styles.menu__filters}>
         <MenuButton
-          onClick={() => handleFilterClick("Chats")}
-          isActive={activeFilter === "Chats"}
-          title="Чаты"
+          onClick={() => handleFilterClick('Chats')}
+          isActive={activeFilter === 'Chats'}
+          title='Чаты'
         />
         <MenuButton
-          onClick={() => handleFilterClick("Groups")}
-          isActive={activeFilter === "Groups"}
-          title="Группы"
+          onClick={() => handleFilterClick('Groups')}
+          isActive={activeFilter === 'Groups'}
+          title='Группы'
         />
       </div>
       {/*<SearchButton onClick={handleSearchClick} />*/}

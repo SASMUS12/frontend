@@ -1,5 +1,5 @@
-import { Interest } from "../openapi";
-import { api } from "../constants";
+import { Interest } from '../openapi';
+import { api } from '../constants';
 
 export const getInterests = async (): Promise<Interest[]> => {
   const { data: interests, error } = await api.api.interestsList();

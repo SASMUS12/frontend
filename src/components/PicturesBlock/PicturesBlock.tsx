@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styles from "./PicturesBlock.module.scss";
-import step1 from "../../images/step1.png";
-import step21 from "../../images/step21.png";
-import step22 from "../../images/step22.png";
-import step23 from "../../images/step23.png";
-import step3 from "../../images/step3.png";
-import step4 from "../../images/step4.png";
-import step5 from "../../images/step5.png";
-import line1 from "../../images/line1.svg";
-import line2 from "../../images/line2.png";
+import React, { useEffect, useState } from 'react';
+import styles from './PicturesBlock.module.scss';
+import step1 from '../../images/step1.png';
+import step21 from '../../images/step21.png';
+import step22 from '../../images/step22.png';
+import step23 from '../../images/step23.png';
+import step3 from '../../images/step3.png';
+import step4 from '../../images/step4.png';
+import step5 from '../../images/step5.png';
+import line1 from '../../images/line1.svg';
+import line2 from '../../images/line2.png';
 
 const PicturesBlock = () => {
   const [pic, setPic] = useState(1);
@@ -26,14 +26,14 @@ const PicturesBlock = () => {
       {pic === 1 && (
         <>
           <p>
-            Учи и практикуй иностранный язык{" "}
+            Учи и практикуй иностранный язык{' '}
             <span>
               <br></br>с носителями из более чем 50 стран
             </span>
           </p>
           <img
             src={step1}
-            alt="Картинки с довольными людьми"
+            alt='Картинки с довольными людьми'
             className={styles.picturesBlock__img}
           />
         </>
@@ -41,24 +41,24 @@ const PicturesBlock = () => {
       {pic === 2 && (
         <>
           <p>
-            Находи новых друзей и единомышленников{" "}
+            Находи новых друзей и единомышленников{' '}
             <span>
               <br></br>с помощью гибкого поиска собеседника
             </span>
           </p>
           <img
             src={step21}
-            alt="Картинки с довольными людьми"
+            alt='Картинки с довольными людьми'
             className={styles.picturesBlock__item1}
           />
           <img
             src={step22}
-            alt="Картинки с довольными людьми"
+            alt='Картинки с довольными людьми'
             className={styles.picturesBlock__item2}
           />
           <img
             src={step23}
-            alt="Картинки с довольными людьми"
+            alt='Картинки с довольными людьми'
             className={styles.picturesBlock__item3}
           />
         </>
@@ -71,7 +71,7 @@ const PicturesBlock = () => {
           </p>
           <img
             src={step3}
-            alt="Картинки с довольными людьми"
+            alt='Картинки с довольными людьми'
             className={styles.picturesBlock__img3}
           />
         </>
@@ -83,7 +83,7 @@ const PicturesBlock = () => {
           </p>
           <img
             src={step4}
-            alt="Картинки с довольными людьми"
+            alt='Картинки с довольными людьми'
             className={styles.picturesBlock__img4}
           />
         </>
@@ -91,12 +91,12 @@ const PicturesBlock = () => {
       {pic === 5 && (
         <>
           <p>
-            Изучай язык <span>в любое время</span> и{" "}
+            Изучай язык <span>в любое время</span> и{' '}
             <span>в удобном месте</span>
           </p>
           <img
             src={step5}
-            alt="Картинки с довольными людьми"
+            alt='Картинки с довольными людьми'
             className={styles.picturesBlock__img}
           />
         </>
@@ -104,7 +104,7 @@ const PicturesBlock = () => {
       <div className={styles.picturesBlock__container}>
         <img
           src={pic === 1 ? line2 : line1}
-          alt="Линия"
+          alt='Линия'
           className={
             pic === 1
               ? styles.picturesBlock__picActive
@@ -116,7 +116,7 @@ const PicturesBlock = () => {
         />
         <img
           src={pic === 2 ? line2 : line1}
-          alt="Линия"
+          alt='Линия'
           className={
             pic === 2
               ? styles.picturesBlock__picActive
@@ -128,7 +128,7 @@ const PicturesBlock = () => {
         />
         <img
           src={pic === 3 ? line2 : line1}
-          alt="Линия"
+          alt='Линия'
           className={
             pic === 3
               ? styles.picturesBlock__picActive
@@ -140,7 +140,7 @@ const PicturesBlock = () => {
         />
         <img
           src={pic === 4 ? line2 : line1}
-          alt="Линия"
+          alt='Линия'
           className={
             pic === 4
               ? styles.picturesBlock__picActive
@@ -152,7 +152,7 @@ const PicturesBlock = () => {
         />
         <img
           src={pic === 5 ? line2 : line1}
-          alt="Линия"
+          alt='Линия'
           className={
             pic === 5
               ? styles.picturesBlock__picActive

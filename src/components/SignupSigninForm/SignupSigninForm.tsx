@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Input } from '../UI/Input/Input';
@@ -16,12 +16,6 @@ const SignupSigninForm = () => {
 
   const location = useLocation();
   const pathName: string = location.pathname;
-
-  const [isSignUp, setIsSignUp] = useState(false);
-
-  const checkIsSignUp = () => {
-    pathName === '/signup' ? setIsSignUp(true) : setIsSignUp(false);
-  };
 
   useEffect(() => {
     model.checkIsSignUp();
@@ -84,9 +78,11 @@ const SignupSigninForm = () => {
         type='email'
         name='email'
         value={model.email}
-        label={isSignUp ? 'Введите эл.почту' : 'Введите логин или эл.почту'}
-        labelHint={isSignUp ? 'И получите письмо с подтверждением' : ''}
-        isLabelHintHidden={!isSignUp}
+        label={
+          model.isSignUp ? 'Введите эл.почту' : 'Введите логин или эл.почту'
+        }
+        labelHint={model.isSignUp ? 'И получите письмо с подтверждением' : ''}
+        isLabelHintHidden={!model.isSignUp}
         placeholder='Эл. почта'
         required
         error={model.error.email}
@@ -99,9 +95,11 @@ const SignupSigninForm = () => {
         type='password'
         name='password'
         value={model.password}
-        label={isSignUp ? 'Придумайте пароль' : 'Введите пароль'}
-        labelHint={isSignUp ? 'Не менее 5 символов, латинскими буквами' : ''}
-        isLabelHintHidden={!isSignUp}
+        label={model.isSignUp ? 'Придумайте пароль' : 'Введите пароль'}
+        labelHint={
+          model.isSignUp ? 'Не менее 5 символов, латинскими буквами' : ''
+        }
+        isLabelHintHidden={!model.isSignUp}
         placeholder='Пароль'
         required
         error={model.error.password}
@@ -164,7 +162,7 @@ const SignupSigninForm = () => {
         variant='primary'
         disabled={model.isLoading}
       >
-        {model.isLoading ? 'Loading' : isSignUp ? 'Продолжить' : 'Войти'}
+        {model.isLoading ? 'Loading' : model.isSignUp ? 'Продолжить' : 'Войти'}
       </Button>
       <p className={cn(styles.form__text_or, styles.form__text_violet14)}>
         или

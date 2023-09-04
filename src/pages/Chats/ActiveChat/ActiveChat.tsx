@@ -1,9 +1,9 @@
-import { FC } from "react";
-import styles from "./ActiveChat.module.scss";
-import { useNavigate } from "react-router-dom";
-import { Input } from "../../../components/UI/Input/Input";
+import { FC } from 'react';
+import styles from './ActiveChat.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { Input } from '../../../components/UI/Input/Input';
 
-import newChatsSocket from "../Websocket/Websocket";
+import newChatsSocket from '../Websocket/Websocket';
 
 interface ActiveChatProps {
   isActive: boolean;
@@ -17,7 +17,7 @@ const ActiveChat: FC<ActiveChatProps> = ({ isActive }) => {
   };
 
   const handlePartnerSearchBtn = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -29,7 +29,7 @@ const ActiveChat: FC<ActiveChatProps> = ({ isActive }) => {
             <button
               className={styles.chat__searchbtn}
               onClick={handlePartnerSearchBtn}
-              type="button"
+              type='button'
             >
               поиск партнёра
             </button>

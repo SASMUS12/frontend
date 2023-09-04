@@ -1,12 +1,12 @@
-import React, { FC, ChangeEvent } from "react";
-import { GenderEnum } from "../../../utils/openapi";
-import IconButton from "../Buttons/IconButton/IconButton";
-import formattedTime from "../../../utils/getTime";
-import cardPartnerAvatar from "../../../images/userProfile/card-partner-avatar.png";
-import cardPartnerFlag from "../../../images/userProfile/russia.svg";
-import clock from "../../../images/userProfile/clock.png";
-import camera from "../../../images/userProfile/camera.svg";
-import styles from "./UserCard.module.scss";
+import React, { FC, ChangeEvent } from 'react';
+import { GenderEnum } from '../../../utils/openapi';
+import IconButton from '../Buttons/IconButton/IconButton';
+import formattedTime from '../../../utils/getTime';
+import cardPartnerAvatar from '../../../images/userProfile/card-partner-avatar.png';
+import cardPartnerFlag from '../../../images/userProfile/russia.svg';
+import clock from '../../../images/userProfile/clock.png';
+import camera from '../../../images/userProfile/camera.svg';
+import styles from './UserCard.module.scss';
 
 export interface Country {
   code: string | null;
@@ -43,7 +43,7 @@ const UserCard: FC<UserCardProps> = ({
 }) => {
   const handleChangeString = (
     setState: React.Dispatch<React.SetStateAction<string>>,
-    value: string
+    value: string,
   ) => {
     setState(value);
   };
@@ -83,7 +83,7 @@ const UserCard: FC<UserCardProps> = ({
               <img
                 className={styles.profile__partnerAvatar}
                 src={avatar ? avatar : cardPartnerAvatar}
-                alt="Аватар пользователя"
+                alt='Аватар пользователя'
               />
               <div className={styles.profile__partnerInfo}>
                 <div>
@@ -94,12 +94,12 @@ const UserCard: FC<UserCardProps> = ({
                 </div>
                 <div>
                   <div className={styles.profile__country}>
-                    {location && typeof location === "object" ? (
+                    {location && typeof location === 'object' ? (
                       <>
                         <img
                           className={styles.profile__flag}
                           src={cardPartnerFlag}
-                          alt="Флаг страны пользователя"
+                          alt='Флаг страны пользователя'
                         />
                         <p className={styles.profile__city}>{location.code}</p>
                       </>
@@ -112,7 +112,7 @@ const UserCard: FC<UserCardProps> = ({
                     <img
                       className={styles.profile__clock}
                       src={clock}
-                      alt="изображение часов с циферблатом"
+                      alt='изображение часов с циферблатом'
                     />
                     <p className={styles.profile__formattedTime}>
                       {formattedTime}
@@ -132,7 +132,7 @@ const UserCard: FC<UserCardProps> = ({
                 <img
                   className={styles.profile__partnerAvatar}
                   src={avatar ? avatar : cardPartnerAvatar}
-                  alt="Аватар пользователя"
+                  alt='Аватар пользователя'
                 />
                 <div className={styles.profile__partnerAvatarButton}>
                   <IconButton
@@ -144,22 +144,22 @@ const UserCard: FC<UserCardProps> = ({
                 </div>
                 <div className={styles.profile__additionalButtons}>
                   <input
-                    type="file"
-                    className="button1"
+                    type='file'
+                    className='button1'
                     onChange={handleFileInputChange}
                   />
-                  Button 1<button className="button2">Button 2</button>
+                  Button 1<button className='button2'>Button 2</button>
                 </div>
               </div>
               <div className={styles.profile__partnerInfo}>
                 <form className={styles.profile__form}>
                   <div>
                     <div className={styles.profile__flexColumn}>
-                      <label htmlFor="partnerName">Имя</label>
+                      <label htmlFor='partnerName'>Имя</label>
                       <input
-                        type="text"
-                        id="partnerName"
-                        name="partnerName"
+                        type='text'
+                        id='partnerName'
+                        name='partnerName'
                         className={styles.profile__input}
                         value={name}
                         onChange={(event) =>
@@ -167,22 +167,22 @@ const UserCard: FC<UserCardProps> = ({
                             setName as React.Dispatch<
                               React.SetStateAction<string>
                             >,
-                            event.target.value
+                            event.target.value,
                           )
                         }
                       />
                     </div>
                     <div className={styles.profile__flexColumn}>
                       <label
-                        htmlFor="partnerBirthday"
+                        htmlFor='partnerBirthday'
                         className={styles.profile__labelForBirthday}
                       >
                         Дата рождения
                       </label>
                       <input
-                        type="date"
-                        id="partnerBirthday"
-                        name="partnerBirthday"
+                        type='date'
+                        id='partnerBirthday'
+                        name='partnerBirthday'
                         className={styles.profile__input}
                         onChange={handleChangeAge}
                       />
@@ -190,37 +190,37 @@ const UserCard: FC<UserCardProps> = ({
                   </div>
                   <div>
                     <div className={styles.profile__flexColumn}>
-                      <label htmlFor="partnerGender">Пол</label>
+                      <label htmlFor='partnerGender'>Пол</label>
                       <div>
                         <input
-                          type="button"
-                          value="мужчина"
-                          name="partnerGender"
-                          id="male"
+                          type='button'
+                          value='мужчина'
+                          name='partnerGender'
+                          id='male'
                           className={
-                            gender === "Male"
+                            gender === 'Male'
                               ? styles.selected
                               : styles.profile__gender
                           }
                           onClick={() => setGender(GenderEnum.Male)}
                         />
                         <input
-                          type="button"
-                          value="женщина"
-                          name="partnerGender"
-                          id="female"
+                          type='button'
+                          value='женщина'
+                          name='partnerGender'
+                          id='female'
                           className={
-                            gender === "Female"
+                            gender === 'Female'
                               ? styles.selected
                               : styles.profile__gender
                           }
                           onClick={() => setGender(GenderEnum.Female)}
                         />
                         <input
-                          type="button"
-                          value="не указан"
-                          name="partnerGender"
-                          id="unspecified"
+                          type='button'
+                          value='не указан'
+                          name='partnerGender'
+                          id='unspecified'
                           className={
                             gender === null
                               ? styles.selected
@@ -233,21 +233,21 @@ const UserCard: FC<UserCardProps> = ({
                     <div className={styles.profile__flexColumn}>
                       <label
                         className={styles.profile__labelForLocation}
-                        htmlFor="partnerLocation"
+                        htmlFor='partnerLocation'
                       >
                         Местоположение
                       </label>
                       <input
-                        type="text"
-                        id="partnerLocation"
-                        name="partnerLocation"
+                        type='text'
+                        id='partnerLocation'
+                        name='partnerLocation'
                         className={styles.profile__input}
                         onChange={(event) =>
                           handleChangeString(
                             setLocation as React.Dispatch<
                               React.SetStateAction<string>
                             >,
-                            event.target.value
+                            event.target.value,
                           )
                         }
                       />

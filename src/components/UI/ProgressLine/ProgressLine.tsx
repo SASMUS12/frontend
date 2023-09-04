@@ -1,5 +1,5 @@
-import styles from "./ProgressLine.module.scss";
-import cn from "classnames";
+import styles from './ProgressLine.module.scss';
+import cn from 'classnames';
 
 interface IProgressLine {
   pageNumber: number;
@@ -15,8 +15,8 @@ const ProgressLine = ({ pageNumber }: IProgressLine) => {
           key={i}
           className={cn(
             styles.lines__line,
-            pageNumber === number ? styles.lines__line_active : "",
-            pageNumber > number ? styles.lines__line_visited : ""
+            pageNumber === number ? styles.lines__line_active : '',
+            pageNumber > number ? styles.lines__line_visited : '',
           )}
         ></li>
       ))}

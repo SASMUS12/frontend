@@ -5,12 +5,7 @@ import { useLocalObservable } from 'mobx-react-lite';
 import { getMe } from '../../../utils/rest/auth';
 import { session } from '../../../models/session/Session';
 
-import {
-  Country,
-  Language,
-  SkillLevelEnum,
-  UserLanguageRequest,
-} from '../../../utils/openapi';
+import { Country, Language, SkillLevelEnum } from '../../../utils/openapi';
 import { api, headersWithToken as headers } from '../../../utils/constants';
 import { store } from '../../../models/store';
 
@@ -36,7 +31,7 @@ export const useModel = () => {
       isSubmitButtonDisabled: false,
       isLoading: false,
       isErrorModalOpen: false,
-      errorMessage: "",
+      errorMessage: '',
 
       async handleCurrentUser() {
         try {
@@ -99,10 +94,10 @@ export const useModel = () => {
         };
 
         if (model.countries === null) {
-          model.error.languages = 'Пожалуйста, выберите язык';
+          model.error.countries = 'Пожалуйста, выберите страну';
         }
 
-        if (model.languagesAndLevels === null) {
+        if (model.languagesAndLevels[0].language === null) {
           model.error.languages = 'Пожалуйста, выберите язык';
         }
 
@@ -121,7 +116,15 @@ export const useModel = () => {
               languages: [
                 {
                   isocode: model.languagesAndLevels[0].language?.isocode || '',
-                  skill_level: {} as SkillLevelEnum,
+                  skill_level: SkillLevelEnum.Native,
+                },
+                {
+                  isocode: model.languagesAndLevels[1].language?.isocode || '',
+                  skill_level: SkillLevelEnum.Native,
+                },
+                {
+                  isocode: model.languagesAndLevels[2].language?.isocode || '',
+                  skill_level: SkillLevelEnum.Native,
                 },
               ],
             },
@@ -136,17 +139,34 @@ export const useModel = () => {
                 {
                   language: model.languagesAndLevels[0].language?.name || '',
                   isocode: model.languagesAndLevels[0].language?.isocode || '',
-                  skill_level: {} as SkillLevelEnum,
+                  skill_level: SkillLevelEnum.Native,
+                },
+                {
+                  language: model.languagesAndLevels[1].language?.name || '',
+                  isocode: model.languagesAndLevels[1].language?.isocode || '',
+                  skill_level: SkillLevelEnum.Native,
+                },
+                {
+                  language: model.languagesAndLevels[2].language?.name || '',
+                  isocode: model.languagesAndLevels[2].language?.isocode || '',
+                  skill_level: SkillLevelEnum.Native,
                 },
               ],
             });
           }
 
-          navigate('fill-out-3');
+          navigate('/fill-out-3');
           model.isLoading = false;
         } catch (error: any) {
           console.log(model.languagesAndLevels[0]);
           console.log('fill-out-2 error:', error);
+          const secondError = Object.values(error)[1];
+          const ErrorString = Object.values(
+            secondError as { [s: string]: unknown },
+          ).join('\n');
+          console.log(ErrorString);
+          model.errorMessage = ErrorString;
+          model.isErrorModalOpen = true;
           model.isLoading = false;
         }
       },

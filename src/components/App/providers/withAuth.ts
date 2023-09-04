@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
-import { useEffect } from "react";
+import type { ReactNode } from 'react';
+import { useEffect } from 'react';
 
-import { authenticate } from "../../../features/authenticate/authenticate";
-import { store } from "../../../models/store";
-import { session } from "../../../models/session/Session";
-import { GenderEnum, NullEnum, UserLanguage } from "../../../utils/openapi";
+import { authenticate } from '../../../features/authenticate/authenticate';
+import { store } from '../../../models/store';
+import { session } from '../../../models/session/Session';
+import { GenderEnum, NullEnum, UserLanguage } from '../../../utils/openapi';
 
 export const withAuth = (component: () => ReactNode) => () => {
   useEffect(() => {
@@ -12,8 +12,8 @@ export const withAuth = (component: () => ReactNode) => () => {
       await authenticate();
     })();
 
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     if (accessToken) {
       if (session?.user) {

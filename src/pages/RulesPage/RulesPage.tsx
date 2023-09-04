@@ -1,7 +1,7 @@
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
-import styles from "./RulesPage.module.scss";
+import styles from './RulesPage.module.scss';
 
 const RulesPage = () => {
   return (

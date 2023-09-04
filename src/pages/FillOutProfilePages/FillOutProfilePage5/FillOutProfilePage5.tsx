@@ -1,13 +1,13 @@
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
 
-import Header from "../../../components/Header/Header";
-import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
-import { Button } from "../../../components/UI/Button/Button";
-import InterestsSelection from "../../../components/InterestsSelection/InterestsSelection";
+import Header from '../../../components/Header/Header';
+import ProgressLine from '../../../components/UI/ProgressLine/ProgressLine';
+import { Button } from '../../../components/UI/Button/Button';
+import InterestsSelection from '../../../components/InterestsSelection/InterestsSelection';
 
-import { useModel } from "./model";
+import { useModel } from './model';
 
-import styles from "../FillOutProfilePages.module.scss";
+import styles from '../FillOutProfilePages.module.scss';
 
 const FillOutProfilePage5 = () => {
   const model = useModel();
@@ -32,8 +32,8 @@ const FillOutProfilePage5 = () => {
             />
             <Button
               className={styles.form__button}
-              type="submit"
-              variant="primary"
+              type='submit'
+              variant='primary'
               disabled={false}
             >
               Продолжить

@@ -1,7 +1,7 @@
-import { ChangeEvent, TextareaHTMLAttributes } from "react";
+import { ChangeEvent, TextareaHTMLAttributes } from 'react';
 
-import styles from "./Textarea.module.scss";
-import cn from "classnames";
+import styles from './Textarea.module.scss';
+import cn from 'classnames';
 
 interface Props<T extends string>
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -56,7 +56,7 @@ export const Textarea = <T extends string>({
         className={cn(
           styles.textarea,
           { [styles.hasError]: hasError },
-          className
+          className,
         )}
         onChange={handleChange}
         name={name}

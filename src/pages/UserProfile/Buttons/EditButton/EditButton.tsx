@@ -1,5 +1,5 @@
-import icon from "../../../../images/userProfile/edit.png";
-import styles from "./EditButton.module.scss";
+import icon from '../../../../images/userProfile/edit.png';
+import styles from './EditButton.module.scss';
 
 const EditButton = () => {
   const handleButtonClick = () => {
@@ -9,7 +9,7 @@ const EditButton = () => {
   return (
     <>
       <button className={styles.profile__button} onClick={handleButtonClick}>
-        <img className={styles.profile__icon} src={icon} alt="редактировать" />
+        <img className={styles.profile__icon} src={icon} alt='редактировать' />
         <p className={styles.profile__text}>Редактировать профиль</p>
       </button>
     </>

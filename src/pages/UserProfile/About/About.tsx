@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import styles from "./About.module.scss";
+import React, { FC } from 'react';
+import styles from './About.module.scss';
 
 interface AboutProps {
   isEditing: boolean;
@@ -29,15 +29,15 @@ const About: FC<AboutProps> = ({ isEditing, about, setAboutMe }) => {
               onChange={(event) => setAboutMe(event.target.value)}
               className={styles.about__input}
               rows={3}
-              placeholder="Напиши несколько предложений о себе, чтобы тебя нашли партнеры со схожими интересами или стилем жизни"
+              placeholder='Напиши несколько предложений о себе, чтобы тебя нашли партнеры со схожими интересами или стилем жизни'
             />
           </section>
           <section>
             <h3 className={styles.about__title}>Я изучаю язык, чтобы</h3>
             <input
-              type="text"
+              type='text'
               className={styles.about__input}
-              placeholder="Расскажи о своей цели"
+              placeholder='Расскажи о своей цели'
             />
           </section>
         </div>

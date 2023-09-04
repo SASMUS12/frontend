@@ -8,9 +8,8 @@ interface Props {
   className?: string;
   type?: 'button' | 'submit';
   variant?: 'primary' | 'transparent' | 'gray' | 'addLanguage';
-  size?: 'small' | 'big';
+  size?: 'xs' | 'small' | 'big';
   fontSize?: '13' | '15' | '16';
-
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   children?: ReactNode;
@@ -18,7 +17,7 @@ interface Props {
 
 export const Button: FC<Props> = ({
   className,
-  type,
+  type = 'button',
   variant = 'primary',
   size = 'big',
   fontSize = '16',

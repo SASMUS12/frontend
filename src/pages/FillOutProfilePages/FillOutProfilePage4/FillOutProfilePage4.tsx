@@ -1,17 +1,12 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  MouseEventHandler,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 
-import Header from "../../../components/Header/Header";
-import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
-import { Button } from "../../../components/UI/Button/Button";
-import { Goals } from "./Goals";
+import Header from '../../../components/Header/Header';
+import ProgressLine from '../../../components/UI/ProgressLine/ProgressLine';
+import { Button } from '../../../components/UI/Button/Button';
+import { Goals } from './Goals';
+
+import { useModel } from './model';
 
 import styles from '../FillOutProfilePages.module.scss';
 
@@ -60,8 +55,8 @@ const FillOutProfilePage4 = () => {
             </div>
             <Button
               className={styles.form__button}
-              type="submit"
-              variant="primary"
+              type='submit'
+              variant='primary'
               disabled={model.isSubmitButtonDisabled}
             >
               Продолжить

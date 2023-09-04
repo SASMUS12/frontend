@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import { avatarList } from "./AvatarsIcons";
+import { avatarList } from './AvatarsIcons';
 
-import styles from "./Avatars.module.scss";
-import cn from "classnames";
+import styles from './Avatars.module.scss';
+import cn from 'classnames';
 
 interface AvatarProps {
   selectedAvatar: string;
@@ -27,12 +27,12 @@ const Avatars = ({ selectedAvatar, setSelectedAvatar }: AvatarProps) => {
                   styles.avatarsItems_avatarItem,
                   selectedAvatar === avatar
                     ? styles.avatarsItems_avatarItem_selected
-                    : ""
+                    : '',
                 )}
                 onClick={handleSetAvatar}
                 key={i}
               >
-                <img src={avatar} alt="Вариант изображения аватара" />
+                <img src={avatar} alt='Вариант изображения аватара' />
               </button>
             )
           );

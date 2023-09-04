@@ -1,5 +1,5 @@
-import { action, computed, makeObservable, observable } from "mobx";
-import { User, UserInterface } from "./User";
+import { action, computed, makeObservable, observable } from 'mobx';
+import { User, UserInterface } from './User';
 
 class Session {
   private _user: User | null = null;
@@ -7,7 +7,7 @@ class Session {
   private _refreshToken: string | null = null;
 
   constructor() {
-    makeObservable<Session, "_user" | "_accessToken" | "_refreshToken">(this, {
+    makeObservable<Session, '_user' | '_accessToken' | '_refreshToken'>(this, {
       _user: observable,
       _accessToken: observable,
       _refreshToken: observable,

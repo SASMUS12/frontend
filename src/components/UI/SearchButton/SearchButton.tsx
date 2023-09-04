@@ -1,5 +1,5 @@
-import { FC } from "react";
-import styles from "./SearchButton.module.scss";
+import { FC } from 'react';
+import styles from './SearchButton.module.scss';
 
 interface SearchButtonProps {
   onClick: () => void;
@@ -7,7 +7,7 @@ interface SearchButtonProps {
 
 const SearchButton: FC<SearchButtonProps> = ({ onClick }) => {
   return (
-    <button className={styles.button} onClick={onClick} type="button"></button>
+    <button className={styles.button} onClick={onClick} type='button'></button>
   );
 };
 

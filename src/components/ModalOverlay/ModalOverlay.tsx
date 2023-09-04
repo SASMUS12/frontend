@@ -1,7 +1,7 @@
-import React, { FC, ReactNode, useEffect, useRef } from "react";
+import React, { FC, ReactNode, useEffect, useRef } from 'react';
 
-import styles from "./ModalOverlay.module.scss";
-import cn from "classnames";
+import styles from './ModalOverlay.module.scss';
+import cn from 'classnames';
 
 interface IModalOverlayProps {
   isOpen: boolean;
@@ -18,7 +18,7 @@ const ModalOverlay: FC<IModalOverlayProps> = ({
 
   // Закрытие по overlay
   const setCloseByOverlayListener = (modal: any) => {
-    modal.addEventListener("mousedown", (event: MouseEvent) => {
+    modal.addEventListener('mousedown', (event: MouseEvent) => {
       const targetClasses = (event.target as Element).classList;
       const regExp = /^(ModalOverlay_modalOverlay_opened__)[\w]?/;
       const getClassName = () => {
@@ -37,7 +37,7 @@ const ModalOverlay: FC<IModalOverlayProps> = ({
 
   // Закрытие при нажатии на Esc
   const handleCloseByEsc = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
+    if (event.key === 'Escape') {
       onClose();
     }
   };
@@ -49,10 +49,10 @@ const ModalOverlay: FC<IModalOverlayProps> = ({
   useEffect(() => {
     if (isOpen) {
       // Список действий внутри одного хука
-      document.addEventListener("keydown", handleCloseByEsc);
+      document.addEventListener('keydown', handleCloseByEsc);
       // Возвращаем функцию, которая удаляет эффекты
       return () => {
-        document.removeEventListener("keydown", handleCloseByEsc);
+        document.removeEventListener('keydown', handleCloseByEsc);
       };
     }
   }, [isOpen]);
@@ -62,7 +62,7 @@ const ModalOverlay: FC<IModalOverlayProps> = ({
       ref={modalRef}
       className={cn(
         styles.modalOverlay,
-        isOpen ? styles.modalOverlay_opened : {}
+        isOpen ? styles.modalOverlay_opened : {},
       )}
     >
       {children}

@@ -1,10 +1,10 @@
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
 
-import Modal from "../Modal/Modal";
+import Modal from '../Modal/Modal';
 
-import errorImage from "../../images/error-modal-image.png";
+import errorImage from '../../images/error-modal-image.png';
 
-import styles from "./ErrorModal.module.scss";
+import styles from './ErrorModal.module.scss';
 
 interface ErrorModalProps {
   isOpen: boolean;
@@ -18,7 +18,7 @@ const ErrorModal = ({ isOpen, onClose, errorMessage }: ErrorModalProps) => {
       <img
         className={styles.modal__image}
         src={errorImage}
-        alt="Думающий человек"
+        alt='Думающий человек'
       />
       <p className={styles.modal__text}>{errorMessage}</p>
     </Modal>
