@@ -175,7 +175,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
               });
               setSelectedLanguagesAndLevels(updatedLanguagesAndLevels);
             }}
-            className={styles.languagesAdd__button}
+            className={styles.languagesAdd}
           >
             {'добавить язык'}
           </Button>

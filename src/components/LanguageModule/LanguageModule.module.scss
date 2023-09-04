@@ -1,14 +1,17 @@
 .languagesAdd {
+  align-items: flex-start;
+  background-color: var(--color-base-white);
+  background-image: url('../../images/svg/plus-in-circle.svg');
+  background-position: left 0 center;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  cursor: pointer;
   display: flex;
   height: 20px;
-  width: 135px;
   justify-content: flex-end;
-  align-items: flex-start;
-  background-image: url('../../images/svg/plus-in-circle.svg');
-  background-repeat: no-repeat;
-  background-position: left 0 center;
-  background-size: 20px 20px;
-  background-color: var(--color-base-white);
+  width: 135px;
+  color: var(--accent-color-violet, #6D47D1);
+  padding: 0;
 
   &:hover {
     background-image: url('../../images/svg/plus-in-circle_hover.svg');

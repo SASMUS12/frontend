@@ -45,7 +45,7 @@ const LanguageLevel: React.FC<LanguageLevelProps> = ({
   console.log('selectedSkillLevels:', selectedSkillLevels);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<
     number | null
   >(null);

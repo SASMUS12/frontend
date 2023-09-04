@@ -16,7 +16,12 @@ interface CountrySelectionProps {
   onClearFilter?: () => void;
 }
 
-const CountrySelection: FC<CountrySelectionProps> = ({pageName, selectedCountries,setSelectedCountries, onClearFilter,}) => {
+const CountrySelection: FC<CountrySelectionProps> = ({
+  pageName,
+  selectedCountries,
+  setSelectedCountries,
+  onClearFilter,
+}) => {
   const [countriesData, setCountriesData] = useState<Country[]>([]);
   const [isCountryListVisible, setCountryListVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -272,7 +277,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({pageName, selectedCountrie
           <div
             className={classNames(styles.country__countryList, {
               [styles.country__countryList_visible]:
-              sortCountriesByLastLetter().length > 0,
+                sortCountriesByLastLetter().length > 0,
             })}
             onKeyDown={handleDropdownKeyDown}
           >
