@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import { useEffect, useState } from 'react';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
-import styles from "./ReviewsPage.module.scss";
+import styles from './ReviewsPage.module.scss';
 
 const ReviewsPage = () => {
   return (

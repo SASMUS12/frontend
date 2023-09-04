@@ -1,13 +1,13 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from 'react';
 
-import LanguageLevel from "../LanguageLevel/LanguageLevel";
-import { Button } from "../UI/Button/Button";
+import LanguageLevel from '../LanguageLevel/LanguageLevel';
+import { Button } from '../UI/Button/Button';
 
-import { Language, SkillLevelEnum } from "../../utils/openapi";
-import { api } from "../../utils/constants";
+import { Language, SkillLevelEnum } from '../../utils/openapi';
+import { api } from '../../utils/constants';
 
-import styles from "./LanguageModule.module.scss";
-import cn from "classnames";
+import styles from './LanguageModule.module.scss';
+import cn from 'classnames';
 
 interface LanguageModuleProps {
   pageName: string;
@@ -34,31 +34,31 @@ const LanguageModule: FC<LanguageModuleProps> = ({
 }) => {
   const [languagesData, setLanguagesData] = useState<Language[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
-    null
+    null,
   );
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
 
   useEffect(() => {
     const languagesInUse = selectedLanguagesAndLevels.map(
-      (item) => item.language
+      (item) => item.language,
     );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setSelectedLanguages(languagesInUse);
   }, [selectedLanguagesAndLevels]);
 
-  console.log("selectedLanguageAndLevels:", selectedLanguagesAndLevels);
+  console.log('selectedLanguageAndLevels:', selectedLanguagesAndLevels);
 
   //Запрос массива языков
   const fetchLanguagesData = async () => {
     try {
-      console.log("отправка запроса ---");
+      console.log('отправка запроса ---');
       const response = await api.api.languagesList();
-      console.log("ответ получен -", response);
+      console.log('ответ получен -', response);
       const languages = response.data;
       setLanguagesData(languages);
     } catch (error) {
-      console.error("Ошибка при получении данных о языках:", error);
+      console.error('Ошибка при получении данных о языках:', error);
     }
   };
 
@@ -77,7 +77,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
 
   const handleSkillLevelsChange = (
     skillLevels: SkillLevelEnum[],
-    index: number
+    index: number,
   ) => {
     if (index >= 0 && index < selectedLanguagesAndLevels.length) {
       const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
@@ -98,7 +98,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
       (item) => ({
         language: null,
         skillLevels: [],
-      })
+      }),
     );
     setSelectedLanguagesAndLevels(clearedLanguagesAndLevels);
   };
@@ -142,7 +142,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
           pageName={pageName}
           key={index}
           languages={languagesData.filter(
-            (lang) => !selectedLanguages.includes(lang)
+            (lang) => !selectedLanguages.includes(lang),
           )}
           selectedLanguage={item.language || selectedLanguage}
           initialLanguageAndLevels={initialLanguageAndLevels}
@@ -159,14 +159,14 @@ const LanguageModule: FC<LanguageModuleProps> = ({
         <div
           className={cn(
             styles.languagesAdd,
-            pageName === "Sort" ? styles.languagesAdd_center : ""
+            pageName === 'Sort' ? styles.languagesAdd_center : '',
           )}
         >
           <Button
-            type="button"
-            variant="addLanguage"
-            size="xs"
-            fontSize="15"
+            type='button'
+            variant='addLanguage'
+            size='xs'
+            fontSize='15'
             onClick={() => {
               const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
               updatedLanguagesAndLevels.push({
@@ -177,7 +177,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
             }}
             className={styles.languagesAdd__button}
           >
-            {"добавить язык"}
+            {'добавить язык'}
           </Button>
         </div>
       )}

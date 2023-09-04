@@ -1,5 +1,5 @@
-import styles from "./AllChats.module.scss";
-import ChatsMenu from "../ChatsMenu/ChatsMenu";
+import styles from './AllChats.module.scss';
+import ChatsMenu from '../ChatsMenu/ChatsMenu';
 
 const ChatsList = () => {
   return (

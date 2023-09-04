@@ -1,13 +1,13 @@
-import { FC, useEffect, useState } from "react";
-import { observer } from "mobx-react-lite";
+import { FC, useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { Input } from "../UI/Input/Input";
-import ItemsOpenedList from "../UI/ItemsOpenedList/ItemsOpenedList";
+import { Input } from '../UI/Input/Input';
+import ItemsOpenedList from '../UI/ItemsOpenedList/ItemsOpenedList';
 
-import { Interest } from "../../utils/openapi";
+import { Interest } from '../../utils/openapi';
 
-import styles from "./InputSearchList.module.scss";
-import cn from "classnames";
+import styles from './InputSearchList.module.scss';
+import cn from 'classnames';
 
 interface IPageName {
   itemsList: Interest[];
@@ -21,18 +21,18 @@ const InputSearchList: FC<IPageName> = ({
   setSelectedInterests,
 }: IPageName) => {
   const [isSearchListVisible, setSearchListVisible] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [filteredItems, setFilteredItems] = useState<Interest[]>([]);
   const [selectedItem, setSelectedItem] = useState<Interest | null>(null);
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(
-    null
+    null,
   );
   const [suggestedItems, setSuggestedItems] = useState<Interest[]>([]);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<
     number | null
   >(null);
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const i = 100;
 
@@ -56,17 +56,17 @@ const InputSearchList: FC<IPageName> = ({
       setSearchListVisible(false);
     }
 
-    const searchValueLower = newSearchValue.toLocaleLowerCase("ru");
+    const searchValueLower = newSearchValue.toLocaleLowerCase('ru');
 
     const filtered = itemsList.filter(
       (item) =>
-        item.name.toLocaleLowerCase("ru").includes(searchValueLower) &&
-        !selectedInterests.includes(item)
+        item.name.toLocaleLowerCase('ru').includes(searchValueLower) &&
+        !selectedInterests.includes(item),
     );
     setFilteredItems(filtered);
 
     const suggested = itemsList.filter((item) =>
-      item.name.toLocaleLowerCase("ru").startsWith(searchValueLower)
+      item.name.toLocaleLowerCase('ru').startsWith(searchValueLower),
     );
     setSuggestedItems(suggested);
 
@@ -74,10 +74,10 @@ const InputSearchList: FC<IPageName> = ({
       searchValueLower.length > 0 ? searchValueLower.charAt(0) : null;
     setLastPressedLetter(firstLetter);
 
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       event.preventDefault();
       if (!selectedInterests.includes(newSearchValue)) {
-        handleSelectItem({ name: newSearchValue, sorting: "" });
+        handleSelectItem({ name: newSearchValue, sorting: '' });
         console.log(newSearchValue);
       }
       if (selectedItem) {
@@ -95,7 +95,7 @@ const InputSearchList: FC<IPageName> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowDown") {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -106,7 +106,7 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -117,11 +117,11 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "Enter") {
+    } else if (e.key === 'Enter') {
       e.preventDefault();
 
       const inputElement = e.target as HTMLInputElement;
-      handleSelectItem({ name: inputElement.value, sorting: "" });
+      handleSelectItem({ name: inputElement.value, sorting: '' });
       console.log(inputElement.value);
       if (selectedItem) {
         handleSelectItem(selectedItem);
@@ -130,7 +130,7 @@ const InputSearchList: FC<IPageName> = ({
   };
 
   const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowDown") {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -141,7 +141,7 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -152,11 +152,11 @@ const InputSearchList: FC<IPageName> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "Enter") {
+    } else if (e.key === 'Enter') {
       e.preventDefault();
 
       const inputElement = e.target as HTMLInputElement;
-      handleSelectItem({ name: inputElement.value, sorting: "" });
+      handleSelectItem({ name: inputElement.value, sorting: '' });
       console.log(inputElement.value);
       if (selectedItem) {
         handleSelectItem(selectedItem);
@@ -194,13 +194,13 @@ const InputSearchList: FC<IPageName> = ({
       setSelectedInterests(updatedSelectedItems);
       setSelectedItem(item);
       setSearchListVisible(false);
-      setSearchValue("");
+      setSearchValue('');
     }
   };
 
   const handleSelectItemFromList = (itemName: string) => {
     const selectedItem = itemsList.find(
-      (item) => item.name.toLocaleLowerCase("ru") === itemName
+      (item) => item.name.toLocaleLowerCase('ru') === itemName,
     );
     if (selectedItem) {
       handleSelectItem(selectedItem);
@@ -211,15 +211,15 @@ const InputSearchList: FC<IPageName> = ({
     <>
       <Input
         className={styles.interests__input}
-        type="search"
-        name="interest"
+        type='search'
+        name='interest'
         value={searchValue}
-        fontSize="16"
-        placeholder="Путешествия"
+        fontSize='16'
+        placeholder='Путешествия'
         isLabelHintHidden={true}
         onValue={(event) => handleInputValue(event)}
         onKeyDown={handleKeyDown}
-        autoComplete="off"
+        autoComplete='off'
       />
       <div className={cn(styles.items, styles.items_668)}>
         {isSearchListVisible && (
@@ -235,20 +235,20 @@ const InputSearchList: FC<IPageName> = ({
                 <div
                   key={index}
                   onClick={() =>
-                    handleSelectItemFromList(item.name.toLocaleLowerCase("ru"))
+                    handleSelectItemFromList(item.name.toLocaleLowerCase('ru'))
                   }
                   className={styles.items__itemsList_option}
                 >
                   {item.name}
                 </div>
-              ) : null
+              ) : null,
             )}
           </div>
         )}
         <div
           className={cn(
             styles.items__selectedItems,
-            styles.items__selectedItems_gap16
+            styles.items__selectedItems_gap16,
           )}
         >
           <ItemsOpenedList

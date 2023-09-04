@@ -1,7 +1,7 @@
-import { ReactNode, SelectHTMLAttributes } from "react";
+import { ReactNode, SelectHTMLAttributes } from 'react';
 
-import styles from "./Select.module.scss";
-import cn from "classnames";
+import styles from './Select.module.scss';
+import cn from 'classnames';
 
 export interface ISelect<T extends string>
   extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -23,7 +23,7 @@ export const Select = <T extends string>({
   className,
   name,
   label,
-  labelStyles = "label16",
+  labelStyles = 'label16',
   labelHint,
   isLabelHintHidden,
   hint,
@@ -39,7 +39,7 @@ export const Select = <T extends string>({
       <span
         className={cn(
           styles.selectElement__label,
-          styles[`selectElement__${labelStyles}`]
+          styles[`selectElement__${labelStyles}`],
         )}
       >
         {label}
@@ -47,7 +47,7 @@ export const Select = <T extends string>({
       <span
         className={cn(
           styles.selectElement__hint,
-          styles[`selectElement__hint_${isLabelHintHidden}`]
+          styles[`selectElement__hint_${isLabelHintHidden}`],
         )}
       >
         {labelHint}
@@ -58,7 +58,7 @@ export const Select = <T extends string>({
           {
             [styles.selectElement__select_hasError]: hasError,
           },
-          className
+          className,
         )}
         name={name}
         required={required}
@@ -69,7 +69,7 @@ export const Select = <T extends string>({
       <span
         className={cn(
           styles.selectElement__placeholder,
-          styles.selectElement__placeholder_withLabel
+          styles.selectElement__placeholder_withLabel,
         )}
       >
         {placeholder}
@@ -88,7 +88,7 @@ export const Select = <T extends string>({
           {
             [styles.selectElement__select_hasError]: hasError,
           },
-          className
+          className,
         )}
         name={name}
         required={required}
@@ -99,7 +99,7 @@ export const Select = <T extends string>({
       <span
         className={cn(
           styles.selectElement__placeholder,
-          styles.selectElement__placeholder_withoutLabel
+          styles.selectElement__placeholder_withoutLabel,
         )}
       >
         {placeholder}

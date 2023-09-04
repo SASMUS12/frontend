@@ -6,9 +6,9 @@ import {
   GenderEnum,
   NullEnum,
   UserLanguage,
-} from "../openapi";
+} from '../openapi';
 
-import { api, headersWithToken as headers } from "../constants";
+import { api, headersWithToken as headers } from '../constants';
 
 export const signInWithEmail = async ({
   username,
@@ -24,8 +24,8 @@ export const signInWithEmail = async ({
   }
 
   if (token) {
-    localStorage.setItem("accessToken", token.access);
-    localStorage.setItem("refreshToken", token.refresh);
+    localStorage.setItem('accessToken', token.access);
+    localStorage.setItem('refreshToken', token.refresh);
     return {
       access: token.access as string,
       refresh: token.refresh as string,
@@ -36,7 +36,7 @@ export const signInWithEmail = async ({
 };
 
 export const getAcceessToken = async (
-  refresh: string
+  refresh: string,
 ): Promise<TokenRefresh | null> => {
   const { data: token, error } = await api.api.authJwtRefreshCreate({
     refresh: refresh,
@@ -47,7 +47,7 @@ export const getAcceessToken = async (
   }
 
   if (token) {
-    localStorage.setItem("accessToken", token.access);
+    localStorage.setItem('accessToken', token.access);
     return {
       access: token.access as string,
     };

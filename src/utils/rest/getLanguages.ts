@@ -1,5 +1,5 @@
-import { Language } from "../openapi";
-import { api } from "../constants";
+import { Language } from '../openapi';
+import { api } from '../constants';
 
 export const getLanguages = async (): Promise<Language[]> => {
   const { data: languages, error } = await api.api.languagesList();

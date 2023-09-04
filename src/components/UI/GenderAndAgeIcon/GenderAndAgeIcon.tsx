@@ -1,12 +1,12 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
-import femaleGender from "../../../images/svg/card-gender-female.svg";
-import maleGender from "../../../images/svg/card-gender-male.svg";
+import femaleGender from '../../../images/svg/card-gender-female.svg';
+import maleGender from '../../../images/svg/card-gender-male.svg';
 
-import { GenderEnum, NullEnum } from "../../../utils/openapi";
+import { GenderEnum, NullEnum } from '../../../utils/openapi';
 
-import styles from "./GenderAndAgeIcon.module.scss";
-import cn from "classnames";
+import styles from './GenderAndAgeIcon.module.scss';
+import cn from 'classnames';
 
 interface GenderAndAgeIconProps {
   gender: GenderEnum | NullEnum | null;
@@ -24,7 +24,7 @@ const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({
   const isGenderVisible = gender && !gender_is_hidden;
   const isAgeVisible = age && !age_is_hidden;
 
-  const genderIcon = gender === "Female" ? femaleGender : maleGender;
+  const genderIcon = gender === 'Female' ? femaleGender : maleGender;
 
   return (
     <div
@@ -39,7 +39,7 @@ const GenderAndAgeIcon: FC<GenderAndAgeIconProps> = ({
               gender_is_hidden,
           })}
           src={genderIcon}
-          alt="Пол пользователя"
+          alt='Пол пользователя'
         />
       )}
       {isAgeVisible && (

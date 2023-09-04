@@ -1,13 +1,13 @@
-import React, { useState, useMemo } from "react";
-import styles from "../Sort/Sort.module.scss";
-import CountrySelection from "../CountrySelection/CountrySelection";
-import LanguageModule from "../LanguageModule/LanguageModule";
-import Gender from "../Gender/Gender";
-import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
-import LanguageLevelModal from "../LanguageLevelModal/LanguageLevelModal";
-import { Button } from "../UI/Button/Button";
+import React, { useState, useMemo } from 'react';
+import styles from '../Sort/Sort.module.scss';
+import CountrySelection from '../CountrySelection/CountrySelection';
+import LanguageModule from '../LanguageModule/LanguageModule';
+import Gender from '../Gender/Gender';
+import MultiRangeSlider from '../MultiRangeSlider/MultiRangeSlider';
+import LanguageLevelModal from '../LanguageLevelModal/LanguageLevelModal';
+import { Button } from '../UI/Button/Button';
 
-import { Country, Language, SkillLevelEnum } from "../../utils/openapi";
+import { Country, Language, SkillLevelEnum } from '../../utils/openapi';
 
 interface Filters {
   country: string;
@@ -59,12 +59,12 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
       .filter((item) => item.language !== null && item.skillLevels.length > 0)
       .map((item) => ({
         language: item.language!.name,
-        skill_level: item.skillLevels.join(","),
+        skill_level: item.skillLevels.join(','),
       }));
     const countryCodes = selectedCountries
       .filter((country) => country.code !== null)
       .map((country) => country.code!.toUpperCase())
-      .join(",");
+      .join(',');
     const filters: Filters = {
       age: ageRange,
       country: countryCodes,
@@ -78,7 +78,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
       <div className={styles.popup__cantry}>
         <h2 className={styles.subtitle}>Страна партнера</h2>
         <CountrySelection
-          pageName="Sort"
+          pageName='Sort'
           selectedCountries={selectedCountries}
           setSelectedCountries={setSelectedCountries}
           onClearFilter={handleClearFilter}
@@ -93,7 +93,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
       </div>
       {showDefaultLanguageModule && (
         <LanguageModule
-          pageName="Sort"
+          pageName='Sort'
           initialLanguageAndLevels={{ language: null, skillLevels: [] }}
           selectedLanguagesAndLevels={selectedLanguagesAndLevels}
           setSelectedLanguagesAndLevels={setSelectedLanguagesAndLevels}
@@ -106,7 +106,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
           <Gender
             selectedGender={selectedGender}
             setSelectedGender={setSelectedGender}
-            componentName="Sort"
+            componentName='Sort'
           />
         </div>
       </div>
@@ -121,24 +121,24 @@ const Sort: React.FC<SortProps> = ({ onChangeSort, isOpen }) => {
         />
       </div>
       <Button
-        type="button"
+        type='button'
         className={styles.findButton}
-        children={"Найти"}
+        children={'Найти'}
         onClick={handleFindButtonClick}
       />
       <Button
-        type="submit"
-        variant="addLanguage"
-        size="xs"
-        fontSize="13"
+        type='submit'
+        variant='addLanguage'
+        size='xs'
+        fontSize='13'
         className={styles.cleanButton}
-        children={"Очистить фильтр"}
+        children={'Очистить фильтр'}
         onClick={handleClearFilter}
       />
       <LanguageLevelModal
         isModalOpen={isModalOpen}
         setModalOpen={setModalOpen}
-        pageName="Sort"
+        pageName='Sort'
       />
     </div>
   );

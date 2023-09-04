@@ -1,6 +1,6 @@
 const newChatsSocket = () => {
   const chatsSocket = new WebSocket(
-    "ws://lingvogo.acceleratorpracticum.ru/ws/chats/1/"
+    'ws://lingvogo.acceleratorpracticum.ru/ws/chats/1/',
   );
 
   // chatsSocket.send("Here's some text that the server is urgently awaiting!");
@@ -15,8 +15,8 @@ const newChatsSocket = () => {
   function sendText() {
     // Construct a msg object containing the data the server needs to process the message from the chat client.
     const msg = {
-      type: "chat_message",
-      message: "document.getElementById.value",
+      type: 'chat_message',
+      message: 'document.getElementById.value',
       // id: clientID,
       // date: Date.now(),
     };

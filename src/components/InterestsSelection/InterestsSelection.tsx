@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { observer } from "mobx-react-lite";
+import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
-import InputSearchList from "../InputSearchList/InputSearchList";
+import InputSearchList from '../InputSearchList/InputSearchList';
 
-import { Interest } from "../../utils/openapi";
-import { getInterests } from "../../utils/rest/getInterests";
+import { Interest } from '../../utils/openapi';
+import { getInterests } from '../../utils/rest/getInterests';
 
 interface InterestsSelectionProps {
   selectedInterests: Interest[];
@@ -23,7 +23,7 @@ const InterestsSelection = ({
         setInterestsList(updatedList);
       })
       .catch((error) => {
-        console.error("Error updating interests list:", error);
+        console.error('Error updating interests list:', error);
       });
   }, []);
 

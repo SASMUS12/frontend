@@ -1,9 +1,9 @@
-import { Button } from "../UI/Button/Button";
+import { Button } from '../UI/Button/Button';
 
-import { GenderEnum, NullEnum } from "../../utils/openapi";
+import { GenderEnum, NullEnum } from '../../utils/openapi';
 
-import styles from "./Gender.module.scss";
-import cn from "classnames";
+import styles from './Gender.module.scss';
+import cn from 'classnames';
 
 interface GenderProps {
   selectedGender: string | GenderEnum | NullEnum | null;
@@ -23,44 +23,44 @@ const Gender = ({
   return (
     <div className={styles.genderArea}>
       <Button
-        type="button"
-        children="мужчина"
+        type='button'
+        children='мужчина'
         onClick={() => handleGenderSelection(GenderEnum.Male)}
         className={cn(
           styles.genderArea__button,
           selectedGender === GenderEnum.Male
             ? styles.genderArea__button_selected
-            : ""
+            : '',
         )}
-        variant="gray"
-        size="small"
-        fontSize={componentName === "fillOutProfile" ? "16" : "13"}
+        variant='gray'
+        size='small'
+        fontSize={componentName === 'fillOutProfile' ? '16' : '13'}
       />
       <Button
-        type="button"
-        children="женщина"
+        type='button'
+        children='женщина'
         onClick={() => handleGenderSelection(GenderEnum.Female)}
         className={cn(
           styles.genderArea__button,
           selectedGender === GenderEnum.Female
             ? styles.genderArea__button_selected
-            : ""
+            : '',
         )}
-        variant="gray"
-        size="small"
-        fontSize={componentName === "fillOutProfile" ? "16" : "13"}
+        variant='gray'
+        size='small'
+        fontSize={componentName === 'fillOutProfile' ? '16' : '13'}
       />
-      {componentName === "fillOutProfile" && (
+      {componentName === 'fillOutProfile' && (
         <Button
-          type="button"
-          children="не указан"
+          type='button'
+          children='не указан'
           onClick={() => handleGenderSelection(null)}
           className={cn(
             styles.genderArea__button,
-            selectedGender === null ? styles.genderArea__button_selected : ""
+            selectedGender === null ? styles.genderArea__button_selected : '',
           )}
-          variant="gray"
-          size="small"
+          variant='gray'
+          size='small'
         />
       )}
     </div>

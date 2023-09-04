@@ -1,5 +1,5 @@
-import React, { memo, useEffect } from "react";
-import styles from "../Categories/Categories.module.scss";
+import React, { memo, useEffect } from 'react';
+import styles from '../Categories/Categories.module.scss';
 
 type Category = {
   name: string;
@@ -14,9 +14,9 @@ type CategoriesProps = {
 const Categories: React.FC<CategoriesProps> = memo(
   ({ value, onChangeCategory }) => {
     const categories: Category[] = [
-      { name: "Все", path: "" },
-      { name: "Сейчас онлайн", path: "True" },
-      { name: "Новые пользователи", path: "-date_joined" },
+      { name: 'Все', path: '' },
+      { name: 'Сейчас онлайн', path: 'True' },
+      { name: 'Новые пользователи', path: '-date_joined' },
     ];
 
     const setActiveStyle = (item: { name: string; path: string }) => {
@@ -48,7 +48,7 @@ const Categories: React.FC<CategoriesProps> = memo(
         </ul>
       </div>
     );
-  }
+  },
 );
 
 export default Categories;

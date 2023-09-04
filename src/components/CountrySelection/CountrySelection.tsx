@@ -1,13 +1,13 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from 'react';
 
-import { Button } from "../UI/Button/Button";
-import { Input } from "../UI/Input/Input";
+import { Button } from '../UI/Button/Button';
+import { Input } from '../UI/Input/Input';
 
-import { Country } from "../../utils/openapi";
-import { api } from "../../utils/constants";
+import { Country } from '../../utils/openapi';
+import { api } from '../../utils/constants';
 
-import styles from "./CountrySelection.module.scss";
-import classNames from "classnames";
+import styles from './CountrySelection.module.scss';
+import classNames from 'classnames';
 
 interface CountrySelectionProps {
   pageName: string;
@@ -24,9 +24,9 @@ const CountrySelection: FC<CountrySelectionProps> = ({
 }) => {
   const [countriesData, setCountriesData] = useState<Country[]>([]);
   const [isCountryListVisible, setCountryListVisible] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [filteredCountries, setFilteredCountries] =
     useState<Country[]>(countriesData);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
@@ -35,14 +35,14 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     number | null
   >(null);
   const [lastPressedLetter, setLastPressedLetter] = useState<string | null>(
-    null
+    null,
   );
 
   const fetchCountriesData = async () => {
     try {
-      console.log("отправка запроса ---");
+      console.log('отправка запроса ---');
       const response = await api.api.countriesList();
-      console.log("ответ получен -", response);
+      console.log('ответ получен -', response);
       const countries = response.data.map((country) => ({
         code: country.code,
         name: country.name,
@@ -50,7 +50,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       }));
       setCountriesData(countries);
     } catch (error) {
-      console.error("Ошибка при получении данных о странах:", error);
+      console.error('Ошибка при получении данных о странах:', error);
     }
   };
 
@@ -58,7 +58,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     fetchCountriesData();
   }, []);
 
-  const i = pageName === "Sort" ? 5 : 1;
+  const i = pageName === 'Sort' ? 5 : 1;
 
   const handleSelectCountry = (country: Country) => {
     if (selectedCountries.length < i && !selectedCountries.includes(country)) {
@@ -67,9 +67,9 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       setSelectedCountry(country);
       setCountryListVisible(false);
 
-      pageName === "FillOutProfile2"
+      pageName === 'FillOutProfile2'
         ? setSearchValue(country.name)
-        : setSearchValue("");
+        : setSearchValue('');
 
       // onSortCountry(country);
     }
@@ -84,16 +84,16 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       setCountryListVisible(false);
     }
 
-    const searchValueLower = newSearchValue.toLocaleLowerCase("ru");
+    const searchValueLower = newSearchValue.toLocaleLowerCase('ru');
     const filtered = countriesData.filter(
       (country) =>
-        country.name.toLocaleLowerCase("ru").includes(searchValueLower) &&
-        !selectedCountries.includes(country)
+        country.name.toLocaleLowerCase('ru').includes(searchValueLower) &&
+        !selectedCountries.includes(country),
     );
     setFilteredCountries(filtered);
 
     const suggested = countriesData.filter((country) =>
-      country.name.toLocaleLowerCase("ru").startsWith(searchValueLower)
+      country.name.toLocaleLowerCase('ru').startsWith(searchValueLower),
     );
     setSuggestedCountries(suggested);
 
@@ -106,8 +106,8 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       filtered.length === 0 &&
       suggested.length === 0;
     const errorMessage = isInvalidSearch
-      ? "Страны не существует, возможно ошибка"
-      : "";
+      ? 'Страны не существует, возможно ошибка'
+      : '';
     setIsError(isInvalidSearch);
     setErrorMessage(errorMessage);
 
@@ -117,7 +117,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowDown") {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -128,7 +128,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -139,7 +139,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "Enter") {
+    } else if (e.key === 'Enter') {
       e.preventDefault();
       if (selectedSuggestionIndex !== null) {
         handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
@@ -151,13 +151,13 @@ const CountrySelection: FC<CountrySelectionProps> = ({
 
   const handleRemoveCountry = (country: Country) => {
     const updatedCountries = selectedCountries.filter(
-      (c) => c.code !== country.code
+      (c) => c.code !== country.code,
     );
     setSelectedCountries(updatedCountries);
   };
 
   const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowDown") {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -168,7 +168,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -179,7 +179,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
           return prevIndex;
         }
       });
-    } else if (e.key === "Enter") {
+    } else if (e.key === 'Enter') {
       e.preventDefault();
       if (selectedSuggestionIndex !== null) {
         handleSelectCountry(suggestedCountries[selectedSuggestionIndex]);
@@ -190,25 +190,25 @@ const CountrySelection: FC<CountrySelectionProps> = ({
   };
 
   const popularCountryCodes = [
-    "cn",
-    "es",
-    "england",
-    "sa",
-    "bd",
-    "pt",
-    "ru",
-    "jp",
-    "pc",
-    "my",
+    'cn',
+    'es',
+    'england',
+    'sa',
+    'bd',
+    'pt',
+    'ru',
+    'jp',
+    'pc',
+    'my',
   ];
 
   const sortCountriesByLastLetter = () => {
     if (lastPressedLetter) {
       const popularCountries = filteredCountries.filter((country) =>
-        popularCountryCodes.includes(country.name)
+        popularCountryCodes.includes(country.name),
       );
       const otherCountries = filteredCountries.filter(
-        (country) => !popularCountryCodes.includes(country.name)
+        (country) => !popularCountryCodes.includes(country.name),
       );
 
       popularCountries.sort((a, b) => a.name.localeCompare(b.name));
@@ -238,7 +238,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
 
   const handleSelectCountryFromList = (countryName: string) => {
     const selectedCountry = countriesData.find(
-      (country) => country.name.toLocaleLowerCase("ru") === countryName
+      (country) => country.name.toLocaleLowerCase('ru') === countryName,
     );
     if (selectedCountry) {
       handleSelectCountry(selectedCountry);
@@ -249,14 +249,14 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     <div className={styles.country}>
       <Input
         className={`${styles.country__input} ${
-          isCountryListVisible ? styles.country__input_showSuggestions : ""
+          isCountryListVisible ? styles.country__input_showSuggestions : ''
         }`}
-        type="search"
-        name="country"
+        type='search'
+        name='country'
         value={searchValue}
-        fontSize={pageName === "FillOutProfile2" ? "16" : "14"}
+        fontSize={pageName === 'FillOutProfile2' ? '16' : '14'}
         isLabelHintHidden={true}
-        placeholder="Начните вводить название"
+        placeholder='Начните вводить название'
         onValue={(event) => handleSearchInputChange(event)}
         onKeyDown={handleKeyDown}
       />
@@ -287,7 +287,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
                   key={country.code}
                   onClick={() =>
                     handleSelectCountryFromList(
-                      country.name.toLocaleLowerCase("ru")
+                      country.name.toLocaleLowerCase('ru'),
                     )
                   }
                   className={classNames(styles.country__countryList_option, {
@@ -302,7 +302,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
                   />
                   {country.name}
                 </div>
-              ) : null
+              ) : null,
             )}
           </div>
         )}

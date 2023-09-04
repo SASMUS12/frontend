@@ -1,6 +1,6 @@
-import { makeObservable, observable } from "mobx";
+import { makeObservable, observable } from 'mobx';
 
-import { GenderEnum, NullEnum, UserLanguage } from "../../utils/openapi";
+import { GenderEnum, NullEnum, UserLanguage } from '../../utils/openapi';
 
 export interface UserInterface {
   username: string;

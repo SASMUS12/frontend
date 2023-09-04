@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import { observer } from "mobx-react-lite";
+import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
-import SignupSigninForm from "../../components/SignupSigninForm/SignupSigninForm";
-import PicturesBlock from "../../components/PicturesBlock/PicturesBlock";
+import SignupSigninForm from '../../components/SignupSigninForm/SignupSigninForm';
+import PicturesBlock from '../../components/PicturesBlock/PicturesBlock';
 
-import logo from "../../images/svg/logo.svg";
+import logo from '../../images/svg/logo.svg';
 
-import styles from "./SignupSigninPage.module.scss";
+import styles from './SignupSigninPage.module.scss';
 
 const SignupSigninPage = () => {
   return (
@@ -17,7 +17,7 @@ const SignupSigninPage = () => {
             <img
               src={logo}
               className={styles.content__signInContainer_logo}
-              alt="Логотип проекта"
+              alt='Логотип проекта'
             />
           </Link>
           <div className={styles.content__formArea}>

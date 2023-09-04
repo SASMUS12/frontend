@@ -1,6 +1,6 @@
-import { FC } from "react";
-import styles from "./GoBackButton.module.scss";
-import cn from "classnames";
+import { FC } from 'react';
+import styles from './GoBackButton.module.scss';
+import cn from 'classnames';
 
 interface GoBackButtonProps {
   onClick: () => void;
@@ -15,7 +15,7 @@ const GoBackButton: FC<GoBackButtonProps> = ({
     <button
       className={cn(styles.button, positionClassName)}
       onClick={onClick}
-      type="button"
+      type='button'
     ></button>
   );
 };

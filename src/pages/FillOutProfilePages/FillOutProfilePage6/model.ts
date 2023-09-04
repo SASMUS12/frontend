@@ -1,12 +1,12 @@
-import { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocalObservable } from "mobx-react-lite";
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocalObservable } from 'mobx-react-lite';
 
-import { getMe } from "../../../utils/rest/auth";
-import { session } from "../../../models/session/Session";
+import { getMe } from '../../../utils/rest/auth';
+import { session } from '../../../models/session/Session';
 
-import { api, headersWithToken as headers } from "../../../utils/constants";
-import { store } from "../../../models/store";
+import { api, headersWithToken as headers } from '../../../utils/constants';
+import { store } from '../../../models/store';
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -15,9 +15,9 @@ export const useModel = () => {
 
   const model = useLocalObservable(() => {
     return {
-      about: "",
-      error: { about: "" },
-      message: "",
+      about: '',
+      error: { about: '' },
+      message: '',
       isSubmitButtonDisabled: false,
       isLoading: false,
 
@@ -27,19 +27,19 @@ export const useModel = () => {
 
           if (user) {
             session.updateUser(user);
-            model.about = user.about ?? "";
+            model.about = user.about ?? '';
           }
         } catch (error: any) {
           model.message = error.message;
         }
       },
 
-      handleValue({ name, value }: { name: "about"; value: string }) {
+      handleValue({ name, value }: { name: 'about'; value: string }) {
         model[name] = value;
       },
 
       handleReturnButtonClick() {
-        navigate("/fill-out-5");
+        navigate('/fill-out-5');
       },
 
       handleSubmitButtonDisabled() {
@@ -49,32 +49,32 @@ export const useModel = () => {
       },
 
       to() {
-        return "/";
+        return '/';
       },
 
       async handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         model.error = {
-          about: "",
+          about: '',
         };
 
-        if (model.about === "") {
-          model.error.about = "Пожалуйста, расскажите о себе";
+        if (model.about === '') {
+          model.error.about = 'Пожалуйста, расскажите о себе';
         }
 
-        if (model.error.about !== "") {
+        if (model.error.about !== '') {
           return;
         }
 
-        model.message = "";
+        model.message = '';
         model.isLoading = true;
         try {
           const getUpdateUser = await api.api.usersMePartialUpdate(
             {
               about: model.about,
             },
-            { headers }
+            { headers },
           );
 
           if (getUpdateUser && user) {
@@ -87,7 +87,7 @@ export const useModel = () => {
           navigate(model.to());
           model.isLoading = false;
         } catch (error: any) {
-          console.log("fill-out-6 error:", error);
+          console.log('fill-out-6 error:', error);
           model.isLoading = false;
         }
       },

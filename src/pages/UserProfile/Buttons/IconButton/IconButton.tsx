@@ -1,6 +1,6 @@
-import React from "react";
-import IconButtonProps from "../../../../types/userProfile/types";
-import styles from "./IconButton.module.scss";
+import React from 'react';
+import IconButtonProps from '../../../../types/userProfile/types';
+import styles from './IconButton.module.scss';
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
@@ -14,7 +14,7 @@ const IconButton: React.FC<IconButtonProps> = ({
         <img
           className={styles.profile__icon}
           src={icon}
-          alt="кликабельная иконка"
+          alt='кликабельная иконка'
           style={{ width: iconWidth, height: iconHeight }}
         />
       </button>

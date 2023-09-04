@@ -1,10 +1,10 @@
-import { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocalObservable } from "mobx-react-lite";
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocalObservable } from 'mobx-react-lite';
 
-import { Interest } from "../../../utils/openapi";
-import { api, headersWithToken as headers } from "../../../utils/constants";
-import { store } from "../../../models/store";
+import { Interest } from '../../../utils/openapi';
+import { api, headersWithToken as headers } from '../../../utils/constants';
+import { store } from '../../../models/store';
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -13,8 +13,8 @@ export const useModel = () => {
   const model = useLocalObservable(() => {
     return {
       selectedInterests: [] as Interest[],
-      error: { selectedInterests: "" },
-      message: "",
+      error: { selectedInterests: '' },
+      message: '',
       isSubmitButtonDisabled: false,
       isLoading: false,
 
@@ -29,7 +29,7 @@ export const useModel = () => {
       },
 
       handleReturnButtonClick() {
-        navigate("/fill-out-4");
+        navigate('/fill-out-4');
       },
 
       handleSubmitButtonDisabled() {
@@ -44,14 +44,14 @@ export const useModel = () => {
         event.preventDefault();
 
         model.error = {
-          selectedInterests: "",
+          selectedInterests: '',
         };
 
         if (model.selectedInterests === null) {
-          model.error.selectedInterests = "Пожалуйста, укажите Ваши интересы";
+          model.error.selectedInterests = 'Пожалуйста, укажите Ваши интересы';
         }
 
-        if (model.error.selectedInterests !== "") {
+        if (model.error.selectedInterests !== '') {
           return;
         }
 
@@ -65,14 +65,14 @@ export const useModel = () => {
 
         console.log(finalInterestsArray);
 
-        model.message = "";
+        model.message = '';
         model.isLoading = true;
         try {
           const getUpdateUser = await api.api.usersMePartialUpdate(
             {
               interests: finalInterestsArray,
             },
-            { headers }
+            { headers },
           );
 
           if (getUpdateUser && user) {
@@ -82,11 +82,11 @@ export const useModel = () => {
             });
           }
 
-          navigate("/fill-out-6");
+          navigate('/fill-out-6');
           model.isLoading = false;
         } catch (error: any) {
           console.log(model.selectedInterests);
-          console.log("fill-out-5 error:", error);
+          console.log('fill-out-5 error:', error);
           model.isLoading = false;
         }
       },

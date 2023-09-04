@@ -1,5 +1,5 @@
-import { UserCreateRequest } from "../openapi";
-import { api } from "../constants";
+import { UserCreateRequest } from '../openapi';
+import { api } from '../constants';
 
 export const signUp = async ({
   email,

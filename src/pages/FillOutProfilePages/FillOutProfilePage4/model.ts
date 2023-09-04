@@ -1,14 +1,14 @@
-import { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocalObservable } from "mobx-react-lite";
-import { toJS } from "mobx";
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocalObservable } from 'mobx-react-lite';
+import { toJS } from 'mobx';
 
-import { getMe } from "../../../utils/rest/auth";
-import { session } from "../../../models/session/Session";
+import { getMe } from '../../../utils/rest/auth';
+import { session } from '../../../models/session/Session';
 
-import { api, headersWithToken as headers } from "../../../utils/constants";
-import { store } from "../../../models/store";
-import styles from "../FillOutProfilePages.module.scss";
+import { api, headersWithToken as headers } from '../../../utils/constants';
+import { store } from '../../../models/store';
+import styles from '../FillOutProfilePages.module.scss';
 
 interface selectedGoals {
   icon: string;
@@ -25,8 +25,8 @@ export const useModel = () => {
     return {
       selectedGoals: [] as selectedGoals[],
       commonGoals: [] as selectedGoals[],
-      error: { goals: "" },
-      message: "",
+      error: { goals: '' },
+      message: '',
       isSubmitButtonDisabled: false,
       isLoading: false,
 
@@ -58,7 +58,7 @@ export const useModel = () => {
       },
 
       handleReturnButtonClick() {
-        navigate("/fill-out-3");
+        navigate('/fill-out-3');
       },
 
       handleGoalButtonClick(event: any, goal: any) {
@@ -71,14 +71,14 @@ export const useModel = () => {
           updatedGoals.push(goal);
           model.selectedGoals = updatedGoals;
           event.currentTarget.classList.add(
-            styles.container__goals_goal_active
+            styles.container__goals_goal_active,
           );
           console.log(model.selectedGoals);
         } else {
           goal.active = false;
           model.selectedGoals.filter((selectedGoal) => selectedGoal.active);
           event.currentTarget.classList.remove(
-            styles.container__goals_goal_active
+            styles.container__goals_goal_active,
           );
           console.log(model.selectedGoals);
         }
@@ -88,18 +88,18 @@ export const useModel = () => {
         event.preventDefault();
 
         model.error = {
-          goals: "",
+          goals: '',
         };
 
         if (model.selectedGoals === null) {
-          model.error.goals = "Пожалуйста, выберите цели";
+          model.error.goals = 'Пожалуйста, выберите цели';
         }
 
-        if (model.error.goals !== "") {
+        if (model.error.goals !== '') {
           return;
         }
 
-        model.message = "";
+        model.message = '';
         model.isLoading = true;
         const goals = model.selectedGoals.map((goal) => goal.description);
         try {
@@ -107,7 +107,7 @@ export const useModel = () => {
             {
               goals: goals,
             },
-            { headers }
+            { headers },
           );
 
           if (getUpdateUser && user) {
@@ -117,10 +117,10 @@ export const useModel = () => {
             });
           }
 
-          navigate("/fill-out-5");
+          navigate('/fill-out-5');
           model.isLoading = false;
         } catch (error: any) {
-          console.log("fill-out-4 error:", error);
+          console.log('fill-out-4 error:', error);
           console.log(goals);
           model.isLoading = false;
         }

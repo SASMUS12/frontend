@@ -1,14 +1,14 @@
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
 
-import Header from "../../../components/Header/Header";
-import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
-import { Button } from "../../../components/UI/Button/Button";
-import { Textarea } from "../../../components/UI/Textarea/Textarea";
+import Header from '../../../components/Header/Header';
+import ProgressLine from '../../../components/UI/ProgressLine/ProgressLine';
+import { Button } from '../../../components/UI/Button/Button';
+import { Textarea } from '../../../components/UI/Textarea/Textarea';
 
-import { useModel } from "./model";
+import { useModel } from './model';
 
-import styles from "../FillOutProfilePages.module.scss";
-import { useEffect } from "react";
+import styles from '../FillOutProfilePages.module.scss';
+import { useEffect } from 'react';
 
 const FillOutProfilePage6 = () => {
   const model = useModel();
@@ -37,9 +37,9 @@ const FillOutProfilePage6 = () => {
           <form className={styles.form} onSubmit={model.handleSubmit}>
             <Textarea
               className={styles.form__textarea}
-              name="about"
+              name='about'
               value={model.about}
-              placeholder="Напишите несколько предложений о себе, чтобы вас могли найти партнеры со схожими интересами или стилем жизни"
+              placeholder='Напишите несколько предложений о себе, чтобы вас могли найти партнеры со схожими интересами или стилем жизни'
               required
               onValue={model.handleValue}
               maxLength={1000}
@@ -48,8 +48,8 @@ const FillOutProfilePage6 = () => {
             </Textarea>
             <Button
               className={styles.form__button}
-              type="submit"
-              variant="primary"
+              type='submit'
+              variant='primary'
               disabled={false}
             >
               Готово

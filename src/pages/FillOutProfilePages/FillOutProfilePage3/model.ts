@@ -1,13 +1,13 @@
-import { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocalObservable } from "mobx-react-lite";
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocalObservable } from 'mobx-react-lite';
 
-import { getMe } from "../../../utils/rest/auth";
-import { session } from "../../../models/session/Session";
+import { getMe } from '../../../utils/rest/auth';
+import { session } from '../../../models/session/Session';
 
-import { Language, SkillLevelEnum } from "../../../utils/openapi";
-import { api, headersWithToken as headers } from "../../../utils/constants";
-import { store } from "../../../models/store";
+import { Language, SkillLevelEnum } from '../../../utils/openapi';
+import { api, headersWithToken as headers } from '../../../utils/constants';
+import { store } from '../../../models/store';
 
 export const useModel = () => {
   const navigate = useNavigate();
@@ -23,14 +23,14 @@ export const useModel = () => {
         },
       ],
       languages: [
-        { isocode: "", language: "", skill_level: {} as SkillLevelEnum },
+        { isocode: '', language: '', skill_level: {} as SkillLevelEnum },
       ],
-      error: { languages: "" },
-      message: "",
+      error: { languages: '' },
+      message: '',
       isSubmitButtonDisabled: false,
       isLoading: false,
       isHelpModalOpen: false,
-      errorMessage: "",
+      errorMessage: '',
 
       async handleCurrentUser() {
         try {
@@ -57,7 +57,7 @@ export const useModel = () => {
         languages: {
           language: Language | null;
           skillLevels: SkillLevelEnum[];
-        }[]
+        }[],
       ) {
         if (languages) {
           model.languagesAndLevels = languages;
@@ -66,7 +66,7 @@ export const useModel = () => {
       },
 
       handleReturnButtonClick() {
-        navigate("/fill-out-2");
+        navigate('/fill-out-2');
       },
 
       handleSubmitButtonDisabled() {
@@ -81,18 +81,18 @@ export const useModel = () => {
         event.preventDefault();
 
         model.error = {
-          languages: "",
+          languages: '',
         };
 
         if (model.languagesAndLevels === null) {
-          model.error.languages = "Пожалуйста, выберите язык";
+          model.error.languages = 'Пожалуйста, выберите язык';
         }
 
-        if (model.error.languages !== "") {
+        if (model.error.languages !== '') {
           return;
         }
 
-        model.message = "";
+        model.message = '';
         model.isLoading = true;
         console.log(model.languagesAndLevels[0].language?.isocode);
 
@@ -101,12 +101,12 @@ export const useModel = () => {
             {
               languages: [
                 {
-                  isocode: model.languagesAndLevels[0].language?.isocode || "",
+                  isocode: model.languagesAndLevels[0].language?.isocode || '',
                   skill_level: model.languagesAndLevels[0].skillLevels[0],
                 },
               ],
             },
-            { headers }
+            { headers },
           );
 
           if (getUpdateUser && user) {
@@ -114,19 +114,19 @@ export const useModel = () => {
               ...user,
               languages: [
                 {
-                  language: model.languagesAndLevels[0].language?.name || "",
-                  isocode: model.languagesAndLevels[0].language?.isocode || "",
+                  language: model.languagesAndLevels[0].language?.name || '',
+                  isocode: model.languagesAndLevels[0].language?.isocode || '',
                   skill_level: model.languagesAndLevels[0].skillLevels[0],
                 },
               ],
             });
           }
 
-          navigate("/fill-out-4");
+          navigate('/fill-out-4');
           model.isLoading = false;
         } catch (error: any) {
           console.log(model.languagesAndLevels[0]);
-          console.log("fill-out-3 error:", error);
+          console.log('fill-out-3 error:', error);
           model.isLoading = false;
         }
       },

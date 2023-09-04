@@ -1,7 +1,7 @@
-import { useLocalObservable } from "mobx-react-lite";
-import { useLocation } from "react-router";
+import { useLocalObservable } from 'mobx-react-lite';
+import { useLocation } from 'react-router';
 
-import { useStore } from "../../components/App/providers/withStore";
+import { useStore } from '../../components/App/providers/withStore';
 
 export const useModel = () => {
   const store = useStore();

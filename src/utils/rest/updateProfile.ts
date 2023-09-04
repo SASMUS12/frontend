@@ -1,6 +1,6 @@
-import { GenderEnum, NullEnum, UserLanguage } from "../openapi";
-import { api, headersWithToken as headers } from "../constants";
-import { store } from "../../models/store";
+import { GenderEnum, NullEnum, UserLanguage } from '../openapi';
+import { api, headersWithToken as headers } from '../constants';
+import { store } from '../../models/store';
 
 export const updateProfile = async ({
   first_name,
@@ -42,7 +42,7 @@ export const updateProfile = async ({
         interests,
         about,
       },
-      { headers }
+      { headers },
     );
 
     store.session.updateUser({
@@ -58,6 +58,6 @@ export const updateProfile = async ({
       about,
     });
   } catch (error) {
-    console.log("features.updateProfile", error);
+    console.log('features.updateProfile', error);
   }
 };

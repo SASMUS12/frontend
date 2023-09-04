@@ -1,7 +1,7 @@
 const currentTime = new Date();
 let hours = currentTime.getHours();
 let minutes = currentTime.getMinutes();
-const amOrPm = hours >= 12 ? "PM" : "AM";
+const amOrPm = hours >= 12 ? 'PM' : 'AM';
 
 if (hours > 12) {
   hours -= 12;
