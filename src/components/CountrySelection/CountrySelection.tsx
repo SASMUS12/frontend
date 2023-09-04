@@ -16,18 +16,12 @@ interface CountrySelectionProps {
   onClearFilter?: () => void;
 }
 
-const CountrySelection: FC<CountrySelectionProps> = ({
-  pageName,
-  selectedCountries,
-  setSelectedCountries,
-  onClearFilter,
-}) => {
+const CountrySelection: FC<CountrySelectionProps> = ({pageName, selectedCountries,setSelectedCountries, onClearFilter,}) => {
   const [countriesData, setCountriesData] = useState<Country[]>([]);
   const [isCountryListVisible, setCountryListVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [filteredCountries, setFilteredCountries] =
     useState<Country[]>(countriesData);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
@@ -67,13 +61,17 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       setSelectedCountries(updatedSelectedCountries);
       setSelectedCountry(country);
       setCountryListVisible(false);
-      setSearchValue('');
-      onSelectedCountriesChange(updatedSelectedCountries);
+
+      pageName === 'FillOutProfile2'
+        ? setSearchValue(country.name)
+        : setSearchValue('');
+
+      // onSortCountry(country);
     }
   };
 
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSearchValue = e.target.value;
+  const handleSearchInputChange = (e: any) => {
+    const newSearchValue = e.value;
     setSearchValue(newSearchValue);
     if (newSearchValue) {
       setCountryListVisible(true);
@@ -93,6 +91,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
       country.name.toLocaleLowerCase('ru').startsWith(searchValueLower),
     );
     setSuggestedCountries(suggested);
+
     const firstLetter =
       searchValueLower.length > 0 ? searchValueLower.charAt(0) : null;
     setLastPressedLetter(firstLetter);
@@ -185,9 +184,32 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     }
   };
 
+  const popularCountryCodes = [
+    'cn',
+    'es',
+    'england',
+    'sa',
+    'bd',
+    'pt',
+    'ru',
+    'jp',
+    'pc',
+    'my',
+  ];
+
   const sortCountriesByLastLetter = () => {
     if (lastPressedLetter) {
-      return filteredCountries.sort((a, b) => {
+      const popularCountries = filteredCountries.filter((country) =>
+        popularCountryCodes.includes(country.name),
+      );
+      const otherCountries = filteredCountries.filter(
+        (country) => !popularCountryCodes.includes(country.name),
+      );
+
+      popularCountries.sort((a, b) => a.name.localeCompare(b.name));
+      otherCountries.sort((a, b) => a.name.localeCompare(b.name));
+
+      return [...popularCountries, ...otherCountries].sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
         if (
@@ -209,17 +231,6 @@ const CountrySelection: FC<CountrySelectionProps> = ({
     }
   };
 
-  const handleClearFilter = () => {
-    onClearFilter();
-    setSearchValue('');
-    setIsError(false);
-    setErrorMessage('');
-    setSelectedCountry(null);
-    setSuggestedCountries([]);
-    setSelectedSuggestionIndex(null);
-    setLastPressedLetter(null);
-  };
-
   const handleSelectCountryFromList = (countryName: string) => {
     const selectedCountry = countriesData.find(
       (country) => country.name.toLocaleLowerCase('ru') === countryName,
@@ -232,16 +243,16 @@ const CountrySelection: FC<CountrySelectionProps> = ({
   return (
     <div className={styles.country}>
       <Input
-        className={`${styles.country__input}
-        ${isCountryListVisible ? styles.country__input_showSuggestions : ''}
-        `}
+        className={`${styles.country__input} ${
+          isCountryListVisible ? styles.country__input_showSuggestions : ''
+        }`}
         type='search'
         name='country'
         value={searchValue}
+        fontSize={pageName === 'FillOutProfile2' ? '16' : '14'}
         isLabelHintHidden={true}
         placeholder='Начните вводить название'
-        required
-        onChange={handleSearchInputChange}
+        onValue={(event) => handleSearchInputChange(event)}
         onKeyDown={handleKeyDown}
       />
       {isError && (
@@ -261,7 +272,7 @@ const CountrySelection: FC<CountrySelectionProps> = ({
           <div
             className={classNames(styles.country__countryList, {
               [styles.country__countryList_visible]:
-                sortCountriesByLastLetter().length > 0,
+              sortCountriesByLastLetter().length > 0,
             })}
             onKeyDown={handleDropdownKeyDown}
           >
