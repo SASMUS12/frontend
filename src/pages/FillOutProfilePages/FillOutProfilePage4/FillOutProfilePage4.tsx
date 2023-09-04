@@ -1,68 +1,33 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {
+  ChangeEvent,
+  FormEvent,
+  MouseEventHandler,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useNavigate } from "react-router-dom";
 
-import Header from '../../../components/Header/Header';
-import ProgressLine from '../../../components/UI/ProgressLine/ProgressLine';
-import { Button } from '../../../components/UI/Button/Button';
-import { Goals } from './Goals';
+import Header from "../../../components/Header/Header";
+import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
+import { Button } from "../../../components/UI/Button/Button";
+import { Goals } from "./Goals";
 
 import styles from '../FillOutProfilePages.module.scss';
 
 const FillOutProfilePage4 = () => {
-  const navigate = useNavigate();
+  const model = useModel();
 
-  const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
-
-  const [selectedGoals, setSelectedGoals] = useState<
-    {
-      image: string;
-      name: string;
-      description: string;
-      active: boolean;
-    }[]
-  >([]);
-
-  console.log(selectedGoals);
-  console.log(isSubmitButtonDisabled);
-
-  const handleSubmitButtonDisabled = () => {
-    selectedGoals.length === 0
-      ? setSubmitButtonDisabled(true)
-      : setSubmitButtonDisabled(false);
-  };
+  console.log(model.selectedGoals);
+  console.log(model.isSubmitButtonDisabled);
 
   useEffect(() => {
-    handleSubmitButtonDisabled();
-  }, [selectedGoals]);
+    model.handleCurrentUser();
+  }, []);
 
-  const handleReturnButtonClick = () => {
-    navigate('/fill-out-3');
-  };
-
-  const handleGoalButtonClick = (event, goal, index) => {
-    const updatedGoals = [...selectedGoals];
-
-    console.log(goal.active);
-
-    if (!goal.active) {
-      goal.active = true;
-      updatedGoals.push(goal);
-      setSelectedGoals(updatedGoals);
-      event.currentTarget.classList.add(styles.container__goals_goal_active);
-    } else {
-      goal.active = false;
-      const updatedGoals = selectedGoals.filter(
-        (selectedGoal) => selectedGoal.active,
-      );
-      setSelectedGoals(updatedGoals);
-      event.currentTarget.classList.remove(styles.container__goals_goal_active);
-    }
-  };
-  const handleFillOutPage4 = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    navigate('/fill-out-5');
-    console.log('FillOutPage4');
-  };
+  useEffect(() => {
+    model.handleSubmitButtonDisabled();
+  }, [model.selectedGoals]);
 
   return (
     <>
@@ -70,14 +35,14 @@ const FillOutProfilePage4 = () => {
       <main className={styles.content}>
         <button
           className={styles.content__returnButton}
-          onClick={handleReturnButtonClick}
+          onClick={model.handleReturnButtonClick}
         >
           Назад
         </button>
         <div className={styles.container}>
           <ProgressLine pageNumber={4} />
           <h1 className={styles.container__title}>Укажите ваши цели</h1>
-          <form className={styles.form} onSubmit={handleFillOutPage4}>
+          <form className={styles.form} onSubmit={model.handleSubmit}>
             <div className={styles.container__goals}>
               {Goals.map((goal, index) => (
                 <button
@@ -85,7 +50,7 @@ const FillOutProfilePage4 = () => {
                   key={index}
                   className={styles.container__goals_goal}
                   onClick={(event) => {
-                    handleGoalButtonClick(event, goal, index);
+                    model.handleGoalButtonClick(event, goal);
                   }}
                 >
                   <img src={goal.image} alt={goal.name} />
@@ -95,9 +60,9 @@ const FillOutProfilePage4 = () => {
             </div>
             <Button
               className={styles.form__button}
-              type='submit'
-              variant='primary'
-              disabled={isSubmitButtonDisabled}
+              type="submit"
+              variant="primary"
+              disabled={model.isSubmitButtonDisabled}
             >
               Продолжить
             </Button>
@@ -107,4 +72,4 @@ const FillOutProfilePage4 = () => {
     </>
   );
 };
-export default FillOutProfilePage4;
+export default observer(FillOutProfilePage4);

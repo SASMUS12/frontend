@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useLocalObservable } from "mobx-react-lite";
 
 import { getMe } from "../../../utils/rest/auth";
-import { updateProfile } from "../../../utils/rest/updateProfile";
 import { session } from "../../../models/session/Session";
 
 import { GenderEnum } from "../../../utils/openapi";
@@ -22,13 +21,16 @@ export const useModel = () => {
       calculatedBirthday: "",
       gender: "Male" as GenderEnum | null,
       avatar: "",
-      avatarFile: null as File | null,
+      avatarBase64: "",
+      avatarFile: "" as string | ArrayBuffer | null,
       previewAvatar: "",
-      errorFillOut1: { firstName: "", birthdate: "", avatar: "" },
+      error: { firstName: "", birthdate: "", avatar: "" },
       message: "",
       isLoading: false,
       isExportAvatarModal: false,
       isCreateAvatarModal: false,
+      isErrorModalOpen: false,
+      errorMessage: "",
 
       async handleCurrentUser() {
         try {
@@ -49,6 +51,7 @@ export const useModel = () => {
       handleModalClose() {
         model.isExportAvatarModal = false;
         model.isCreateAvatarModal = false;
+        model.isErrorModalOpen = false;
       },
 
       handleAvatarSelection(creationWay: string) {
@@ -85,21 +88,22 @@ export const useModel = () => {
         if (event.currentTarget.files) {
           const file = event.currentTarget.files[0];
           if (file) {
+            const fileSrc = URL.createObjectURL(file);
+
             model.handleValue({
               name: "avatar",
-              value: URL.createObjectURL(file),
+              value: fileSrc,
             });
 
             const reader = new FileReader();
-            reader.onload = () => {
-              const base64Data = reader.result as null;
-              if (base64Data) {
-                model.avatarFile = base64Data;
+            reader.onload = function (event) {
+              if (event.target) {
+                const base64Image = event.target.result;
+                console.log(base64Image);
+                model.avatarFile = base64Image;
               }
             };
             reader.readAsDataURL(file);
-
-            console.log("imageBase64", model.avatarFile);
 
             model.handleModalClose();
             console.log(model.avatar);
@@ -116,34 +120,34 @@ export const useModel = () => {
         model.handleModalClose();
       },
 
-      async handleFillOut1Submit(event: FormEvent<HTMLFormElement>) {
+      async handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        model.errorFillOut1 = {
+        model.error = {
           firstName: "",
           birthdate: "",
           avatar: "",
         };
 
         if (model.firstName === "") {
-          model.errorFillOut1.firstName = "Пожалуйста, введите Ваше имя";
+          model.error.firstName = "Пожалуйста, введите Ваше имя";
         }
 
         if (model.birthdate === "") {
-          model.errorFillOut1.birthdate = "Пожалуйста, введите дату рождения";
+          model.error.birthdate = "Пожалуйста, введите дату рождения";
         }
 
         if (
           model.avatar === "" ||
           model.avatar === "../../images/fill-out-profile-export-avatar.png"
         ) {
-          model.errorFillOut1.avatar = "Пожалуйста, выберете аватар";
+          model.error.avatar = "Пожалуйста, выберете аватар";
         }
 
         if (
-          model.errorFillOut1.firstName !== "" ||
-          model.errorFillOut1.birthdate !== "" ||
-          model.errorFillOut1.avatar !== ""
+          model.error.firstName !== "" ||
+          model.error.birthdate !== "" ||
+          model.error.avatar !== ""
         ) {
           return;
         }
@@ -154,7 +158,7 @@ export const useModel = () => {
           const getUpdateUser = await api.api.usersMePartialUpdate(
             {
               first_name: model.firstName,
-              avatar: model.avatarFile,
+              avatar: model.avatarFile as string,
               birth_date: model.birthdate,
               gender: model.gender,
             },
@@ -175,6 +179,13 @@ export const useModel = () => {
           model.isLoading = false;
         } catch (error: any) {
           console.log("fill-out-1 error:", error);
+          const secondError = Object.values(error)[1];
+          const ErrorString = Object.values(
+            secondError as { [s: string]: unknown }
+          ).join("\n");
+          console.log(ErrorString);
+          model.errorMessage = ErrorString;
+          model.isErrorModalOpen = true;
           model.isLoading = false;
         }
       },

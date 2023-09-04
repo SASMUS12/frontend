@@ -24,7 +24,7 @@ const SignupSigninForm = () => {
   };
 
   useEffect(() => {
-    checkIsSignUp();
+    model.checkIsSignUp();
   }, [pathName]);
 
   useEffect(() => {
@@ -39,13 +39,13 @@ const SignupSigninForm = () => {
   return (
     <form
       className={styles.form}
-      onSubmit={isSignUp ? model.handleRegister : model.handleLogin}
+      onSubmit={model.isSignUp ? model.handleRegister : model.handleLogin}
     >
       <ul className={styles.form__links}>
         <Link
           to={`/signin`}
           className={
-            !isSignUp
+            !model.isSignUp
               ? styles.form__links_activeLinkItem
               : styles.form__links_linkItem
           }
@@ -55,7 +55,7 @@ const SignupSigninForm = () => {
         <Link
           to={`/signup`}
           className={
-            isSignUp
+            model.isSignUp
               ? styles.form__links_activeLinkItem
               : styles.form__links_linkItem
           }
@@ -63,7 +63,7 @@ const SignupSigninForm = () => {
           Регистрация
         </Link>
       </ul>
-      {isSignUp && (
+      {model.isSignUp && (
         <Input
           className={styles.form__input}
           type='text'
@@ -109,7 +109,7 @@ const SignupSigninForm = () => {
         maxLength={12}
         minLength={5}
       />
-      {isSignUp && (
+      {model.isSignUp && (
         <Input
           className={styles.form__input}
           type='password'
@@ -125,7 +125,7 @@ const SignupSigninForm = () => {
           minLength={5}
         />
       )}
-      {isSignUp && (
+      {model.isSignUp && (
         <p className={styles.form__text_grey12}>
           Нажимая на кнопку «Продолжить», вы соглашаетесь с&nbsp;
           <span className={styles.form__text_grey12_underline}>
@@ -134,7 +134,7 @@ const SignupSigninForm = () => {
         </p>
       )}
       <div className={styles.form__textTag}>
-        {!isSignUp && (
+        {!model.isSignUp && (
           <label
             className={cn(styles.form__checkbox, styles.form__text_violet14)}
           >
@@ -149,7 +149,7 @@ const SignupSigninForm = () => {
             Запомнить меня
           </label>
         )}
-        {!isSignUp && (
+        {!model.isSignUp && (
           <a
             className={styles.form__forgotLink}
             href='src/components/UI/SignInForm#'

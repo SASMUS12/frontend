@@ -6,7 +6,7 @@ import styles from "./Gender.module.scss";
 import cn from "classnames";
 
 interface GenderProps {
-  selectedGender: GenderEnum | NullEnum | null;
+  selectedGender: string | GenderEnum | NullEnum | null;
   setSelectedGender: (gender: GenderEnum | NullEnum | null) => void;
   componentName: string;
 }

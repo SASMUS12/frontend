@@ -9,6 +9,9 @@ import { session } from '../../models/session/Session';
 export const useModel = () => {
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const pathName: string = location.pathname;
+
   const model = useLocalObservable(() => {
     return {
       username: '',
@@ -21,6 +24,12 @@ export const useModel = () => {
       refresh: '',
       access: '',
       isSignUp: false,
+
+      checkIsSignUp() {
+        pathName === "/signup"
+          ? (model.isSignUp = true)
+          : (model.isSignUp = false);
+      },
 
       handleValue({
         name,
@@ -78,6 +87,8 @@ export const useModel = () => {
         model.message = '';
         model.isLoading = true;
         try {
+          session.signOut();
+
           await signUp({
             email: model.email,
             username: model.username,
@@ -90,6 +101,8 @@ export const useModel = () => {
           });
 
           if (token) {
+            localStorage.setItem("accessToken", token.access);
+            localStorage.setItem("refreshToken", token.refresh);
             session.setAccessToken(token.access);
             session.setRefreshToken(token.refresh);
           }
@@ -129,12 +142,16 @@ export const useModel = () => {
         model.isLoading = true;
 
         try {
+          session.signOut();
+
           const token = await signInWithEmail({
             username: model.email,
             password: model.password,
           });
 
           if (token) {
+            localStorage.setItem("accessToken", token.access);
+            localStorage.setItem("refreshToken", token.refresh);
             session.setAccessToken(token.access);
             session.setRefreshToken(token.refresh);
           }

@@ -11,13 +11,15 @@ import classNames from 'classnames';
 
 interface CountrySelectionProps {
   pageName: string;
-  onSelectedCountriesChange: (selectedCountries: Country[]) => void;
-  onClearFilter: () => void;
+  selectedCountries: Country[];
+  setSelectedCountries: (selectedCountries: Country[]) => void;
+  onClearFilter?: () => void;
 }
 
 const CountrySelection: FC<CountrySelectionProps> = ({
   pageName,
-  onSelectedCountriesChange,
+  selectedCountries,
+  setSelectedCountries,
   onClearFilter,
 }) => {
   const [countriesData, setCountriesData] = useState<Country[]>([]);

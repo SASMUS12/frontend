@@ -1,32 +1,16 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
+import { observer } from "mobx-react-lite";
 
-import Header from '../../../components/Header/Header';
-import ProgressLine from '../../../components/UI/ProgressLine/ProgressLine';
-import { Button } from '../../../components/UI/Button/Button';
-import InterestsSelection from '../../../components/CountriesAndInterestsSelection/CountriesAndInterestsSelection';
+import Header from "../../../components/Header/Header";
+import ProgressLine from "../../../components/UI/ProgressLine/ProgressLine";
+import { Button } from "../../../components/UI/Button/Button";
+import InterestsSelection from "../../../components/InterestsSelection/InterestsSelection";
 
-import { useModel } from '../FillOutProfilePage1/model';
+import { useModel } from "./model";
 
-import styles from '../FillOutProfilePages.module.scss';
-import { Interest } from '../../../utils/openapi';
+import styles from "../FillOutProfilePages.module.scss";
 
 const FillOutProfilePage5 = () => {
   const model = useModel();
-  const navigate = useNavigate();
-
-  const [selectedInterests, setSelectedInterests] = useState<Interest[]>([]);
-
-  const handleReturnButtonClick = () => {
-    navigate('/fill-out-4');
-  };
-
-  const handleFillOutPage5 = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    navigate('/fill-out-6');
-    console.log('FillOutPage5');
-  };
 
   return (
     <>
@@ -34,23 +18,22 @@ const FillOutProfilePage5 = () => {
       <main className={styles.content}>
         <button
           className={styles.content__returnButton}
-          onClick={handleReturnButtonClick}
+          onClick={model.handleReturnButtonClick}
         >
           Назад
         </button>
         <div className={styles.container}>
           <ProgressLine pageNumber={5} />
-          <h1 className={styles.container__title}>Укажите ваши интересы</h1>
-          <form className={styles.form} onSubmit={handleFillOutPage5}>
+          <h1 className={styles.container__title}>Укажите Ваши интересы</h1>
+          <form className={styles.form} onSubmit={model.handleSubmit}>
             <InterestsSelection
-              pageName='FillOutProfile5'
-              itemsName='interests'
-              onSelectedItemsChange={setSelectedInterests}
+              selectedInterests={model.selectedInterests}
+              setSelectedInterests={model.setSelectedInterests}
             />
             <Button
               className={styles.form__button}
-              type='submit'
-              variant='primary'
+              type="submit"
+              variant="primary"
               disabled={false}
             >
               Продолжить

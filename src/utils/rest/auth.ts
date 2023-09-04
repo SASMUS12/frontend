@@ -1,5 +1,3 @@
-import { loggedIn } from "../../models/LoggedIn";
-
 import {
   TokenObtainPairRequest,
   TokenObtainPair,
@@ -70,16 +68,13 @@ export const getMe = async (): Promise<UserProfile | null> => {
   }
 
   if (user) {
-    loggedIn.setLoggedInTrue();
-    console.log(loggedIn.loggedIn);
-
     return {
       username: user.username as string,
       first_name: user.first_name as string,
       avatar: user.avatar as string,
       age: user.age as string,
       slug: user.slug as string | null,
-      country: user.country as string | null,
+      country: user.country as string | undefined,
       languages: user.languages as UserLanguage[],
       gender: user.gender as GenderEnum | NullEnum | null,
       goals: user.goals as string[],
@@ -106,8 +101,7 @@ export const getMe = async (): Promise<UserProfile | null> => {
 //     }
 
 // if (res) {
-//   localStorage.clear();
-// loggedIn.setLoggedInFalse();
+// session.signOut();
 // }
 
 //

@@ -142,6 +142,10 @@
     overflow: hidden;
     clip: rect(0 0 0 0);
 
+    &_hidden {
+      display: none;
+    }
+
     & + .language__level_checkbox_visible::before {
       content: '';
       display: inline-block;

@@ -31,18 +31,19 @@ const FillOutProfilePage5 = lazy(
 const FillOutProfilePage6 = lazy(
   () => import('./FillOutProfilePages/FillOutProfilePage6/FillOutProfilePage6'),
 );
-
+const ChatsPage = lazy(() => import("./Chats/Chats"));
 export const Routing = () => {
   return (
     <Routes>
       {/*<Route path={'/'} element={<RequireAuth />}>*/}
-      <Route path='/fill-out-1' element={<FillOutProfilePage1 />} />
-      <Route path='/fill-out-2' element={<FillOutProfilePage2 />} />
-      <Route path='/fill-out-3' element={<FillOutProfilePage3 />} />
-      <Route path='/fill-out-4' element={<FillOutProfilePage4 />} />
-      <Route path='/fill-out-5' element={<FillOutProfilePage5 />} />
-      <Route path='/fill-out-6' element={<FillOutProfilePage6 />} />
-      <Route path='/profile' element={<ProfilePage />} />
+      <Route path="/fill-out-1" element={<FillOutProfilePage1 />} />
+      <Route path="/fill-out-2" element={<FillOutProfilePage2 />} />
+      <Route path="/fill-out-3" element={<FillOutProfilePage3 />} />
+      <Route path="/fill-out-4" element={<FillOutProfilePage4 />} />
+      <Route path="/fill-out-5" element={<FillOutProfilePage5 />} />
+      <Route path="/fill-out-6" element={<FillOutProfilePage6 />} />
+      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/chats" element={<ChatsPage />} />
       {/*</Route>*/}
       <Route path='/signin' element={<SignInPage />} />
       <Route path='/signup' element={<SignUpPage />} />

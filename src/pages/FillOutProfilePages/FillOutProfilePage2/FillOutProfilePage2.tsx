@@ -9,8 +9,9 @@ import CountrySelection from '../../../components/CountrySelection/CountrySelect
 
 import { useModel } from './model';
 
-import styles from '../FillOutProfilePages.module.scss';
-import { Language, SkillLevelEnum } from '../../../utils/openapi';
+import styles from "../FillOutProfilePages.module.scss";
+import { SkillLevelEnum } from "../../../utils/openapi";
+import ErrorModal from "../../../components/ErrorModal/ErrorModal";
 
 const FillOutProfilePage2 = () => {
   const model = useModel();
@@ -73,6 +74,12 @@ const FillOutProfilePage2 = () => {
               Продолжить
             </Button>
           </form>
+
+          <ErrorModal
+            isOpen={model.isErrorModalOpen}
+            onClose={model.handleModalClose}
+            errorMessage={model.errorMessage}
+          />
         </div>
       </main>
     </>

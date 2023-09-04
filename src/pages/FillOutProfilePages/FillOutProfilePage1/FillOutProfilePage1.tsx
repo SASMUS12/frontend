@@ -14,6 +14,9 @@ import faceInACircle from '../../../images/face-in-a-circle.png';
 
 import { useModel } from './model';
 
+import styles from "../FillOutProfilePages.module.scss";
+import cn from "classnames";
+import ErrorModal from "../../../components/ErrorModal/ErrorModal";
 import styles from '../FillOutProfilePages.module.scss';
 import cn from 'classnames';
 
@@ -33,11 +36,7 @@ const FillOutProfilePage1 = () => {
           <h1 className={styles.container__title}>
             Давайте заполним ваш профиль и начнем общаться
           </h1>
-          <form
-            id='form'
-            className={styles.form}
-            onSubmit={model.handleFillOut1Submit}
-          >
+          <form id="form" className={styles.form} onSubmit={model.handleSubmit}>
             <div className={styles.container__fillOutProfileArea}>
               <Input
                 className={cn(
@@ -51,8 +50,8 @@ const FillOutProfilePage1 = () => {
                 label='Укажите имя'
                 labelStyles='label18'
                 isLabelHintHidden={true}
-                placeholder='Имя'
-                error={model.errorFillOut1.firstName}
+                placeholder="Имя"
+                error={model.error.firstName}
                 required
                 maxLength={12}
                 onValue={model.handleValue}
@@ -77,7 +76,7 @@ const FillOutProfilePage1 = () => {
                 labelStyles='label18'
                 isLabelHintHidden={true}
                 required
-                error={model.errorFillOut1.birthdate}
+                error={model.error.birthdate}
                 onValue={model.handleValue}
               />
             </div>
@@ -202,6 +201,12 @@ const FillOutProfilePage1 = () => {
               Отменить изменения
             </button>
           </Modal>
+
+          <ErrorModal
+            isOpen={model.isErrorModalOpen}
+            onClose={model.handleModalClose}
+            errorMessage={model.errorMessage}
+          />
         </div>
       </main>
     </>

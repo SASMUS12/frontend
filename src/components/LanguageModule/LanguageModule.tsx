@@ -35,14 +35,16 @@ const LanguageModule: FC<LanguageModuleProps> = ({
 }) => {
   const [languagesData, setLanguagesData] = useState<Language[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
-    null,
+    null
   );
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
 
   useEffect(() => {
     const languagesInUse = selectedLanguagesAndLevels.map(
-      (item) => item.language,
+      (item) => item.language
     );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     setSelectedLanguages(languagesInUse);
   }, [selectedLanguagesAndLevels]);
 
@@ -76,7 +78,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
 
   const handleSkillLevelsChange = (
     skillLevels: SkillLevelEnum[],
-    index: number,
+    index: number
   ) => {
     if (index >= 0 && index < selectedLanguagesAndLevels.length) {
       const updatedLanguagesAndLevels = [...selectedLanguagesAndLevels];
@@ -97,7 +99,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
       (item) => ({
         language: null,
         skillLevels: [],
-      }),
+      })
     );
     setSelectedLanguagesAndLevels(clearedLanguagesAndLevels);
   };
@@ -120,7 +122,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
   };
 
   return (
-    <>
+    <div>
       {selectedLanguagesAndLevels.length === 0 && (
         <LanguageLevel
           pageName={pageName}
@@ -141,7 +143,7 @@ const LanguageModule: FC<LanguageModuleProps> = ({
           pageName={pageName}
           key={index}
           languages={languagesData.filter(
-            (lang) => !selectedLanguages.includes(lang),
+            (lang) => !selectedLanguages.includes(lang)
           )}
           selectedLanguage={item.language || selectedLanguage}
           initialLanguageAndLevels={initialLanguageAndLevels}

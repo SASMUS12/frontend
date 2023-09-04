@@ -35,6 +35,8 @@ export const useModel = () => {
       message: '',
       isSubmitButtonDisabled: false,
       isLoading: false,
+      isErrorModalOpen: false,
+      errorMessage: "",
 
       async handleCurrentUser() {
         try {
@@ -48,6 +50,10 @@ export const useModel = () => {
         } catch (error: any) {
           model.message = error.message;
         }
+      },
+
+      handleModalClose() {
+        model.isErrorModalOpen = false;
       },
 
       handleCountriesValue(countries: Country[]) {
@@ -111,7 +117,7 @@ export const useModel = () => {
         try {
           const getUpdateUser = await api.api.usersMePartialUpdate(
             {
-              country: model.countries[0].code,
+              country: model.countries[0].name,
               languages: [
                 {
                   isocode: model.languagesAndLevels[0].language?.isocode || '',
