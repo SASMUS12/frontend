@@ -35,13 +35,18 @@ const MainPage = () => {
     setSortPopupOpen(!isSortPopupOpen);
   };
 
-  const getUsersList = async (filters: any) => {
+   const getUsersList = async () => {
     try {
       console.log('отправка запроса ---');
-      const response = await api.api.usersList({
-        ordering: `${category.path}`,
-        ...filters,
-      });
+      const params = {
+        ordering: category.path,
+        age: filters.age,
+        country: filters.country,
+        gender: filters.gender,
+        languages: filters.languages,
+        skill_level: filters.skill_level,
+      };
+      const response = await api.api.usersList(params);
       console.log('ответ получен -', response);
       setIsUsersList(true);
 
@@ -54,12 +59,6 @@ const MainPage = () => {
       setIsUsersList(false);
     }
   };
-
-  useEffect(() => {
-    getUsersList(sortType);
-  }, [category, sortType]);
-
-  //Запрос массива языков
 
   return (
     <>
